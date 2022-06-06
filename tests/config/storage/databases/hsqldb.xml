@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE storage PUBLIC "-//MMBase//DTD storage config 1.0//EN" "http://www.mmbase.org/dtd/storage_1_0.dtd" >
+<!DOCTYPE storage PUBLIC "-//MMBase//DTD storage config 1.0//EN" "https://www.mmbase.org/dtd/storage_1_0.dtd" >
 <storage>
   <!-- HSQLdb configuration resource.
        Note: a number of options used here may be incompatible with older configurations, especially
@@ -48,9 +48,9 @@
     <scheme name="create-table-scheme">CREATE TEXT TABLE {1} ({2} {3} {5}); SET TABLE {1} SOURCE "{7}_{1}.txt;encoding=UTF-8"</scheme>
     <scheme name="create-object-table-scheme">CREATE TEXT TABLE {1} ({2} {3} {5}); SET TABLE {1} SOURCE "{7}_{1}.txt;encoding=UTF-8"</scheme>
     <scheme name="create-sequence-scheme">CREATE TEXT TABLE {0}_NUMBERTABLE ({1}); SET TABLE {0}_NUMBERTABLE SOURCE "{2}_{0}_NUMBERTABLE.txt;encoding=UTF-8"</scheme>
-    <!--    
+    <!--
     -->
-    <!-- This one is better if the tables get so big that you don't want them in memory entirely     
+    <!-- This one is better if the tables get so big that you don't want them in memory entirely
     -->
     <!--
 		<scheme name="create-table-scheme">CREATE CACHED TABLE {1} ({2} {3} {5})</scheme>

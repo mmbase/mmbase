@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE builder PUBLIC "-//MMBase//DTD builder config 1.1//EN" "http://www.mmbase.org/dtd/builder_1_1.dtd">
+<!DOCTYPE builder PUBLIC "-//MMBase//DTD builder config 1.1//EN" "https://www.mmbase.org/dtd/builder_1_1.dtd">
 <builder name="chatter" maintainer="mmbase.org" version="0" extends="object">
   <status>active</status>
 
   <searchage>14</searchage>
-  
+
   <names>
     <singular xml:lang="en">Chatter</singular>
     <singular xml:lang="nl">Babbelaar</singular>
     <plural xml:lang="en">Chatters</plural>
     <plural xml:lang="nl">Babbeleaars</plural>
   </names>
-  
+
   <descriptions>
     <description xml:lang="en">A user of a community</description>
     <description xml:lang="nl">Een gebruiker in een gemeenschap</description>
@@ -27,7 +27,7 @@
         <guiname xml:lang="en">Username</guiname>
         <guiname xml:lang="nl">Gebruikersnaam</guiname>
         <guitype>string</guitype>
-      </gui>      
+      </gui>
       <editor>
         <positions>
           <list>1</list>
@@ -38,9 +38,9 @@
         <type state="persistent" size="30" notnull="true">STRING</type>
       </db>
     </field>
-    
+
     <field>
-      <descriptions>        
+      <descriptions>
         <description xml:lang="en">User password for the community</description>
         <description xml:lang="nl">Gebruikers wachtwoord voor de gemeenschap</description>
       </descriptions>
@@ -54,7 +54,7 @@
         <type state="persistent" size="40" notnull="false">STRING</type>
       </db>
     </field>
-    
+
   </fieldlist>
 
 </builder>

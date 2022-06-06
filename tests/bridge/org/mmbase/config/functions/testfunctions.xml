@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE functionset PUBLIC "//MMBase - functionset //" "http://www.mmbase.org/dtd/functionset_1_0.dtd">
+<!DOCTYPE functionset PUBLIC "//MMBase - functionset //" "https://www.mmbase.org/dtd/functionset_1_0.dtd">
 <functionset>
   <version>1</version>
   <description>Set of testfunctions for the function-framework</description>
-  
+
   <function name="testBoolean">
     <description>
-    takes a Boolean and returns it 
+    takes a Boolean and returns it
     </description>
     <type>class</type>
     <class>org.mmbase.bridge.TestFunctionSet</class>

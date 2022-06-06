@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE application PUBLIC "-//MMBase//DTD application config 1.1//EN" "http://www.mmbase.org/dtd/application_1_1.dtd">
+<!DOCTYPE application PUBLIC "-//MMBase//DTD application config 1.1//EN" "https://www.mmbase.org/dtd/application_1_1.dtd">
 <application name="BugTracker" maintainer="submarine.nl" version="1" auto-deploy="false">
 	<requirements>
 		<requires name="Resources" maintainer="mmbase.org" version="1" />
@@ -62,7 +62,7 @@
 		<contextsource path="BugTracker/backup.xml" type="depth" goal="backup"/>
 	</contextsourcelist>
 
-	<description><![CDATA[BugTracking application for www.mmbase.org, before deploying this make sure all the 
+	<description><![CDATA[BugTracking application for www.mmbase.org, before deploying this make sure all the
         builders from the BugTracker/builders dir are also in your config/builders dir and the
         state of these builders is active.]]></description>
 

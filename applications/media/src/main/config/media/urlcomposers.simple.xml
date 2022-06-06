@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE urlcomposers SYSTEM "http://www.mmbase.org/dtd/urlcomposers_1_0.dtd">
+<!DOCTYPE urlcomposers SYSTEM "https://www.mmbase.org/dtd/urlcomposers_1_0.dtd">
 <!-- configuration for org.mmbase.applications.media.urlcomposers.URLComposerFactory -->
-<urlcomposers>  
+<urlcomposers>
   <default>org.mmbase.applications.media.urlcomposers.URLComposer</default>
   <urlcomposer format="ra"  >org.mmbase.applications.media.urlcomposers.RealURLComposer</urlcomposer>
   <urlcomposer format="rm"  >org.mmbase.applications.media.urlcomposers.RealURLComposer</urlcomposer>

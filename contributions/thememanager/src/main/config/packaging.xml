@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE packaging PUBLIC "-//MMBase/DTD packaging config 1.0//EN" "http://www.mmbase.org/dtd/packaging_1_0.dtd">
+<!DOCTYPE packaging PUBLIC "-//MMBase/DTD packaging config 1.0//EN" "https://www.mmbase.org/dtd/packaging_1_0.dtd">
 <packaging basedir=".">
 	<package name="function" type="function/set" file="packaging/ThemeManager_function.xml" />
 	<package name="java" type="java/jar" file="packaging/ThemeManager_java.xml" />

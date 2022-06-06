@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE eventmanager PUBLIC "-//MMBase//DTD eventmanager config 1.0//EN" "http://www.mmbase.org/dtd/eventmanager_1_0.dtd">
+<!DOCTYPE eventmanager PUBLIC "-//MMBase//DTD eventmanager config 1.0//EN" "https://www.mmbase.org/dtd/eventmanager_1_0.dtd">
 <!--
 	This config file allows you to configure what event brokers will be loaded
 	when mmbase starts up. For more information on event brokers read the apidoc

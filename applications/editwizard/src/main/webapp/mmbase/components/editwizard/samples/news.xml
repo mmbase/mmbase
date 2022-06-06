@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE wizard-schema PUBLIC "-//MMBase/DTD editwizard 1.0//EN" "http://www.mmbase.org/dtd/wizard-schema_1_0.dtd">
+<!DOCTYPE wizard-schema PUBLIC "-//MMBase/DTD editwizard 1.0//EN" "https://www.mmbase.org/dtd/wizard-schema_1_0.dtd">
 <wizard-schema id="empty">
   <title xml:lang="nl">Voer hier de wizard titel in</title>
   <title xml:lang="en">Enter Wizard Title Here</title>

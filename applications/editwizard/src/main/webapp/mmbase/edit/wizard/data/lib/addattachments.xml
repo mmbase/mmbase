@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE list PUBLIC "-//MMBase/DTD editwizard 1.0//EN" "http://www.mmbase.org/dtd/wizard-schema_1_0.dtd">
+<!DOCTYPE list PUBLIC "-//MMBase/DTD editwizard 1.0//EN" "https://www.mmbase.org/dtd/wizard-schema_1_0.dtd">
 <list role="posrel" destination="attachments" ordertype="number" orderby="field[@name='pos']">
   <title xml:lang="en">Related documents</title>
   <title xml:lang="nl">Gerelateerde documenten</title>
-  
+
   <description xml:lang="en">These are the attachments that are related, ordered by position, to this item.</description>
   <description xml:lang="nl">Dit zijn de gerelateerde documenten, gesorteerd op 'positie'</description>
   <item>

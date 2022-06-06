@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE security PUBLIC "-//MMBase//DTD security config 1.0//EN" "http://www.mmbase.org/dtd/security_1_0.dtd">
-<!-- 
+<!DOCTYPE security PUBLIC "-//MMBase//DTD security config 1.0//EN" "https://www.mmbase.org/dtd/security_1_0.dtd">
+<!--
 Example security.xml to switch on Cloud Context Security. No other configuration needed (Cloud Context Security
 is configured in the cloud)
-@version $Id$   
+@version $Id$
 -->
 <security active="true">
   <key>1234</key>
-  <authentication class="org.mmbase.security.implementation.cloudcontext.Authenticate" url="" />   
+  <authentication class="org.mmbase.security.implementation.cloudcontext.Authenticate" url="" />
   <authorization  class="org.mmbase.security.implementation.cloudcontext.Verify"       url="" />
   <sharedsecret>pindakaas</sharedsecret><!-- unused -->
 </security>

@@ -52,7 +52,7 @@ public class Controller {
      *Constructor for the Controller object
      */
     public Controller() {
-           cloud = ContextProvider.getDefaultCloudContext().getCloud("mmbase", "class", null); 
+           cloud = ContextProvider.getDefaultCloudContext().getCloud("mmbase", "class", null);
     }
 
     public String getNextPatchLevel(String version) {
@@ -81,7 +81,7 @@ public class Controller {
 	}
     }
 
-    public String isOlderVersion(String currentversion, String checkversion) {	
+    public String isOlderVersion(String currentversion, String checkversion) {
 	int cu = getVersionValue(currentversion);
 	int ch = getVersionValue(checkversion);
 	if (cu==-1 || ch==-1) return "unknown";
@@ -94,7 +94,7 @@ public class Controller {
     }
 
 
-    public String isOlderPatchLevel(String currentversion, String checkversion) {	
+    public String isOlderPatchLevel(String currentversion, String checkversion) {
 	try {
 	StringTokenizer tok = new StringTokenizer(currentversion,".\n\r");
 	StringTokenizer tok2 = new StringTokenizer(checkversion,".\n\r");
@@ -114,14 +114,14 @@ public class Controller {
 			}
 		    }
 		}
-	    }	
+	    }
 	}
       } catch(Exception e) {
 	// something went wrong return false;
       }
       return "invalid";
     }
-	
+
     public int getVersionValue(String version) {
       // use a stupid trick that works until we get more than 9999 version
       // per type
@@ -135,7 +135,7 @@ public class Controller {
 	    	if (tok.hasMoreTokens()) {
 	    		value += Integer.parseInt(tok.nextToken());
 		}
-            } 
+            }
 	}
 	return value;
       } catch(Exception e) {
@@ -148,7 +148,7 @@ public class Controller {
     public String getNextPrincipleNumber(String principleset) {
 	    // since i didn't want to enforce int only numbers
 	    // but to want to help and and guess the next number
-	    // we need this kinda kludge 
+	    // we need this kinda kludge
 	    // (seems i did demand Integer afteral, im leaving this in
 	    //  since i might change it)
 	    int current = 0;
@@ -179,7 +179,7 @@ public class Controller {
 	org.mmbase.bridge.Node node=cloud.getNode(setid);
 	if (node!=null) {
 	    String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-	    body += "<!DOCTYPE principleset PUBLIC \"//MMBase - principleset//\" \"http://www.mmbase.org/dtd/principleset_1_0.dtd\">\n";
+	    body += "<!DOCTYPE principleset PUBLIC \"//MMBase - principleset//\" \"https://www.mmbase.org/dtd/principleset_1_0.dtd\">\n";
 	    body += "<principleset name=\""+node.getStringValue("name")+"\" description=\""+node.getStringValue("description")+"\">\n";
             RelationIterator i = node.getRelations("principlerel", "principle").relationIterator();
             while (i.hasNext()) {
@@ -187,10 +187,10 @@ public class Controller {
 		org.mmbase.bridge.Node principleset = principlerel.getSource();
 		org.mmbase.bridge.Node principle = null;
 		if (principleset.getNumber()==node.getNumber()) {
-			principle = principlerel.getDestination();	
+			principle = principlerel.getDestination();
 		} else {
 			principle = principleset;
-			principleset = principlerel.getDestination();	
+			principleset = principlerel.getDestination();
 		}
 		String setname = principleset.getStringValue("name");
 		String state = principlerel.getStringValue("state");
@@ -339,7 +339,7 @@ public class Controller {
         	File file = new File(filepath);
         	if (file.exists()) {
             	   reader = new DocumentReader(new InputSource(filepath), Controller.class);
-	       } 
+	       }
 	}
 
         if (reader != null) {
@@ -432,6 +432,6 @@ public class Controller {
 	    }
         return "imported";
     }
-    
+
 }
 

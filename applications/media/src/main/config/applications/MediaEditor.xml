@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE application PUBLIC "-//MMBase//DTD application config 1.1//EN" "http://www.mmbase.org/dtd/application_1_1.dtd">
+<!DOCTYPE application PUBLIC "-//MMBase//DTD application config 1.1//EN" "https://www.mmbase.org/dtd/application_1_1.dtd">
 <application name="MediaEditor" maintainer="mediaproject.mmbase.org" version="1" auto-deploy="false">
 
 
@@ -34,13 +34,13 @@
     <relation from="mediafragments"  to="publishtimes"    type="related" />
 
     <!-- for introduction -->
-    <relation from="mediafragments"  to="mediafragments"  type="previous" /> 
+    <relation from="mediafragments"  to="mediafragments"  type="previous" />
 
     <!-- grouping / categorizing -->
-    <relation from="pools"           to="pools"           type="parent"  />  
+    <relation from="pools"           to="pools"           type="parent"  />
     <relation from="pools"           to="mediafragments"  type="related" />
     <relation from="pools"           to="mediafragments"  type="base"    />
-   
+
   </allowedrelationlist>
 
   <datasourcelist>
@@ -50,7 +50,7 @@
   <relationsourcelist>
     <relationsource builder="insrel" path="MediaEditor/insrel.xml" />
   </relationsourcelist>
-  
+
   <contextsourcelist>
     <contextsource path="MediaEditor/backup.xml" type="depth" goal="backup"/>
   </contextsourcelist>

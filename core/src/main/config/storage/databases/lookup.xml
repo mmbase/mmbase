@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE database-filters PUBLIC "-//MMBase//DTD database storage lookup 1.0//EN" "http://www.mmbase.org/dtd/database-storage-lookup_1_0.dtd" >
+<!DOCTYPE database-filters PUBLIC "-//MMBase//DTD database storage lookup 1.0//EN" "https://www.mmbase.org/dtd/database-storage-lookup_1_0.dtd" >
 <database-filters>
   <!--
     The database-config is the name referencing the database-config-xml.

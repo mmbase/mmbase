@@ -32,7 +32,7 @@ public class ProviderFileWriter {
     public static boolean write() {
         String body =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                "<!DOCTYPE providers PUBLIC \"-//MMBase/DTD providers config 1.0//EN\" \"http://www.mmbase.org/dtd/providers_1_0.dtd\">\n";
+                "<!DOCTYPE providers PUBLIC \"-//MMBase/DTD providers config 1.0//EN\" \"https://www.mmbase.org/dtd/providers_1_0.dtd\">\n";
         body += "<providers>\n";
 
         body += writeProviders();

@@ -168,7 +168,7 @@
       mmbase-mynews.jar.</para>
 
       <programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE application PUBLIC "-//MMBase//DTD application config 1.1//EN" "http://www.mmbase.org/dtd/application_1_1.dtd"&gt;
+&lt;!DOCTYPE application PUBLIC "-//MMBase//DTD application config 1.1//EN" "https://www.mmbase.org/dtd/application_1_1.dtd"&gt;
 &lt;application name="MyNews" maintainer="mmbase.org" version="2" auto-deploy="true"&gt;
   &lt;requirements&gt;
     &lt;requires name="Resources" maintainer="mmbase.org" version="1" /&gt;
@@ -214,7 +214,7 @@
           <para><sgmltag class="xmlpi">xml version="1.0"
           encoding="UTF-8"</sgmltag> <sgmltag role="doctype">&lt;!DOCTYPE
           application PUBLIC "-//MMBase/DTD application config 1.0//EN"
-          "http://www.mmbase.org/dtd/application_1_0.dtd"&gt;</sgmltag></para>
+          "https://www.mmbase.org/dtd/application_1_0.dtd"&gt;</sgmltag></para>
 
           <para>Every xml-document must have a reference to its document type
           definition or dtd. For the applications version as implemented in

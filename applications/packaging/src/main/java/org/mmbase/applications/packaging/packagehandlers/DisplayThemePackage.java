@@ -240,7 +240,7 @@ public class DisplayThemePackage extends BasicPackage implements PackageInterfac
         String themedir = PackageManager.getConfigPath() + File.separator + "thememanager" + File.separator;
         ExtendedDocumentReader reader = new ExtendedDocumentReader(themedir + "themes.xml", DisplayThemePackage.class);
         String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-        body += "<!DOCTYPE themes PUBLIC \"//MMBase - themes //\" \"http://www.mmbase.org/dtd/themes_1_0.dtd\">\n";
+        body += "<!DOCTYPE themes PUBLIC \"//MMBase - themes //\" \"https://www.mmbase.org/dtd/themes_1_0.dtd\">\n";
         body += "<themes>\n";
         boolean found = false;
         for (Element n: reader.getChildElements("themes", "theme")) {

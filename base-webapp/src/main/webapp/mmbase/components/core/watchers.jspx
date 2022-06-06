@@ -17,7 +17,7 @@
     <table summary="Resource Watchers" border="0" cellspacing="0" cellpadding="3">
       <caption>ResourceWatchers</caption>
       <mm:listfunction set="utils" name="resourceWatchers" varStatus="status">
-        <tr><th colspan="5">${status.index} ${_.class.name}</th></tr>
+        <tr><th colspan="5">${status.index} ${_.getClass().name}</th></tr>
         <tr><th>Watches in</th><td>${_.resourceLoader}</td></tr>
         <tr>
           <th>Watches</th>

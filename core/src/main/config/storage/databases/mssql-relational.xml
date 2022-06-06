@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE storage PUBLIC "-//MMBase//DTD storage config 1.0//EN" "http://www.mmbase.org/dtd/storage_1_0.dtd" >
+<!DOCTYPE storage PUBLIC "-//MMBase//DTD storage config 1.0//EN" "https://www.mmbase.org/dtd/storage_1_0.dtd" >
 <storage>
   <storagemanagerfactory classname="org.mmbase.storage.implementation.database.DatabaseStorageManagerFactory" version="0.1" />
   <storagemanager classname="org.mmbase.storage.implementation.database.RelationalDatabaseStorageManager" version="0.1" />
@@ -31,7 +31,7 @@
     <type-mapping name="STRING" min-size="1000" max-size="16777216" type="NTEXT" />
     <type-mapping name="XML" min-size="1" max-size="8000" type="NVARCHAR({0,number,########})" />
     <type-mapping name="XML" min-size="8000" max-size="16777216" type="NTEXT" />
-    <type-mapping name="BYTE" min-size="1" max-size="16777216" type="BINARY" />    
+    <type-mapping name="BYTE" min-size="1" max-size="16777216" type="BINARY" />
   </type-mappings>
 
   <!-- MSSQL disallowed fields (copied from the old configurations) 	-->

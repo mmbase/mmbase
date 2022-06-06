@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE sharedpackages PUBLIC "-//MMBase/DTD sharedpackages config 1.0//EN" "http://www.mmbase.org/dtd/sharedpackages_1_0.dtd"><%@ taglib uri="http://www.mmbase.org/mmbase-taglib-1.0" prefix="mm" %><mm:cloud><mm:import externid="user">guest</mm:import><mm:import externid="password">guest</mm:import><mm:import externid="method">http</mm:import><mm:import externid="host"></mm:import><mm:import externid="callbackurl">none</mm:import>
+<!DOCTYPE sharedpackages PUBLIC "-//MMBase/DTD sharedpackages config 1.0//EN" "https://www.mmbase.org/dtd/sharedpackages_1_0.dtd"><%@ taglib uri="http://www.mmbase.org/mmbase-taglib-1.0" prefix="mm" %><mm:cloud><mm:import externid="user">guest</mm:import><mm:import externid="password">guest</mm:import><mm:import externid="method">http</mm:import><mm:import externid="host"></mm:import><mm:import externid="callbackurl">none</mm:import>
 <sharedpackages>
 	<mm:nodelistfunction set="mmpm" name="getRemoteSharedPackages" referids="user,password,method,host,callbackurl">
 	<package name="<mm:field name="name" />" type="<mm:field name="type" />" maintainer="<mm:field name="maintainer" />" version="<mm:field name="version" />" creation-date="6 Apr 2003 10:30" >

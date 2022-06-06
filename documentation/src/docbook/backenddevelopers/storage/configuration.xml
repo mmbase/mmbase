@@ -358,7 +358,7 @@
 			<title>An example jdbc.xml</title>
 			<programlisting id="jdbc.xml"><![CDATA[
 <?xml version="1.0"?>
-<!DOCTYPE module PUBLIC "-//MMBase/ DTD module config 1.0//EN" "http://www.mmbase.org/dtd/module_1_0.dtd">
+<!DOCTYPE module PUBLIC "-//MMBase/ DTD module config 1.0//EN" "https://www.mmbase.org/dtd/module_1_0.dtd">
 <module maintainer="mmbase.org" version="0">
 	<status>active</status>
 	<classfile>org.mmbase.module.database.JDBC</classfile>

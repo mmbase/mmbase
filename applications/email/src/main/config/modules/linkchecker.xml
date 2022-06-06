@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//MMBase//DTD module config 1.0//EN" "http://www.mmbase.org/dtd/module_1_0.dtd">
-<!--    
+<!DOCTYPE module PUBLIC "-//MMBase//DTD module config 1.0//EN" "https://www.mmbase.org/dtd/module_1_0.dtd">
+<!--
 This module sends all incorrect urls to a certain person.
 Make sure that you enabled the sendmail module and that you
-have specified the mailhost in sendmail.properties. 
+have specified the mailhost in sendmail.properties.
 -->
 
 <module>
   <status>inactive</status>
   <class>org.mmbase.module.LinkChecker</class>
-  <!-- 
+  <!--
      @javadoc
    -->
   <properties>
     <property name="from">linkchecker@mmbase.org</property>
     <property name="to">linkchecker@mmbase.org</property>
-  </properties>  
+  </properties>
 </module>

@@ -455,7 +455,7 @@ public class Project {
      */
     public boolean save() {
         String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-        body += "<!DOCTYPE packaging PUBLIC \"-//MMBase/DTD packaging config 1.0//EN\" \"http://www.mmbase.org/dtd/packaging_1_0.dtd\">\n";
+        body += "<!DOCTYPE packaging PUBLIC \"-//MMBase/DTD packaging config 1.0//EN\" \"https://www.mmbase.org/dtd/packaging_1_0.dtd\">\n";
         body += "<packaging basedir=\".\">\n";
         Iterator<Target> e = packagetargets.values().iterator();
         while (e.hasNext()) {

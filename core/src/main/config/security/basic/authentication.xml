@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE authentication PUBLIC "-//MMBase//DTD securityabasicauth config 1.0//EN" "http://www.mmbase.org/dtd/securitybasicauth_1_0.dtd">
+<!DOCTYPE authentication PUBLIC "-//MMBase//DTD securityabasicauth config 1.0//EN" "https://www.mmbase.org/dtd/securitybasicauth_1_0.dtd">
 <authentication>
 
   <loginmodule  name="anonymous"     class="org.mmbase.security.implementation.basic.AnonymousLoginModule" rank="anonymous" />
-  
+
   <loginmodule  name="name/password" class="org.mmbase.security.implementation.basic.FileLoginModule" rank="basic user">
     <property   name="file">accounts.properties</property>
   </loginmodule>
@@ -14,5 +14,5 @@
     <property name="admin">administrator</property>
     <property name="foo">basic user</property>
   </loginmodule>
-  
+
 </authentication>

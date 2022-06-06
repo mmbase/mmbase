@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE packaging_function_set PUBLIC "-//MMBase/DTD packaging_function_set config 1.0//EN" "http://www.mmbase.org/dtd/packaging_function_set_1_0.dtd">
+<!DOCTYPE packaging_function_set PUBLIC "-//MMBase/DTD packaging_function_set config 1.0//EN" "https://www.mmbase.org/dtd/packaging_function_set_1_0.dtd">
 <packaging_function_set>
 	<lastversion>9</lastversion>
 	<lastdate>Fri Jun 03 12:53:41 CEST 2005</lastdate>

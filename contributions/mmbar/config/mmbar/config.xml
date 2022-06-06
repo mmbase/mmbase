@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mmbar PUBLIC "-//MMBase/DTD mmbar 1.0//EN" "http://www.mmbase.org/dtd/mmbarconfig_1_0.dtd">
+<!DOCTYPE mmbar PUBLIC "-//MMBase/DTD mmbar 1.0//EN" "https://www.mmbase.org/dtd/mmbarconfig_1_0.dtd">
 <mmbarconfig>
  <basetesturl>http://localhost:9100/mmbar/tests/</basetesturl>
  <machinespecs cpu="DualCore 2.16Ghz" server="Tomcat 5.5.9" database="MySQL" driver="mysqlconnector 3.0.11"  />

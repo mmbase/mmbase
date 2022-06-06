@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE functionsets PUBLIC "//MMBase - functionsets//" "http://www.mmbase.org/dtd/functionsets_1_0.dtd">
+<!DOCTYPE functionsets PUBLIC "//MMBase - functionsets//" "https://www.mmbase.org/dtd/functionsets_1_0.dtd">
 <functionsets>
         <functionset name="mmbar" file="sets/mmbar_functionset.xml" />
 </functionsets>

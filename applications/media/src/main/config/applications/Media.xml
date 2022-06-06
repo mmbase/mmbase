@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE application PUBLIC "-//MMBase//DTD application config 1.1//EN" "http://www.mmbase.org/dtd/application_1_1.dtd">
+<!DOCTYPE application PUBLIC "-//MMBase//DTD application config 1.1//EN" "https://www.mmbase.org/dtd/application_1_1.dtd">
 <application name="Media" maintainer="mediaproject.mmbase.org" version="1" auto-deploy="true">
 
   <neededbuilderlist>
@@ -39,15 +39,15 @@
     <relation from="videofragments"  to="videofragments"  type="posrel" />
     <relation from="audiofragments"  to="audiofragments"  type="posrel" />
 
-    
+
     <!-- it is possible to associated 'templates' (probably jsp) to a certain fragment -->
     <relation from="mediafragments"  to="templates"    type="related" />
-    
+
   </allowedrelationlist>
 
   <datasourcelist />
   <relationsourcelist />
-  
+
   <contextsourcelist>
   </contextsourcelist>
 

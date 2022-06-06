@@ -71,7 +71,7 @@ public class NodeWriter {
         }
         // Write the header
         write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-        //write("<!DOCTYPE builder PUBLIC \"-//MMBase/data//EN\" \"http://www.mmbase.org/dtd/data.dtd\">\n");
+        //write("<!DOCTYPE builder PUBLIC \"-//MMBase/data//EN\" \"https://www.mmbase.org/dtd/data.dtd\">\n");
         Calendar cal= Calendar.getInstance();
         long htimestamp=cal.get(Calendar.YEAR)*10000+
                        (cal.get(Calendar.MONTH)+1)*100+

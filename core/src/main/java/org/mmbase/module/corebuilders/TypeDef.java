@@ -185,7 +185,7 @@ public class TypeDef extends MMObjectBuilder {
             } else {
                 stringReader = new StringReader("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                                                 "<!DOCTYPE builder PUBLIC \"" + BuilderReader.PUBLIC_ID_BUILDER +
-                                                "\" \":http://www.mmbase.org/dtd/" + BuilderReader.DTD_BUILDER + "\" >\n" +
+                                                "\" \":https://www.mmbase.org/dtd/" + BuilderReader.DTD_BUILDER + "\" >\n" +
                                                 config);
             }
             BuilderReader newBuilderXml      = new BuilderReader(new InputSource(stringReader), getMMBase());

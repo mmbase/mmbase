@@ -53,8 +53,8 @@ import org.mmbase.bridge.Cloud;
 public abstract class AbstractDove {
 
     // dtds
-    public static final String DOCTYPE_REQUEST  = "http://www.mmbase.org/dtd/doverequest_1_1.dtd";
-    public static final String DOCTYPE_RESPONSE = "http://www.mmbase.org/dtd/doveresponse_1_2.dtd";
+    public static final String DOCTYPE_REQUEST  = "https://www.mmbase.org/dtd/doverequest_1_1.dtd";
+    public static final String DOCTYPE_RESPONSE = "https://www.mmbase.org/dtd/doveresponse_1_2.dtd";
 
     // keywords used for tags
     public static final String REQUEST = "request";

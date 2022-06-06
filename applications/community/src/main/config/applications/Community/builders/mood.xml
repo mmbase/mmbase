@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE builder PUBLIC "-//MMBase//DTD builder config 1.1//EN" "http://www.mmbase.org/dtd/builder_1_1.dtd">
+<!DOCTYPE builder PUBLIC "-//MMBase//DTD builder config 1.1//EN" "https://www.mmbase.org/dtd/builder_1_1.dtd">
 <builder name="mood" maintainer="mmbase.org" version="0" extends="object" >
   <status>active</status>
-  
+
   <searchage>14</searchage>
   <names>
 		<singular xml:lang="en">Mood</singular>
@@ -10,12 +10,12 @@
 		<plural xml:lang="en">Mood</plural>
 		<plural xml:lang="nl">Humeur</plural>
   </names>
-  
-  <descriptions>    
+
+  <descriptions>
 		<description xml:lang="en">The mood of somebody</description>
 		<description xml:lang="nl">Iemands humeur</description>
   </descriptions>
-  
+
   <fieldlist>
     <field>
       <descriptions>
@@ -31,7 +31,7 @@
         <positions>
           <list>1</list>
         </positions>
-      </editor>     
+      </editor>
       <db>
         <name>description</name>
         <type state="persistent" size="255" notnull="false">STRING</type>
@@ -49,7 +49,7 @@
         <guitype>integer</guitype>
       </gui>
       <editor>
-        <positions>          
+        <positions>
           <list>2</list>
         </positions>
       </editor>
@@ -58,7 +58,7 @@
         <type state="persistent" notnull="false">INTEGER</type>
       </db>
 		</field>
-    
+
 </fieldlist>
 
 </builder>

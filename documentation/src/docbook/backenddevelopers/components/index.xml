@@ -244,7 +244,7 @@
     xmlns="http://www.mmbase.org/xmlns/component"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.mmbase.org/xmlns/component
-                        http://www.mmbase.org/xmlns/component.xsd"&gt;
+                        https://www.mmbase.org/xmlns/component.xsd"&gt;
   &lt;description&gt;Ecards component&lt;/description&gt;
   &lt;block name="home" mimetype="text/html"&gt;
     &lt;process jsp="ecards_init.jsp" /&gt;
@@ -564,7 +564,7 @@
 &lt;component
     xmlns="http://www.mmbase.org/xmlns/component"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.mmbase.org/xmlns/component http://www.mmbase.org/xmlns/component.xsd"
+    xsi:schemaLocation="http://www.mmbase.org/xmlns/component https://www.mmbase.org/xmlns/component.xsd"
     name="helloagain"&gt;
   &lt;description&gt;Hello again! An example component with just one block.&lt;/description&gt;
   &lt;block name="home" mimetype="text/html"&gt;

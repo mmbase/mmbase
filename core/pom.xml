@@ -153,6 +153,12 @@ See http://www.MMBase.org/license
 
 
 
+    <dependency>
+      <groupId>xalan</groupId>
+      <artifactId>xalan</artifactId>
+      <version>2.7.2</version>
+    </dependency>
+
   </dependencies>
 
   <!--

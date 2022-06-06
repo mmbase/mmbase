@@ -1,11 +1,11 @@
 /*
- 
+
 This software is OSI Certified Open Source Software.
 OSI Certified is a certification mark of the Open Source Initiative.
- 
+
 The license (Mozilla version 1.0) can be read at the MMBase site.
 See http://www.MMBase.org/license
- 
+
  */
 
 package org.mmbase.applications.packaging.projects.creators;
@@ -30,7 +30,7 @@ import org.mmbase.util.logging.Logging;
 import org.w3c.dom.NamedNodeMap;
 
 /**
- * BasicCreator, base class for creators 
+ * BasicCreator, base class for creators
  *
  * @author Daniel Ockeloen (MMBased)
  */
@@ -42,7 +42,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
     private Target threadtarget;
     private int threadversion;
     private String state = "done";
-    
+
     private String type="unknown/unknown";
     private String description="";
 
@@ -54,7 +54,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
     private float progressstep = 1;
     private float subprogressbar = 0;
     private float subprogressstep = 1;
-    
+
 
     public BasicCreator() {
     }
@@ -74,39 +74,39 @@ public class BasicCreator implements CreatorInterface,Runnable {
 
    public boolean setDescription(Target target,String newdescription) {
 	target.setItem("description",newdescription);
-	target.save();	
+	target.save();
 	return true;
    }
 
 
    public boolean setName(Target target,String newname) {
 	target.setItem("name",newname);
-	target.save();	
+	target.save();
 	return true;
    }
 
 
    public boolean setMaintainer(Target target,String newmaintainer) {
 	target.setItem("maintainer",newmaintainer);
-	target.save();	
+	target.save();
 	return true;
    }
 
    public boolean setLicenseVersion(Target target,String newlicenseversion) {
 	target.setItem("license.version",newlicenseversion);
-	target.save();	
+	target.save();
 	return true;
    }
 
    public boolean setLicenseType(Target target,String newlicensetype) {
 	target.setItem("license.type",newlicensetype);
-	target.save();	
+	target.save();
 	return true;
    }
 
    public boolean setLicenseName(Target target,String newlicensename) {
 	target.setItem("license.name",newlicensename);
-	target.save();	
+	target.save();
 	return true;
    }
 
@@ -135,7 +135,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
        threadversion =  newversion;
        state="creating";
        Thread kicker = new Thread(this, "packagethread");
-       kicker.start();	
+       kicker.start();
    }
 
    public void run() {
@@ -184,7 +184,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
         target.save();
 	return true;
    }
-	
+
    public ArrayList<PackageDepend> getPackageDepends(Target target) {
 	Object o=target.getItem("packagedepends");
 	if (o!=null) return (ArrayList<PackageDepend>)o;
@@ -201,7 +201,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
 	pr.setName(newname);
 	pr.setCompany(newcompany);
 	list.add(pr);
-	target.save();	
+	target.save();
 	return true;
    }
 
@@ -209,9 +209,9 @@ public class BasicCreator implements CreatorInterface,Runnable {
    	ArrayList<Person> people=getRelatedPeople("initiators",target);
        	for (Person pr : people) {
 		if (pr.getName().equals(oldname) && pr.getCompany().equals(oldcompany)) {
-			pr.setName(newname);		
-			pr.setCompany(newcompany);		
-			target.save();	
+			pr.setName(newname);
+			pr.setCompany(newcompany);
+			target.save();
 			break;
 		}
 	}
@@ -224,7 +224,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
        	for (Person pr : people) {
 		if (pr.getName().equals(oldname) && pr.getCompany().equals(oldcompany)) {
 			people.remove(pr);
-			target.save();	
+			target.save();
 			break;
 		}
 	}
@@ -242,7 +242,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
 	pr.setName(newname);
 	pr.setCompany(newcompany);
 	list.add(pr);
-	target.save();	
+	target.save();
 	return true;
    }
 
@@ -250,9 +250,9 @@ public class BasicCreator implements CreatorInterface,Runnable {
    	ArrayList<Person> people=getRelatedPeople("developers",target);
        	for (Person pr : people) {
 		if (pr.getName().equals(oldname) && pr.getCompany().equals(oldcompany)) {
-			pr.setName(newname);		
-			pr.setCompany(newcompany);		
-			target.save();	
+			pr.setName(newname);
+			pr.setCompany(newcompany);
+			target.save();
 			break;
 		}
 	}
@@ -265,7 +265,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
        	for (Person pr : people) {
 		if (pr.getName().equals(oldname) && pr.getCompany().equals(oldcompany)) {
 			people.remove(pr);
-			target.save();	
+			target.save();
 			break;
 		}
 	}
@@ -284,7 +284,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
 	pr.setMailto(newemail);
 	pr.setReason(newreason);
 	list.add(pr);
-	target.save();	
+	target.save();
 	return true;
    }
 
@@ -292,10 +292,10 @@ public class BasicCreator implements CreatorInterface,Runnable {
    	ArrayList<Person> people=getRelatedPeople("contacts",target);
        	for (Person pr : people) {
 		if (pr.getName().equals(oldname) && pr.getReason().equals(oldreason) && pr.getMailto().equals(oldemail)) {
-			pr.setName(newname);		
-			pr.setMailto(newemail);		
-			pr.setReason(newreason);		
-			target.save();	
+			pr.setName(newname);
+			pr.setMailto(newemail);
+			pr.setReason(newreason);
+			target.save();
 			break;
 		}
 	}
@@ -308,7 +308,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
        	for (Person pr : people) {
 		if (pr.getName().equals(oldname) && pr.getMailto().equals(oldemail) && pr.getReason().equals(oldreason)) {
 			people.remove(pr);
-			target.save();	
+			target.save();
 			break;
 		}
 	}
@@ -325,7 +325,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
 	Person pr=new Person();
 	pr.setCompany(newcompany);
 	list.add(pr);
-	target.save();	
+	target.save();
 	return true;
    }
 
@@ -333,8 +333,8 @@ public class BasicCreator implements CreatorInterface,Runnable {
    	ArrayList<Person> people=getRelatedPeople("supporters",target);
        	for (Person pr : people) {
 		if (pr.getCompany().equals(oldcompany)) {
-			pr.setCompany(newcompany);		
-			target.save();	
+			pr.setCompany(newcompany);
+			target.save();
 			break;
 		}
 	}
@@ -347,7 +347,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
        	for (Person pr : people) {
 		if (pr.getCompany().equals(oldcompany)) {
 			people.remove(pr);
-			target.save();	
+			target.save();
 			break;
 		}
 	}
@@ -465,7 +465,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
 	// wrapper because we only want to filter it 1 time and not recursive
 	ArrayList<String> files=getFileNames_r(foundfiles,basedir,include,exclude);
 	ArrayList<String> filtered=new ArrayList<String>();
-	
+
 	// tricky : a filter all unused dirs
 	Iterator<String> e=files.iterator();
 	while (e.hasNext()) {
@@ -482,7 +482,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
 		} else {
 			filtered.add(fn);
 		}
-	}	
+	}
 	return filtered;
    }
 
@@ -496,9 +496,9 @@ public class BasicCreator implements CreatorInterface,Runnable {
 			foundfiles.add(basedir+element+"/");
 			getFileNames_r(foundfiles,basedir+element+File.separator,include,exclude);
 		} else {
-			
+
 			String fn=basedir+element;
-			if (include.equals("*") || fn.indexOf(include)!=-1) { 
+			if (include.equals("*") || fn.indexOf(include)!=-1) {
 			if (exclude.equals("") || !excludeFile(tfile,fn,exclude)) {
 				foundfiles.add(fn);
 			}
@@ -549,7 +549,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
    public void createPackageMetaFile(JarOutputStream jarfile,Target target,int newversion) {
 	Date d=new Date();
 	String body="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-	body+="<!DOCTYPE package PUBLIC \"-//MMBase/DTD package config 1.0//EN\" \"http://www.mmbase.org/dtd/package_1_0.dtd\">\n";
+	body+="<!DOCTYPE package PUBLIC \"-//MMBase/DTD package config 1.0//EN\" \"https://www.mmbase.org/dtd/package_1_0.dtd\">\n";
 	body+="<package name=\""+getName(target)+"\" type=\""+type+"\" maintainer=\""+getMaintainer(target)+"\" version=\""+newversion+"\" creation-date=\""+d.toString()+"\" >\n";
 	body+="\t<description>"+getDescription(target)+"</description>\n";
 	body+="\t<license type=\""+getLicenseType(target)+"\" version=\""+getLicenseVersion(target)+"\" name=\""+getLicenseName(target)+"\" />\n";
@@ -593,7 +593,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
 
    public void createDependsMetaFile(JarOutputStream jarfile,Target target) {
 	String body="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-	body+="<!DOCTYPE packagedepends PUBLIC \"-//MMBase/DTD packagedepends config 1.0//EN\" \"http://www.mmbase.org/dtd/packagedepends_1_0.dtd\">\n";
+	body+="<!DOCTYPE packagedepends PUBLIC \"-//MMBase/DTD packagedepends config 1.0//EN\" \"https://www.mmbase.org/dtd/packagedepends_1_0.dtd\">\n";
 	body+="\t<packagedepends>\n";
 
 	ArrayList<PackageDepend> packagedepends=getPackageDepends(target);
@@ -674,7 +674,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
         String tmp=getItemStringValue(target,"installreset");
 	if (tmp!=null && !tmp.equals("")) {
 		return tmp;
-	} 
+	}
 	return "false";
    }
 
@@ -800,7 +800,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
 			if (pr.getCompany()!=null) result+=" company=\""+pr.getCompany()+"\"";
 			if (pr.getReason()!=null) result+=" reason=\""+pr.getReason()+"\"";
 			if (pr.getMailto()!=null) result+=" mailto=\""+pr.getMailto()+"\"";
-			
+
 			result+=" />\n";
 		}
 	}
@@ -1010,7 +1010,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
    }
 
    public String getDefaultXMLHeader(Target target) {
-       String body="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";        body+="<!DOCTYPE "+prefix+" PUBLIC \"-//MMBase/DTD "+prefix+" config 1.0//EN\" \"http://www.mmbase.org/dtd/"+prefix+"_1_0.dtd\">\n";
+       String body="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";        body+="<!DOCTYPE "+prefix+" PUBLIC \"-//MMBase/DTD "+prefix+" config 1.0//EN\" \"https://www.mmbase.org/dtd/"+prefix+"_1_0.dtd\">\n";
         body+="<"+prefix+">\n";
 	return body;
    }
@@ -1068,7 +1068,7 @@ public class BasicCreator implements CreatorInterface,Runnable {
                 	n2=nm.getNamedItem("state");
                 	if (n2!=null) {
                        		if (n2.getNodeValue().equals("active")) {
-					target.setPublishState(true);			
+					target.setPublishState(true);
 				}
 			}
                 	n2=nm.getNamedItem("sharepassword");

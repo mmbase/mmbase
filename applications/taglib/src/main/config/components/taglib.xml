@@ -126,7 +126,7 @@
          mimetype="text/html">
     <title xml:lang="en">Taglib</title>
     <title xml:lang="nl">Taglib</title>
-    <xi:include href="http://www.mmbase.org/components/docbook.head.xml" />
+    <xi:include href="https://www.mmbase.org/components/docbook.head.xml" />
     <body>
       <class name="org.mmbase.framework.DocumentationRenderer">
         <param name="docbook">frontenddevelopers/taglib/tutorial.xml</param>
@@ -141,7 +141,7 @@
          mimetype="text/html">
     <title xml:lang="en">Taglib - Including</title>
     <title xml:lang="nl">Taglib - Including</title>
-    <xi:include href="http://www.mmbase.org/components/docbook.head.xml" />
+    <xi:include href="https://www.mmbase.org/components/docbook.head.xml" />
     <body>
       <class name="org.mmbase.framework.DocumentationRenderer">
         <param name="docbook">frontenddevelopers/taglib/include.xml</param>
@@ -170,7 +170,7 @@
          mimetype="text/html">
     <title xml:lang="en">Taglib - Reference</title>
     <title xml:lang="nl">Taglib - Reference</title>
-    <xi:include href="http://www.mmbase.org/components/docbook.head.xml" />
+    <xi:include href="https://www.mmbase.org/components/docbook.head.xml" />
     <body>
       <class name="org.mmbase.framework.CachedRenderer">
         <param name="wrapsBlock">taglib-reference-uncached</param>

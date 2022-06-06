@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE packaging_cloud_model PUBLIC "-//MMBase/DTD packaging_cloud_model config 1.0//EN" "http://www.mmbase.org/dtd/packaging_cloud_model_1_0.dtd">
+<!DOCTYPE packaging_cloud_model PUBLIC "-//MMBase/DTD packaging_cloud_model config 1.0//EN" "https://www.mmbase.org/dtd/packaging_cloud_model_1_0.dtd">
 <packaging_cloud_model>
 	<lastversion>10</lastversion>
 	<lastdate>Wed May 05 01:04:57 CEST 2004</lastdate>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE functionset PUBLIC "//MMBase - functionset //" "http://www.mmbase.org/dtd/functionset_1_0.dtd">
+<!DOCTYPE functionset PUBLIC "//MMBase - functionset //" "https://www.mmbase.org/dtd/functionset_1_0.dtd">
 <functionset>
 <status>active</status>
 <version>1</version>
@@ -10,8 +10,8 @@
 		<type>class</type>
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>getWriteTests</method>
-		<return type="java.util.List"> 
-		</return> 
+		<return type="java.util.List">
+		</return>
 	</function>
 
 	<function name="getWriteTestBenchmarks">
@@ -20,8 +20,8 @@
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>getWriteTestBenchmarks</method>
                 <param name="name" type="String" description="" />
-		<return type="java.util.List"> 
-		</return> 
+		<return type="java.util.List">
+		</return>
 	</function>
 
 	<function name="getWriteTest">
@@ -30,8 +30,8 @@
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>getWriteTest</method>
                 <param name="name" type="String" description="" />
-		<return type="java.util.HashMap"> 
-		</return> 
+		<return type="java.util.HashMap">
+		</return>
 	</function>
 
 	<function name="performWriteTest">
@@ -40,8 +40,8 @@
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>performWriteTest</method>
                 <param name="name" type="String" description="" />
-		<return type="Boolean"> 
-		</return> 
+		<return type="Boolean">
+		</return>
 	</function>
 
 
@@ -50,8 +50,8 @@
 		<type>class</type>
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>getReadTests</method>
-		<return type="java.util.List"> 
-		</return> 
+		<return type="java.util.List">
+		</return>
 	</function>
 
 
@@ -60,8 +60,8 @@
 		<type>class</type>
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>getMixedTests</method>
-		<return type="java.util.List"> 
-		</return> 
+		<return type="java.util.List">
+		</return>
 	</function>
 
 
@@ -70,8 +70,8 @@
 		<type>class</type>
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>getEnduranceTests</method>
-		<return type="java.util.List"> 
-		</return> 
+		<return type="java.util.List">
+		</return>
 	</function>
 
 	<function name="getReadTestBenchmarks">
@@ -80,8 +80,8 @@
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>getReadTestBenchmarks</method>
                 <param name="name" type="String" description="" />
-		<return type="java.util.List"> 
-		</return> 
+		<return type="java.util.List">
+		</return>
 	</function>
 
 
@@ -91,8 +91,8 @@
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>getMixedTestBenchmarks</method>
                 <param name="name" type="String" description="" />
-		<return type="java.util.List"> 
-		</return> 
+		<return type="java.util.List">
+		</return>
 	</function>
 
 
@@ -102,8 +102,8 @@
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>getEnduranceTestBenchmarks</method>
                 <param name="name" type="String" description="" />
-		<return type="java.util.List"> 
-		</return> 
+		<return type="java.util.List">
+		</return>
 	</function>
 
 	<function name="getReadTest">
@@ -112,8 +112,8 @@
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>getReadTest</method>
                 <param name="name" type="String" description="" />
-		<return type="java.util.HashMap"> 
-		</return> 
+		<return type="java.util.HashMap">
+		</return>
 	</function>
 
 
@@ -123,8 +123,8 @@
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>getMixedTest</method>
                 <param name="name" type="String" description="" />
-		<return type="java.util.HashMap"> 
-		</return> 
+		<return type="java.util.HashMap">
+		</return>
 	</function>
 
 
@@ -134,8 +134,8 @@
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>getEnduranceTest</method>
                 <param name="name" type="String" description="" />
-		<return type="java.util.HashMap"> 
-		</return> 
+		<return type="java.util.HashMap">
+		</return>
 	</function>
 
 	<function name="performReadTest">
@@ -144,8 +144,8 @@
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>performReadTest</method>
                 <param name="name" type="String" description="" />
-		<return type="Boolean"> 
-		</return> 
+		<return type="Boolean">
+		</return>
 	</function>
 
 
@@ -155,8 +155,8 @@
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>performMixedTest</method>
                 <param name="name" type="String" description="" />
-		<return type="Boolean"> 
-		</return> 
+		<return type="Boolean">
+		</return>
 	</function>
 
 	<function name="performEnduranceTest">
@@ -165,8 +165,8 @@
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>performEnduranceTest</method>
                 <param name="name" type="String" description="" />
-		<return type="Boolean"> 
-		</return> 
+		<return type="Boolean">
+		</return>
 	</function>
 
 	<function name="getStateInfo">
@@ -174,8 +174,8 @@
 		<type>class</type>
 		<class>org.mmbase.applications.mmbar.gui.Controller</class>
 		<method>getStateInfo</method>
-		<return type="java.util.HashMap"> 
-		</return> 
+		<return type="java.util.HashMap">
+		</return>
 	</function>
 
 </functionset>

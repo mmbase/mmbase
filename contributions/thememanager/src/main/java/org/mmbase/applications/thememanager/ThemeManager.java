@@ -318,7 +318,7 @@ public class ThemeManager {
 
     public static void save() {
         String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-        body += "<!DOCTYPE themes PUBLIC \"//MMBase - theme//\" \"http://www.mmbase.org/dtd/themes_1_0.dtd\">\n";
+        body += "<!DOCTYPE themes PUBLIC \"//MMBase - theme//\" \"https://www.mmbase.org/dtd/themes_1_0.dtd\">\n";
         body += "<themes>\n";
         HashMap m = getThemes();
         if (m != null) {

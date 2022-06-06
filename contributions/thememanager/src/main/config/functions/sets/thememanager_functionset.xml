@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE functionset PUBLIC "//MMBase - functionset //" "http://www.mmbase.org/dtd/functionset_1_0.dtd">
+<!DOCTYPE functionset PUBLIC "//MMBase - functionset //" "https://www.mmbase.org/dtd/functionset_1_0.dtd">
 <functionset>
   <version>4</version>
   <description>functions for the thememanager</description>
@@ -12,8 +12,8 @@
     <param name="context" type="String" description="the context where to find the stylesheet" />
     <param name="themeid" type="String" description="the id of the theme" />
     <param name="styleid" type="String" description="the id of the stylesheet">default</param>
-    <return type="String"> 
-    </return> 
+    <return type="String">
+    </return>
   </function>
 
   <function name="getAssignedList">
@@ -21,8 +21,8 @@
     <type>class</type>
     <class>org.mmbase.applications.thememanager.taglib.ThemeManagerController</class>
     <method>getAssignedList</method>
-    <return type="NodeList"> 
-    </return> 
+    <return type="NodeList">
+    </return>
   </function>
 
 
@@ -31,8 +31,8 @@
     <type>class</type>
     <class>org.mmbase.applications.thememanager.taglib.ThemeManagerController</class>
     <method>getThemesList</method>
-    <return type="NodeList"> 
-    </return> 
+    <return type="NodeList">
+    </return>
   </function>
 
   <function name="getAssignInfo">
@@ -41,8 +41,8 @@
     <class>org.mmbase.applications.thememanager.taglib.ThemeManagerController</class>
     <method>getAssignInfo</method>
     <param name="id" type="String" description="the id of assign" />
-    <return type="java.util.Map"> 
-    </return> 
+    <return type="java.util.Map">
+    </return>
   </function>
 
 
@@ -53,8 +53,8 @@
     <method>setCSSValue</method>
     <param name="sname" type="String" description="path/name of the property" />
     <param name="svalue" type="String" description="value of the new property" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -64,8 +64,8 @@
     <class>org.mmbase.applications.thememanager.taglib.ThemeManagerController</class>
     <method>getCSSValue</method>
     <param name="sname" type="String" description="path/name of the property" />
-    <return type="String"> 
-    </return> 
+    <return type="String">
+    </return>
   </function>
 
 
@@ -75,8 +75,8 @@
     <class>org.mmbase.applications.thememanager.taglib.ThemeManagerController</class>
     <method>getCSSType</method>
     <param name="sname" type="String" description="path/name of the property" />
-    <return type="String"> 
-    </return> 
+    <return type="String">
+    </return>
   </function>
 
 
@@ -85,8 +85,8 @@
     <type>class</type>
     <class>org.mmbase.applications.thememanager.taglib.ThemeManagerController</class>
     <method>hasChanged</method>
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -96,8 +96,8 @@
     <class>org.mmbase.applications.thememanager.taglib.ThemeManagerController</class>
     <method>getThemeInfo</method>
     <param name="id" type="String" description="the id of theme" />
-    <return type="java.util.Map"> 
-    </return> 
+    <return type="java.util.Map">
+    </return>
   </function>
 
   <function name="getStyleSheetClasses">
@@ -108,8 +108,8 @@
     <param name="id" type="String" description="the id of theme" />
     <param name="cssid" type="String" description="the id of theme" />
     <param name="searchkey" type="String" description="to limit the list" />
-    <return type="NodeList"> 
-    </return> 
+    <return type="NodeList">
+    </return>
   </function>
 
 
@@ -121,8 +121,8 @@
     <param name="tid" type="String" description="the id of theme" />
     <param name="cssid" type="String" description="the id of stylesheet" />
     <param name="id" type="String" description="the id of property" />
-    <return type="NodeList"> 
-    </return> 
+    <return type="NodeList">
+    </return>
   </function>
 
 
@@ -132,8 +132,8 @@
     <class>org.mmbase.applications.thememanager.taglib.ThemeManagerController</class>
     <method>getThemeStyleSheetsList</method>
     <param name="id" type="String" description="the id of theme" />
-    <return type="NodeList"> 
-    </return> 
+    <return type="NodeList">
+    </return>
   </function>
 
 
@@ -144,8 +144,8 @@
     <method>getThemeImageSetsList</method>
     <param name="id" type="String" description="the id of theme" />
     <param name="role" type="String" description="role of the imageset" />
-    <return type="NodeList"> 
-    </return> 
+    <return type="NodeList">
+    </return>
   </function>
 
 
@@ -157,8 +157,8 @@
     <param name="imagecontext" type="String" description="the context where to find the image" />
     <param name="themeid" type="String" description="the id of theme" />
     <param name="imageid" type="String" description="the id of the image" />
-    <return type="String"> 
-    </return> 
+    <return type="String">
+    </return>
   </function>
 
   <function name="getThemeImages">
@@ -169,8 +169,8 @@
     <param name="imagecontext" type="String" description="the context where to find the images" />
     <param name="themeid" type="String" description="the id of theme" />
     <param name="imagesetid" type="String" description="the id of the imageset" />
-    <return type="NodeList"> 
-    </return> 
+    <return type="NodeList">
+    </return>
   </function>
 
   <function name="changeAssign">
@@ -180,8 +180,8 @@
     <method>changeAssign</method>
     <param name="id" type="String" description="the id of assign" />
     <param name="newtheme" type="String" description="the new theme" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="setStyleSheetProperty">
@@ -194,8 +194,8 @@
     <param name="id" type="String" description="the id of assign" />
     <param name="name" type="String" description="the id of assign" />
     <param name="value" type="String" description="the id of assign" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -209,8 +209,8 @@
     <param name="id" type="String" description="the id of assign" />
     <param name="name" type="String" description="the id of assign" />
     <param name="value" type="String" description="the id of assign" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -222,8 +222,8 @@
     <param name="tid" type="String" description="the id of assign" />
     <param name="cssid" type="String" description="the id of assign" />
     <param name="name" type="String" description="the id of assign" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -235,8 +235,8 @@
     <param name="tid" type="String" description="the id of assign" />
     <param name="cssid" type="String" description="the id of assign" />
     <param name="name" type="String" description="the id of assign" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -249,8 +249,8 @@
     <param name="cssid" type="String" description="the id of assign" />
     <param name="id" type="String" description="the id of assign" />
     <param name="name" type="String" description="the id of assign" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -260,8 +260,8 @@
     <class>org.mmbase.applications.thememanager.taglib.ThemeManagerController</class>
     <method>removeAssign</method>
     <param name="removeid" type="String" description="the id of assign" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -272,8 +272,8 @@
     <method>addAssign</method>
     <param name="newid" type="String" description="the newid of assign" />
     <param name="newtheme" type="String" description="the new theme" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="copyTheme">
@@ -283,8 +283,8 @@
     <method>addTheme</method>
     <param name="copytheme" type="String" description="the newid of assign" />
     <param name="newtheme" type="String" description="the new theme" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 </functionset>

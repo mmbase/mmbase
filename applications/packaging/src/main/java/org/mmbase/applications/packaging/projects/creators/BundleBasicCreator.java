@@ -1,11 +1,11 @@
 /*
- 
+
 This software is OSI Certified Open Source Software.
 OSI Certified is a certification mark of the Open Source Initiative.
- 
+
 The license (Mozilla version 1.0) can be read at the MMBase site.
 See http://www.MMBase.org/license
- 
+
  */
 
 package org.mmbase.applications.packaging.projects.creators;
@@ -72,10 +72,10 @@ public class BundleBasicCreator extends BasicCreator implements CreatorInterface
 		if (p != null) {
 			try {
 				int t=Integer.parseInt(p.getVersion());
-				if (t >= nv) nv = t+1;	
+				if (t >= nv) nv = t+1;
 			} catch(Exception e) {}
 		}
-		
+
 	        step=getNextPackageStep();
         	step.setUserFeedBack("related create : "+rt.getId()+" version "+nv+"..");
                 rt.createPackage(nv);
@@ -89,7 +89,7 @@ public class BundleBasicCreator extends BasicCreator implements CreatorInterface
         increaseProgressBar(200);
 
 	relatedtargetcreate = new ArrayList<Target>();
-	
+
 
 	String newfilename=getBuildPath()+getName(target).replace(' ','_')+"@"+getMaintainer(target)+"_bundle_basic_"+newversion;
 
@@ -126,12 +126,12 @@ public class BundleBasicCreator extends BasicCreator implements CreatorInterface
 				}
 				JarFile jf=p.getJarFile();
 				if (jf!=null) {
-					String includename=ip.getId()+"_"+ip.getVersion()+".mmp";	
+					String includename=ip.getId()+"_"+ip.getVersion()+".mmp";
 					String buildname=jf.getName();
 	                		addFile(jarfile,buildname,includename,"packagefile","");
 				}
 			}
-						
+
 		}
        		increaseSubProgressBar(1);
 		// set to 55%
@@ -152,7 +152,7 @@ public class BundleBasicCreator extends BasicCreator implements CreatorInterface
                 }
     		f2 = new File(newfilename+".mmb");
     		if (f1.renameTo(f2)) {
-			updatePackageTime(target,new Date(),newversion);	
+			updatePackageTime(target,new Date(),newversion);
 			target.save();
                 } else {
                     log.error("rename failed from : "+newfilename+".tmp  to : "+newfilename + ".mmb");
@@ -185,13 +185,13 @@ public class BundleBasicCreator extends BasicCreator implements CreatorInterface
 	// set to 100%
        	increaseProgressBar(50);
         return true;
-   }    
+   }
 
 
    public void createBundleMetaFile(JarOutputStream jarfile,Target target,int newversion) {
 	Date d=new Date();
 	String body="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-	body+="<!DOCTYPE bundle PUBLIC \"-//MMBase/DTD bundle config 1.0//EN\" \"http://www.mmbase.org/dtd/bundle_1_0.dtd\">\n";
+	body+="<!DOCTYPE bundle PUBLIC \"-//MMBase/DTD bundle config 1.0//EN\" \"https://www.mmbase.org/dtd/bundle_1_0.dtd\">\n";
 	body+="<bundle name=\""+getName(target)+"\" type=\""+getType()+"\" maintainer=\""+getMaintainer(target)+"\" version=\""+newversion+"\" creation-date=\""+d.toString()+"\" >\n";
 	body+="\t<description>"+getDescription(target)+"</description>\n";
 	body+="\t<license type=\""+getLicenseType(target)+"\" version=\""+getLicenseVersion(target)+"\" name=\""+getLicenseName(target)+"\" />\n";
@@ -240,7 +240,7 @@ public class BundleBasicCreator extends BasicCreator implements CreatorInterface
 
   public boolean decodeItems(Target target) {
 			super.decodeItems(target);
-			// decode the needed packages	
+			// decode the needed packages
 			ArrayList<IncludedPackage> includedpackages=new ArrayList<IncludedPackage>();
 			ExtendedDocumentReader reader=target.getReader();
                        	org.w3c.dom.Node n=reader.getElementByPath(prefix+".neededpackages");
@@ -343,7 +343,7 @@ public class BundleBasicCreator extends BasicCreator implements CreatorInterface
 		target.setItem("includedpackages",packages);
 	     }
 	     packages.add(ip);
-	     target.save(); 
+	     target.save();
              return true;
 	}
         return false;

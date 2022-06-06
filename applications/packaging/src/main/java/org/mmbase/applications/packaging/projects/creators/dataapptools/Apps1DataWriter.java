@@ -271,7 +271,7 @@ public class Apps1DataWriter {
 
     public static boolean writeDataXML(HashSet<Integer> fb,String datafile,Target target) {
         String body="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-        body+="<!DOCTYPE dataset PUBLIC \"-//MMBase/DTD dataset config 1.0//EN\" \"http://www.mmbase.org/dtd/dataset_1_0.dtd\">\n";
+        body+="<!DOCTYPE dataset PUBLIC \"-//MMBase/DTD dataset config 1.0//EN\" \"https://www.mmbase.org/dtd/dataset_1_0.dtd\">\n";
         body+="<dataset>\n";
 	/* not sure if ill keep these
         body+="\t<creationinfo>\n";

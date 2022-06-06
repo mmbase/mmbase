@@ -441,7 +441,7 @@ public class MultiLanguageGui {
 
     private String createSetXML(String setname) {
         String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-        body += "<!DOCTYPE languageguiset PUBLIC \"//MMBase - languageguiset //\" \"http://www.mmbase.org/dtd/languageguiset_1_0.dtd\">\n";
+        body += "<!DOCTYPE languageguiset PUBLIC \"//MMBase - languageguiset //\" \"https://www.mmbase.org/dtd/languageguiset_1_0.dtd\">\n";
 
         Hashtable set = (Hashtable) languageguisets.get(setname);
         if (set != null) {
@@ -467,7 +467,7 @@ public class MultiLanguageGui {
 
     private String createSetsXML() {
         String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-        body += "<!DOCTYPE languageguisets PUBLIC \"//MMBase - languageguisets //\" \"http://www.mmbase.org/dtd/languageguisets_1_0.dtd\">\n";
+        body += "<!DOCTYPE languageguisets PUBLIC \"//MMBase - languageguisets //\" \"https://www.mmbase.org/dtd/languageguisets_1_0.dtd\">\n";
         body += "<languageguisets>\n";
         Enumeration e = languageguisets.keys();
         while (e.hasMoreElements()) {

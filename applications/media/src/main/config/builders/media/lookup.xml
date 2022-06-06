@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE builder PUBLIC "-//MMBase//DTD builder config 1.1//EN" "http://www.mmbase.org/dtd/builder_1_1.dtd">
+<!DOCTYPE builder PUBLIC "-//MMBase//DTD builder config 1.1//EN" "https://www.mmbase.org/dtd/builder_1_1.dtd">
 <builder name="lookup" maintainer="mediaproject.mmbase.org" version="0" extends="object">
 
 
   <!-- VPRO legacy? -->
   <status>inactive</status>
-  
+
   <searchage>200</searchage>
-  
+
   <names>
     <singular xml:lang="en">Lookup</singular>
     <singular xml:lang="nl">Lookup</singular>
     <plural xml:lang="en">Lookup</plural>
     <plural xml:lang="nl">Lookup</plural>
   </names>
-  
+
   <descriptions>
     <description xml:lang="en">The lookup builder resolves a word by a given number</description>
     <description xml:lang="nl">De lookup builder vind een woord bij een nummertje</description>
@@ -39,7 +39,7 @@
         <type state="persistent" notnull="true">INTEGER</type>
       </db>
     </field>
-    
+
     <!-- <field> 'value'  -->
     <field>
       <gui>
@@ -57,7 +57,7 @@
         <type state="persistent" size="255" notnull="true">STRING</type>
       </db>
     </field>
-    
+
   </fieldlist>
-  
+
 </builder>

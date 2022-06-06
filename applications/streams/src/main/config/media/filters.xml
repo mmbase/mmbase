@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<!DOCTYPE mainFilter SYSTEM "http://www.mmbase.org/dtd/mediafilter_1_0.dtd" [
- <!ENTITY % format SYSTEM "http://www.mmbase.org/dtd/formatcomparator_1_0.dtd" >
- <!ENTITY % dimension SYSTEM "http://www.mmbase.org/dtd/dimensioncomparator_1_0.dtd" >
+<!DOCTYPE mainFilter SYSTEM "https://www.mmbase.org/dtd/mediafilter_1_0.dtd" [
+ <!ENTITY % format SYSTEM "https://www.mmbase.org/dtd/formatcomparator_1_0.dtd" >
+ <!ENTITY % dimension SYSTEM "https://www.mmbase.org/dtd/dimensioncomparator_1_0.dtd" >
  <!ENTITY % bitrate SYSTEM  "http://www.mmbase.org/dtt/clientbitratefilter_1_0.dtd" >
  <!ENTITY % configSubTags "preferredSource|preferredDimension|bitrates|property*">
  %format;

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE security PUBLIC "-//MMBase//DTD security config 1.0//EN" "http://www.mmbase.org/dtd/security_1_0.dtd">
+<!DOCTYPE security PUBLIC "-//MMBase//DTD security config 1.0//EN" "https://www.mmbase.org/dtd/security_1_0.dtd">
 <security active="true">
   <key>123321</key>
 	<authentication class="org.mmbase.security.implementation.aselect.ASelectAuthentication" url="config.xml" />
   <!-- authentication class="org.mmbase.security.implementation.aselect.ASelectAuthentication" url="/usr/local/A-SelectAgent/agent.xml" /-->
   <authorization  class="org.mmbase.security.implementation.cloudcontext.Verify"           url="" /> <!-- Cloud Context authorization -->
   <!--
-  <authorization  class="org.mmbase.security.implementation.basic.OwnerAuthorization"      url="accounts.properties" /> 
+  <authorization  class="org.mmbase.security.implementation.basic.OwnerAuthorization"      url="accounts.properties" />
   -->                                                                                     <!-- only for 'getPossibleContexts' -->
 
   <sharedsecret></sharedsecret>

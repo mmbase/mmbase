@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE builder PUBLIC "-//MMBase//DTD builder config 1.1//EN" "http://www.mmbase.org/dtd/builder_1_1.dtd">
+<!DOCTYPE builder PUBLIC "-//MMBase//DTD builder config 1.1//EN" "https://www.mmbase.org/dtd/builder_1_1.dtd">
 <builder name="people" maintainer="mmbase.org" version="0" extends="object">
-  
+
   <status>active</status>
 
   <searchage>1000</searchage>
-    
+
   <names>
 		<singular xml:lang="en">Person</singular>
 		<singular xml:lang="fr">Personne</singular>
@@ -20,7 +20,7 @@
 		<description xml:lang="fr">Personnes</description>
 		<description xml:lang="nl">Personen</description>
   </descriptions>
-  
+
   <fieldlist>
     <field>
       <descriptions>
@@ -43,7 +43,7 @@
         <type state="persistent" size="32" notnull="false" key="false">STRING</type>
       </db>
 		</field>
-    
+
     <field>
       <descriptions>
         <description xml:lang="en">Person's last name</description>

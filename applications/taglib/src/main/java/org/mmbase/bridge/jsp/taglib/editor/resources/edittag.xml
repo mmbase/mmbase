@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE edittagtypes PUBLIC "-//MMBase//DTD edittagtypes 1.0//EN" "http://www.mmbase.org/dtd/edittagtypes_1_0.dtd">
+<!DOCTYPE edittagtypes PUBLIC "-//MMBase//DTD edittagtypes 1.0//EN" "https://www.mmbase.org/dtd/edittagtypes_1_0.dtd">
 <edittagtypes>
   <!--
       version: $Id$
   -->
 
-  <!-- 
+  <!--
        These are the available editors for use with the edittag
   -->
   <editor type="basic">
@@ -25,7 +25,7 @@
   <editor type="yammeditor">
     <class>org.mmbase.bridge.jsp.taglib.editor.YAMMEditor</class>
     <info>
-      An editor to directly edit content in pages. This is an example 
+      An editor to directly edit content in pages. This is an example
       implementation which calls the editor yammeditor.jsp.
     </info>
   </editor>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE providerhandlers PUBLIC "-//MMBase/DTD providerhandlers config 1.0//EN" "http://www.mmbase.org/dtd/providerhandlers_1_0.dtd">
+<!DOCTYPE providerhandlers PUBLIC "-//MMBase/DTD providerhandlers config 1.0//EN" "https://www.mmbase.org/dtd/providerhandlers_1_0.dtd">
 <providerhandlers>
   <providerhandler active="true" method="disk" class="org.mmbase.applications.packaging.providerhandlers.DiskProvider" basescore="5000">
     <description>Handles providers from diskbased devices</description>

@@ -32,7 +32,7 @@ public class Mmxf {
 
     public final static String NAMESPACE = "http://www.mmbase.org/xmlns/mmxf";
     public final static String DOCUMENTTYPE_PUBLIC =  "-//MMBase//DTD mmxf 1.1//EN";
-    public final static String DOCUMENTTYPE_SYSTEM = "http://www.mmbase.org/dtd/mmxf_1_1.dtd";
+    public final static String DOCUMENTTYPE_SYSTEM = "https://www.mmbase.org/dtd/mmxf_1_1.dtd";
 
 
     /**

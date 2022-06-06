@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE theme PUBLIC "//MMBase - theme//" "http://www.mmbase.org/dtd/theme_1_0.dtd">
+<!DOCTYPE theme PUBLIC "//MMBase - theme//" "https://www.mmbase.org/dtd/theme_1_0.dtd">
 <theme>
 	<stylesheet file="default.css" />
 	<stylesheet id="editor" file="editor.css" />

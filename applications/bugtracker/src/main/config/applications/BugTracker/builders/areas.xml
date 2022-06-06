@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE builder PUBLIC "-//MMBase/DTD builder config 1.1//EN" "http://www.mmbase.org/dtd/builder_1_1.dtd">
+<!DOCTYPE builder PUBLIC "-//MMBase/DTD builder config 1.1//EN" "https://www.mmbase.org/dtd/builder_1_1.dtd">
 <!-- areas -->
 <builder version="0" name="areas" maintainer="mmbase.org" extends="object">
   <classfile>Dummy</classfile>

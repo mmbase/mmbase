@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE creators PUBLIC "-//MMBase/DTD creators config 1.0//EN" "http://www.mmbase.org/dtd/creators_1_0.dtd">
+<!DOCTYPE creators PUBLIC "-//MMBase/DTD creators config 1.0//EN" "https://www.mmbase.org/dtd/creators_1_0.dtd">
 <creators>
   <creator type="display/html" class="org.mmbase.applications.packaging.projects.creators.DisplayHtmlCreator">
     <description>Creates mmp files for display/html packages</description>

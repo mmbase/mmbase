@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE security PUBLIC "-//MMBase//DTD classsecurity config 1.0//EN" "http://www.mmbase.org/dtd/classsecurity_1_0.dtd">
+<!DOCTYPE security PUBLIC "-//MMBase//DTD classsecurity config 1.0//EN" "https://www.mmbase.org/dtd/classsecurity_1_0.dtd">
 <security>
   <authenticate class="org\.apache\.jsp\..*mail_jspx.*">
     <property name="rank" value="administrator" />
   </authenticate>
 </security>
- 
+

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mmbobconfig PUBLIC "-//MMBase//DTD mmbob config 1.0//EN" "http://www.mmbase.org/dtd/mmbobconfig_1_0.dtd">
+<!DOCTYPE mmbobconfig PUBLIC "-//MMBase//DTD mmbob config 1.0//EN" "https://www.mmbase.org/dtd/mmbobconfig_1_0.dtd">
 <mmbobconfig>
   <forums account="admin" password="admin2k" language="en">
     <generatedata role="body" file="generate/body.txt" tokenizer=",!? " />

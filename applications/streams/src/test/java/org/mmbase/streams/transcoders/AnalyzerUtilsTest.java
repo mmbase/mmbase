@@ -35,6 +35,8 @@ import static org.junit.Assume.*;
 public class AnalyzerUtilsTest {
 
 
+
+
     Transcoder getFFMpegTranscoder() {
         FFMpegRecognizer rec = new FFMpegRecognizer();
         Transcoder trans = new RecognizerTranscoder(rec);

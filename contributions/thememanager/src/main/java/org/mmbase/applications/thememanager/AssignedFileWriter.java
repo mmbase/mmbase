@@ -30,14 +30,14 @@ public class AssignedFileWriter  {
     public static boolean write() {
         String body =
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-        "<!DOCTYPE assigned PUBLIC \"-// MMBase - assigned //EN\" \"http://www.mmbase.org/dtd/assigned_1_0.dtd\">\n";
+        "<!DOCTYPE assigned PUBLIC \"-// MMBase - assigned //EN\" \"https://www.mmbase.org/dtd/assigned_1_0.dtd\">\n";
         body+="<assigned>\n";
 
         body+=writeAssigns();
 
         body+="</assigned>\n";
 
-        try {                
+        try {
 		Writer wr = ResourceLoader.getConfigurationRoot().getWriter("thememanager/assigned.xml");
                 wr.write(body);
                 wr.flush();

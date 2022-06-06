@@ -35,7 +35,7 @@ public class ShareFileWriter {
     public static boolean write() {
         String body =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                "<!DOCTYPE shared PUBLIC \"-//MMBase/DTD shared config 1.0//EN\" \"http://www.mmbase.org/dtd/shared_1_0.dtd\">\n";
+                "<!DOCTYPE shared PUBLIC \"-//MMBase/DTD shared config 1.0//EN\" \"https://www.mmbase.org/dtd/shared_1_0.dtd\">\n";
         body += "<shared>\n";
 
         body += writeSharedBundles();

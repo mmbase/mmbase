@@ -14,7 +14,7 @@
         <affiliation>
           <orgname>Publieke Omroep</orgname>
         </affiliation>
-      </author>      
+      </author>
     </authorgroup>
   </articleinfo>
 
@@ -25,7 +25,7 @@
       mechanism. MMBase did already provide a way to plug in Authentication-mechanisms, but the
       actual plug-in still needed to be made. This plug-in was finally implemented by Publieke
       Omroep (an important MMBase implementor) and Alfa&amp;Ariss (the supliers of ASelect itself).
-    </para>  
+    </para>
   </section>
 
   <section id="authenticationandauthorisation">
@@ -43,13 +43,13 @@
       of rank 'Anonymous' (may only read, never change, regardless of which node is under consideration), or 'Administrator' (may do everything). The
       rank can also be used to grant or disallow access to certain pages. This is easiest done by
       explicitely requiring a certain minimal rank on the 'cloud' tag (which is normally arround
-      your complete jsp-page). For example:      
+      your complete jsp-page). For example:
       <programlisting id="mmcloud"><![CDATA[
 <%@page language="java" contentType="text/html;charset=utf-8"  errorPage="error.jsp" %>
 <mm:content type="text/html">
 <mm:cloud rank="basic user" method="delegate">
 <html>
-... 
+...
 </html>
 </mm:cloud>
 </mm:content>
@@ -73,7 +73,7 @@
       linking user names with an alternative rank. Every user logon of ASelect is checked with this property file, and if the
       user is present, the given Rank will be used in stead of 'basic user'. In this way it is
       simple to e.g. grant access to editor pages only to certain users. This is an example of such
-      an accounts.properties files:     
+      an accounts.properties files:
       <programlisting id="accounts.properties"><![CDATA[
 Michiel\ Meeuwissen=administrator
 Jo\ Lahaye=editor
@@ -99,7 +99,7 @@ editor=500
 <mm:content type="text/html">
 <mm:cloud rank="administrator" method="delegate" authenticate="mmbase_strong">
 <html>
-... 
+...
 </html>
 </mm:cloud>
 </mm:content>
@@ -107,7 +107,7 @@ editor=500
      which means that this page is only accessible for users with rank 'administrator', but only if
      they are logged in 'strongly'. If the administrator did not authenticate herself strongly,
      automaticly a new ASelect authentication window will appear.
-    </para>      
+    </para>
   </section>
 
 
@@ -123,8 +123,8 @@ editor=500
     <para>
       So to set up an ASelect authenticated MMBase you firstly need an ASelect-Server.
     </para>
-    
-    
+
+
   </section>
 
   <section id="installationandconfiguration">
@@ -132,7 +132,7 @@ editor=500
     <para>
       If you want to use the ASelect Authentication plugin for MMBase, then you need to have MMBase
       version 1.8 or higher. The first version of this plugin also worked with MMBase 1.7 (only by
-      agent, without cloud-context), and this version is availabe on request. 
+      agent, without cloud-context), and this version is availabe on request.
     </para>
     <para>
       To install the MMBase-ASelect plugin you need to place mmbase-aselect.jar in your WEB-INF/lib
@@ -156,7 +156,7 @@ editor=500
         And to configure it as your authentication implementation. WEB-INF/config/security/security.xml might look like this then:
       <programlisting id="web.xml"><![CDATA[
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE security PUBLIC "-//MMBase//DTD security config 1.0//EN" "http://www.mmbase.org/dtd/security_1_0.dtd">
+<!DOCTYPE security PUBLIC "-//MMBase//DTD security config 1.0//EN" "https://www.mmbase.org/dtd/security_1_0.dtd">
 <security active="true">
 
   <authentication class="org.mmbase.security.implementation.aselect.ASelectAuthentication" url="/e/as/aselect/conf/agent.conf" />

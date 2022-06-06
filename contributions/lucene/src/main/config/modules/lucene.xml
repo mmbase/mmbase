@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE module PUBLIC "//MMBase - module//" "http://www.mmbase.org/dtd/module_1_0.dtd">
+<!DOCTYPE module PUBLIC "//MMBase - module//" "https://www.mmbase.org/dtd/module_1_0.dtd">
 <module>
   <status>active</status>
   <class>org.mmbase.module.lucene.Lucene</class>

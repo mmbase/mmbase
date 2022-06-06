@@ -186,7 +186,7 @@
       <para>The content of the configuration file should be similar to the following:</para>
       <programlisting><![CDATA[
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE security PUBLIC "//MMBase - security//" "http://www.mmbase.org/dtd/security.dtd">
+<!DOCTYPE security PUBLIC "//MMBase - security//" "https://www.mmbase.org/dtd/security.dtd">
 <security active="true">
   <authentication
     class="org.mmbase.security.implementation.context.ContextAuthentication"

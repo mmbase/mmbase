@@ -9,9 +9,8 @@
 
 
 out:
-	java -jar taglibrarydoc-1_3/tlddoc.jar  target/mmbase-vpro-wizards-1.9-SNAPSHOT.war
-	rsync -ra out/* mmbase.org:web/tags/mm/vpro-wizards
-
+	java -jar ~/.m2/repository/taglibrarydoc/tlddoc/1.3/tlddoc-1.3.jar   target/mmbase-vpro-wizards-1.9-SNAPSHOT.war
+	rsync -ra out/* ~/github/mmbase/mmbase.github.io/tags/mm/vpro-wizards
 
 clean:
 	rm -r out

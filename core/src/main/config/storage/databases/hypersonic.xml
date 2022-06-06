@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE storage PUBLIC "-//MMBase//DTD storage config 1.0//EN" "http://www.mmbase.org/dtd/storage_1_0.dtd" >
+<!DOCTYPE storage PUBLIC "-//MMBase//DTD storage config 1.0//EN" "https://www.mmbase.org/dtd/storage_1_0.dtd" >
 <storage>
 	<!-- Hypersonic configuration resource.
 			 Note: a number of options used here may be incompatible with older configurations, especially

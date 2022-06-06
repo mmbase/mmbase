@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mimemapping SYSTEM "http://www.mmbase.org/dtd/mimemapping_1_0.dtd">
+<!DOCTYPE mimemapping SYSTEM "https://www.mmbase.org/dtd/mimemapping_1_0.dtd">
 <!--
 This will arrange the mimetype mapping according to the format/codec.
 You can use wildcards, the most strict mapping will have priority.
@@ -10,17 +10,17 @@ refer e.g. to http://wiki.whatwg.org/wiki/Video_type_parameters for media types 
   <map format="ra"  codec="*">audio/x-pn-realaudio</map>
   <map format="rm"  codec="*">application/x-pn-realmedia</map>
   <map format="ram" codec="*">audio/x-pn-realaudio</map>
-  
+
   <map format="ogg" codec="vorbis">audio/ogg</map>
   <map format="ogg" codec="theora">video/ogg</map>
   <map format="ogg" codec="*">application/ogg</map>
   <map format="ogx" codec="*">application/ogg</map>
   <map format="oga" codec="*">audio/ogg</map>
   <map format="ogv" codec="*">video/ogg</map>
-  
+
   <map format="flac" codec="*">audio/flac</map>
   <map format="webm" codec="*">video/webm</map>
-  
+
   <map format="aif" codec="*">audio/x-aif</map>
   <map format="asf" codec="*">video/x-ms-asf</map>
   <map format="avi" codec="*">video/avi</map>
@@ -47,14 +47,14 @@ refer e.g. to http://wiki.whatwg.org/wiki/Video_type_parameters for media types 
   <map format="mp3" codec="*">audio/mpeg</map>
   <map format="mpg" codec="*">video/mpeg</map>
   <map format="ts"  codec="*">video/MP2T</map>
-  
+
   <map format="m3u" codec="*">audio/x-mpegurl</map>
   <map format="m3u8" codec="*">application/x-mpegurl</map>
-  
+
   <map format="3gp" codec="*">video/3gpp</map>
-  
+
   <map format="flv" codec="*">video/x-flv</map>
-  
+
   <map format="mov" codec="*">video/quicktime</map>
   <map format="qt" codec="*">video/quicktime</map>
 

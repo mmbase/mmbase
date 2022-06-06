@@ -8,9 +8,9 @@
 .PHONY: clean
 
 
-out:
-	java -jar taglibrarydoc-1_3/tlddoc.jar  target/mmbase-cloudcontext-1.9-SNAPSHOT.war
-	rsync -ra out/* mmbase.org:web/tags/mm/security
+ut:
+	java -jar ~/.m2/repository/taglibrarydoc/tlddoc/1.3/tlddoc-1.3.jar   target/mmbase-cloudcontext-1.9-SNAPSHOT.war
+	rsync -ra out/* ~/github/mmbase/mmbase.github.io/tags/mm/security
 
 
 clean:

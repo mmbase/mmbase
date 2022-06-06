@@ -324,7 +324,7 @@
 
     <programlisting>
 &lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;!DOCTYPE contextconfig PUBLIC "//MMBase - contextconfig//" "http://www.mmbase.org/dtd/securitycontextconfig.dtd"&gt;
+&lt;!DOCTYPE contextconfig PUBLIC "//MMBase - contextconfig//" "https://www.mmbase.org/dtd/securitycontextconfig.dtd"&gt;
 &lt;contextconfig&gt;
   &lt;loginmodules&gt;
     &lt;module name="anonymous" class="org.mmbase.security.implementation.context.AnonymousLogin" /&gt;

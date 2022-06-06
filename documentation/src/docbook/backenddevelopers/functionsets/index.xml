@@ -274,14 +274,14 @@
     <programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;!DOCTYPE functionsets
   PUBLIC "-//MMBase//DTD functionsets config 1.0//EN"
-  "http://www.mmbase.org/dtd/functionsets_1_0.dtd"&gt;
+  "https://www.mmbase.org/dtd/functionsets_1_0.dtd"&gt;
 &lt;functionsets&gt;
   &lt;functionset name="utils"      resource="utils.xml" /&gt;
 &lt;/functionsets&gt; </programlisting> The set itself (in this case
     'config/functions/utils.xml') defines the mapping, names, classes and
     methods to be called: <programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;!DOCTYPE functionset PUBLIC
-  "//MMBase - functionset //" "http://www.mmbase.org/dtd/functionset_1_0.dtd"&gt;
+  "//MMBase - functionset //" "https://www.mmbase.org/dtd/functionset_1_0.dtd"&gt;
 &lt;functionset&gt;
 
   &lt;description&gt;

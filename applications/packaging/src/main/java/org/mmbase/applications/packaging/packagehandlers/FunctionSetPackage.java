@@ -226,7 +226,7 @@ public class FunctionSetPackage extends BasicPackage implements PackageInterface
         // manager but until functions are clear in 1.7 ill do it like this.
         ExtendedDocumentReader reader = new ExtendedDocumentReader(functiondir + "functionsets.xml", FunctionSetPackage.class);
         String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-        body += "<!DOCTYPE functionsets PUBLIC \"//MMBase - functionsets//\" \"http://www.mmbase.org/dtd/functionsets_1_0.dtd\">\n";
+        body += "<!DOCTYPE functionsets PUBLIC \"//MMBase - functionsets//\" \"https://www.mmbase.org/dtd/functionsets_1_0.dtd\">\n";
         body += "<functionsets>\n";
         boolean found = false;
         for (Element n: reader.getChildElements("functionsets", "functionset")) {

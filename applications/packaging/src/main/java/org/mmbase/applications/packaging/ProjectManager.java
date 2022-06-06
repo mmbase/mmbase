@@ -273,7 +273,7 @@ public class ProjectManager {
    */
    public static boolean save() {
        String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-       body += "<!DOCTYPE projects PUBLIC \"-//MMBase/DTD projects config 1.0//EN\" \"http://www.mmbase.org/dtd/projects_1_0.dtd\">\n";
+       body += "<!DOCTYPE projects PUBLIC \"-//MMBase/DTD projects config 1.0//EN\" \"https://www.mmbase.org/dtd/projects_1_0.dtd\">\n";
        body += "<projects>\n";
        Iterator<Project> e=projects.values().iterator();
        while (e.hasNext()) {

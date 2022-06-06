@@ -54,7 +54,7 @@
       <para>
         <programlisting format="linespecific"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE builder PUBLIC "-//MMBase//DTD builder config 1.1//EN" "http://www.mmbase.org/dtd/builder_1_1.dtd">
+<!DOCTYPE builder PUBLIC "-//MMBase//DTD builder config 1.1//EN" "https://www.mmbase.org/dtd/builder_1_1.dtd">
 
 <builder name="persons" maintainer="thedutchrepublic.com" version="0" extends="object">
   <status>active</status>
@@ -212,7 +212,7 @@ public class PersonBuilder extends MMObjectBuilder {
         Hello.xml:
         <programlisting format="linespecific"><![CDATA[
 <?xml version="1.0"?>
-  <!DOCTYPE application PUBLIC "-//MMBase/DTD application config 1.0//EN" "http://www.mmbase.org/dtd/application_1_0.dtd">
+  <!DOCTYPE application PUBLIC "-//MMBase/DTD application config 1.0//EN" "https://www.mmbase.org/dtd/application_1_0.dtd">
   <application name="Hello" maintainer="mmbase.org" version="0" auto-deploy="true">
     <neededbuilderlist>
       <builder maintainer="mmbase.org" version="0">persons</builder>

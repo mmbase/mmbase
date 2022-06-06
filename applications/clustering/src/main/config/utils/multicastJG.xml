@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
-<!DOCTYPE util PUBLIC "-//MMBase//DTD util config 1.0//EN" "http://www.mmbase.org/dtd/util_1_0.dtd">
+<!DOCTYPE util PUBLIC "-//MMBase//DTD util config 1.0//EN" "https://www.mmbase.org/dtd/util_1_0.dtd">
 <util>
  <properties>
    <!--
        name="channelname"  Name of the channel the current instance should communicate on.
      -->
    <property name="channelname">local</property>
-   
+
    <!--
-    name="channelproperties"  Long string with all properties of a JChannel protocol stack. 
+    name="channelproperties"  Long string with all properties of a JChannel protocol stack.
     Whitespaces and carriage returns are ignored. May be used for readability.
 
     Sets the properties as used by the channel to set up the protocol stack.
-    The stack below is a copy of the default stack as used by a JChannel (see the JChannel.java 
-    source code). 
+    The stack below is a copy of the default stack as used by a JChannel (see the JChannel.java
+    source code).
 
-    See JGroups documentation for explanation of each of the layers in the 
-    protocol stack. Important to have every layer, otherwise stack setup will fail, 
+    See JGroups documentation for explanation of each of the layers in the
+    protocol stack. Important to have every layer, otherwise stack setup will fail,
     and no multicast will be available. Recommend only changing mcast_addr, mcast_port and ip_ttl.
 
     JGroups automatically fragments large message. Datagramsize is therefore not needed.
-    
+
     MERGE2 is set for the following reason:
     When a network error occurs, the cluster might be partitioned into
     several different partitions. JGroups has a MERGE service that allows
@@ -39,8 +39,8 @@
      FRAG:
      pbcast.GMS(join_timeout=5000;join_retry_timeout=2000;shun=true;print_local_addr=true)
    </property>
-   
-   <!-- 
+
+   <!--
         TCP based
    <property name="channelproperties">
      TCP1_4(start_port=7800;bind_addr=localhost;loopback=true):

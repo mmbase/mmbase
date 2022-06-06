@@ -604,21 +604,24 @@
   </xsl:template>
 
   <xsl:template match="document">
+
     <!-- I hate XSL -->
-    <xsl:if test="@mode = 'escapers'">
-      <xsl:apply-templates select="document(@file)" mode="escapers"/>
-    </xsl:if>
-    <xsl:if test="@mode = 'parameterizedescapers'">
-      <xsl:apply-templates select="document(@file)" mode="parameterizedescapers"/>
-    </xsl:if>
-    <xsl:if test="@mode = 'postprocessors'">
-      <xsl:apply-templates select="document(@file)"  mode="postprocessors"/>
-    </xsl:if>
-    <xsl:if test="@mode = 'content'">
-      <xsl:apply-templates select="document(@file)"  mode="content"/>
-    </xsl:if>
-    <xsl:if test="not(@mode)">
-      <xsl:apply-templates select="document(@file)" />
+    <xsl:if test="@file != ''">
+     <xsl:if test="@mode = 'escapers'">
+        <xsl:apply-templates select="document(@file)" mode="escapers"/>
+      </xsl:if>
+      <xsl:if test="@mode = 'parameterizedescapers'">
+        <xsl:apply-templates select="document(@file)" mode="parameterizedescapers"/>
+      </xsl:if>
+      <xsl:if test="@mode = 'postprocessors'">
+        <xsl:apply-templates select="document(@file)"  mode="postprocessors"/>
+      </xsl:if>
+      <xsl:if test="@mode = 'content'">
+        <xsl:apply-templates select="document(@file)"  mode="content"/>
+      </xsl:if>
+      <xsl:if test="not(@mode)">
+        <xsl:apply-templates select="document(@file)" />
+      </xsl:if>
     </xsl:if>
   </xsl:template>
 

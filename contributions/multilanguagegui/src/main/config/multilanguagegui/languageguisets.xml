@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE languageguisets PUBLIC "//MMBase - languageguisets //" "http://www.mmbase.org/dtd/languageguisets_1_0.dtd">
+<!DOCTYPE languageguisets PUBLIC "//MMBase - languageguisets //" "https://www.mmbase.org/dtd/languageguisets_1_0.dtd">
 <languageguisets>
 	<languageguiset name="misc" file="sets/misc.xml" />
 	<languageguiset name="mmbob" file="sets/mmbob.xml" />

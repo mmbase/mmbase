@@ -123,7 +123,7 @@ public class Theme {
 
     public void save() {
         String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-        body += "<!DOCTYPE theme PUBLIC \"//MMBase - theme//\" \"http://www.mmbase.org/dtd/theme_1_0.dtd\">\n";
+        body += "<!DOCTYPE theme PUBLIC \"//MMBase - theme//\" \"https://www.mmbase.org/dtd/theme_1_0.dtd\">\n";
         body += "<theme>\n";
         HashMap m = getStyleSheets();
         if (m != null) {

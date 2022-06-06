@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE logging PUBLIC "-//MMBase//DTD logging config 1.0//EN" "http://www.mmbase.org/dtd/logging_1_0.dtd">
+<!DOCTYPE logging PUBLIC "-//MMBase//DTD logging config 1.0//EN" "https://www.mmbase.org/dtd/logging_1_0.dtd">
 <logging>
    <class>org.mmbase.util.logging.ExceptionImpl</class>
-   <!--  
+   <!--
   Throw exception on error (and higher), those will be considered
   test-case failures.
   -->

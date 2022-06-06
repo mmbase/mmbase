@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE builder PUBLIC "-//MMBase//DTD builder config 1.1//EN" "http://www.mmbase.org/dtd/builder_1_1.dtd">
+<!DOCTYPE builder PUBLIC "-//MMBase//DTD builder config 1.1//EN" "https://www.mmbase.org/dtd/builder_1_1.dtd">
 <builder name="email" maintainer="mmbase.org" version="0" extends="object">
   <!-- @version $Id$ -->
 
@@ -25,7 +25,7 @@
     <!--
     'email-lists' are implemetned by relateing a group of users to the email node before sending it.
     You can configure which builders are used for that here
-    -->    
+    -->
 		<property name="groups-builder">groups</property>
 		<property name="users-builder">users</property> <!-- you might want to use 'people' -->
 		<property name="users-email-field">email</property>

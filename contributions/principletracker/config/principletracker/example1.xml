@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE principleset PUBLIC "//MMBase - principleset//" "http://www.mmbase.org/dtd/principleset_1_0.dtd">
+<!DOCTYPE principleset PUBLIC "//MMBase - principleset//" "https://www.mmbase.org/dtd/principleset_1_0.dtd">
 <principleset name="MMBase" description="Principles for the MMBase Opensource project">
   <principle number="14">
     <state>active</state>
@@ -67,8 +67,8 @@ Core, framework, components
     <name><![CDATA[All source code of MMBase is subject to the Open Source license MPL 1.0]]></name>
     <qualification><![CDATA[Binding]]></qualification>
     <explanation><![CDATA[The license chosen for MMBase at the release date (April 4, 2000) was the MPL 1.0. There are no plans to change the license.]]></explanation>
-    <argumentation><![CDATA[The core of MMBase and the framework must have the same open source license to avoid license incompatibilities. 
-For components that are developed for the MMBase-framework, or MMBase-portals, the MPL 1.0 is strongly advised, however, there might be reasons to use another license. In all cases this should not affect the license used for the core and framework. 
+    <argumentation><![CDATA[The core of MMBase and the framework must have the same open source license to avoid license incompatibilities.
+For components that are developed for the MMBase-framework, or MMBase-portals, the MPL 1.0 is strongly advised, however, there might be reasons to use another license. In all cases this should not affect the license used for the core and framework.
 ]]></argumentation>
     <consequence><![CDATA[Components or technology-solutions might be rejected because of incompatibility of licenses.]]></consequence>
     <allowedimplementation><![CDATA[MPL 1.0]]></allowedimplementation>
@@ -118,7 +118,7 @@ For components that are developed for the MMBase-framework, or MMBase-portals, t
     <qualification><![CDATA[Strong rule]]></qualification>
     <explanation><![CDATA[]]></explanation>
     <argumentation><![CDATA[For the users is maintainability of the deployment very important. Backwards compatibility is not a holy grail but the core must be as stable as possible as far as code is concerned]]></argumentation>
-    <consequence><![CDATA[Changes in the core should deal with issues of backwards compatibility. This can result to more development time. Furthermore, any changes that are not backwards compatible should be sufficiently documented. 
+    <consequence><![CDATA[Changes in the core should deal with issues of backwards compatibility. This can result to more development time. Furthermore, any changes that are not backwards compatible should be sufficiently documented.
 The documentation should contain explanations about changes that are not backwards compatible as well as advice on the impact on upgrades.
 This principle also implies that the core must be as lean as possible. In this way it is possible to greatly avoid compatibility issues and the reworks that accompany them.
 ]]></consequence>
@@ -133,7 +133,7 @@ This principle also implies that the core must be as lean as possible. In this w
     <qualification><![CDATA[Strong rule]]></qualification>
     <explanation><![CDATA[]]></explanation>
     <argumentation><![CDATA[For the users is maintainability of the deployment very important. Backwards compatibility is not a holy grail but the core must be as stable as possible as far as code is concerned]]></argumentation>
-    <consequence><![CDATA[Changes in the core should deal with issues of backwards compatibility. This can result to more development time. Furthermore, any changes that are not backwards compatible should be sufficiently documented. 
+    <consequence><![CDATA[Changes in the core should deal with issues of backwards compatibility. This can result to more development time. Furthermore, any changes that are not backwards compatible should be sufficiently documented.
 The documentation should contain explanations about changes that are not backwards compatible as well as advice on the impact on upgrades.
 This principle also implies that the core must be as lean as possible. In this way it is possible to greatly avoid compatibility issues and the reworks that accompany them.
 ]]></consequence>
@@ -240,7 +240,7 @@ Other dependencies can be introduced with reluctance and with good reason (e.g. 
     <name><![CDATA[Database independency]]></name>
     <qualification><![CDATA[Binding]]></qualification>
     <explanation><![CDATA[All code is implemented in a database independent way.]]></explanation>
-    <argumentation><![CDATA[MMBase is principally indepent of the chosen database. 
+    <argumentation><![CDATA[MMBase is principally indepent of the chosen database.
 So no code in MMBase should depend on features of a specific database (unless of course the code _is_ the specific database layer).
 
 Therefore this is also a principle for applications built on MMBase, otherwise they are not portable to other MMBase installations.
@@ -263,7 +263,7 @@ You should also add an issue to the mmbase bugtracker to report the problem you 
     <name><![CDATA[Database independency]]></name>
     <qualification><![CDATA[Binding]]></qualification>
     <explanation><![CDATA[All code is implemented in a database independent way.]]></explanation>
-    <argumentation><![CDATA[MMBase is principally indepent of the chosen database. 
+    <argumentation><![CDATA[MMBase is principally indepent of the chosen database.
 So no code in MMBase should depend on features of a specific database (unless of course the code _is_ the specific database layer).
 
 Therefore this is also a principle for applications built on MMBase, otherwise they are not portable to other MMBase installations.
@@ -314,9 +314,9 @@ You should also add an issue to the mmbase bugtracker to report the problem you 
 ]]></argumentation>
     <consequence><![CDATA[Make no assumptions on the OS.
 
-Make no assumptions on location or writeability of resources. To open resources (like configuration) you should use the MMBase ResourceLoader. 
+Make no assumptions on location or writeability of resources. To open resources (like configuration) you should use the MMBase ResourceLoader.
 
-Do not use java.io.File. 
+Do not use java.io.File.
 
 The webapp may be installed as a 'war' and it's contents not available as File at all.
 
@@ -428,7 +428,7 @@ XML:
  XML code is indented by 2 spaces. Do not use tabs.
 
 JSP:
- Preferably, JSP is like XML (e.g. JSPX). Java code in JSP should be limited to an absolute minimum. Use taglib (MMBase taglib, JSTL). 
+ Preferably, JSP is like XML (e.g. JSPX). Java code in JSP should be limited to an absolute minimum. Use taglib (MMBase taglib, JSTL).
 
  Complicated functionality could be done in some MVC-framework, or be delegated to functions implemented on MMBase datatypes, fields, builders or function sets.
 
@@ -476,7 +476,7 @@ XML:
  XML code is indented by 2 spaces. Do not use tabs.
 
 JSP:
- Preferably, JSP is like XML (e.g. JSPX). Java code in JSP should be limited to an absolute minimum. Use taglib (MMBase taglib, JSTL). 
+ Preferably, JSP is like XML (e.g. JSPX). Java code in JSP should be limited to an absolute minimum. Use taglib (MMBase taglib, JSTL).
 
  Complicated functionality could be done in some MVC-framework, or be delegated to functions implemented on MMBase datatypes, fields, builders or function sets.
 

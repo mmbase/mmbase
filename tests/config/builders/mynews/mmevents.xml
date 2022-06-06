@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE builder PUBLIC "-//MMBase//DTD builder config 1.1//EN" "http://www.mmbase.org/dtd/builder_1_1.dtd">
+<!DOCTYPE builder PUBLIC "-//MMBase//DTD builder config 1.1//EN" "https://www.mmbase.org/dtd/builder_1_1.dtd">
 <builder name="mmevents" maintainer="mmbase.org" version="0" extends="object" >
 
   <status>active</status>
@@ -20,7 +20,7 @@
     <description xml:lang="en">Times used to place objects on a fixed time bar (epoch)</description>
     <description xml:lang="nl">Tijden voor het plaatsen van object op een tijdas</description>
   </descriptions>
-  
+
   <properties>
     <!-- Enable the automatic notification of when mmevents start or stop -->
     <!-- you can listen to these notifications with the nodeChanged method -->
@@ -43,7 +43,7 @@
       </gui>
       <editor>
         <positions>
-          <input>1</input>          
+          <input>1</input>
           <list>1</list>
           <search>1</search>
         </positions>
@@ -124,7 +124,7 @@
         <type state="persistent" notnull="false" key="false">INTEGER</type>
       </db>
     </field>
-    
+
   </fieldlist>
 
 </builder>

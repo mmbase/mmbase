@@ -2,7 +2,7 @@
 <xsl:stylesheet id="xml2html"
   version="1.0"
   xmlns="http://docbook.org/ns/docbook"
-  xmlns:dt="http://www.mmbase.org/xmlns/datatypes"
+  xmlns:dt="https://www.mmbase.org/xmlns/datatypes"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   exclude-result-prefixes="dt"
   >

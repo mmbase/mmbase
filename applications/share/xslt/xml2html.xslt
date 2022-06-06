@@ -5,7 +5,7 @@
   xmlns:xalan="http://xml.apache.org/xalan/redirect"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:rf="org.mmbase.bridge.jsp.taglib.util.ReadFile"
-  extension-element-prefixes="xalan"
+  extension-element-prefixes="xalan rf"
   xmlns:mm="mmbase-taglib"
   >
 
@@ -30,8 +30,8 @@
   <xsl:param name="exampledir"></xsl:param>
   <xsl:param name="files">reference</xsl:param>
   <xsl:variable name="basedirfiles"><xsl:value-of select="$basedir" />/<xsl:value-of select="$files" /></xsl:variable><!-- make sure this directory exists! -->
-  
-  
+
+
   <!-- some configuration -->
   <xsl:variable name="extendscolor">blue</xsl:variable>
   <xsl:variable name="attrcolor">green</xsl:variable>
@@ -500,11 +500,11 @@
           <xsl:if test="not($linkexamples)">
             <xsl:for-each select="example/include">
               <!-- The following will only work with xalan! -->
-              <xsl:apply-templates select="rf:readExample(concat($exampledir, @href))" />
+              <!--<xsl:apply-templates select="rf:readExample(concat($exampledir, @href))" />-->
               <!--
                   The following will work in XSLT 2.0, but not yet :(
                   <xsl:value-of select="unparsed-text(@href)" />
-                  
+
                   When using 'xsltproc' to generate the documentation, you can use the
                   following, but you have to create a bunch of .xml files from the
                   codesamples:
@@ -585,7 +585,7 @@
               <!--
                   The following will work in XSLT 2.0, but not yet :(
                   <xsl:value-of select="unparsed-text(@href)" />
-                  
+
                   When using 'xsltproc' to generate the documentation, you can use the
                   following, but you have to create a bunch of .xml files from the
                   codesamples:
@@ -768,18 +768,7 @@
     <xsl:if test="@mode = 'escapers'">
       <xsl:apply-templates select="document(@file)" mode="escapers"/>
     </xsl:if>
-    <xsl:if test="@mode = 'parameterizedescapers'">
-      <xsl:apply-templates select="document(@file)" mode="parameterizedescapers"/>
-    </xsl:if>
-    <xsl:if test="@mode = 'postprocessors'">
-      <xsl:apply-templates select="document(@file)"  mode="postprocessors"/>
-    </xsl:if>
-    <xsl:if test="@mode = 'content'">
-      <xsl:apply-templates select="document(@file)"  mode="content"/>
-    </xsl:if>
-    <xsl:if test="not(@mode)">
-      <xsl:apply-templates select="document(@file)" />
-    </xsl:if>
+
   </xsl:template>
 
   <xsl:template match="p|text()|a|ul|pre">
@@ -806,8 +795,8 @@
       <td valign="top">
         <table>
           <tr>
-            <th valign="top">Parameter name</th> 
-            <th valign="top">Description</th> 
+            <th valign="top">Parameter name</th>
+            <th valign="top">Description</th>
           </tr>
           <xsl:for-each select="param">
             <tr>

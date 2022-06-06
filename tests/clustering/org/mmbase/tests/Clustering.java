@@ -212,7 +212,7 @@ public class Clustering extends BridgeTest {
         Node zz = typedef.createNode();
         zz.setStringValue("name", "zz");
         Document builderXML = Casting.toXML("<?xml version='1.0' encoding='UTF-8'?>\n" +
-                                            "<!DOCTYPE builder PUBLIC \"-//MMBase//builder config 1.1//EN\" \"http://www.mmbase.org/dtd/builder_1_1.dtd\">\n" +
+                                            "<!DOCTYPE builder PUBLIC \"-//MMBase//builder config 1.1//EN\" \"https://www.mmbase.org/dtd/builder_1_1.dtd\">\n" +
                                             "<builder extends='object' maintainer='mmbase.org' name='zz' version='0'></builder>");
         System.out.println("Using builder XML " + org.mmbase.util.xml.XMLWriter.write(builderXML, true));
         zz.setXMLValue("config", builderXML);

@@ -607,7 +607,7 @@ public class ForumsConfig {
 
         /// OOOH NOOOO!
 	String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-	body += "<!DOCTYPE mmbobconfig PUBLIC \"-//MMBase/DTD mmbob config 1.0//EN\" \"http://www.mmbase.org/dtd/mmbobconfig_1_0.dtd\">\n";
+	body += "<!DOCTYPE mmbobconfig PUBLIC \"-//MMBase/DTD mmbob config 1.0//EN\" \"https://www.mmbase.org/dtd/mmbobconfig_1_0.dtd\">\n";
 	body += "<mmbobconfig>\n";
 	body += "\t<forums account=\""+getDefaultAccount()+"\" password=\""+getDefaultPassword()+"\" language=\""+getLanguage()+"\">\n";
 	body += "\t\t<generatedata role=\"body\" file=\"generate/body.txt\" tokenizer=\",!? \" />\n";

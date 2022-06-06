@@ -234,9 +234,9 @@ http://cgi.omroep.nl/cgi-bin/streams?/tv/ncrv/manbijthond/bb.20051205.asf?title=
 We want to be able to generate these based on one videofragment, that we can relate to four different videosources. These videosources contain information about the bitrate and format, and based on these we want to be able to generate the urls.
 What will happen now is if the 'url' function is called on the videofragment node, a list of URLs will be generated for this fragment. We want to be able to parameterize this function call to get only the URL for a specific bitrate and format. To do this, we create the following 'filters.xml' file:
 <programlisting><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mainFilter SYSTEM "http://www.mmbase.org/dtd/mediafilter_1_0.dtd" [
+<!DOCTYPE mainFilter SYSTEM "https://www.mmbase.org/dtd/mediafilter_1_0.dtd" [
  <!ENTITY % configSubTags "bitrates"  >
- <!ENTITY % bitrate SYSTEM "http://www.mmbase.org/dtd/clientbitratefilter_1_0.dtd" >
+ <!ENTITY % bitrate SYSTEM "https://www.mmbase.org/dtd/clientbitratefilter_1_0.dtd" >
  %bitrate;
 ]>
 <mainFilter>

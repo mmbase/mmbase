@@ -31,7 +31,7 @@ import org.xml.sax.*;
  * It's DTD is located in the directory
  * <code>org.mmbase.storage.search.implementation.database.informix.excalibur.resources</code>
  * in the MMBase source tree and
- * <a href="http://www.mmbase.org/dtd/etxindices.dtd">here</a> online.
+ * <a href="https://www.mmbase.org/dtd/etxindices.dtd">here</a> online.
  *
  * @author Rob van Maris
  * @version $Id$

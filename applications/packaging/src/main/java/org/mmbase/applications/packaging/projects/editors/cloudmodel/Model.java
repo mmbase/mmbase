@@ -461,7 +461,7 @@ public class Model {
 
     public boolean writeModel() {
         String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-        body += "<!DOCTYPE cloudmodel PUBLIC \"-//MMBase/DTD cloudmodel 1.0//EN\" \"http://www.mmbase.org/dtd/cloudmodel_1_0.dtd\">\n";
+        body += "<!DOCTYPE cloudmodel PUBLIC \"-//MMBase/DTD cloudmodel 1.0//EN\" \"https://www.mmbase.org/dtd/cloudmodel_1_0.dtd\">\n";
 
         body += "<cloudmodel>\n";
         body += "\t<neededbuilderlist>\n";
@@ -521,7 +521,7 @@ public class Model {
     private boolean writeBuilder(NeededBuilder nb) {
         String builderpath = path.substring(0, path.length() - 4) + "/" + nb.getName() + ".xml";
         String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-        body += "<!DOCTYPE builder PUBLIC \"-//MMBase/DTD builder 1.1//EN\" \"http://www.mmbase.org/dtd/builder_1_1.dtd\">\n";
+        body += "<!DOCTYPE builder PUBLIC \"-//MMBase/DTD builder 1.1//EN\" \"https://www.mmbase.org/dtd/builder_1_1.dtd\">\n";
 
         body += "<builder name=\"" + nb.getName() + "\" maintainer=\"" + nb.getMaintainer()
                 + "\" version=\"" + nb.getVersion() + "\" extends=\"" + nb.getExtends() + "\">\n";

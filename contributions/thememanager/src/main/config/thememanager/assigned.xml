@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE assigned PUBLIC "-// MMBase - assigned //EN" "http://www.mmbase.org/dtd/assigned_1_0.dtd">
+<!DOCTYPE assigned PUBLIC "-// MMBase - assigned //EN" "https://www.mmbase.org/dtd/assigned_1_0.dtd">
 <assigned>
 		<assign id="MMBob" theme="MMBaseTools"  />
 		<assign id="MLG" theme="MMBaseTools"  />

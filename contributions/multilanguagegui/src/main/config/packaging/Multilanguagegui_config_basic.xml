@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE packaging_config_basic PUBLIC "-//MMBase/DTD packaging_config_basic config 1.0//EN" "http://www.mmbase.org/dtd/packaging_config_basic_1_0.dtd">
+<!DOCTYPE packaging_config_basic PUBLIC "-//MMBase/DTD packaging_config_basic config 1.0//EN" "https://www.mmbase.org/dtd/packaging_config_basic_1_0.dtd">
 <packaging_config_basic>
 	<lastversion>2</lastversion>
 	<lastdate>Fri Oct 15 16:04:31 CEST 2004</lastdate>

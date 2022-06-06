@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE application PUBLIC "-//MMBase//DTD application config 1.1//EN" "http://www.mmbase.org/dtd/application_1_1.dtd">
+<!DOCTYPE application PUBLIC "-//MMBase//DTD application config 1.1//EN" "https://www.mmbase.org/dtd/application_1_1.dtd">
 <application name="MMBob" maintainer="mmbase.org" version="1" auto-deploy="true">
   <requirements>
     <requires name="Resources" maintainer="mmbase.org" version="1" />
@@ -25,7 +25,7 @@
     <builder maintainer="submarine.nl" version="0">forposrel</builder>
     <builder maintainer="submarine.nl" version="0">posmboxrel</builder>
   </neededbuilderlist>
-  
+
   <neededreldeflist>
     <reldef source="related" target="related" direction="bidirectional" guisourcename="Related" guitargetname="Related" builder="insrel" />
     <reldef source="posrel" target="posrel" direction="bidirectional" guisourcename="Posrel" guitargetname="Posrel" builder="posrel" />
@@ -35,7 +35,7 @@
     <reldef source="forarearel" target="forerearel" direction="bidirectional" guisourcename="ForAreaRel" guitargetname="ForAreaRel" builder="forarearel" />
     <reldef source="areathreadrel" target="areathreadrel" direction="bidirectional" guisourcename="AreaThreadRel" guitargetname="AreaThreadRel" builder="areathreadrel" />
   </neededreldeflist>
-  
+
   <allowedrelationlist>
     <relation from="forummessagebox" to="forumprivatemessage" type="related" />
     <relation from="postareas" to="posters" type="rolerel" />
@@ -49,7 +49,7 @@
     <relation from="forums" to="postareas" type="forarearel" />
     <relation from="postareas" to="postthreads" type="areathreadrel" />
   </allowedrelationlist>
-  
+
   <datasourcelist />
 
   <relationsourcelist />

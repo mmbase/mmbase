@@ -101,7 +101,7 @@ public class XMLBasicReader extends DocumentReader {
             is.setSystemId(FILENOTFOUND + path);
             is.setCharacterStream(new StringReader("<?xml version=\"1.0\"?>\n" +
                                                    "<!DOCTYPE error PUBLIC \"" + PUBLIC_ID_ERROR + "\"" +
-                                                   " \"http://www.mmbase.org/dtd/error_1_0.dtd\">\n" +
+                                                   " \"https://www.mmbase.org/dtd/error_1_0.dtd\">\n" +
                                                    "<error>" + path + " not found</error>"));
          }
         return is;

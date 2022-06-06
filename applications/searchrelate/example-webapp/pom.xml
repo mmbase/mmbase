@@ -22,10 +22,13 @@
     <defaultGoal>install</defaultGoal>
     <plugins>
       <plugin>
-        <groupId>org.mortbay.jetty</groupId>
+        <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.4.44.v20210927</version>
         <configuration>
-          <jettyEnvXml>${basedir}/jetty-env.xml</jettyEnvXml>
+          <webApp>
+            <jettyEnvXml>${basedir}/jetty-env.xml</jettyEnvXml>
+          </webApp>
           <systemProperties>
             <systemProperty>
               <name>com.sun.management.jmxremote</name>

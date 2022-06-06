@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE application PUBLIC "-//MMBase//DTD application config 1.1//EN" "http://www.mmbase.org/dtd/application_1_1.dtd">
+<!DOCTYPE application PUBLIC "-//MMBase//DTD application config 1.1//EN" "https://www.mmbase.org/dtd/application_1_1.dtd">
 <application name="FullBackup" maintainer="mmbase.org" version="1" auto-deploy="false">
 
   <neededbuilderlist/>
@@ -16,9 +16,9 @@
     <contextsource path="" type="full" goal="backup"/>
   </contextsourcelist>
 
-  <description><![CDATA[Creates a full backup of the nodes in this MMBase cloud. 
+  <description><![CDATA[Creates a full backup of the nodes in this MMBase cloud.
   While this will create an applications directory filled with all your nodes, relations and builders
-  you will have to document the cloud yourself using this same file when you care to re-import 
+  you will have to document the cloud yourself using this same file when you care to re-import
   the backup.]]></description>
 
   <install-notice />

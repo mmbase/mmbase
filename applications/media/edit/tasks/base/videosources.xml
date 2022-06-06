@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<!DOCTYPE wizard-schema PUBLIC "-//MMBase/DTD editwizard 1.0//EN" "http://www.mmbase.org/dtd/wizard-schema_1_0.dtd"
- [ 
+<!DOCTYPE wizard-schema PUBLIC "-//MMBase/DTD editwizard 1.0//EN" "https://www.mmbase.org/dtd/wizard-schema_1_0.dtd"
+ [
    <!ENTITY base         SYSTEM "mediasources.xml">
    <!ENTITY type        "video">
    <!ENTITY extrafields  SYSTEM "videofields.xml" >
@@ -8,6 +8,6 @@
   ]
 ><wizard-schema id="media">
 	<title xml:lang="en">Video source</title>
-	<title xml:lang="nl">Videobron</title>   
+	<title xml:lang="nl">Videobron</title>
   &base;
  </wizard-schema>

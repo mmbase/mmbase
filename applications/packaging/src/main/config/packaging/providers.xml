@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE providers PUBLIC "-//MMBase/DTD providers config 1.0//EN" "http://www.mmbase.org/dtd/providers_1_0.dtd">
+<!DOCTYPE providers PUBLIC "-//MMBase/DTD providers config 1.0//EN" "https://www.mmbase.org/dtd/providers_1_0.dtd">
 <providers>
   <provider name="MMBase Package Server" maintainer="MMBase.org" method="http" >
     <path>http://packages.mmbase.org/mmbase/packagemanager/sharing/sharedpackages.jsp</path>

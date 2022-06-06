@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE storage PUBLIC "-//MMBase//DTD storage config 1.0//EN" "http://www.mmbase.org/dtd/storage_1_0.dtd" >
+<!DOCTYPE storage PUBLIC "-//MMBase//DTD storage config 1.0//EN" "https://www.mmbase.org/dtd/storage_1_0.dtd" >
 <storage>
   <storagemanagerfactory classname="org.mmbase.storage.implementation.database.DatabaseStorageManagerFactory" version="0.1" />
   <storagemanager        classname="org.mmbase.storage.implementation.database.ViewDatabaseStorageManager" version="0.1" />
@@ -14,7 +14,7 @@
 
     <option name="database-stores-binary-as-file" />
     <option name="database-supports-transactions" value="false" />
-    
+
     <scheme name="create-table-scheme">CREATE TABLE {1} ({2} {3} {5})</scheme>
     <scheme name="create-object-table-scheme">CREATE TABLE {1} ({2} {3} )</scheme>
     <scheme name="create-foreign-key-scheme">CONSTRAINT {1}_{2}_foreign FOREIGN KEY ({2}) REFERENCES {3} ({4})</scheme>

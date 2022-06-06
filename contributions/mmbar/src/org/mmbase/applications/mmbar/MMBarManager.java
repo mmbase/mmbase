@@ -65,7 +65,7 @@ public class MMBarManager {
     // read tests we have loaded
     private static ArrayList readtests = new ArrayList();
 
-    // mixed tests we have loaded 
+    // mixed tests we have loaded
     private static ArrayList mixedtests = new ArrayList();
 
     // endurance tests we have loaded
@@ -77,7 +77,7 @@ public class MMBarManager {
     // test we are currently running, null is none
     private static BaseTest runningtest = null;
 
-    // base testurl, http base for all the jsp tests 
+    // base testurl, http base for all the jsp tests
     private static String basetesturl;
 
     /**
@@ -159,7 +159,7 @@ public class MMBarManager {
     /**
      * Get write test defined by name
      *
-     * @param  name of write test we want 
+     * @param  name of write test we want
      * @return  write test or null if not found
      */
     public static WriteTest getWriteTest(String name) {
@@ -621,7 +621,7 @@ public class MMBarManager {
 					name = n5.getNodeValue();
                                     	n5 = nm.getNamedItem("value");
 					String value = n5.getNodeValue();
-					rt.setProperty(name,value);	
+					rt.setProperty(name,value);
 				    }
 				}
                             }
@@ -850,7 +850,7 @@ public class MMBarManager {
     /**
      * get the name of the test that is running
      *
-     * @return   name of test, null if none is running 
+     * @return   name of test, null if none is running
      */
     public static String getRunningName() {
         if (runningtest != null) {
@@ -863,7 +863,7 @@ public class MMBarManager {
     /**
      * get the current progress (within the test) of the test that is running
      *
-     * @return   current progress counter, -1 if none is running 
+     * @return   current progress counter, -1 if none is running
      */
     public static int getRunningPos() {
         if (runningtest != null) {
@@ -876,7 +876,7 @@ public class MMBarManager {
     /**
      * get the current progress (within the test) of the test that is running
      *
-     * @return   current progress counter, -1 if none is running 
+     * @return   current progress counter, -1 if none is running
      */
     public static int getRunningCount() {
         if (runningtest != null) {
@@ -923,7 +923,7 @@ public class MMBarManager {
     /**
      * get the cloud object needed for the testing
      *
-     * @return   cloud object or null if it failed to create one 
+     * @return   cloud object or null if it failed to create one
      */
     public static Cloud getCloud() {
         if (cloud == null) {
@@ -1069,10 +1069,10 @@ public class MMBarManager {
     public static Iterator getOSList() {
 	// temp until from config
 	ArrayList result = new ArrayList();
-	result.add("osx");	
-	result.add("xp");	
-	result.add("linux");	
-	result.add("unknown");	
+	result.add("osx");
+	result.add("xp");
+	result.add("linux");
+	result.add("unknown");
         return result.iterator();
     }
 
@@ -1080,10 +1080,10 @@ public class MMBarManager {
     public static Iterator getCPUList() {
 	// temp until from config
 	ArrayList result = new ArrayList();
-	result.add("G4/768Mhz");	
-	result.add("P4/3.2Ghz");	
-	result.add("P3/1.26Ghz");	
-	result.add("unknown");	
+	result.add("G4/768Mhz");
+	result.add("P4/3.2Ghz");
+	result.add("P3/1.26Ghz");
+	result.add("unknown");
         return result.iterator();
     }
 
@@ -1091,12 +1091,12 @@ public class MMBarManager {
     public static Iterator getServerList() {
 	// temp until from config
 	ArrayList result = new ArrayList();
-	result.add("Tomcat 5.0.x");	
-	result.add("Tomcat 5.5.x");	
-	result.add("Orion");	
-	result.add("Webphere");	
-	result.add("Resin");	
-	result.add("unknown");	
+	result.add("Tomcat 5.0.x");
+	result.add("Tomcat 5.5.x");
+	result.add("Orion");
+	result.add("Webphere");
+	result.add("Resin");
+	result.add("unknown");
         return result.iterator();
     }
 
@@ -1104,11 +1104,11 @@ public class MMBarManager {
     public static Iterator getDatabaseList() {
 	// temp until from config
 	ArrayList result = new ArrayList();
-	result.add("MySQL");	
-	result.add("Hypersonic");	
-	result.add("Postgress");	
-	result.add("Oracle");	
-	result.add("unknown");	
+	result.add("MySQL");
+	result.add("Hypersonic");
+	result.add("Postgress");
+	result.add("Oracle");
+	result.add("unknown");
         return result.iterator();
     }
 
@@ -1116,11 +1116,11 @@ public class MMBarManager {
     public static Iterator getDriverList() {
 	// temp until from config
 	ArrayList result = new ArrayList();
-	result.add("mysqlconnector 3.x");	
-	result.add("Hypersonic jdbc");	
-	result.add("pg7xjdbc3");	
-	result.add("pg8xjdbc3");	
-	result.add("unknown");	
+	result.add("mysqlconnector 3.x");
+	result.add("Hypersonic jdbc");
+	result.add("pg7xjdbc3");
+	result.add("pg8xjdbc3");
+	result.add("unknown");
         return result.iterator();
     }
 
@@ -1128,16 +1128,16 @@ public class MMBarManager {
     public static Iterator getJavaList() {
 	// temp until from config
 	ArrayList result = new ArrayList();
-	result.add("1.3");	
-	result.add("1.4");	
-	result.add("1.5");	
-	result.add("unknown");	
+	result.add("1.3");
+	result.add("1.4");
+	result.add("1.5");
+	result.add("unknown");
         return result.iterator();
     }
 
     public static void saveSettings() {
 	String body="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-	body+="<!DOCTYPE mmbarconfig PUBLIC \"-//MMBase/DTD mmbar 1.0//EN\" \"http://www.mmbase.org/dtd/mmbarconfig_1_0.dtd\">\n";
+	body+="<!DOCTYPE mmbarconfig PUBLIC \"-//MMBase/DTD mmbar 1.0//EN\" \"https://www.mmbase.org/dtd/mmbarconfig_1_0.dtd\">\n";
 	body+="<mmbarconfig>\n";
 	body+="\t<basetesturl>"+getBaseTestUrl()+"</basetesturl>\n";
 	body+="\t<machinespecs os=\""+getOS()+"\" cpu=\""+getCPU()+"\" server=\""+getServer()+"\" database=\""+getDatabase()+"\" driver=\""+getDriver()+"\" java=\""+getJava()+"\" />\n";

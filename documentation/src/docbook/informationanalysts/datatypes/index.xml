@@ -35,7 +35,7 @@
 
     <para>MMBase datatypes are defined in the resource <filename>&lt;MMBase
     configuration&gt;/datatypes.xml</filename>. See <ulink
-    url="http://www.mmbase.org/xmlns/datatypes.xsd">the Xml Schema
+    url="https://www.mmbase.org/xmlns/datatypes.xsd">the Xml Schema
     Definition</ulink>, for a formal description of this XML format. This
     resource can exist multiple times, but there is at least one in
     mmbase.jar. The contents of that one are described in <xref
@@ -63,7 +63,7 @@
 &lt;datatypes
     xmlns="http://www.mmbase.org/xmlns/datatypes"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.mmbase.org/xmlns/datatypes http://www.mmbase.org/xmlns/datatypes.xsd"&gt;
+    xsi:schemaLocation="http://www.mmbase.org/xmlns/datatypes https://www.mmbase.org/xmlns/datatypes.xsd"&gt;
 
 
   &lt;datatype id="integer"&gt;
@@ -461,7 +461,7 @@ SATURDAY=saturday</programlisting>
           'NODE' typed fields. You simply specify a mmbase query which
           specifies the allowed node values for the field. The query is
           speficied with XML in the namespace
-          "http://www.mmbase.org/xmlns/searchquery" (This format is e.g. also
+          "https://www.mmbase.org/xmlns/searchquery" (This format is e.g. also
           used in the XML's of the lucene contributions).</para>
 
           <para>Most oftenly, the query simply lists all nodes of one certain

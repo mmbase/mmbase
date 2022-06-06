@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE functionset PUBLIC "//MMBase - functionset //" "http://www.mmbase.org/dtd/functionset_1_0.dtd">
+<!DOCTYPE functionset PUBLIC "//MMBase - functionset //" "https://www.mmbase.org/dtd/functionset_1_0.dtd">
 <functionset>
   <version>4</version>
   <description>Support functions for.mmbob.template systeem</description>
@@ -11,8 +11,8 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="postareaid" type="String" description="MMbase node number of the postarea" />
     <param name="postthreadid" type="String" description="MMBase node number of the postthread" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="getPosting">
@@ -26,8 +26,8 @@
     <param name="postingid" type="String" description="MMBase node number of the posting" />
     <param name="posterid" type="int" description="MMBase node number of current Poster (on the page)" />
     <param name="imagecontext" type="String" description="The imagecontext where to find images (eg smilies)">/mmbase/thememanager/images</param>
-    <return type="java.util.Map"> 
-    </return> 
+    <return type="java.util.Map">
+    </return>
   </function>
 
 
@@ -41,8 +41,8 @@
     <param name="postthreadid" type="String" description="MMBase node number of the postthread" />
     <param name="postingid" type="String" description="MMBase node number of the posting" />
     <param name="pagesize" type="int" description="MMBase node number of the posting" />
-    <return type="String"> 
-    </return> 
+    <return type="String">
+    </return>
   </function>
 
 
@@ -53,8 +53,8 @@
     <method>getBirthDateString</method>
     <param name="bname" type="String" description="MMBase node number of the forum" />
     <param name="bvalue" type="String" description="MMBase node number of the posting" />
-    <return type="String"> 
-    </return> 
+    <return type="String">
+    </return>
   </function>
 
   <function name="getPostings">
@@ -69,8 +69,8 @@
     <param name="page" type="int" description="Page number of the threads we want" />
     <param name="pagesize" type="int" description="The number of postings per page">5</param>
     <param name="imagecontext" type="String" description="The imagecontext where to find images (eg smilies)">/mmbase/thememanager/images</param>
-    <return type="NodeList"> 
-    </return> 
+    <return type="NodeList">
+    </return>
   </function>
 
 
@@ -82,8 +82,8 @@
     <method>removePostArea</method>
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="postareaid" type="String" description="MMBase node number of the postarea" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="removeForum">
@@ -92,8 +92,8 @@
     <class>org.mmbase.applications.mmbob.gui.Controller</class>
     <method>removeForum</method>
     <param name="remforum" type="String" description="MMBase node number of the forum you want to remove" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="getForumInfo">
@@ -103,7 +103,7 @@
     <method>getForumInfo</method>
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="String" description="Id for the current (on the page) poster for admin/onwership checks" />
-    <return type="java.util.Map"> 
+    <return type="java.util.Map">
       <field name="name" type="String" description="Name of the forum" />
       <field name="language" type="String" description="language code of this forum" />
       <field name="description" type="String" description="Description of the forum" />
@@ -118,7 +118,7 @@
       <field name="lastposttime" type="int" description="TIme of the last posting, -1 if no posting was done sofar" />
       <field name="lastsubject" type="String" description="Subject of the last postthread that changed" />
       <field name="isadministrator" type="String" description="is the posterid given a administrator of this forum ?  true/false." />
-    </return> 
+    </return>
   </function>
 
 
@@ -128,8 +128,8 @@
     <class>org.mmbase.applications.mmbob.gui.Controller</class>
     <method>getForumAlias</method>
     <param name="key" type="String" description="key" />
-    <return type="String"> 
-    </return> 
+    <return type="String">
+    </return>
   </function>
 
 
@@ -138,7 +138,7 @@
     <type>class</type>
     <class>org.mmbase.applications.mmbob.gui.Controller</class>
     <method>getForumsConfig</method>
-    <return type="java.util.Map"> 
+    <return type="java.util.Map">
       <field name="language" type="String" description="language code of this forum" />
       <field name="accountcreationtype" type="String" description="TODO" />
       <field name="accountremovaltype" type="String" description="TODO" />
@@ -153,7 +153,7 @@
       <field name="fromaddress" type="String" description="TODO" />
       <field name="headerpath" type="String" description="TODO" />
       <field name="footerpath" type="String" description="TODO" />
-    </return> 
+    </return>
   </function>
 
   <function name="getForumConfig">
@@ -163,7 +163,7 @@
     <method>getForumConfig</method>
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="String" description="Id for the current (on the page) poster for admin/onwership checks" />
-    <return type="java.util.Map"> 
+    <return type="java.util.Map">
       <field name="language" type="String" description="language code of this forum" />
       <field name="accountcreationtype" type="String" description="TODO" />
       <field name="accountremovaltype" type="String" description="TODO" />
@@ -180,7 +180,7 @@
       <field name="headerpath" type="String" description="TODO" />
       <field name="footerpath" type="String" description="TODO" />
       <field name="isadministrator" type="String" description="is the posterid given a administrator of this forum ?  true/false." />
-    </return> 
+    </return>
   </function>
 
 
@@ -192,12 +192,12 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="String" description="Id for the current (on the page) poster for admin/onwership checks" />
     <param name="postareaid" type="String" description="Id for the current (on the page) poster for admin/onwership checks" />
-    <return type="java.util.Map"> 
-    </return> 
+    <return type="java.util.Map">
+    </return>
   </function>
 
        <function name="getForumHeaderPath">
-               <description>Provide the headerpath for the given forum</description>  
+               <description>Provide the headerpath for the given forum</description>
                 <type>class</type>
                 <class>org.mmbase.applications.mmbob.gui.Controller</class>
                 <method>getForumHeaderPath</method>
@@ -236,7 +236,7 @@
     <method>getPosterInfo</method>
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="String" description="Id for poster we want (string/account field)" />
-    <return type="java.util.Map"> 
+    <return type="java.util.Map">
       <field name="account" type="String" description="Account name of active poster" />
       <field name="firstname" type="String" description="Firstname of the active poster" />
       <field name="lastname" type="String" description="Lastname of the active poster" />
@@ -246,7 +246,7 @@
       <field name="gender" type="String" description="Gender of the active poster" />
       <field name="firstlogin" type="int" description="Firstlogin time of the active poster" />
       <field name="avatar" type="int" description="MMBase node (image) of the avatar of the active poster" />
-    </return> 
+    </return>
   </function>
 
   <function name="getQuotaInfo">
@@ -257,8 +257,8 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="int" description="Id for poster we want (string/account field)" />
     <param name="barsize" type="int" description="total size of the wanted used bar" />
-    <return type="java.util.Map"> 
-    </return> 
+    <return type="java.util.Map">
+    </return>
   </function>
 
 
@@ -270,8 +270,8 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="int" description="Id for poster we want (string/account field)" />
     <param name="mailboxid" type="String" description="Id for mailbox we want" />
-    <return type="java.util.Map"> 
-    </return> 
+    <return type="java.util.Map">
+    </return>
   </function>
 
 
@@ -283,8 +283,8 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="int" description="Id for poster we want (string/account field)" />
     <param name="mailboxid" type="String" description="Id for mailbox we want" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -296,8 +296,8 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="account" type="String" description="account" />
     <param name="password" type="String" description="password" />
-    <return type="java.util.Map"> 
-    </return> 
+    <return type="java.util.Map">
+    </return>
   </function>
 
 
@@ -308,8 +308,8 @@
     <method>getPosterPassword</method>
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="account" type="String" description="account" />
-    <return type="java.util.Map"> 
-    </return> 
+    <return type="java.util.Map">
+    </return>
   </function>
 
 
@@ -321,8 +321,8 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="int" description="posterid" />
     <param name="host" type="String" description="password" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="newPost">
@@ -336,9 +336,9 @@
     <param name="poster" type="String" description="Posterid to be attached to the postthread as its creator" />
     <param name="body" type="String" description="Body of the new post" />
     <param name="mood" type="String" description="Body of the new post">normal</param>
-    <return type="java.util.Map"> 
+    <return type="java.util.Map">
       <field name="postthreadid" type="int" description="Newly related id (MMBase node number)" />
-    </return> 
+    </return>
   </function>
 
 
@@ -352,9 +352,9 @@
     <param name="poster" type="String" description="Poster who is sending the message" />
     <param name="to" type="String" description="Poster to which to send the message" />
     <param name="body" type="String" description="Body of the new post" />
-    <return type="java.util.Map"> 
+    <return type="java.util.Map">
       <field name="postthreadid" type="int" description="Newly message id (MMBase node number)" />
-    </return> 
+    </return>
   </function>
 
   <function name="createPoster">
@@ -371,9 +371,9 @@
     <param name="email" type="String" description="Email address of the new poster" />
     <param name="gender" type="String" description="Gender of the new poster" />
     <param name="location" type="String" description="Location of the new poster" />
-    <return type="String"> 
+    <return type="String">
       <field name="feedback" type="String" description="Feedback from the create command (accountused for example)" />
-    </return> 
+    </return>
   </function>
 
 
@@ -392,9 +392,9 @@
     <param name="email" type="String" description="Email address of the new poster" />
     <param name="gender" type="String" description="Gender of the new poster" />
     <param name="location" type="String" description="Location of the new poster" />
-    <return type="String"> 
+    <return type="String">
       <field name="feedback" type="String" description="Feedback from the create command (accountused for example)" />
-    </return> 
+    </return>
   </function>
 
   <function name="changeForum">
@@ -407,8 +407,8 @@
     <param name="newlang" type="String" description="New language of this forum" />
     <param name="description" type="String" description="New description of this forum" />
     <param name="activeid" type="int" description="current userid" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -421,8 +421,8 @@
     <param name="name" type="String" description="New name for this forum" />
     <param name="value" type="String" description="New language of this forum" />
     <param name="activeid" type="int" description="current userid" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -434,8 +434,8 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="name" type="String" description="New name for this forum" />
     <param name="activeid" type="int" description="current userid" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -455,8 +455,8 @@
     <param name="navigationmethod" type="String" description="" />
     <param name="alias" type="String" description="" />
     <param name="activeid" type="int" description="current userid" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -468,8 +468,8 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="int" description="current userid" />
     <param name="postcount" type="int" description="" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -481,8 +481,8 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="int" description="current userid" />
     <param name="delay" type="int" description="" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -493,8 +493,8 @@
     <method>getForumSpeedPostTime</method>
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="int" description="current userid" />
-    <return type="int"> 
-    </return> 
+    <return type="int">
+    </return>
   </function>
 
 
@@ -505,8 +505,8 @@
     <method>getForumPostingsPerPage</method>
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="int" description="current userid" />
-    <return type="int"> 
-    </return> 
+    <return type="int">
+    </return>
   </function>
 
 
@@ -518,8 +518,8 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="int" description="current userid" />
     <param name="count" type="int" description="" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -532,8 +532,8 @@
     <method>getForumPostingsOverflowPostArea</method>
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="int" description="current userid" />
-    <return type="int"> 
-    </return> 
+    <return type="int">
+    </return>
   </function>
 
   <function name="getForumReplyOnEachPage">
@@ -543,8 +543,8 @@
     <method>getForumReplyOnEachPage</method>
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="int" description="current userid" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -555,8 +555,8 @@
     <method>getForumPostingsOverflowThreadPage</method>
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="int" description="current userid" />
-    <return type="int"> 
-    </return> 
+    <return type="int">
+    </return>
   </function>
 
 
@@ -568,8 +568,8 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="int" description="current userid" />
     <param name="count" type="int" description="" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="changeForumReplyOnEachPage">
@@ -580,8 +580,8 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="int" description="current userid" />
     <param name="value" type="String" description="" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -598,8 +598,8 @@
     <param name="threadstartlevel" type="String" description="New description of this forum" />
     <param name="position" type="int" description="New description of this forum" />
     <param name="activeid" type="int" description="current userid" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -619,8 +619,8 @@
     <param name="smileysenabled" type="String" description="New description of this forum" />
     <param name="privatemessagesenabled" type="String" description="New description of this forum" />
     <param name="postingsperpage" type="String" description="New description of this forum" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="getForums">
@@ -629,7 +629,7 @@
     <class>org.mmbase.applications.mmbob.gui.Controller</class>
     <method>getForums</method>
     <param name="mode" type="String" description="list mode">default</param>
-    <return type="NodeList"> 
+    <return type="NodeList">
       <field name="name" type="String" description="Name of the forum" />
       <field name="id" type="int" description="Id of the forum (a MMBase node number from the.mmbob.builder)" />
       <field name="description" type="String" description="Description of the forum" />
@@ -643,7 +643,7 @@
       <field name="lastposter" type="String" description="Last person (poster) who entered a new postthread or reply" />
       <field name="lastposttime" type="int" description="TIme of the last posting, -1 if no posting was done sofar" />
       <field name="lastsubject" type="String" description="Subject of the last postthread that changed" />
-    </return> 
+    </return>
   </function>
 
   <function name="newPostArea">
@@ -655,9 +655,9 @@
     <param name="name" type="String" description="Name of the new post area" />
     <param name="description" type="String" description="Description of the new post area" />
     <param name="activeid" type="int" description="current userid" />
-    <return type="java.util.Map"> 
+    <return type="java.util.Map">
       <field name="newpostareaid" type="int" description="MMBase node number of the new postarea" />
-    </return> 
+    </return>
   </function>
 
   <function name="removeModerator">
@@ -669,8 +669,8 @@
     <param name="postareaid" type="String" description="MMBase node number of the postarea" />
     <param name="posterid" type="int" description="MMBase node number of current Poster (on the page)" />
     <param name="remmoderator" type="int" description="MMBase node number of moderator you want to remove" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -682,8 +682,8 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="int" description="MMBase node number of current Poster (on the page)" />
     <param name="remadministrator" type="int" description="MMBase node number of moderator you want to remove" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="getPostThreadNavigation">
@@ -699,11 +699,11 @@
     <param name="pagesize" type="int" description="Number of postings per page">5</param>
     <param name="baseurl" type="String" description="Base url for links in the navigation html">thread.jsp</param>
     <param name="cssclass" type="String" description="stylesheet name for the url links" />
-    <return type="java.util.Map"> 
+    <return type="java.util.Map">
       <field name="navline" type="String" description="The created html navigation code to be included in the page" />
       <field name="lastpage" type="String" description="Is this page the last page in the thread. true/false" />
       <field name="pagecount" type="int" description="Number of pages in this thread" />
-    </return> 
+    </return>
   </function>
 
   <function name="editPost">
@@ -719,8 +719,8 @@
     <param name="subject" type="String" description="New subject of the post" />
     <param name="body" type="String" description="new body of the post" />
     <param name="imagecontext" type="String" description="The imagecontext where to find images (eg smilies)">/mmbase/thememanager/images</param>
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -736,8 +736,8 @@
     <param name="mood" type="String" description="New mood" />
     <param name="state" type="String" description="New State" />
     <param name="type" type="String" description="New Type" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -751,8 +751,8 @@
     <param name="postthreadid" type="String" description="MMBase node number of the postthread" />
     <param name="posterid" type="int" description="MMBase node number of current Poster (on the page)" />
     <param name="newpostareaid" type="String" description="MMBase node number of the postarea" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="getModerators">
@@ -762,12 +762,12 @@
     <method>getModerators</method>
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="postareaid" type="String" description="MMBase node number of the postarea" />
-    <return type="NodeList"> 
+    <return type="NodeList">
       <field name="id" type="int" description="MMBase node number of a moderator (poster)" />
       <field name="account" type="String" description="Account name of this moderator" />
       <field name="firstname" type="String" description="Firstname of this moderator" />
       <field name="lastname" type="String" description="Last name of this moderator" />
-    </return> 
+    </return>
   </function>
 
 
@@ -777,12 +777,12 @@
     <class>org.mmbase.applications.mmbob.gui.Controller</class>
     <method>getAdministrators</method>
     <param name="forumid" type="String" description="MMBase node number of the forum" />
-    <return type="NodeList"> 
+    <return type="NodeList">
       <field name="id" type="int" description="MMBase node number of a moderator (poster)" />
       <field name="account" type="String" description="Account name of this moderator" />
       <field name="firstname" type="String" description="Firstname of this moderator" />
       <field name="lastname" type="String" description="Last name of this moderator" />
-    </return> 
+    </return>
   </function>
 
 
@@ -792,12 +792,12 @@
     <class>org.mmbase.applications.mmbob.gui.Controller</class>
     <method>getPostersOnline</method>
     <param name="forumid" type="String" description="MMBase node number of the forum" />
-    <return type="NodeList"> 
+    <return type="NodeList">
       <field name="id" type="int" description="MMBase node number of a moderator (poster)" />
       <field name="account" type="String" description="Account name of this moderator" />
       <field name="firstname" type="String" description="Firstname of this moderator" />
       <field name="lastname" type="String" description="Last name of this moderator" />
-    </return> 
+    </return>
   </function>
 
 
@@ -810,12 +810,12 @@
     <param name="searchkey" type="String" description="searchkey" />
     <param name="page" type="int" description="page number" />
     <param name="pagesize" type="int" description="size per page" />
-    <return type="NodeList"> 
+    <return type="NodeList">
       <field name="id" type="int" description="MMBase node number of a moderator (poster)" />
       <field name="account" type="String" description="Account name of this moderator" />
       <field name="firstname" type="String" description="Firstname of this moderator" />
       <field name="lastname" type="String" description="Last name of this moderator" />
-    </return> 
+    </return>
   </function>
 
   <function name="searchPostings">
@@ -830,12 +830,12 @@
     <param name="posterid" type="int" description="MMBase node number of the poster" />
     <param name="page" type="int" description="page number" />
     <param name="pagesize" type="int" description="size per page" />
-    <return type="NodeList"> 
+    <return type="NodeList">
       <field name="id" type="int" description="MMBase node number of a moderator (poster)" />
       <field name="account" type="String" description="Account name of this moderator" />
       <field name="firstname" type="String" description="Firstname of this moderator" />
       <field name="lastname" type="String" description="Last name of this moderator" />
-    </return> 
+    </return>
   </function>
 
   <function name="newModerator">
@@ -847,8 +847,8 @@
     <param name="postareaid" type="String" description="MMBase node number of the postarea" />
     <param name="posterid" type="String" description="MMBase node number of current Poster (on the page)" />
     <param name="newmoderator" type="String" description="MMBase node number of moderator you want to add" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="newAdministrator">
@@ -860,8 +860,8 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="String" description="MMBase node number of current Poster (on the page)" />
     <param name="newadministrator" type="String" description="MMBase node number of moderator you want to add" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="getPostAreaInfo">
@@ -876,7 +876,7 @@
                 <param name="pagesize" type="int" description="Number of postings per page">25</param>
                 <param name="baseurl" type="String" description="Base url for links in the navigation html">postarea.jsp</param>
                 <param name="cssclass" type="String" description="stylesheet name for the url links" />
-    <return type="java.util.Map"> 
+    <return type="java.util.Map">
       <field name="name" type="String" description="Name of this PostArea" />
       <field name="postthreadcount" type="int" description="Number of postthreads in this postarea" />
       <field name="postcount" type="int" description="Number of postings in this postarea" />
@@ -896,7 +896,7 @@
       <field name="active_firstlogin" type="int" description="Firstlogin time of the active poster" />
       <field name="active_avatar" type="int" description="MMBase node (image) of the avatar of the active poster" />
       <field name="active_postcount" type="int" description="Number of postings done by the active poster" />
-    </return> 
+    </return>
   </function>
 
 
@@ -909,8 +909,8 @@
     <param name="postareaid" type="String" description="MMBase node number of the postarea" />
     <param name="postthreadid" type="String" description="MMBase node number of the postarea" />
                 <param name="pagesize" type="int" description="Number of postings per page">25</param>
-    <return type="java.util.Map"> 
-    </return> 
+    <return type="java.util.Map">
+    </return>
   </function>
 
   <function name="getPostThreads">
@@ -926,7 +926,7 @@
     <param name="overviewpagesize" type="int" description="The number of threads per page">25</param>
     <param name="baseurl" type="String" description="Base url for links in the navigation html">thread.jsp</param>
     <param name="cssclass" type="String" description="Stylesheet name for the url links" />
-    <return type="NodeList"> 
+    <return type="NodeList">
       <field name="name" type="String" description="Name of the postthread" />
       <field name="id" type="int" description="MMBase node number of postthread" />
       <field name="creator" type="String" description="account name of the creator of the postthread" />
@@ -936,7 +936,7 @@
       <field name="lastposttime" type="int" description="Time of the last posting in this postthread, -1 if no posting was done sofar" />
       <field name="lastsubject" type="String" description="Subject of the last postting that changed" />
       <field name="navline" type="String" description="Generated html navigation line" />
-    </return> 
+    </return>
   </function>
 
   <function name="getBookmarkedThreads">
@@ -952,8 +952,8 @@
     <param name="overviewpagesize" type="int" description="The number of threads per page">25</param>
     <param name="baseurl" type="String" description="Base url for links in the navigation html">thread.jsp</param>
     <param name="cssclass" type="String" description="Stylesheet name for the url links" />
-    <return type="NodeList"> 
-    </return> 
+    <return type="NodeList">
+    </return>
   </function>
 
   <function name="changePostArea">
@@ -966,8 +966,8 @@
     <param name="name" type="String" description="Name of the postarea" />
     <param name="description" type="String" description="Description of the post area" />
     <param name="activeid" type="int" description="current userid" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="getNonModerators">
@@ -978,12 +978,12 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="postareaid" type="String" description="MMBase node number of the new postarea" />
     <param name="searchkey" type="String" description="MMBase node number of the new postarea" />
-    <return type="NodeList"> 
+    <return type="NodeList">
       <field name="id" type="int" description="MMBase node number of the poster" />
       <field name="account" type="String" description="Account name of this poster" />
       <field name="firstname" type="String" description="Firstname of this poster" />
       <field name="lastname" type="String" description="Lastname of this poster" />
-    </return> 
+    </return>
   </function>
 
 
@@ -994,12 +994,12 @@
     <method>getNonAdministrators</method>
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="searchkey" type="String" description="MMBase node number of the forum" />
-    <return type="NodeList"> 
+    <return type="NodeList">
       <field name="id" type="int" description="MMBase node number of the poster" />
       <field name="account" type="String" description="Account name of this poster" />
       <field name="firstname" type="String" description="Firstname of this poster" />
       <field name="lastname" type="String" description="Lastname of this poster" />
-    </return> 
+    </return>
   </function>
 
   <function name="removePost">
@@ -1012,8 +1012,8 @@
     <param name="postthreadid" type="String" description="MMBase node number of postthread" />
     <param name="postingid" type="int" description="MMBase node number of the posting" />
     <param name="posterid" type="int" description="MMBase node number of the poster" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="editPoster">
@@ -1030,9 +1030,9 @@
     <param name="location" type="String" description="New location of the poster" />
     <param name="newpassword" type="String" description="New Password for the poster" />
     <param name="newconfirmpassword" type="String" description="New Confirm Password for the new poster" />
-    <return type="String"> 
+    <return type="String">
       <field name="feedback" type="String" description="Feedback of the edit action" />
-    </return> 
+    </return>
   </function>
 
 
@@ -1051,9 +1051,9 @@
     <param name="location" type="String" description="New location of the poster" />
     <param name="newpassword" type="String" description="New Password for the poster" />
     <param name="newconfirmpassword" type="String" description="New Confirm Password for the new poster" />
-    <return type="String"> 
+    <return type="String">
       <field name="feedback" type="String" description="Feedback of the edit action" />
-    </return> 
+    </return>
   </function>
 
   <function name="newForum">
@@ -1068,10 +1068,10 @@
     <param name="password" type="String" description="default/first admin password name for this new forum" />
     <param name="nick" type="String" description="nickname if set" />
     <param name="email" type="String" description="default/first admin email for this new forum" />
-    <return type="java.util.Map"> 
+    <return type="java.util.Map">
       <field name="forumid" type="int" description="The newly created forum id" />
       <field name="adminid" type="int" description="The newly created admin poster id ('admin')" />
-    </return> 
+    </return>
   </function>
 
   <function name="newFolder">
@@ -1082,8 +1082,8 @@
     <param name="forumid" type="String" description="" />
     <param name="posterid" type="int" description="" />
     <param name="newfolder" type="String" description="" />
-    <return type="Node"> 
-    </return> 
+    <return type="Node">
+    </return>
   </function>
 
 
@@ -1095,8 +1095,8 @@
     <param name="forumid" type="String" description="" />
     <param name="posterid" type="int" description="" />
     <param name="foldername" type="String" description="" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="getPostAreas">
@@ -1107,7 +1107,7 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="String" description="MMBase node number of the active poster" />
     <param name="mode" type="String" description="list mode">default</param>
-    <return type="NodeList"> 
+    <return type="NodeList">
       <field name="name" type="String" description="Name of this PostArea" />
       <field name="description" type="String" description="Description of this PostArea" />
       <field name="id" type="int" description="MMBase node number of this PostArea" />
@@ -1119,7 +1119,7 @@
       <field name="lastsubject" type="String" description="Subject of the last postthread that changed in this postarea" />
       <field name="moderators" type="String" description="Navigation line of the moderators of this postarea" />
       <field name="isadministrator" type="String" description="Is active user a administrator true/false" />
-    </return> 
+    </return>
   </function>
 
 
@@ -1131,8 +1131,8 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="String" description="MMBase node number of the active poster" />
     <param name="tree" type="String" description="tree node">root</param>
-    <return type="NodeList"> 
-    </return> 
+    <return type="NodeList">
+    </return>
   </function>
 
   <function name="postReply">
@@ -1146,8 +1146,8 @@
     <param name="subject" type="String" description="Subject of the reply (normally same as the postthread sibject)" />
     <param name="poster" type="String" description="Posterid of the reply" />
     <param name="body" type="String" description="Body of the reply" />
-    <return type="java.util.Map"> 
-    </return> 
+    <return type="java.util.Map">
+    </return>
   </function>
 
   <function name="generatePosters">
@@ -1158,8 +1158,8 @@
     <param name="generatecount" type="int" description="Number of items to be generated" />
     <param name="generatedelay" type="int" description="time between generates in ms" />
     <param name="inforum" type="String" description="In which forum or all?" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="generateAreas">
@@ -1170,8 +1170,8 @@
     <param name="generatecount" type="int" description="Number of items to be generated" />
     <param name="generatedelay" type="int" description="time between generates in ms" />
     <param name="inforum" type="String" description="In which forum or all?" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="generateThreads">
@@ -1183,8 +1183,8 @@
     <param name="generatedelay" type="int" description="time between generates in ms" />
     <param name="inforum" type="String" description="In which forum or all?" />
     <param name="inpostarea" type="String" description="In which postarea or all?" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="generateReplys">
@@ -1196,8 +1196,8 @@
     <param name="generatedelay" type="int" description="time between generates in ms" />
     <param name="inforum" type="String" description="In which forum or all?" />
     <param name="inpostarea" type="String" description="In which postarea or all?" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -1208,8 +1208,8 @@
     <method>profileUpdated</method>
     <param name="forumid" type="String" description="id of the forum we are in" />
     <param name="posterid" type="int" description="id of the poster that has changed" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
   <function name="getDefaultPassword">
@@ -1217,8 +1217,8 @@
     <type>class</type>
     <class>org.mmbase.applications.mmbob.gui.Controller</class>
     <method>getDefaultPassword</method>
-    <return type="String"> 
-    </return> 
+    <return type="String">
+    </return>
   </function>
 
   <function name="getDefaultAccount">
@@ -1226,8 +1226,8 @@
     <type>class</type>
     <class>org.mmbase.applications.mmbob.gui.Controller</class>
     <method>getDefaultAccount</method>
-    <return type="String"> 
-    </return> 
+    <return type="String">
+    </return>
   </function>
 
         <function name="removePoster">
@@ -1273,8 +1273,8 @@
     <method>getSignatures</method>
     <param name="forumid" type="String" description="list mode" />
     <param name="posterid" type="String" description="list mode" />
-    <return type="NodeList"> 
-    </return> 
+    <return type="NodeList">
+    </return>
   </function>
 
   <function name="getRemoteHosts">
@@ -1284,8 +1284,8 @@
     <method>getRemoteHosts</method>
     <param name="forumid" type="String" description="list mode" />
     <param name="posterid" type="String" description="list mode" />
-    <return type="NodeList"> 
-    </return> 
+    <return type="NodeList">
+    </return>
   </function>
 
   <function name="changeSignature">
@@ -1299,8 +1299,8 @@
     <param name="newbody" type="String" description="list mode" />
     <param name="newmode" type="String" description="list mode" />
     <param name="newencoding" type="String" description="list mode" />
-    <return type="String"> 
-    </return> 
+    <return type="String">
+    </return>
   </function>
 
 
@@ -1313,8 +1313,8 @@
     <param name="posterid" type="String" description="list mode" />
     <param name="newbody" type="String" description="list mode" />
     <param name="newencoding" type="String" description="list mode" />
-    <return type="String"> 
-    </return> 
+    <return type="String">
+    </return>
   </function>
 
 
@@ -1325,8 +1325,8 @@
     <method>getSingleSignature</method>
     <param name="forumid" type="String" description="list mode" />
     <param name="posterid" type="String" description="list mode" />
-    <return type="java.util.Map"> 
-    </return> 
+    <return type="java.util.Map">
+    </return>
   </function>
 
 
@@ -1340,8 +1340,8 @@
     <param name="newbody" type="String" description="list mode" />
     <param name="newmode" type="String" description="list mode" />
     <param name="newencoding" type="String" description="list mode" />
-    <return type="String"> 
-    </return> 
+    <return type="String">
+    </return>
   </function>
 
 
@@ -1354,8 +1354,8 @@
     <param name="postthreadid" type="String" description="MMBase node number of the postthread" />
     <param name="posterid" type="int" description="MMBase node number of the poster" />
     <param name="state" type="String" description="MMBase node number of the postthread" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -1368,8 +1368,8 @@
     <param name="postthreadid" type="String" description="MMBase node number of the postthread" />
     <param name="posterid" type="int" description="MMBase node number of the poster" />
     <param name="state" type="String" description="MMBase node number of the postthread" />
-    <return type="Boolean"> 
-    </return> 
+    <return type="Boolean">
+    </return>
   </function>
 
 
@@ -1381,8 +1381,8 @@
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="posterid" type="int" description="MMBase node number of current Poster (on the page)" />
     <param name="guipos" type="int" description="show from pos x and up" />
-    <return type="NodeList"> 
-    </return> 
+    <return type="NodeList">
+    </return>
   </function>
 
 
@@ -1392,8 +1392,8 @@
     <class>org.mmbase.applications.mmbob.gui.Controller</class>
     <method>getFilterWords</method>
     <param name="forumid" type="String" description="MMBase node number of the forum" />
-    <return type="NodeList"> 
-    </return> 
+    <return type="NodeList">
+    </return>
   </function>
 
 
@@ -1404,8 +1404,8 @@
     <method>getGuiEdit</method>
     <param name="forumid" type="String" description="MMBase node number of the forum" />
     <param name="name" type="String" description="name of the option" />
-    <return type="String"> 
-    </return> 
+    <return type="String">
+    </return>
   </function>
 
 
@@ -1418,7 +1418,7 @@
     <param name="posterid" type="int" description="MMBase node number of current Poster (on the page)" />
     <param name="pname" type="String" description="Name of profile value" />
     <param name="pvalue" type="String" description="Value of profile value" />
-    <return type="java.util.Map"> 
-    </return> 
+    <return type="java.util.Map">
+    </return>
   </function>
 </functionset>

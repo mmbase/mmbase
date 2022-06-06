@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE urlcomposers SYSTEM "http://www.mmbase.org/dtd/urlcomposers_1_0.dtd">
+<!DOCTYPE urlcomposers SYSTEM "https://www.mmbase.org/dtd/urlcomposers_1_0.dtd">
 <!-- configuration for org.mmbase.applications.media.urlcomposers.URLComposerFactory -->
 <urlcomposers>
   <!-- This configuration file is used by the Media application example

@@ -614,7 +614,7 @@
 
         <programlisting id="jdbc.xml">
 &lt;?xml version="1.0"?&gt;
-&lt;!DOCTYPE module PUBLIC "-//MMBase/ DTD module config 1.0//EN" "http://www.mmbase.org/dtd/module_1_0.dtd"&gt;
+&lt;!DOCTYPE module PUBLIC "-//MMBase/ DTD module config 1.0//EN" "https://www.mmbase.org/dtd/module_1_0.dtd"&gt;
 &lt;module maintainer="mmbase.org" version="0"&gt;
     &lt;status&gt;active&lt;/status&gt;
     &lt;classfile&gt;org.mmbase.module.database.JDBC&lt;/classfile&gt;
@@ -941,7 +941,7 @@
       <programlisting>
 
 &lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-&lt;!DOCTYPE caches PUBLIC "-//MMBase/DTD cache config 1.0//EN" "http://www.mmbase.org/dtd/caches_1_0.dtd"&gt;
+&lt;!DOCTYPE caches PUBLIC "-//MMBase/DTD cache config 1.0//EN" "https://www.mmbase.org/dtd/caches_1_0.dtd"&gt;
 
 &lt;caches&gt;
     &lt;!-- ================================================================================

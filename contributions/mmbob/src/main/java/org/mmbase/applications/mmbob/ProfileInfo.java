@@ -184,7 +184,7 @@ public class ProfileInfo {
 
     private String encodeXML() {
 	String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-	body += "<!DOCTYPE profileinfo PUBLIC \"-//MMBase/DTD mmbob profileinfo 1.0//EN\" \"http://www.mmbase.org/dtd/mmbobprofileinfo_1_0.dtd\">\n";
+	body += "<!DOCTYPE profileinfo PUBLIC \"-//MMBase/DTD mmbob profileinfo 1.0//EN\" \"https://www.mmbase.org/dtd/mmbobprofileinfo_1_0.dtd\">\n";
 	body += "<profileinfo>\n";
 
 	Iterator pi=entries.values().iterator();

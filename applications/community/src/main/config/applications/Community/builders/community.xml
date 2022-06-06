@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE builder PUBLIC "-//MMBase//DTD builder config 1.1//EN" "http://www.mmbase.org/dtd/builder_1_1.dtd">
+<!DOCTYPE builder PUBLIC "-//MMBase//DTD builder config 1.1//EN" "https://www.mmbase.org/dtd/builder_1_1.dtd">
 <builder name="community" maintainer="mmbase.org" version="0" extends="object">
   <!-- @version $Id$ -->
-  <status>active</status>  
+  <status>active</status>
   <classfile>org.mmbase.applications.community.builders.Community</classfile>
 
   <searchage>14</searchage>
@@ -18,7 +18,7 @@
     <description xml:lang="en">A place where people can come together to communicate on the Internet</description>
     <description xml:lang="nl">Plaats waar personen bijeen kunnen komen en communiceren</description>
   </descriptions>
-  
+
   <fieldlist>
 
     <field>
@@ -57,7 +57,7 @@
         <type state="persistent" size="255" notnull="false">STRING</type>
       </db>
     </field>
-    
+
     <field>
       <descriptions>
         <description xml:lang="en">Introtext for the community, i.e. a welcome message</description>
@@ -106,7 +106,7 @@
         <name>kind</name>
         <type state="persistent" size="15" notnull="true">STRING</type>
       </db>
-    </field>    
+    </field>
   </fieldlist>
 </builder>
 
