@@ -17,7 +17,7 @@ fi
 #exit
 for d in  . maven-base maven maven/maven-mmbase-plugin maven-base/applications applications   ; do
     echo "========== Running with -N in $d"
-    (cd $DIR/$d &&  $MVN -X -N clean "$TARGET")
+    (cd $DIR/$d &&  $MVN -N clean "$TARGET")
 done
 
 echo "============= Now running the rest $(pwd) $DIR"
