@@ -523,7 +523,16 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
           </reportSet>
         </reportSets>
       </plugin>
-
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.8.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <publishingServerId>central</publishingServerId>
+          <autoPublish>true</autoPublish>
+        </configuration>
+      </plugin>
       <!--
           <plugin>
           <artifactId>maven-checkstyle-plugin</artifactId>
@@ -684,26 +693,15 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
       <id>deploy</id>
       <build>
         <plugins>
-         <plugin>
-           <groupId>org.sonatype.plugins</groupId>
-             <artifactId>nexus-staging-maven-plugin</artifactId>
-           <version>1.7.0</version>
-           <extensions>true</extensions>
-           <configuration>
-             <serverId>ossrh</serverId>
-               <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                 <autoReleaseAfterClose>true</autoReleaseAfterClose>
-           </configuration>
-         </plugin>
-        <plugin>
-          <artifactId>maven-gpg-plugin</artifactId>
+          <plugin>
+            <artifactId>maven-gpg-plugin</artifactId>
           <version>3.2.7</version>
-          <executions>
+            <executions>
             <execution>
               <id>sign-artifacts</id>
               <phase>verify</phase>
               <goals>
-                  <goal>sign</goal>
+                <goal>sign</goal>
               </goals>
             </execution>
           </executions>
