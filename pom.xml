@@ -77,10 +77,6 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
     </notifiers>
   </ciManagement>
 
-  <prerequisites>
-    <maven>2.0.9</maven>
-  </prerequisites>
-
   <mailingLists>
     <mailingList>
       <name>MMBase discussion group</name>
