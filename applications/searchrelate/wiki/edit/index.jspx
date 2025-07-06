@@ -32,7 +32,7 @@
         <link rel="stylesheet" type="text/css" href="q.css" />
       </head>
       <body>
-        <mm:haspage page="/mmbase/jquery/jquery-3.4.1.min.js" inverse="true">
+        <mm:haspage page="/mmbase/jquery/jquery-3.7.1.min.js" inverse="true">
           <h1 class="error">You need to have jquery installed in /mmbase/jquery!</h1>
         </mm:haspage>
 

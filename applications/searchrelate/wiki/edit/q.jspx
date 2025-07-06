@@ -9,7 +9,7 @@
     <head>
       <mm:import id="jq"><mm:url page="/mmbase/jquery/" /></mm:import>
 
-      <script src="${jq}jquery-3.4.1.min.js"><jsp:text> </jsp:text></script>
+      <script src="${jq}jquery-3.7.1.min.js"><jsp:text> </jsp:text></script>
       <script src="${jq}jquery.dimensions.js"><jsp:text> </jsp:text></script>
       <script src="${jq}ui.mouse.js"></script>
       <script src="${jq}ui.draggable.js"></script>

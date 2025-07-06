@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.mmbase.org/xmlns/component https://www.mmbase.org/xmlns/component.xsd">
   <class name="org.mmbase.framework.StringRenderer">
-    <param name="string"><![CDATA[<script src="{REQUEST.getContextPath}/mmbase/jquery/jquery-3.4.1.min.js" type="text/javascript"> </script>
+    <param name="string"><![CDATA[<script src="{REQUEST.getContextPath}/mmbase/jquery/jquery-3.7.1.min.js" type="text/javascript"> </script>
                                   <script src="{REQUEST.getContextPath}/mmbase/validation/validation.js.jsp" type="text/javascript"> </script>]]></param>
   </class>
 </head>

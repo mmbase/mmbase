@@ -7,7 +7,7 @@
   <mm:context>
     <mm:import id="__javascript_jquery" from="request" externid="org.mmbase.jquery" />
     <mm:isempty referid="__javascript_jquery">
-      <mm:link encode="false" page="/mmbase/jquery/jquery-3.4.1.min.js">
+      <mm:link encode="false" page="/mmbase/jquery/jquery-3.7.1.min.js">
         <script src="${_}" type="text/javascript"><jsp:text> </jsp:text></script>
       </mm:link>
       <mm:write request="org.mmbase.jquery" value="yes" />
