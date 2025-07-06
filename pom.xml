@@ -684,7 +684,7 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
         <plugins>
           <plugin>
             <artifactId>maven-gpg-plugin</artifactId>
-          <version>3.2.7</version>
+            <version>3.2.8</version>
             <executions>
             <execution>
               <id>sign-artifacts</id>
