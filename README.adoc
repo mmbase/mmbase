@@ -4,7 +4,7 @@ image:https://github.com/mmbase/mmbase/workflows/build/badge.svg?[Build Status,l
 image:https://img.shields.io/maven-central/v/org.mmbase/mmbase.svg?label=Maven%20Central[Maven Central,link=https://search.maven.org/search?q=g:org.mmbase]
 //image:https://codecov.io/gh/mmbase/mmbase/branch/MMBase-1_9/graph/badge.svg[codecov,link=https://codecov.io/gh/mmbase/mmbase]
 image:http://www.javadoc.io/badge/org.mmbase/mmbase.svg?color=blue[javadoc,link=http://www.javadoc.io/doc/org.mmbase/mmbase]
-image:https://img.shields.io/nexus/s/https/oss.sonatype.org/org.mmbase/mmbase.svg[snapshots,link=https://oss.sonatype.org/content/repositories/snapshots/org/mmbase/]
+//image:https://img.shields.io/nexus/s/https/oss.sonatype.org/org.mmbase/mmbase.svg[snapshots,link=https://oss.sonatype.org/content/repositories/snapshots/org/mmbase/]
 
 The last stable version of MMBase was 1.9
 
