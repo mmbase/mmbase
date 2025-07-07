@@ -262,11 +262,11 @@
     </profile>
   </profiles>
   <pluginRepositories>
-    <!--<pluginRepository>
+    <pluginRepository>
       <id>caucho</id>
       <name>Caucho</name>
-      <url>http://caucho.com/m2</url>
-    </pluginRepository>-->
+      <url>https://caucho.com/m2</url>
+    </pluginRepository>
   </pluginRepositories>
   <repositories>
     <repository>
