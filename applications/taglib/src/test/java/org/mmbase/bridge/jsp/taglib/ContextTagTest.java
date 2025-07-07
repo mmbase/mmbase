@@ -10,15 +10,13 @@ See http://www.MMBase.org/license
 
 package org.mmbase.bridge.jsp.taglib;
 
-import org.mmbase.bridge.jsp.taglib.util.*;
-
-import javax.servlet.jsp.*;
-import javax.servlet.http.*;
-import org.springframework.mock.web.*;
-
-import org.junit.*;
+import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.JspTagException;
+import javax.servlet.jsp.PageContext;
 import static org.junit.Assert.*;
-import static org.junit.Assume.*;
+import org.junit.Test;
+import org.mmbase.bridge.jsp.taglib.util.ContextContainer;
+import org.mmbase.bridge.mock.jsp.MockPageContext;
 
 /**
  * @version $Id$
