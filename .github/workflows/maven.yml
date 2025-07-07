@@ -12,7 +12,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: ghcr.io/mmbase/build:2
+    container:
+     image: ghcr.io/mmbase/build:2
+     options: --user root
     env:
       MAVEN_OPTS: -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
     steps:
