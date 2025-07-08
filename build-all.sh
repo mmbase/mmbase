@@ -5,7 +5,7 @@ set -e
 
 export MAVEN_ARGS="-B  --no-transfer-progress"
 DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-MVN="mvn -Duser.home=$DIR"
+MVN="mvn"
 #echo $OSSRH_PASSWORD | base64
 
 #MVN="mvn -ntp -fae -Duser.home=$HOME -Dmaven.repo.local=/Users/michiel/.m2/repository_clean"
@@ -17,7 +17,7 @@ fi
 #cd $DIR/applications/streams && $MVN -P'deploy,!development' clean deploy
 #exit
 for d in  . maven-base maven maven/maven-mmbase-plugin maven-base/applications applications   ; do
-    echo "========== Running with -N in $d"
+    echo "========== Running with -N clean $TARGET in $d"
     (cd $DIR/$d &&  $MVN -N clean "$TARGET")
 done
 
