@@ -4,10 +4,10 @@ set -e
 #export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
 
 DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-#MVN="mvn -Dcom.sun.net.ssl.checkRevocation=false -Dhttps.protocols=TLSv1.2 -Duser.home=$DIR"
+MVN="mvn -Dcom.sun.net.ssl.checkRevocation=false -Dhttps.protocols=TLSv1.2 -Duser.home=$DIR"
 #echo $OSSRH_PASSWORD | base64
 
-MVN="mvn -ntp -fae -Duser.home=$HOME -Dmaven.repo.local=/Users/michiel/.m2/repository_clean"
+#MVN="mvn -ntp -fae -Duser.home=$HOME -Dmaven.repo.local=/Users/michiel/.m2/repository_clean"
 TARGET=deploy
 if [ ! -z "$1" ] ; then
     TARGET=$1
