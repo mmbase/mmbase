@@ -3,7 +3,7 @@
 set -e
 #export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
 
-export MAVEN_ARGS="-B  --no-transfer-progress"
+export MAVEN_ARGS="-B  --no-transfer-progress -Pdeploy"
 DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 MVN="mvn"
 #echo $OSSRH_PASSWORD | base64
