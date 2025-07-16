@@ -30,7 +30,7 @@ public class FullBackupDataWriter {
     /**
      * Logging instance
      */
-    private static Logger log = Logging.getLoggerInstance(FullBackupDataWriter.class);
+    private static final Logger log = Logging.getLoggerInstance(FullBackupDataWriter.class);
 
     /**
      * Writes all nodes to XML.
@@ -38,7 +38,6 @@ public class FullBackupDataWriter {
      * @param targetPath The path where to save the application
      * @param mmbase Reference to the MMbase processormodule. Used to retrieve the nodes to write.
      * @param logger Storage for messages which can be displayed to the user.
-     * @throws IOException if a file could not be written
      * @throws SearchQueryException if data could not be obtained from the database
      */
     public static void writeContext(ApplicationReader reader, String targetPath, MMBase mmbase, Logger logger) throws SearchQueryException {
@@ -54,15 +53,14 @@ public class FullBackupDataWriter {
     /**
      * Searches the MMBase cloud, collecting all nodes and storing them in data files.
      *
-     * @param targetPath The path where to save the application data
-     * @param mmb MMBase object used to retrieve builder information
+     * @param subTargetPath The path where to save the application data
+     * @param mmbase MMBase object used to retrieve builder information
      * @param logger Storage for messages which can be displayed to the user.
-     * @throws IOException if a file could not be written
      * @throws SearchQueryException if data could not be obtained from the database
      */
     static void writeNodes(String subTargetPath, MMBase mmbase, Logger logger) throws SearchQueryException {
-        for (Object element : mmbase.getBuilders()) {
-            MMObjectBuilder builder = (MMObjectBuilder) element;
+        for (MMObjectBuilder element : mmbase.getBuilders()) {
+            MMObjectBuilder builder = element;
 
             // Skip virtual builders and a set of system builders
             String builderName = builder.getTableName();
@@ -94,7 +92,7 @@ public class FullBackupDataWriter {
      * @param builder The builder.
      * @param nodes The nodes, must type corresponding to the builder.
      * @param subTargetPath Path where the XML file is written.
-     * @param mmb MMBase object used to retrieve builder information
+     * @param mmbase MMBase object used to retrieve builder information
      * @param logger Used to store messages that can be shown to the user
      * @param isRelation Indicates whether the nodes to write are data (false) or relation (true) nodes
      */
