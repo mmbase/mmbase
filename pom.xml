@@ -452,6 +452,7 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
         <configuration>
           <publishingServerId>central</publishingServerId>
           <autoPublish>true</autoPublish>
+          <waitUntil>published</waitUntil>
         </configuration>
       </plugin>
     </plugins>
