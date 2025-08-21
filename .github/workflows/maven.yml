@@ -46,4 +46,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # required
           verbose: true # optional (default = false)
+      - uses: mmprogrami/after-maven-action@v1
+
 
