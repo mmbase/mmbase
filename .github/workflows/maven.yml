@@ -13,18 +13,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-     image: ghcr.io/mmbase/build:2
-     options: --user root
+     image: ghcr.io/mmbase/build:main
     env:
       MAVEN_ARGS: '--no-transfer-progress'
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-java@v4
-        with:
-          server-id: central
-          server-username: CENTRAL_USERNAME
-          server-password: CENTRAL_PASSWORD
-          gpg-private-key: ${{ secrets.GPG_SECRET_KEY }}
       - name: Build1
         run: |
           mvn help:effective-settings
