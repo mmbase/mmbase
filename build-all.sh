@@ -2,9 +2,18 @@
 # exit when any command fails
 set -e
 #export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
+BATCH_MODE="${BATCH_MODE:-true}"
+
+MAVEN_ARGS="--no-transfer-progress -Pdeploy"
+if [ $BATCH_MODE = 'true' ] ; then
+  echo batch mode
+  MAVEN_ARGS="$MAVEN_ARGS -B"
+else
+  echo interactive mode
+fi
 
 echo central username: ${CENTRAL_USERNAME}
-export MAVEN_ARGS="-B  --no-transfer-progress -Pdeploy"
+
 DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 MVN="mvn"
 #echo $OSSRH_PASSWORD | base64

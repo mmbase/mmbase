@@ -15,8 +15,6 @@ jobs:
     container:
      image: ghcr.io/mmbase/build:2
      options: --user root
-    env:
-      MAVEN_OPTS: -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-java@v5
@@ -39,7 +37,7 @@ jobs:
         if: success() || failure()    # run this step even if previous step failed
         with:
           files: '**/target/surefire-reports/TEST-*.xml'    # Path to test
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         if: github.ref == 'refs/heads/MMBase-1_9'
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # required
