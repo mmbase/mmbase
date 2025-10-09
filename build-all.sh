@@ -4,10 +4,11 @@ set -e
 #export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
 BATCH_MODE="${BATCH_MODE:-true}"
 
-MAVEN_ARGS="--no-transfer-progress -Pdeploy"
+export MAVEN_ARGS="--no-transfer-progress -Pdeploy"
+
 if [ $BATCH_MODE = 'true' ] ; then
   echo batch mode
-  MAVEN_ARGS="$MAVEN_ARGS -B"
+  export MAVEN_ARGS="$MAVEN_ARGS -B"
 else
   echo interactive mode
 fi
