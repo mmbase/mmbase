@@ -29,7 +29,9 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_SECRET_KEY }}
           cache: maven
       - name: Build1
-        run: mvn -N deploy
+        run: |
+          mvn help:effective-settings
+          mvn -N deploy
         env:
           CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
