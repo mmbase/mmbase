@@ -18,14 +18,9 @@ jobs:
       MAVEN_ARGS: '--no-transfer-progress'
     steps:
       - uses: actions/checkout@v5
-      - name: Build1
+      - name: Import GPG key
         run: |
-          mvn help:effective-settings
-          mvn -N deploy
-        env:
-          CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
-          CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
-          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
+          echo "${{ secrets.GPG_SECRET_KEY }}" | gpg --batch --import
       - name: Build with Maven
         run: ./build-all.sh
         env:
