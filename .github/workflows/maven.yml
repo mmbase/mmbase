@@ -12,6 +12,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+     image: ghcr.io/mmbase/build:2
+     options: --user runner
     env:
       MAVEN_ARGS: '--no-transfer-progress'
     steps:
