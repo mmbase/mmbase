@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://www.mmbase.org/xmlns/builder
                         https://www.mmbase.org/xmlns/builder.xsd
                         http://www.mmbase.org/xmlns/datatypes
-                        https://www.mmbase.org/xmlns/datatyps.xsd"
+                        https://www.mmbase.org/xmlns/datatypes.xsd"
     name="mags" maintainer="mmbase.org" version="0" extends="object">
   <names>
     <singular xml:lang="en">Magazine</singular>
