@@ -53,7 +53,7 @@
             <td>
               <c:choose>
                 <c:when test="${fn:length(entry.value) eq 1}">
-                  <jsp:text><mm:escape>${entry.value[0]}</mm:escape></jsp:text>
+                  <mm:escape>${entry.value[0]}</mm:escape>
                 </c:when>
                 <c:otherwise>
                   <ul>

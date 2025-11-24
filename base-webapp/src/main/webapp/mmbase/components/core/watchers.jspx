@@ -67,7 +67,7 @@
       <caption>FileWatchers</caption>
       <mm:listfunction set="utils" name="fileWatchers" varStatus="status">
         <tr>
-          <th colspan="5">${status.index} ${_.class}</th>
+          <th colspan="5">${status.index} ${_.getClass()}</th>
         </tr>
         <tr>
           <th>files</th>
