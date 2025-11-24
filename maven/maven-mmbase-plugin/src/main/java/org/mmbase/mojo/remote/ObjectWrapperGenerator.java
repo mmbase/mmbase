@@ -119,7 +119,10 @@ public class ObjectWrapperGenerator extends AbstractGenerator {
             buffer.append("        retval = new " + remoteName + "_Rmi((" + name + ")o, port);\n");
             isFirst = false;
         }
-        buffer.append("    }\n    return retval;\n  }\n\n");
+        if (! isFirst) {
+            buffer.append("    }\n");
+        }
+        buffer.append("return retval;\n  }\n\n");
 
         buffer.append("  public static Object rmiObjectToRemoteProxy(Object o) throws RemoteException {\n");
         buffer.append("      Object retval = null;\n");
@@ -134,7 +137,11 @@ public class ObjectWrapperGenerator extends AbstractGenerator {
             buffer.append("      retval = new " + remoteName + "_Proxy((" + remoteName + ")o);\n");
             isFirst = false;
         }
-        buffer.append("    }\n    return retval;\n  }\n\n");
+
+        if (! isFirst) {
+            buffer.append("    }\n");
+        }
+        buffer.append("return retval;\n  }\n\n");
 
         buffer.append("}\n");
     }
