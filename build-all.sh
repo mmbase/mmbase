@@ -2,7 +2,7 @@
 # exit when any command fails
 set -e
 #export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
-BATCH_MODE="${BATCH_MODE:-true}"
+BATCH_MODE="${BATCH_MODE:-false}"
 
 export MAVEN_ARGS="--no-transfer-progress -Pdeploy"
 
