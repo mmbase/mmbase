@@ -637,14 +637,14 @@
     <title xml:lang="en">Java API documentation</title>
     <body>
       <class name="org.mmbase.framework.IFrameRenderer">
-        <param name="url">http://www.mmbase.org/api/overview-summary.html</param>
+        <param name="url">https://www.mmbase.org/api/overview-summary.html</param>
       </class>
     </body>
   </block>
 
   <block name="docbook"
          mimetype="text/html">
-    <xi:include href="http://www.mmbase.org/components/docbook.head.xml" />
+    <xi:include href="https://www.mmbase.org/components/docbook.head.xml" />
     <body>
       <class name="org.mmbase.framework.DocumentationRenderer">
         <param name="includeRenderTime">xml-comments</param>
