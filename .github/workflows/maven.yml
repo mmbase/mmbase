@@ -4,6 +4,12 @@ on:
   push:
     branches: [MMBase-1_9, main]
   workflow_dispatch:
+    inputs:
+      skipTests:
+        description: 'Skip tests'
+        required: true
+        default: false
+        type: boolean
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -17,13 +23,14 @@ jobs:
     env:
       MAVEN_ARGS: '--no-transfer-progress'
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Import GPG key
         run: |
           echo "${{ secrets.GPG_SECRET_KEY }}" | gpg --batch --import
       - name: Build with Maven
         run: ./build-all.sh
         env:
+          BATCH_MODE: true
           CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
