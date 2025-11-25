@@ -1,8 +1,7 @@
 <mm:content
     type="application/xml"
-    xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
     xmlns:jsp="http://java.sun.com/JSP/Page"
-    xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
     xmlns:mm="http://www.mmbase.org/mmbase-taglib-2.0"
     >
@@ -77,7 +76,9 @@
        <tr>
          <td>
            <select  name="type">
-             <c:forTokens items="0:new,1:change,2:delete" var="_" delims=",">
+             <mm:context>
+             <mm:import id="tokens" vartype="list">0:new,1:change,2:delete</mm:import>
+             <mm:stringlist referid="tokens">
                <c:choose>
                  <c:when test='${type eq fn:split(_, ":")[0]}'>
                    <option value='${fn:split(_, ":")[0]}' selected="selected">${fn:split(_, ":")[1]}</option>
@@ -86,11 +87,15 @@
                    <option value='${fn:split(_, ":")[0]}'>${fn:split(_, ":")[1]}</option>
                  </c:otherwise>
                </c:choose>
-             </c:forTokens>
+             </mm:stringlist>
+             </mm:context>
            </select>
          </td><td>
           <select  name="class">
-            <c:forTokens items="IdEvent:IdEvent,NodeEvent:NodeEvent,RelationEvent:RelationEvent" var="_" delims=",">
+            <mm:context>
+            <mm:import id="tokens"  vartype="list">IdEvent:IdEvent,NodeEvent:NodeEvent,RelationEvent:RelationEvent</mm:import>
+
+            <mm:stringlist referid="tokens">
               <c:choose>
                 <c:when test='${pageScope["class"] eq fn:split(_, ":")[0]}'>
                   <option value='${fn:split(_, ":")[0]}' selected="selected">${fn:split(_, ":")[1]}</option>
@@ -99,7 +104,8 @@
                   <option value='${fn:split(_, ":")[0]}'>${fn:split(_, ":")[1]}</option>
                 </c:otherwise>
               </c:choose>
-            </c:forTokens>
+            </mm:stringlist>
+            </mm:context>
           </select>
         </td><td>
         <input name="id" value="${id}"/>
