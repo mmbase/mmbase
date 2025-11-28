@@ -32,7 +32,7 @@
 
   <block name="test_fieldinfo" mimetype="text/html"
          classification="taglib.test">
-    <xi:include href="http://www.mmbase.org/components/jquery.head.xml" />
+    <xi:include href="https://www.mmbase.org/components/jquery.head.xml" />
     <body jsp="test/fieldinfo.jspx" />
   </block>
 
@@ -59,7 +59,7 @@
   </block>
   <block name="test_contextvars" mimetype="text/html"
          classification="taglib.test">
-    <xi:include href="http://www.mmbase.org/components/jquery.head.xml" />
+    <xi:include href="https://www.mmbase.org/components/jquery.head.xml" />
     <body jsp="test/context_vars.jspx" />
   </block>
   <block name="test_form" mimetype="text/html"
@@ -132,6 +132,7 @@
         <param name="docbook">frontenddevelopers/taglib/tutorial.xml</param>
         <param name="module">applications/taglib/documentation</param>
         <param name="includeRenderTime">xml-comments</param>
+        <param name="project">mmbase</param>
       </class>
     </body>
   </block>
@@ -147,6 +148,7 @@
         <param name="docbook">frontenddevelopers/taglib/include.xml</param>
         <param name="module">applications/taglib/documentation</param>
         <param name="includeRenderTime">xml-comments</param>
+        <param name="project">mmbase</param>
       </class>
     </body>
   </block>

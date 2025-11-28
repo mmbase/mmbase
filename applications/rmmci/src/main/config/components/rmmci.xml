@@ -11,19 +11,17 @@
   <description xml:lang="en">RMMCI</description>
   <description xml:lang="nl">RMMCI</description>
 
-
-
-
   <block name="rmmci-documentation"
          classification="mmbase.documentation"
          mimetype="text/html">
     <title>RMMI</title>
-    <xi:include href="http://www.mmbase.org/components/docbook.head.xml" />
+    <xi:include href="https://www.mmbase.org/components/docbook.head.xml" />
     <body>
       <class name="org.mmbase.framework.DocumentationRenderer">
         <param name="docbook">documentation/backenddevelopers/rmmci/index.xml</param>
         <param name="module">applications/rmmci</param>
         <param name="includeRenderTime">xml-comments</param>
+        <param name="project">mmbase</param>
       </class>
     </body>
   </block>
