@@ -157,7 +157,7 @@
   </logger>
 
   <root>
-    <level class="&mmlevel;" value ="warn" />
+    <level class="&mmlevel;" value ="info" />
     <appender-ref ref="logfile" />
   </root>
 
