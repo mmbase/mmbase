@@ -112,12 +112,13 @@
          classification="mmbase.documentation"
          mimetype="text/html">
     <title>Editwizards</title>
-    <xi:include href="http://www.mmbase.org/components/docbook.head.xml" />
+    <xi:include href="https://www.mmbase.org/components/docbook.head.xml" />
     <body>
       <class name="org.mmbase.framework.DocumentationRenderer">
         <param name="docbook">frontenddevelopers/editwizard/index.xml</param>
         <param name="module">applications/editwizard/documentation</param>
         <param name="includeRenderTime">xml-comments</param>
+        <param name="project">mmbase</param>
       </class>
     </body>
   </block>
@@ -126,12 +127,13 @@
          classification="mmbase.documentation"
          mimetype="text/html">
     <title>Editwizards (frontend)</title>
-    <xi:include href="http://www.mmbase.org/components/docbook.head.xml" />
+    <xi:include href="https://www.mmbase.org/components/docbook.head.xml" />
     <body>
       <class name="org.mmbase.framework.DocumentationRenderer">
         <param name="docbook">frontenddevelopers/editwizard/frontend.xml</param>
         <param name="module">applications/editwizard/documentation</param>
         <param name="includeRenderTime">xml-comments</param>
+        <param name="project">mmbase</param>
       </class>
     </body>
   </block>
@@ -140,12 +142,13 @@
          classification="mmbase.documentation"
          mimetype="text/html">
     <title>Editwizards (reference)</title>
-    <xi:include href="http://www.mmbase.org/components/docbook.head.xml" />
+    <xi:include href="https://www.mmbase.org/components/docbook.head.xml" />
     <body>
       <class name="org.mmbase.framework.DocumentationRenderer">
         <param name="docbook">frontenddevelopers/editwizard/reference.xml</param>
         <param name="module">applications/editwizard/documentation</param>
         <param name="includeRenderTime">xml-comments</param>
+        <param name="project">mmbase</param>
       </class>
     </body>
   </block>

@@ -75,6 +75,7 @@
         <param name="docbook">email.xml</param>
         <param name="module">applications/email/documentation</param>
         <param name="includeRenderTime">xml-comments</param>
+        <param name="project">mmbase</param>
       </class>
     </body>
   </block>

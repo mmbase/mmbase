@@ -481,7 +481,7 @@
          classification="mmbase.documentation"
          mimetype="text/html">
     <title>Components</title>
-    <xi:include href="http://www.mmbase.org/components/docbook.head.xml" />
+    <xi:include href="https://www.mmbase.org/components/docbook.head.xml" />
     <body>
       <class name="org.mmbase.framework.DocumentationRenderer">
         <param name="docbook">backenddevelopers/components/index.xml</param>

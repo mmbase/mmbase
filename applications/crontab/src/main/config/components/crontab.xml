@@ -38,6 +38,7 @@
       <class name="org.mmbase.framework.DocumentationRenderer">
         <param name="docbook">documentation/crontab.xml</param>
         <param name="module">applications/crontab</param>
+        <param name="project">mmbase</param>
         <param name="includeRenderTime">xml-comments</param>
       </class>
     </body>

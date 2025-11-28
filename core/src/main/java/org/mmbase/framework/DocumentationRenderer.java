@@ -20,7 +20,7 @@ import org.mmbase.util.logging.Logging;
 
 /**
  * Currently renders documentation directly from subversion, using an XSLT to convert docbook to
- * HTML. The idea is that a fall-back could be added to render the documenation from the xml's in
+ * HTML. The idea is that a fall-back could be added to render the documentation from the xml's in
  * a/the jar.
  *
  * @author Michiel Meeuwissen
@@ -31,9 +31,10 @@ import org.mmbase.util.logging.Logging;
 public class DocumentationRenderer extends CachedRenderer {
     private static final Logger log = Logging.getLoggerInstance(DocumentationRenderer.class);
 
-    private String repository  = "https://raw.githubusercontent.com/mmbase/";
-    private String project     = "mmbase/MMBase-1_9";
-    private String module      = "documentation/src/docbook";
+    private String repository  = "https://raw.githubusercontent.com/mmbase";
+    private String project     = "mmdocs";
+    private String module      = "src/docbook";
+    private String branch      = "refs/heads/main";
 
     private String docbook     = null;
 
@@ -52,11 +53,12 @@ public class DocumentationRenderer extends CachedRenderer {
     @Override
     public Parameter<?>[] getParameters() {
         return new Parameter<?>[] {
-                new Parameter<String>("docbook", String.class, docbook),
-                new Parameter<String>("module", String.class, module),
-                new Parameter<String>("project", String.class, project),
-                new Parameter<String>("repository", String.class, repository)
-                };
+            new Parameter<String>("docbook", String.class, docbook),
+            new Parameter<String>("module", String.class, module),
+            new Parameter<String>("project", String.class, project),
+            new Parameter<String>("repository", String.class, repository),
+            new Parameter<String>("branch", String.class, branch)
+        };
     }
 
 
@@ -75,7 +77,13 @@ public class DocumentationRenderer extends CachedRenderer {
                                     db = DocumentationRenderer.this.docbook;
                                     //if (db == null) throw new IllegalArgumentException("docbook parameter not set on parameters, nor as renderer property");
                                 }
-                                return new URL(repository + "/" + project + "/" + module + "/" + db).toURI();
+                                //https://raw.githubusercontent.com/mmbase/mmdocs/refs/heads/main/src/docbook/index.xml
+                                //https://raw.githubusercontent.com/mmbase/mmdocs/refs/head/main/src/docbook/index.xml
+                                //https://raw.githubusercontent.com/mmbase/mmdocs/src/docbook/refs/head/main/index.xml
+                                URI url = new URL(repository + "/" + project + "/" + branch + "/" + module + "/" + db).toURI();
+
+                                log.info("Resolved " + url);
+                                return url;
                             } catch (MalformedURLException mfe) {
                                 throw new RuntimeException(mfe.getMessage(), mfe);
                             } catch (URISyntaxException use) {
