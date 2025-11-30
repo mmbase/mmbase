@@ -651,7 +651,6 @@ MMBaseValidator.prototype.getDataTypeXml = function(el) {
     if (dataType == null) {
         var url = '<mm:url page="/mmbase/validation/datatype.jspx" />?';
         var params = this.getDataTypeArguments(key);
-        // console.log('params', params);
 
         var self = this;
         var needsAmp = false;
@@ -662,7 +661,6 @@ MMBaseValidator.prototype.getDataTypeXml = function(el) {
             url += p + "=" + params[p];
             needsAmp = true;
         }
-        // console.log('Fetching datatype from ', url);
 
         fetch(url)
             .then(function(response) {
@@ -675,10 +673,11 @@ MMBaseValidator.prototype.getDataTypeXml = function(el) {
                 var parser = new DOMParser();
                 dataType = parser.parseFromString(html, "application/xml");
                 MMBaseValidator.dataTypeCache[el.mm_key] = dataType;
+                // console.log('found ', dataType);
                 self.log("Found " + dataType);
             })
             .catch(function(error) {
-                self.log('There has been a problem with your fetch operation: ' + error.message);
+                console.log('There has been a problem with your fetch operation: ' + error);
             });
 
         // $.ajax({async: false, url: url, type: "GET",
@@ -780,54 +779,54 @@ MMBaseValidator.prototype.prefetchNodeManager = function(nodemanager) {
 };
 
 MMBaseValidator.prototype.checkPrefetch = function() {
-    var nodemanagers = "";
+    var nodemanagers = [];
 
     // MMBaseValidator.prefetchedNodeManagers
     for (var k in MMBaseValidator.prefetchedNodeManagers) {
         // console.log('checking manager: ', k, MMBaseValidator.prefetchedNodeManagers[k]);
         if (MMBaseValidator.prefetchedNodeManagers[k] == "requested") {
-            nodemanagers += k + ",";
+            nodemanagers.push(k);
         }
     }
 
-    // $.each(MMBaseValidator.prefetchedNodeManagers, function(k) {
-    //         if (MMBaseValidator.prefetchedNodeManagers[k] == "requested") {
-    //             nodemanagers += k + ",";
-    //         }
-    //     });
     if (nodemanagers.length > 0) {
         this.log("prefetching " + nodemanagers);
         var url = '<mm:url page="/mmbase/validation/datatypes.jspx" />';
-        var params = { nodemanager: nodemanagers };
-        if (this.uri != null) {
-            params.uri = this.uri;
+
+        var params = new URLSearchParams();
+        params.append("nodemanager", nodemanagers.toString());
+        if (this.uri) {
+            params.append("uri", this.uri);
         } else {
-            params.uri = "local";
+            params.append("uri", "local");
         }
-        if (this.cloud != null) {
-            params.cloud = this.cloud;
+        if (this.cloud) {
+            params.append("cloud", this.cloud);
         } else {
-            params.cloud = "mmbase";
+            params.append("cloud", "mmbase");
         }
         var self = this;
-        // $.ajax({async: false, url: url, type: "GET", dataType: "xml", data: params,
-        //             complete: function(res, status){
-        //             if (status == "success") {
-        //                 var dataTypes = res.responseXML;
 
-        //                 var fields = dataTypes.documentElement.childNodes;
-        //                 for (var i = 0; i < fields.length; i++) {
-        //                     var key = new Key();
-        //                     key.uri = params.uri;
-        //                     key.cloud = params.cloud;
-        //                     key.nodeManager = fields[i].getAttribute("nodemanager");
-        //                     key.field = fields[i].getAttribute("name");
-        //                     MMBaseValidator.dataTypeCache[key.string()] = fields[i];
-        //                     MMBaseValidator.prefetchedNodeManagers[key.nodeManager] = status;
-        //                 }
-        //             }
-        //         }
-        //     });
+        fetch(url + '?' + params.toString())
+            .then((res) => res.text())
+            .then((html) => {
+                var parser = new DOMParser();
+                var dataTypes = parser.parseFromString(html, "application/xml");
+
+                var fields = dataTypes.documentElement.childNodes;
+                for (var i = 0; i < fields.length; i++) {
+                    var key = new Key();
+                    key.uri = params.get("uri");
+                    key.cloud = params.get("cloud");
+                    key.nodeManager = fields[i].getAttribute("nodemanager");
+                    key.field = fields[i].getAttribute("name");
+                    MMBaseValidator.dataTypeCache[key.string()] = fields[i];
+                    MMBaseValidator.prefetchedNodeManagers[key.nodeManager] = "success";
+                }
+            })
+            .catch((err) => {
+                console.error('Error prefetching datatypes: ', err);
+            });
     }
 };
 
@@ -870,7 +869,6 @@ MMBaseValidator.prototype.getValue = function(el) {
     } else {
         if (el.tagName == "div") {
             return el.innerText;
-            // return $(el).text();
         }
         var value = el.value;
 
@@ -882,7 +880,6 @@ MMBaseValidator.prototype.getValue = function(el) {
         } else if (this.isBoolean(el)) {
             if ("checkbox" === el.type) {
                 value = el.checked;
-                // value =  $(el).is(":checked");
             }
         }
         return value;
@@ -1115,9 +1112,11 @@ MMBaseValidator.prototype.serverValidation = function(el) {
         params.changed = this.isChanged(el);
         var result;
 
-        console.log('serverValidation -', validationUrl, params);
-        fetch(validationUrl + "?" + new URLSearchParams(params))
+        var fetchUrl = validationUrl + "?" + new URLSearchParams(params);
+        console.log('serverValidation -', fetchUrl);
+        fetch(fetchUrl)
             .then(function(response) {
+                console.log('response', response);
                 if (response.ok) {
                     return response.text();
                 }
