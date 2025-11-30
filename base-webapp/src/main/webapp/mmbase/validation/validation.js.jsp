@@ -1033,41 +1033,6 @@ MMBaseValidator.prototype.binaryServerValidation = function(el) {
                     self.showServerErrors(el, result, el.initialId);
                 }
             }); */
-    } else {
-
-        return;
-
-        // jquery.form based upload
-        //
-        // TODO, probably won't work.
-        // An anyhow, uploading the entire thing just for validation is not such a good idea.
-        // if (typeof($.fn.ajaxSubmit) == "undefined") {
-
-        //     if (this.valid(el)) {
-        //         this.showServerErrors(el, $("<result valid='true' class='implicit_binary' />")[0]);
-        //     } else {
-        //         this.showServerErrors(el, $("<result valid='false' class='implicit_binary' />")[0]);
-        //     }
-        //     return;
-        // }
-        // // It seems that the upload is done always in this case.
-        // // Probably this is not the way.
-        // // Leaving it, because I thing it's the only thing which may work in IE.
-
-        // var form = $('<form style="display: inline;" method="POST"  enctype="multipart/form-data"></form>');
-        // var clone = $(el).clone();
-        // $(el).after(form);
-        // form.append(el);
-
-        // form.ajaxSubmit({
-        //         dataType: 'xml',
-        //         url: validationUrl,
-        //         success: function(xml, textStatus) {
-        //             self.showServerErrors(el, xml);
-        //             form.before(el);
-        //             form.remove();
-        //         }
-        //     });
     }
 };
 
@@ -1115,20 +1080,20 @@ MMBaseValidator.prototype.serverValidation = function(el) {
         var fetchUrl = validationUrl + "?" + new URLSearchParams(params);
         console.log('serverValidation -', fetchUrl);
         fetch(fetchUrl)
-            .then(function(response) {
-                console.log('response', response);
-                if (response.ok) {
-                    return response.text();
-                }
-                throw new Error('Network response was not ok');
-            }).catch(function(error) {
-                self.log('There has been a problem with your fetch operation: ' + error.message);
+            .then(function(resp){ return resp.text()})
+            .then(function(html) {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(html, "application/xml");
+                var result = doc.querySelector('result');
+                console.log("RESULT", result);
                 el.serverValidated = true;
-                return document.querySelector('result[valid="true"]');
-                // return $("<result valid='true' />")[0];
+
+                self.showServerErrors(el, doc);
+            })
+            .catch(function(error) {
+                self.log('There has been a problem with your fetch operation: ' + error);
             });
 
-        return;
         // $.ajax({async: true, url: validationUrl, type: "GET", dataType: "xml", data: params,
 	    //         complete: function(res, status){
 		// 	var result;
@@ -1144,6 +1109,7 @@ MMBaseValidator.prototype.serverValidation = function(el) {
         //             }
         //     });
     } catch (ex) {
+        console.info("Exception in serverValidation: ", ex);
         this.log(ex);
         throw ex;
     }
@@ -1203,29 +1169,27 @@ MMBaseValidator.prototype.serverValidate = function(event) {
 
 MMBaseValidator.prototype.showServerErrors = function(element, serverXml, id) {
     var valid = this.validResult(serverXml);
-    if (id == null) {
+    if (!id) {
       id = element.id;
     }
-    if (id != null) {
+    console.log("VALID", valid, id);
+    if (id) {
         var errorDiv = document.getElementById("mm_check_" + id.substring(3));
-        if (errorDiv != null) {
+        console.log("showServerErrors", valid, errorDiv);
+        if (errorDiv) {
             errorDiv.className = valid ? "mm_check_noerror mm_check_updated" : "mm_check_error mm_check_updated";
             if (errorDiv) {
-                // $(errorDiv).empty();
                 errorDiv.innerHTML = "";
                 var errors = serverXml.documentElement ? serverXml.documentElement.childNodes : [];
                 this.log("errors for " + element.id + " " +  serverXml + " " + errors.length);
 
-
-                for (var  i = 0; i < errors.length; i++) {
-		    if (errors[i].tagName == "error") {
-			var span = document.createElement("span");
-			// span.innerHTML = $(errors[i]).text();
-            span.innerHTML = errors[i].innerText;
-			// $(span).addClass($(errors[i]).attr("class"));
-            span.classList.add(errors[i].getAttribute("class"));
-			errorDiv.appendChild(span);
-		    }
+                for (var i = 0; i < errors.length; i++) {
+        		    if (errors[i].tagName.toLowerCase() === "error") {
+		            	var span = document.createElement("span");
+                        span.innerHTML = errors[i].innerHTML;
+                        span.setAttribute("class", errors[i].getAttribute("class"));
+			            errorDiv.append(span);
+		            }
                 }
             }
         } else {
