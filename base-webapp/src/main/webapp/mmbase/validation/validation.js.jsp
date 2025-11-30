@@ -34,6 +34,7 @@ function MMBaseValidator(root, id) {
 
     this.root = root;
     this.setup();
+
     this.lang          = document.querySelector("html")?.getAttribute("lang");
     this.sessionName   = null;
     this.activeElement = null;
@@ -43,7 +44,6 @@ function MMBaseValidator(root, id) {
     if (MMBaseValidator.validators.length == 1) {
         setTimeout(MMBaseValidator.watcher, 500);
     }
-
     this.saveToForm    = null;
 }
 
@@ -679,17 +679,7 @@ MMBaseValidator.prototype.getDataTypeXml = function(el) {
                 console.log('Problem fetching datatype XML -' + error);
             });
 
-        // $.ajax({async: false, url: url, type: "GET",
-        //             dataType: "xml", data: params,
-        //             complete: function(res, status){
-        //             if (status == "success" || res.status == '404') {
-        //                 dataType = res.responseXML;
-        //                 MMBaseValidator.dataTypeCache[el.mm_key] = dataType;
-        //             }
-        //         }
-        //     });
         this.log("Found " + dataType);
-
 
     } else {
         this.trace("Found in cache " + dataType);
@@ -1001,7 +991,6 @@ MMBaseValidator.prototype.binaryServerValidation = function(el) {
         //form.append('<input type="hidden" name="' + p + '" value="' + params[p] + '" />');
     }
     if (params.length != null) {
-        var result;
         console.log('binaryServerValidation -', validationUrl);
         fetch(validationUrl)
             .then(function(response) {
@@ -1009,11 +998,15 @@ MMBaseValidator.prototype.binaryServerValidation = function(el) {
                     return response.text();
                 }
                 throw new Error('Network response was not ok');
-            }).catch(function(error) {
-                self.log('There has been a problem with your fetch operation: ' + error.message);
+            })
+            .then(function(html) {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(html, "application/xml");
                 el.serverValidated = true;
-                return document.querySelector('result[valid="true"]');
-                // return $("<result valid='true' />")[0];
+                self.showServerErrors(el, doc, el.initialId);
+            })
+            .catch(function(error) {
+                self.log('There has been a problem with binaryServerValidation: ' + error.message);
             });
 
         /* $.ajax({async: true, url: validationUrl, type: "GET", dataType: "xml",
@@ -1062,10 +1055,9 @@ MMBaseValidator.prototype.serverValidation = function(el) {
 
         var validationUrl = '<mm:url page="/mmbase/validation/valid.jspx" />';
 
-	if (this.saveToForm != null) {
-	    params.form = this.saveToForm;
-	}
-
+        if (this.saveToForm != null) {
+            params.form = this.saveToForm;
+        }
 
         if (this.lang != null) params.lang = this.lang;
         if (this.sessionName != null) params.sessionname = this.sessionName;
@@ -1081,30 +1073,13 @@ MMBaseValidator.prototype.serverValidation = function(el) {
             .then(function(html) {
                 var parser = new DOMParser();
                 var doc = parser.parseFromString(html, "application/xml");
-                var result = doc.querySelector('result');
-                console.log("RESULT", result);
                 el.serverValidated = true;
-
                 self.showServerErrors(el, doc);
             })
             .catch(function(error) {
                 self.log('There has been a problem with your fetch operation: ' + error);
             });
 
-        // $.ajax({async: true, url: validationUrl, type: "GET", dataType: "xml", data: params,
-	    //         complete: function(res, status){
-		// 	var result;
-		// 	if (status == "success") {
-        //                     el.serverValidated = true;
-        //                     result = res.responseXML;
-        //                 //console.log("" + res);
-		// 	} else {
-        //                     el.serverValidated = true;
-        //                     result = $("<result valid='true' />")[0];
-		// 	}
-		// 	self.showServerErrors(el, result);
-        //             }
-        //     });
     } catch (ex) {
         console.info("Exception in serverValidation: ", ex);
         this.log(ex);
