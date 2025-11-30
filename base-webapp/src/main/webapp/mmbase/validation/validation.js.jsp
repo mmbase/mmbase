@@ -224,8 +224,8 @@ MMBaseValidator.prototype.showWarning = function(e) {
 
         MMBaseValidator.prototype.warnedUpload = true;
         setTimeout(function() {
-                warning.classList.add("slow");
-            }, 3000);
+            warning.classList.add("slow");
+        }, 3000);
     }
 
 };
@@ -674,10 +674,9 @@ MMBaseValidator.prototype.getDataTypeXml = function(el) {
                 dataType = parser.parseFromString(html, "application/xml");
                 MMBaseValidator.dataTypeCache[el.mm_key] = dataType;
                 // console.log('found ', dataType);
-                self.log("Found " + dataType);
             })
             .catch(function(error) {
-                console.log('There has been a problem with your fetch operation: ' + error);
+                console.log('Problem fetching datatype XML -' + error);
             });
 
         // $.ajax({async: false, url: url, type: "GET",
@@ -783,7 +782,6 @@ MMBaseValidator.prototype.checkPrefetch = function() {
 
     // MMBaseValidator.prefetchedNodeManagers
     for (var k in MMBaseValidator.prefetchedNodeManagers) {
-        // console.log('checking manager: ', k, MMBaseValidator.prefetchedNodeManagers[k]);
         if (MMBaseValidator.prefetchedNodeManagers[k] == "requested") {
             nodemanagers.push(k);
         }
@@ -805,7 +803,6 @@ MMBaseValidator.prototype.checkPrefetch = function() {
         } else {
             params.append("cloud", "mmbase");
         }
-        var self = this;
 
         fetch(url + '?' + params.toString())
             .then((res) => res.text())
@@ -1172,10 +1169,10 @@ MMBaseValidator.prototype.showServerErrors = function(element, serverXml, id) {
     if (!id) {
       id = element.id;
     }
-    console.log("VALID", valid, id);
+
     if (id) {
         var errorDiv = document.getElementById("mm_check_" + id.substring(3));
-        console.log("showServerErrors", valid, errorDiv);
+        // console.log("showServerErrors", valid, errorDiv);
         if (errorDiv) {
             errorDiv.className = valid ? "mm_check_noerror mm_check_updated" : "mm_check_error mm_check_updated";
             if (errorDiv) {
@@ -1298,9 +1295,6 @@ MMBaseValidator.prototype.removeValidation = function(el) {
     var els = el.querySelectorAll(".mm_validate").forEach(function(entry) {
             self.removeValidationFromElement(entry);
         });
-    // var els = $(el).find(".mm_validate").each(function() {
-    //         self.removeValidationFromElement(this);
-    //     });
 };
 
 MMBaseValidator.prototype.removeValidationFromElement = function(el) {
@@ -1317,11 +1311,6 @@ MMBaseValidator.prototype.removeValidationFromElement = function(el) {
                 newElements.push(elem);
             }
         });
-        // $(self.elements).each(function() {
-		// if (this.initialalId != el.initialId) {
-		//     newElements.push(this);
-		// }
-	    // });
         self.elements = newElements;
     }
 };
@@ -1340,16 +1329,14 @@ MMBaseValidator.prototype.addValidationForElements = function(els) {
         if (!entry.classList.contains("mm_validate")) {
             continue;
         }
-        // if (! $(entry).hasClass("mm_validate")) {
-        //     continue;
-        // }
 
         if (entry.type == "textarea") {
             entry.value = entry.value.replace(/^\s+|\s+$/g, "");
         }
         // Store the original ID, especially for binaries, because jquery-upload may temporary change it sometimes, which would make the error div unfindable
         entry.initialId = entry.id;
-	var self = this;
+
+        var self = this;
         // switch stolen from editwizards, not all cases are actually supported already here.
         switch(entry.type) {
         case "text":
@@ -1392,14 +1379,13 @@ MMBaseValidator.prototype.addValidationForElements = function(els) {
         if (this.validateHook) {
             this.validateHook(valid, entry);
         }
-
     }
+
     if (els.length === 0) {
         if (this.validateHook) {
             this.validateHook(this.invalidElements == 0);
         }
     }
-
 };
 
 /**
