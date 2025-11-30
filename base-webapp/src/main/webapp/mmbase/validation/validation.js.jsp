@@ -219,14 +219,11 @@ MMBaseValidator.prototype.warnedUpload = false;
 
 MMBaseValidator.prototype.showWarning = function(e) {
     if (! MMBaseValidator.prototype.warnedUpload) {
-        // var warning = $("<div style='background-color: yellow; color: black; position: absolute; right: 0; top: 0; z-index: 2000;'>I'm sorry, your browser cannot determin the size of the upload. Please use e.g. FireFox, Safari or Chromium. Please DO NOT USE Internet Explorer. That is an unuseable, crappy, sorry excuse for a browser. (" + e + ")</div>");
         var warning = "<div style='background-color: yellow; color: black; position: absolute; right: 0; top: 0; z-index: 2000;'>I'm sorry, your browser cannot determin the size of the upload. Please use e.g. FireFox, Safari or Chromium. Please DO NOT USE Internet Explorer. That is an unuseable, crappy, sorry excuse for a browser. (" + e + ")</div>";
-        // $("body").append(warning);
         document.body.appendChild(warning);
 
         MMBaseValidator.prototype.warnedUpload = true;
         setTimeout(function() {
-                // warning.hide("slow");
                 warning.classList.add("slow");
             }, 3000);
     }
@@ -1395,19 +1392,12 @@ MMBaseValidator.prototype.addValidationForElements = function(els) {
         case "text":
         case "password":
         case "textarea":
-            // $(entry).bind("keyup",  function(ev) { self.setLastChange(ev); self.validate(ev); });
             entry.addEventListener("keyup", function(ev) { self.setLastChange(ev); self.validate(ev); }, false);
-
-            // $(entry).bind("change", function(ev) { self.serverValidate(ev); });
             entry.addEventListener("change", function(ev) { self.serverValidate(ev); }, false);
-
-            //$(entry).bind("blur", function(ev) { self.serverValidate(ev); });
             entry.addEventListener("blur", function(ev) { self.serverValidate(ev); }, false);
             // IE calls this when the user does a right-click paste
             entry.addEventListener("paste", function(ev) { self.setLastChange(ev); self.validate(ev); }, false);
-            //$(entry).bind("paste", function(ev) { self.setLastChange(ev); self.validate(ev); });
             // FireFox calls this when the user does a right-click paste
-            //$(entry).bind("input", function(ev) { self.validate(ev); }); // Firefox sends a 'paste' event now too.
             break;
 
         case "radio":
@@ -1415,16 +1405,9 @@ MMBaseValidator.prototype.addValidationForElements = function(els) {
             entry.addEventListener("click", function(ev) { self.setLastChange(ev); self.validate(ev); }, false);
             entry.addEventListener("blur", function(ev) { self.serverValidate(ev); }, false);
             entry.addEventListener("change", function(ev) { self.serverValidate(ev); }, false);
-            // $(entry).bind("click", function(ev) { self.setLastChange(ev); self.validate(ev); });
-            // $(entry).bind("click", function(ev) { self.setLastChange(ev); self.validate(ev); });
-            // $(entry).bind("blur",   function(ev) { self.serverValidate(ev); });
-            // $(entry).bind("change",   function(ev) { self.serverValidate(ev); });
             break;
         case "file":
             entry.addEventListener("change", function(ev) { self.setLastChange(ev); self.validate(ev); }, false);
-            // $(entry).bind("change", function(ev) {
-            //         self.setLastChange(ev); self.serverValidate(ev);
-            //     });
             break;
         case "select-one":
         case "select-multiple":
@@ -1433,8 +1416,6 @@ MMBaseValidator.prototype.addValidationForElements = function(els) {
             this.log(entry);
             entry.addEventListener("change", function(ev) { self.setLastChange(ev); self.validate(ev); }, false);
             entry.addEventListener("blur", function(ev) { self.serverValidate(ev); }, false);
-            // $(entry).bind("change", function(ev) { self.setLastChange(ev); self.validate(ev); });
-            // $(entry).bind("blur",   function(ev) { self.serverValidate(ev); });
         }
         entry.serverValidated = true; // It starts out server-validated
         entry.originalValue = this.getValue(entry);
