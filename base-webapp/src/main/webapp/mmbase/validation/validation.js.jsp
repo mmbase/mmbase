@@ -211,7 +211,6 @@ MMBaseValidator.prototype.isRequired = function(el) {
     var re = this.find(this.getDataTypeXml(el), 'datatype required')[0];
     el.mm_isrequired = re != null && ("true" == "" + re.getAttribute("value"));
     el.mm_isrequired_enforce = re != null && re.getAttribute("enforce");
-    console.log("is required " + el.mm_isrequired);
     return el.mm_isrequired;
 };
 
@@ -676,7 +675,7 @@ MMBaseValidator.prototype.getDataTypeXml = function(el) {
                 // console.log('found ', dataType);
             })
             .catch(function(error) {
-                console.log('Problem fetching datatype XML -' + error);
+                console.error('Error fetching datatype XML -' + error);
             });
 
         this.log("Found " + dataType);
@@ -1067,7 +1066,6 @@ MMBaseValidator.prototype.serverValidation = function(el) {
         var result;
 
         var fetchUrl = validationUrl + "?" + new URLSearchParams(params);
-        console.log('serverValidation -', fetchUrl);
         fetch(fetchUrl)
             .then(function(resp){ return resp.text()})
             .then(function(html) {
@@ -1096,7 +1094,6 @@ MMBaseValidator.prototype.validResult = function(xml) {
             return "true" == xml.documentElement.getAttribute("valid");
         } else {
             return "true" == "" + xml.getAttribute("valid");
-            // return "true" == "" + $(xml).attr("valid");
         }
     } catch (ex) {
         this.log(ex);
@@ -1130,7 +1127,7 @@ MMBaseValidator.prototype.getElement = function(event) {
  * overriding this function.
  */
 MMBaseValidator.prototype.validate = function(event, server) {
-    //this.log("event " + event.type + " on " + target.id);
+    // this.log("event " + event.type + " on " + target.id);
     var element = this.getElement(event);
     return this.validateElement(element, server);
 };
@@ -1147,7 +1144,6 @@ MMBaseValidator.prototype.showServerErrors = function(element, serverXml, id) {
 
     if (id) {
         var errorDiv = document.getElementById("mm_check_" + id.substring(3));
-        // console.log("showServerErrors", valid, errorDiv);
         if (errorDiv) {
             errorDiv.className = valid ? "mm_check_noerror mm_check_updated" : "mm_check_error mm_check_updated";
             if (errorDiv) {
@@ -1212,6 +1208,7 @@ MMBaseValidator.prototype.validateElement = function(element, server) {
     } else {
         valid = this.valid(element);
         this.updateValidity(element, valid, false);
+
         return valid;
     }
 
