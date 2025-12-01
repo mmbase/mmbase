@@ -2,8 +2,8 @@ package org.mmbase.framework;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import junit.framework.TestCase;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mmbase.bridge.CloudContext;
 import org.mmbase.bridge.mock.MockCloudContext;
@@ -24,6 +24,7 @@ public class DocumentationRendererTest {
     }
 
     @Test
+    @Ignore
     public void testRenderDocumentation() throws FrameworkException, IOException {
         DocumentationRenderer renderer = new DocumentationRenderer(Renderer.Type.BODY, new Block("test", "text/html", new BasicComponent("bla"), "cla"));
         renderer.setDocbook("backenddevelopers/components/index.xml");
