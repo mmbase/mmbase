@@ -617,8 +617,8 @@ See http://www.MMBase.org/license
         <defaultGoal>deploy</defaultGoal>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
+            <version>3.4.0</version>
             <executions>
               <execution>
                 <id>attach-sources</id>
