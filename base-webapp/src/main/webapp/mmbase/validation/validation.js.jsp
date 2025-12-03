@@ -648,14 +648,15 @@ MMBaseValidator.prototype.getDataTypeXml = function(el) {
 
     var dataType = MMBaseValidator.dataTypeCache[el.mm_key];
     if (dataType == null) {
-        var url = '<mm:url page="/mmbase/validation/datatype.jspx" />?';
+        var url = '<mm:url page="/mmbase/validation/datatype.jspx" />';
         var params = this.getDataTypeArguments(key);
 
-        var self = this;
         var needsAmp = false;
         for (var p in params) {
             if (needsAmp) {
                 url += "&";
+            } else {
+                url += "?";
             }
             url += p + "=" + params[p];
             needsAmp = true;
