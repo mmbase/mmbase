@@ -92,13 +92,8 @@
     <dependency>
       <groupId>opensymphony</groupId>
       <artifactId>oscache</artifactId>
-      <version>2.4</version> <!-- do not use 2.4.1, because then you also need commons logging -->
+      <version>2.4.1</version> <!-- do not use 2.4.1, because then you also need commons logging -->
       <exclusions>
-        <exclusion>
-          <!-- provided by base-webapp -->
-          <groupId>log4j</groupId>
-          <artifactId>log4j</artifactId>
-        </exclusion>
         <!-- would also be provided by e.g. lucene
         <exclusion>
 
@@ -107,9 +102,9 @@
         </exclusion>
         -->
         <exclusion>
-          <!-- this is a bug in the oscache pom, if you ask me -->
-          <groupId>javax.servlet</groupId>
-          <artifactId>servlet-api</artifactId>
+          <!-- we never used jms-->
+          <groupId>javax.jms</groupId>
+          <artifactId>jms</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
