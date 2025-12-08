@@ -30,6 +30,7 @@
   <build>
     <defaultGoal>install</defaultGoal>
     <plugins>
+      <!--
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
         <artifactId>tomcat-maven-plugin</artifactId>
@@ -38,6 +39,7 @@
           <warSourceDirectory>src/main/webapp</warSourceDirectory>
         </configuration>
       </plugin>
+      -->
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
@@ -219,6 +221,12 @@
       <version>0.4-SNAPSHOT</version>
       <type>war</type>
     </dependency>
+    <dependency>
+      <groupId>org.mmbase</groupId>
+      <artifactId>mmbase-mmsite</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <type>war</type>
+    </dependency>
 
     <dependency>
       <groupId>org.mmbase</groupId>
@@ -265,6 +273,7 @@
       </properties>
     </profile>
   </profiles>
+  <!-- don't currently use it, and give some issues with jdk8 and certificates.
   <pluginRepositories>
     <pluginRepository>
       <id>caucho</id>
@@ -272,6 +281,7 @@
       <url>https://caucho.com/m2</url>
     </pluginRepository>
   </pluginRepositories>
+  -->
   <repositories>
     <repository>
       <name>Central Portal Snapshots</name>
