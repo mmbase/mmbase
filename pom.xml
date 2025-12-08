@@ -391,10 +391,10 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
           <forkMode>${surefire.fork.mode}</forkMode>
           <childDelegation>false</childDelegation>
           <argLine>${surefire.fork.vmargs}</argLine>
-          <systemProperties>
+          <systemPropertyVariables>
             <property>
               <name>java.awt.headless</name>
-              <value>${java.awt.headless}</value>
+              <value>true</value>
             </property>
             <property>
               <name>mmbase.defaultcloudcontext</name>
@@ -414,8 +414,8 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
               <name>surefire.fork.vmargs</name>
               <value>${surefire.fork.vmargs}</value>
             </property>
-          </systemProperties>
-
+          </systemPropertyVariables>
+<!--
           <check>
             <branchRate>80</branchRate>
             <lineRate>80</lineRate>
@@ -424,7 +424,7 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
             <totalLineRate>80</totalLineRate>
             <packageLineRate>80</packageLineRate>
             <packageBranchRate>80</packageBranchRate>
-          </check>
+          </check>-->
         </configuration>
       </plugin>
       <plugin>
@@ -555,6 +555,7 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
 
   <repositories>
     <repository>
+      <!-- jai-* is not in central, jms (which is dependeny of oscache) isn't either -->
       <id>jboss</id>
       <name>JBoss maven 2 repository</name>
       <url>https://repository.jboss.org/maven2</url>

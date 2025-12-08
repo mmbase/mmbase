@@ -101,7 +101,12 @@ public class MMServers extends MMObjectBuilder implements MMBaseObserver, org.mm
      * @since MMBase-1.7
      */
     protected void start() {
-        future =  ThreadPools.scheduler.scheduleAtFixedRate(new Runnable() {
+        if (intervalTime <= 0) {
+            log.info("MMServers check up disabled (ProbeInterval <= 0)");
+        } else {
+            log.info("MMServers check up started with interval " + intervalTime + " seconds");
+        }
+        future = intervalTime > 0 ?  ThreadPools.scheduler.scheduleAtFixedRate(new Runnable() {
                 public void run() {
                     if (mmb != null && mmb.getState() && ! mmb.isShutdown()) {
                         MMServers.this.doCheckUp();
@@ -109,7 +114,8 @@ public class MMServers extends MMObjectBuilder implements MMBaseObserver, org.mm
                 }
             },
             2,
-            intervalTime, TimeUnit.SECONDS);
+            intervalTime, TimeUnit.SECONDS) : null;
+
         ThreadPools.identify(future, "MMServer check up");
     }
     public void shutdown() {

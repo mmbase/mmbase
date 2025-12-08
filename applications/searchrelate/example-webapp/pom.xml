@@ -16,7 +16,6 @@
   <properties>
     <my.postfix>${mmbase.version.postfix}</my.postfix>
     <base.version>${mmbase.version.number}${my.postfix}</base.version>
-    <saxon.version>9.1.0.6</saxon.version>
   </properties>
 
   <build>

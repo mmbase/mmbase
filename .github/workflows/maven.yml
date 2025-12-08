@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-     image: ghcr.io/mmbase/build:main
+     image: ghcr.io/mmbase/build:3
     env:
       MAVEN_ARGS: '--no-transfer-progress'
     steps:
