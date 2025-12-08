@@ -18,7 +18,7 @@
   </description>
 
   <properties>
-    <saxon.version>9.1.0.8</saxon.version>
+    <saxon.version>8.7</saxon.version>
   </properties>
 
 
@@ -41,11 +41,19 @@
     -->
 
     <dependency>
-      <groupId>net.sourceforge.saxon</groupId>
+      <groupId>net.sf.saxon</groupId>
       <artifactId>saxon</artifactId>
       <version>${saxon.version}</version>
       <scope>runtime</scope>
     </dependency>
+
+    <dependency>
+      <groupId>net.sf.saxon</groupId>
+      <artifactId>saxon-dom</artifactId>
+      <version>${saxon.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
 
     <dependency>
       <groupId>opensymphony</groupId>
