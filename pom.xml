@@ -555,11 +555,6 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
 
   <repositories>
     <repository>
-      <id>jboss</id>
-      <name>JBoss maven 2 repository</name>
-      <url>https://repository.jboss.org/maven2</url>
-    </repository>
-    <repository>
       <name>Central Portal Snapshots</name>
       <id>central-portal-snapshots</id>
       <url>https://central.sonatype.com/repository/maven-snapshots/</url>
