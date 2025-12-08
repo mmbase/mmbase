@@ -46,7 +46,7 @@ See http://www.MMBase.org/license
 
     <compile.flags>-Xlint:unchecked,deprecation,fallthrough,finally</compile.flags>
 
-    <junit.version>4.13.1</junit.version>
+    <junit.version>4.13.2</junit.version>
 
     <buildnumber.doCheck>false</buildnumber.doCheck>
 
