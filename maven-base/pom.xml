@@ -52,7 +52,7 @@ See http://www.MMBase.org/license
 
 
     <netbeans.hint.deploy.server>gfv3</netbeans.hint.deploy.server>
-    <netbeans.hint.jdkPlatform>JDK_1.6</netbeans.hint.jdkPlatform>
+
 
     <!-- Try to configure netbeans to be as faithful as possible to mmbase code conventions -->
     <org-netbeans-modules-editor-indent.CodeStyle.project.tab-size>2</org-netbeans-modules-editor-indent.CodeStyle.project.tab-size>
@@ -137,8 +137,8 @@ See http://www.MMBase.org/license
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.14.1</version>
           <configuration>
-            <source>8</source>
-            <target>8</target>
+            <source>11</source>
+            <target>11</target>
             <maxmem>256M</maxmem>
             <fork>${compiler.fork}</fork>
             <showDeprecation>false</showDeprecation>
