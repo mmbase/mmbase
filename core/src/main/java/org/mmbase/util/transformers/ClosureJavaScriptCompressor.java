@@ -12,10 +12,10 @@ package org.mmbase.util.transformers;
 import com.google.javascript.jscomp.*;
 import com.google.javascript.jscomp.Compiler;
 import java.io.Reader;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Collections;
-import org.mmbase.util.IOUtil;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 
@@ -47,9 +47,10 @@ public class ClosureJavaScriptCompressor extends  ReaderTransformer {
         CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
         WarningLevel.DEFAULT.setOptionsForWarningLevel(options);
 
+        StringWriter writerBuffer = new StringWriter();
+        CopyCharTransformer.INSTANCE.transform(reader, writerBuffer);
+
         try {
-            StringWriter writerBuffer = new StringWriter();
-            IOUtil.copy(reader, writerBuffer);
 
 
             SourceFile input = SourceFile.fromCode("input.js", writerBuffer.toString());
@@ -69,11 +70,15 @@ public class ClosureJavaScriptCompressor extends  ReaderTransformer {
                 writer.write(compiled);
                 LOG.debug("Ready (compiled)");
                 return writer;
+            } else {
+                LOG.error("JavaScript compilation failed");
             }
         } catch (Exception e) {
             LOG.error("Error during JavaScript compression: " + e.getMessage(), e);
-
         }
+        // unsuccessful, return original
+        CopyCharTransformer.INSTANCE.transform(new StringReader(writerBuffer.toString()), writer);
+
         return writer;
 
     }
