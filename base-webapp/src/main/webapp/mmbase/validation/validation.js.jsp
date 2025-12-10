@@ -41,7 +41,7 @@ function MMBaseValidator(root, id) {
     this.checkAfter    = 600;
     this.logArea       = "logarea";
     this.id = MMBaseValidator.validators.push(this);
-    if (MMBaseValidator.validators.length == 1) {
+    if (MMBaseValidator.validators.length === 1) {
         setTimeout(MMBaseValidator.watcher, 500);
     }
     this.saveToForm    = null;
@@ -444,8 +444,8 @@ MMBaseValidator.prototype.hasJavaClass = function(el, javaClass) {
             return true;
         }
         var ex = javaClassElement.getAttribute("extends");
-        var javaClasses = ex.split(",");
-        for (i = 0; i < javaClasses.length; i++) {
+        const javaClasses = ex.split(",");
+        for (let i = 0; i < javaClasses.length; i++) {
             if (pattern.test(javaClasses[i])) {
                 MMBaseValidator.hasJavaClassesCache[key] = true;
                 return true;
@@ -728,7 +728,7 @@ MMBaseValidator.prototype.getDataTypeKey = function(el) {
 MMBaseValidator.prototype.prefetchNodeManager = function(nodemanager) {
     if (nodemanager != undefined) {
         var nm = nodemanager.split(",");
-        for (var i=0; i < nm.length; i++) {
+        for (let i=0; i < nm.length; i++) {
             if (nm[i].length > 0) {
                 var n = nm[i];
                 if (MMBaseValidator.prefetchedNodeManagers[n] == "success") {
