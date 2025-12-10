@@ -16,7 +16,7 @@ public class ClosureJavascriptCompressorTest {
         compressor.transform(
             new StringReader("function test() {\n  var a = 1 + 1; return a; }"),
             writer);
-        assertEquals("'use strict';function test(){return 2};", writer.toString());
+        assertEquals("\n'use strict';function test(){return 2};", writer.toString());
 
     }
 }
