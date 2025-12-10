@@ -26,8 +26,6 @@ public class TransformingWriterTest   {
         String testString = "a=b;";
         writer.write(testString);
         writer.close();
-
-
     }
 
 }

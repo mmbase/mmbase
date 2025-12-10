@@ -3,6 +3,8 @@ name: build
 on:
   push:
     branches: [MMBase-1_9, main]
+  pull_request:
+    branches: [MMBase-1_9, main]
   workflow_dispatch:
     inputs:
       skipTests:

@@ -191,6 +191,12 @@ See http://www.MMBase.org/license
       <version>2.4.8</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>com.google.javascript</groupId>
+      <artifactId>closure-compiler</artifactId>
+      <version>v20220202</version>
+      <optional>true</optional>
+    </dependency>
 
     <!--
     <dependency>

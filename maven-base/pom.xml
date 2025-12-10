@@ -52,7 +52,7 @@ See http://www.MMBase.org/license
 
 
     <netbeans.hint.deploy.server>gfv3</netbeans.hint.deploy.server>
-    <netbeans.hint.jdkPlatform>JDK_1.6</netbeans.hint.jdkPlatform>
+
 
     <!-- Try to configure netbeans to be as faithful as possible to mmbase code conventions -->
     <org-netbeans-modules-editor-indent.CodeStyle.project.tab-size>2</org-netbeans-modules-editor-indent.CodeStyle.project.tab-size>

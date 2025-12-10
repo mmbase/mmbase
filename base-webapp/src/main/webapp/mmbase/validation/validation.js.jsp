@@ -41,7 +41,7 @@ function MMBaseValidator(root, id) {
     this.checkAfter    = 600;
     this.logArea       = "logarea";
     this.id = MMBaseValidator.validators.push(this);
-    if (MMBaseValidator.validators.length == 1) {
+    if (MMBaseValidator.validators.length === 1) {
         setTimeout(MMBaseValidator.watcher, 500);
     }
     this.saveToForm    = null;
@@ -452,8 +452,8 @@ MMBaseValidator.prototype.hasJavaClass = function(el, javaClass) {
             return true;
         }
         var ex = javaClassElement.getAttribute("extends");
-        var javaClasses = ex.split(",");
-        for (i = 0; i < javaClasses.length; i++) {
+        const javaClasses = ex.split(",");
+        for (let i = 0; i < javaClasses.length; i++) {
             if (pattern.test(javaClasses[i])) {
                 MMBaseValidator.hasJavaClassesCache[key] = true;
                 return true;
@@ -553,8 +553,8 @@ MMBaseValidator.prototype.typeValid = function(el) {
 MMBaseValidator.prototype.getValueAttribute = function(numeric, el) {
     if (el == null) return null;
     var value = el.getAttribute("value");
-    var eval = el.getAttribute("eval");
-    if (! eval == "") value = eval;
+    var evalled = el.getAttribute("eval");
+    if (! evalled == "") value = evalled;
 
     if (numeric) {
         if (value === "") return null;
@@ -755,7 +755,7 @@ MMBaseValidator.prototype.getDataTypeKey = function(el) {
 MMBaseValidator.prototype.prefetchNodeManager = function(nodemanager) {
     if (nodemanager != undefined) {
         var nm = nodemanager.split(",");
-        for (var i=0; i < nm.length; i++) {
+        for (let i=0; i < nm.length; i++) {
             if (nm[i].length > 0) {
                 var n = nm[i];
                 if (MMBaseValidator.prefetchedNodeManagers[n] == "success") {
@@ -1027,7 +1027,7 @@ MMBaseValidator.prototype.binaryServerValidation = function(el) {
 };
 
 /**
- * Determins whether a form element contains a valid value, according to the server.
+ * Determines whether a form element contains a valid value, according to the server.
  * Returns an XML containing the reasons why it would not be valid.
  */
 MMBaseValidator.prototype.serverValidation = function(el) {
