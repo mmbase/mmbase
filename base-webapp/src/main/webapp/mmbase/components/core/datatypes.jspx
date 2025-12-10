@@ -1,11 +1,9 @@
 <mm:content
-    type="application/xml"
-    xmlns:c="http://java.sun.com/jsp/jstl/core"
-    xmlns:jsp="http://java.sun.com/JSP/Page"
-    xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
-    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-    xmlns:mm="http://www.mmbase.org/mmbase-taglib-2.0"
-    >
+  type="application/xml"
+  xmlns:c="http://java.sun.com/jsp/jstl/core"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  xmlns:mm="http://www.mmbase.org/mmbase-taglib-2.0"
+>
   <jsp:output omit-xml-declaration="true" />
   <jsp:directive.page import="org.mmbase.datatypes.*,java.util.*" />
   <mm:cloud rank="administrator">
@@ -13,6 +11,8 @@
       class="mm_c c_core b_datatypes ${requestScope.className}"
       id="${requestScope['org.mmbase.componentId']}">
 
+    <mm:url id="ok" write="false" page="/mmbase/style/images/ok.png" />
+    <mm:url id="next" write="false" page="/mmbase/style/images/next.png" />
       <table>
         <mm:cloud>
           <mm:import externid="nodemanager">object</mm:import>
