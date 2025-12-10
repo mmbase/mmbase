@@ -545,8 +545,8 @@ MMBaseValidator.prototype.typeValid = function(el) {
 MMBaseValidator.prototype.getValueAttribute = function(numeric, el) {
     if (el == null) return null;
     var value = el.getAttribute("value");
-    var eval = el.getAttribute("eval");
-    if (! eval == "") value = eval;
+    var evalled = el.getAttribute("eval");
+    if (! evalled == "") value = evalled;
 
     if (numeric) {
         if (value === "") return null;
@@ -1007,7 +1007,7 @@ MMBaseValidator.prototype.binaryServerValidation = function(el) {
 };
 
 /**
- * Determins whether a form element contains a valid value, according to the server.
+ * Determines whether a form element contains a valid value, according to the server.
  * Returns an XML containing the reasons why it would not be valid.
  */
 MMBaseValidator.prototype.serverValidation = function(el) {

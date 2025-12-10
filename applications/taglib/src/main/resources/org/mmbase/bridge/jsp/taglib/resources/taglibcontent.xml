@@ -533,12 +533,12 @@
     <param name="type"    value="svg"/>
   </parameterizedescaper>
 
-  <parameterizedescaper id="javascript-compress">
+  <parameterizedescaper id="javascript-compress-yui">
     <class>org.mmbase.util.transformers.YUIJavaScriptCompressor</class>
-    <fallback>javascript-compress-2</fallback>
+    <fallback>javascript-compress</fallback>
   </parameterizedescaper>
 
-  <parameterizedescaper id="javascript-compress-2">
+  <parameterizedescaper id="javascript-compress">
     <class>org.mmbase.util.transformers.ClosureJavaScriptCompressor</class>
     <fallback>none</fallback>
   </parameterizedescaper>
