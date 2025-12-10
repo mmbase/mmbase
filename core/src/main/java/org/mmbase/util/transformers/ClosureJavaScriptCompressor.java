@@ -41,7 +41,7 @@ public class ClosureJavaScriptCompressor extends  ReaderTransformer {
         // Setup Closure Compiler
         Compiler compiler = new Compiler();
         CompilerOptions options = new CompilerOptions();
-        CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
+        CompilationLevel.ADVANCED_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
         WarningLevel.DEFAULT.setOptionsForWarningLevel(options);
 
         try {
