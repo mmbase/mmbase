@@ -2,6 +2,7 @@ package org.mmbase.util.transformers;
 
 import java.io.StringReader;
 import java.io.StringWriter;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class ClosureJavascriptCompressorTest {
@@ -15,7 +16,7 @@ public class ClosureJavascriptCompressorTest {
         compressor.transform(
             new StringReader("function test() {\n  var a = 1 + 1; return a; }"),
             writer);
-        assert(writer.toString().contains("function test(){return 2}"));
+        assertEquals("'use strict';function test(){return 2};", writer.toString());
 
     }
 }

@@ -41,7 +41,7 @@ public class ClosureJavaScriptCompressor extends  ReaderTransformer {
         // Setup Closure Compiler
         Compiler compiler = new Compiler();
         CompilerOptions options = new CompilerOptions();
-        CompilationLevel.ADVANCED_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
+        CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
         WarningLevel.DEFAULT.setOptionsForWarningLevel(options);
 
         try {
@@ -65,6 +65,7 @@ public class ClosureJavaScriptCompressor extends  ReaderTransformer {
                 return writer;
             }
         } catch (Exception e) {
+            LOG.error("Error during JavaScript compression: " + e.getMessage(), e);
 
         }
         return writer;
