@@ -138,7 +138,7 @@ See http://www.MMBase.org/license
           <version>3.14.1</version>
           <configuration>
             <source>8</source>
-            <target>9</target>
+            <target>8</target>
             <maxmem>256M</maxmem>
             <fork>${compiler.fork}</fork>
             <showDeprecation>false</showDeprecation>
