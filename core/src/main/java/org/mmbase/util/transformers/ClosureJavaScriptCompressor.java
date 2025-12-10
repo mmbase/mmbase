@@ -31,6 +31,9 @@ public class ClosureJavaScriptCompressor extends  ReaderTransformer {
     private static final long serialVersionUID = 0L;
     private static final Logger LOG = Logging.getLoggerInstance(ClosureJavaScriptCompressor.class);
 
+    private boolean initialNewline = true;
+
+
     public ClosureJavaScriptCompressor() {
     }
 
@@ -59,6 +62,9 @@ public class ClosureJavaScriptCompressor extends  ReaderTransformer {
             );
 
             if (result.success) {
+                if (initialNewline) {
+                    writer.write('\n');
+                }
                 String compiled = compiler.toSource();
                 writer.write(compiled);
                 LOG.debug("Ready (compiled)");
@@ -71,5 +77,10 @@ public class ClosureJavaScriptCompressor extends  ReaderTransformer {
         return writer;
 
     }
+
+    public void setInitialNewline(boolean i) {
+        initialNewline = i;
+    }
+
 
 }
