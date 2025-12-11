@@ -93,7 +93,7 @@ MMBaseValidator.prototype.setup = function(el) {
         }
     }
 
-    if (this.root !== null) {
+    if (this.root != null) {
         var self = this;
         docReady(function(event) {
             self.onLoad(event);
@@ -103,7 +103,7 @@ MMBaseValidator.prototype.setup = function(el) {
 
 
 MMBaseValidator.prototype.onLoad = function(event) {
-    if (this.root === null && event !== null) {
+    if (this.root == null && event != null) {
         this.root = event.target;
     }
     //console.log("Root" + this.root);
@@ -206,7 +206,7 @@ MMBaseValidator.prototype.find = function(el, path, r) {
  * Whether the element is a 'required' form input
  */
 MMBaseValidator.prototype.isRequired = function(el) {
-    if (el.mm_isrequired !== null) return el.mm_isrequired;
+    if (el.mm_isrequired != null) return el.mm_isrequired;
     const re = this.find(this.getDataTypeXml(el), 'datatype required')[0];
     el.mm_isrequired = re != null && ("true" === "" + re.getAttribute("value"));
     el.mm_isrequired_enforce = re != null && re.getAttribute("enforce");
@@ -235,7 +235,7 @@ MMBaseValidator.prototype.getLength = function(el) {
             this.getDataTypeKey(el); // set also mm_length
             length = el.mm_initial_length;
         } else {
-            if (el.files === null) {
+            if (el.files == null) {
                 try {
                     // We can always try.
                     // According to
@@ -368,7 +368,7 @@ MMBaseValidator.prototype.lengthValid = function(el) {
 
     if (el.mm_length_set == null) {
         const l =  this.find(xml, 'datatype length')[0];
-        if (l !== null) {
+        if (l != null) {
             el.mm_length = parseInt(l.getAttribute("value"));
             el.mm_length_enforce = l.getAttribute("enforce");
         }
@@ -376,7 +376,7 @@ MMBaseValidator.prototype.lengthValid = function(el) {
     }
 
     if (this.enforce(el, el.mm_length_enforce)) {
-        if (el.mm_length != null && length !== el.mm_length) {
+        if (el.mm_length != null && length != el.mm_length) {
             return false;
         }
     }
@@ -417,7 +417,7 @@ MMBaseValidator.prototype.patternValid = function(el) {
         if (el.value === "" || el.value == null) return true;
       }
         const xml = this.getDataTypeXml(el);
-        if (el.mm_pattern === null) {
+        if (el.mm_pattern == null) {
             const javaPatternXml = this.find(xml, 'datatype pattern')[0];
             if (javaPatternXml == null) {
                 alert("No pattern found for " + el.id);
@@ -471,13 +471,13 @@ MMBaseValidator.prototype.hasJavaClass = function(el, javaClass) {
  * double, integer and long. This means that we don't care about loss of precision only.
  */
 MMBaseValidator.prototype.isNumeric = function(el) {
-    if (el.mm_isnumeric !== null) return el.mm_isnumeric;
+    if (el.mm_isnumeric != null) return el.mm_isnumeric;
     el.mm_isnumeric = this.hasJavaClass(el, "org\.mmbase\.datatypes\.NumberDataType");
     return el.isnumeric;
 };
 
 MMBaseValidator.prototype.isBoolean = function(el) {
-    if (el.mm_isboolean !== null) return el.mm_isboolean;
+    if (el.mm_isboolean != null) return el.mm_isboolean;
     el.mm_isboolean = this.hasJavaClass(el, "org\.mmbase\.datatypes\.BooleanDataType");
     return el.isboolean;
 };
@@ -490,12 +490,12 @@ MMBaseValidator.prototype.isInteger = function(el) {
 
 MMBaseValidator.prototype.isFloat = function(el) {
     if (el.mm_isfloat != null) return el.mm_isfloat;
-    el.mm_isfloat = this.hasJavaClass(el, "(org\.mmbase\.datatypes\.FloatDataType|org\.mmbase\.datatypes\.DoubleDataType)");
+    el.mm_isfloat = this.hasJavaClass(el, "(org\.mmbase\.datatypes\.FloatDataType|org\.mmbase\.datatypes\.DoubleDataType|org\.mmbase\.datatypes\.DecimalDataType)");
     return el.mm_isfloat;
 };
 
 MMBaseValidator.prototype.isString = function(el) {
-    if (el.mm_isstring !== null) {
+    if (el.mm_isstring != null) {
         return el.mm_isstring;
     }
     el.mm_isstring =  this.hasJavaClass(el, "org\.mmbase\.datatypes\.StringDataType");
@@ -503,25 +503,25 @@ MMBaseValidator.prototype.isString = function(el) {
 };
 
 MMBaseValidator.prototype.isDateTime = function(el) {
-    if (el.mm_isdatetime !== null) return el.mm_isdatetime;
+    if (el.mm_isdatetime != null) return el.mm_isdatetime;
     el.mm_isdatetime = this.hasJavaClass(el, "org\.mmbase\.datatypes\.DateTimeDataType");
     return el.mm_isdatetime;
 };
 
 MMBaseValidator.prototype.isBinary = function(el) {
-    if (el.mm_isbinary !== null) return el.mm_isbinary;
+    if (el.mm_isbinary != null) return el.mm_isbinary;
     el.mm_isbinary = this.hasJavaClass(el, "org\.mmbase\.datatypes\.BinaryDataType");
     return el.mm_isbinary;
 };
 
 MMBaseValidator.prototype.isCheckEquality = function(el) {
-    if (el.mm_ischeckequality !== null) return el.mm_ischeckequality;
+    if (el.mm_ischeckequality != null) return el.mm_ischeckequality;
     el.mm_ischeckequality = this.hasJavaClass(el, "org\.mmbase\.datatypes\.CheckEqualityDataType");
     return el.ischeckequality;
 };
 
 MMBaseValidator.prototype.isXml = function(el) {
-    if (el.mm_isxml !== null) return el.mm_isxml;
+    if (el.mm_isxml != null) return el.mm_isxml;
     el.mm_isxml= this.hasJavaClass(el, "org\.mmbase\.datatypes\.XmlDataType");
     return el.mm_isxml;
 };
@@ -751,7 +751,7 @@ MMBaseValidator.prototype.getDataTypeKey = function(el) {
  *
  */
 MMBaseValidator.prototype.prefetchNodeManager = function(nodemanager) {
-    if (nodemanager !== undefined) {
+    if (nodemanager != null) {
         const nm = nodemanager.split(",");
         for (let i=0; i < nm.length; i++) {
             if (nm[i].length > 0) {
@@ -1108,7 +1108,7 @@ MMBaseValidator.prototype.target = function(event) {
 
 MMBaseValidator.prototype.getElement = function(event) {
     let target = this.target(event);
-    if (target === null) target = event;
+    if (target == null) target = event;
     //this.log("event " + event.type + " on " + target.id);
     if (target.classList.contains("mm_validate")) {
       return target;
@@ -1258,7 +1258,7 @@ MMBaseValidator.prototype.getValidElements = function() {
 };
 
 MMBaseValidator.prototype.removeValidation = function(el) {
-    if (el === null) {
+    if (el == null) {
         el = document.documentElement;
     }
     const self = this;
