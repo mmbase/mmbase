@@ -47,12 +47,21 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }} # required
           verbose: true # optional (default = false)
       - uses: MMProgrami/after-maven-action@v2
+      - name: Set variables
+        id: vars
+        run: |
+          commit_timestamp=$(git show -s --format="%ci" ${{github.sha}})
+          echo commit $commit_timestamp
+          echo "commit_timestamp=${commit_timestamp}" >> "$GITHUB_OUTPUT"
+          echo project_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout) >>  "$GITHUB_OUTPUT"
+        shell: bash
       - uses: actions/upload-artifact@v5
         with:
           name: wars
           path: |
               example-webapp/target/*.war
               example-webapp/Dockerfile
+              base-webapp/target/*.war
   docker:
     needs: maven
     runs-on: ubuntu-latest
