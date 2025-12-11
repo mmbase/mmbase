@@ -97,6 +97,8 @@ jobs:
             type=ref,event=tag
             type=raw,value=latest,enable={{is_default_branch}}
             type=pep440,pattern={{major}},event=tag
+          annotations: |
+            index:org.opencontainers.image.documentation=https://github.com/mmbase/mmbase/tree/MMBase-1_9/${{matrix.directory}}
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v6
@@ -105,11 +107,11 @@ jobs:
           context: ${{ matrix.directory }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
           cache-from: type=registry,ref=ghcr.io/mmbase/${{ matrix.directory }}:buildcache
           cache-to: type=registry,ref=ghcr.io/mmbase/${{ matrix.directory }}:buildcache,mode=max
           platforms: linux/amd64,linux/arm64
-          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=MMBase Example image
+          annotations: ${{ steps.meta.outputs.annotations }}
+          outputs: type=image,name=target
           build-args: |
             CI_COMMIT_REF_NAME=${{ github.ref_name }}
             CI_COMMIT_SHA=${{ github.sha }}
