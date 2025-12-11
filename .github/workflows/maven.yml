@@ -71,7 +71,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        directory: [ example-webapp ]
+        directory: [ example-webapp, base-webapp ]
     steps:
       - name: Download WAR artifact
         uses: actions/download-artifact@v6
