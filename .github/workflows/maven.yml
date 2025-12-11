@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  maven:
     runs-on: ubuntu-latest
     container:
      image: ghcr.io/mmbase/build:3
