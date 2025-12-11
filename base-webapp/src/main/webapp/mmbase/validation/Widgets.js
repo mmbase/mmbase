@@ -1,12 +1,12 @@
 /**
  * Javascript to mold default html input widgets (e.g. as made by <mm:fieldinfo type="input" />) to things regularly requested by customers.
  *
- * @TODO It would be nice if some of these methods (like 'enumerationSuggestion' for non-enforces enumeration) be called automaticly.
- *        Currently the moldingprocess must be bootstrapped manually, per input box.
+ * @TODO It would be nice if some of these methods (like 'enumerationSuggestion' for non-enforces enumeration) be called automatically.
+ *        Currently the molding process must be bootstrapped manually, per input box.
 
  * Supported are
  *  -  Widgets.instance.enumerationSuggestion(selector):  Makes single selection only a suggestion, meaning that the value 'OTHER' gives the user the possibility to type a value herself
- *  -  Widgets.instance.boxes(selector):  Makes select into a list of checkboxes (multiple) or radioboxes (single)
+ *  -  Widgets.instance.boxes(selector):  Makes select into a list of checkboxes (multiple) or radio boxes (single)
  *  -  Widgets.instance.twoMultiples(selector):  Splits up multiple selection into 2 boxes, the left one containing the selected values, the right one the optiosn which are not selected.
 
  *  -  Widgets.instance.labelsToInputs(selector):  Select a bunch of 'labels'. The text of the label will be put as value of the associated text-input, and removed on focus. The label itself will be hidden.
