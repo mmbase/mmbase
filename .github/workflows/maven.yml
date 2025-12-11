@@ -47,5 +47,66 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }} # required
           verbose: true # optional (default = false)
       - uses: MMProgrami/after-maven-action@v2
+      - uses: actions/upload-artifact@v5
+        with:
+          name: wars
+          path: |
+              example-webapp/target/*.war
+              example-webapp/Dockerfile
+  docker:
+    needs: maven
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        directory: [ example-webapp ]
+    steps:
+      - name: Download WAR artifact
+        uses: actions/download-artifact@v6
+        with:
+          name: "wars"
+          path: .
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Log into registry ghcr.io
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/mmbase/${{matrix.directory}}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=pep440,pattern={{major}},event=tag
+      - name: Build and push Docker image
+        id: build-and-push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          context: ${{ matrix.directory }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=ghcr.io/mmbase/${{ matrix.directory }}:buildcache
+          cache-to: type=registry,ref=ghcr.io/mmbase/${{ matrix.directory }}:buildcache,mode=max
+          platforms: linux/amd64,linux/arm64
+          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=MMBase Example image
+          build-args:
+            CI_COMMIT_REF_NAME=${{ github.ref_name }}
+            CI_COMMIT_SHA=${{ github.sha }}
+            CI_COMMIT_TITLE=${{ github.event.head_commit.message }}
+            CI_COMMIT_TIMESTAMP=${{ needs.build.outputs.outputs.commit_timestamp }}
+            PROJECT_VERSION=${{ needs.build.outputs.outputs.project_version }}
+
+
+
 
 
