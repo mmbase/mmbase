@@ -13,7 +13,7 @@
     <h2>Node Manager: ${nodeManager.name}</h2>
     <ul>
       <mm:listnodes type="${nodeManager.name}" max="1" >
-        <c:forEach items="${_node}" var="fun">
+        <c:forEach items="${_node.functions}" var="fun">
           <li>
             ${fun.class}
             <mm:escape>${fun}</mm:escape>
