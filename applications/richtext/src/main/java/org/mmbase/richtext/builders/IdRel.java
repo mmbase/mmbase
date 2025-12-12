@@ -25,6 +25,7 @@ public class IdRel extends InsRel {
     public static final String VERSION_FROM = "version_from";
     public static final String VERSION_TO   = "version_to";
 
+    @Override
     public String getGUIIndicator(MMObjectNode node) {
         return super.getGUIIndicator(node) + ":" + node.getStringValue(ID);
     }

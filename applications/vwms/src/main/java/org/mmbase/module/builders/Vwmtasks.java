@@ -145,6 +145,7 @@ public class Vwmtasks extends MMObjectBuilder implements Runnable {
      * @param node The node to be committed.
      * @return the node to be committed (after changes have been made).
      */
+    @Override
     public MMObjectNode preCommit(MMObjectNode node) {
         node.setValue("changedtime",(int)(System.currentTimeMillis()/1000));
         return node;
@@ -156,6 +157,7 @@ public class Vwmtasks extends MMObjectBuilder implements Runnable {
      * @param node The node to display
      * @return the display of the node as a <code>String</code>
      */
+    @Override
     public String getGUIIndicator (MMObjectNode node) {
         String str = node.getStringValue ("task");
         if (str.length () > 15) {
@@ -172,6 +174,7 @@ public class Vwmtasks extends MMObjectBuilder implements Runnable {
      * @param field the name field of the field to display
      * @return the display of the node's field as a <code>String</code>, null if not specified
      */
+    @Override
     public String getGUIIndicator (String field, MMObjectNode node) {
         if (field.equals ("status")) {
             int val = node.getIntValue ("status");

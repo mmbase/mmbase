@@ -253,6 +253,7 @@ public class TypeRel extends MMObjectBuilder implements SystemEventListener {
      * @return An <code>int</code> value which is the new object's unique number, -1 if the insert
      * failed.
      */
+    @Override
     public int insert(String owner, MMObjectNode node) {
         int snumber = node.getIntValue("snumber");
         int dnumber = node.getIntValue("dnumber");
@@ -270,6 +271,7 @@ public class TypeRel extends MMObjectBuilder implements SystemEventListener {
      * Remove a node from the cloud.
      * @param node The node to remove.
      */
+    @Override
     public void removeNode(MMObjectNode node) {
         super.removeNode(node);
     }
@@ -384,6 +386,7 @@ public class TypeRel extends MMObjectBuilder implements SystemEventListener {
      * @param node Node from which to retrieve the data
      * @return A <code>String</code> describing the content of the node
      */
+    @Override
     public String getGUIIndicator(MMObjectNode node) {
         try {
             String source = mmb.getTypeDef().getValue(node.getIntValue("snumber"));
@@ -404,6 +407,7 @@ public class TypeRel extends MMObjectBuilder implements SystemEventListener {
      * @param node Node from which to retrieve the data
      * @return A <code>String</code> describing the content of the field
      */
+    @Override
     public String getGUIIndicator(String field, MMObjectNode node) {
         try {
             if (field.equals("snumber")) {
@@ -627,6 +631,7 @@ public class TypeRel extends MMObjectBuilder implements SystemEventListener {
      * are the same, and the rnumber fields are the same, or one of these is '-1' (don't care).
      * @since MMBase-1.6.2
      */
+    @Override
     public boolean equals(MMObjectNode o1, MMObjectNode o2) {
         if (o2.getBuilder() instanceof TypeRel) {
             int r1 = o1.getIntValue("rnumber");
@@ -641,6 +646,7 @@ public class TypeRel extends MMObjectBuilder implements SystemEventListener {
      * Implements for MMObjectNode
      * @since MMBase-1.6.2
      */
+    @Override
     public int hashCode(MMObjectNode o) {
         int result = 0;
         result = HashCodeUtil.hashCode(result, o.getIntValue("snumber"));
@@ -649,6 +655,7 @@ public class TypeRel extends MMObjectBuilder implements SystemEventListener {
         return result;
     }
 
+    @Override
     public String toString(MMObjectNode n) {
         try {
             int snumber = n.getIntValue("snumber");

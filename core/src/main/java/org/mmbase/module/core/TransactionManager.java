@@ -36,7 +36,7 @@ public class TransactionManager {
      * NOLONGER: The node alreayd existed, but will be deleted by the transaction. Or, it was created and deleted in the transaction.
      * UNDEFINED: Just a value used to indicate that the corresponding _exists field is not filled
      */
-    public static enum Exists {
+    public enum Exists {
         NO,
         YES,
         NOLONGER,
@@ -283,7 +283,7 @@ public class TransactionManager {
     }
 
 
-    private class NodeState {
+    private static class NodeState {
         public Exists exists;
         public State state;
         public boolean changed = true;

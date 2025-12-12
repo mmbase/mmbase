@@ -63,6 +63,7 @@ public class Ranks extends MMObjectBuilder {
     /**
      * If a rank is inserted, it must be registered
      */
+    @Override
     public int insert(String owner, MMObjectNode node) {
         int res = super.insert(owner, node);
         int rank = node.getIntValue("rank");
@@ -98,6 +99,7 @@ public class Ranks extends MMObjectBuilder {
      * A rank may only be removed if there are no users of that rank.
      *
      */
+    @Override
     public void removeNode(MMObjectNode node) {
         List<MMObjectNode> users =  node.getRelatedNodes("mmbaseusers", RelationStep.DIRECTIONS_SOURCE);
         if (users.size() > 1) {
@@ -158,6 +160,7 @@ public class Ranks extends MMObjectBuilder {
      * Only the description of a rarnk may be changed.
      *
      */
+    @Override
     public boolean setValue(MMObjectNode node, String field, Object originalValue) {
         if (field.equals("name") || field.equals("rank")) {
             if ( (!node.getValue(field).equals(originalValue)) && (originalValue != null)) {
@@ -168,6 +171,7 @@ public class Ranks extends MMObjectBuilder {
     }
 
     //javadoc inherited
+    @Override
     public void setDefaults(MMObjectNode node) {
         // does not work because setValue disallowes changing
         //setUniqueValue(node, "name", "rank");

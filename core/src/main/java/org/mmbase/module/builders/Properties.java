@@ -51,6 +51,7 @@ public class Properties extends MMObjectBuilder {
 
     private static final Logger log = Logging.getLoggerInstance(Properties.class);
 
+    @Override
     public String getGUIIndicator(MMObjectNode node) {
         String str = node.getStringValue("key");
         if (str.length() > 15) {

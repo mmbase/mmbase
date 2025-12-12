@@ -39,6 +39,7 @@ public class VirtualReferrerBuilder extends VirtualBuilder {
      * @param node The node to display
      * @return either the name field of the node or "no info"
      */
+    @Override
     public String getGUIIndicator(MMObjectNode node) {
         return originalBuilder.getGUIIndicator(node);
     }
@@ -49,7 +50,8 @@ public class VirtualReferrerBuilder extends VirtualBuilder {
      * @param field the fieldname that is requested
      * @return the result of the 'function', or null if no valid functions could be determined.
      */
-    public Object getValue(MMObjectNode node,String field) {
+    @Override
+    public Object getValue(MMObjectNode node, String field) {
         return originalBuilder.getValue(node, field);
     }
 

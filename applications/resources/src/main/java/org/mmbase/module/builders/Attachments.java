@@ -146,6 +146,7 @@ public class Attachments extends AbstractServletBuilder {
      *
      * @since MMBase-1.6.1
      */
+    @Override
     protected Object executeFunction(MMObjectNode node, String function, List<?> args) {
         log.debug("executeFunction of attachments builder");
         if ("mimetype".equals(function)) {

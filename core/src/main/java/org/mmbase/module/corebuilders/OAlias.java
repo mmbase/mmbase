@@ -187,6 +187,7 @@ public class OAlias extends MMObjectBuilder {
      * Remove a node from the cloud and update the cache
      * @param node The node to remove.
      */
+    @Override
     public void removeNode(MMObjectNode node) {
         String name = node.getStringValue("name");
         super.removeNode(node);
@@ -199,6 +200,7 @@ public class OAlias extends MMObjectBuilder {
      * cache.
      * @since MMBase-1.7.1
      */
+    @Override
     public boolean nodeRemoteChanged(String machine, String number, String builder, String ctype) {
         if (builder.equals(getTableName())) {
             if (ctype.equals("c") || ctype.equals("n")) {

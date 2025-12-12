@@ -139,7 +139,7 @@ public class DoveServlet extends MMBaseServlet { // MMBase, only to be able to u
      * These can then be retrieved by the Dove servlet, so it can generate an
      * error response.
      */
-    public class DoveErrorHandler implements org.xml.sax.ErrorHandler {
+    public static class DoveErrorHandler implements org.xml.sax.ErrorHandler {
 
         /**
          * The errors that occurred during the parse.

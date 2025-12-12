@@ -128,7 +128,8 @@ public class Cookies extends MMObjectBuilder {
     /**
     * local change on a cookie object detected
     */
-    public boolean nodeLocalChanged(String machine,String number,String builder,String ctype) {
+    @Override
+    public boolean nodeLocalChanged(String machine, String number, String builder, String ctype) {
         super.nodeLocalChanged(machine,number,builder,ctype);
         return(nodeChanged(machine,number,builder,ctype));
     }
@@ -136,7 +137,8 @@ public class Cookies extends MMObjectBuilder {
     /**
     * remote  change on a cookie object detected
     */
-    public boolean nodeRemoteChanged(String machine,String number,String builder,String ctype) {
+    @Override
+    public boolean nodeRemoteChanged(String machine, String number, String builder, String ctype) {
         super.nodeRemoteChanged(machine,number,builder,ctype);
         return(nodeChanged(machine,number,builder,ctype));
     }

@@ -51,6 +51,7 @@ public class NetFileSrv extends MMObjectBuilder {
      * @param node The node to display
      * @return the display of the node as a <code>String</code>
      */
+    @Override
     public String getGUIIndicator(MMObjectNode node) {
         String str=node.getStringValue("service");
         str+="/"+node.getStringValue("subservice");

@@ -16,6 +16,7 @@ public class MyNewsBuilder extends org.mmbase.util.functions.ExampleBuilder {
 
     // Adds a few 'virtual' fields.
 
+    @Override
     public Object getValue(MMObjectNode node, String field) {
         if ("magazine".equals(field)) {
             log.trace("Getting magazine virtual field");

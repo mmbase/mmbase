@@ -166,13 +166,13 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
      * The string that can be used inside the builder.xml as property,
      * to define the maximum number of nodes to return.
      */
-    private static String MAX_NODES_FROM_QUERY_PROPERTY = "max-nodes-from-query";
+    private static final String MAX_NODES_FROM_QUERY_PROPERTY = "max-nodes-from-query";
 
     /**
      * The string that can be used inside the builder.xml as property,
      * to set whether the builder broadcasts changes to nodes to eventlisteners.
      */
-    private static String BROADCAST_CHANGES_PROPERTY = "broadcast-changes";
+    private static final String BROADCAST_CHANGES_PROPERTY = "broadcast-changes";
 
     /**
      * Description of the builder in the currently selected language
@@ -266,6 +266,7 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
             {
                 setDescription("This function wraps a field, word-by-word. You can use this, e.g. in <pre>-tags. This functionality should be available as an 'escaper', and this version should now be considered an example.");
             }
+            @Override
             public String getFunctionValue(Node node, Parameters parameters) {
                 String val = node.getStringValue(parameters.getString(Parameter.FIELD));
                 Number wrappos = (Number) parameters.get("length");
@@ -297,9 +298,11 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
         {
             setDescription("The 'getFunctions' returns a Map of al Function object which are available on this FunctionProvider");
         }
+        @Override
         public Collection<? extends Function> getFunctionValue(Node node, Parameters parameters) {
             return MMObjectBuilder.this.getFunctions(getCoreNode(MMObjectBuilder.this, node));
         }
+        @Override
         public Collection<? extends Function> getFunctionValue(Parameters parameters) {
             Node node = parameters.get(Parameter.NODE);
             if (node == null) {
@@ -706,7 +709,7 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
      * Actual broadcasting (and cache emptying) is initiated in the storage layer, when
      * changes are commited.
      * By default, all builders broadcast their changes, with the exception of the TypeDef builder.
-     *
+     * <p>
      * MM: Can somebody please explain _why_ typedef node changes, like e.g. creating a new node type are _not_ broadcast.
      * @since MMBase-1.8
      */
@@ -1050,8 +1053,8 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
     /**
      * Locks the node cache during the commit of a node.  This prevents the cache from gaining an
      * invalid state during the commit.
-     *
-     * Basicly the goals is to ensure that nothing is put into the cache during a commit of a node,
+     * <p>
+     * Basically the goal is to ensure that nothing is put into the cache during a commit of a node,
      * because that may be the wrong node then.
      */
     boolean safeCommit(MMObjectNode node) {
@@ -1201,7 +1204,7 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
      * with underscore ('_'), wich it usually does, then the field does also get a 'dbpos' (1000) as if it
      * was actually present in the builder's XML as a virtual field (this is accompanied with a log
      * message).
-     *
+     * <p>
      * Normally this is used to add 'tmp' fields like _number, _exists and _snumber which are system
      * fields which are normally invisible.
      *
@@ -1417,7 +1420,7 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
         if (locale == null) {
             if (field == null || "".equals(field)) {
                 rtn = getGUIIndicator(node);
-                if (rtn == GUI_INDICATOR) { // not overridden
+                if (rtn.equals(GUI_INDICATOR)) { // not overridden
                     rtn = getNodeGUIIndicator(node, pars);
                 }
             } else {
@@ -1426,7 +1429,7 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
         } else {
             if (field == null || "".equals(field)) {
                 rtn = getLocaleGUIIndicator(locale, node);
-                if (rtn == GUI_INDICATOR) { // not overridden
+                if (rtn.equals(GUI_INDICATOR)) { // not overridden
                     rtn = getNodeGUIIndicator(node, pars);
                 }
             } else {
@@ -1570,7 +1573,7 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
                 } else {
                     // may return GUI_INDICATOR
                     String rtn = otherNode.parent.getGUIIndicator(otherNode);
-                    if (rtn == GUI_INDICATOR) {
+                    if (rtn.equals(GUI_INDICATOR)) {
                         rtn = otherNode.parent.getNodeGUIIndicator(otherNode, null);
                     }
                     return rtn;
@@ -1787,10 +1790,10 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
     /**
      * Executes a 'function' on a MMObjectNode. The function is
      * identified by a string, and its arguments are passed by a List.
-     *
+     * <p>
      * The function 'info' should exist, and this will return a Map
      * with descriptions of the possible functions.
-     *
+     * <p>
      * Call {@link #addFunction} in your extension if you want to add functions.
      *
      * @param node The node on which the function must be executed
@@ -1861,6 +1864,7 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
      * @inheritDoc
      * @since MMBase-1.8
      */
+    @Override
     protected Function newFunctionInstance(String name, Parameter[] parameters, ReturnType returnType) {
         return new MMObjectNodeFunction<Object>(name, parameters, returnType) {
             @Override public Object getFunctionValue(Node node, Parameters parameters) {
@@ -1983,7 +1987,7 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
     /**
      * Executes a function on the field of a node, and returns the result.
      * This method is called by the builder's {@link #getValue} method.
-     *
+     * <p>
      * current functions are:<br />
      * on dates: date, time, timesec, longmonth, month, monthnumber, weekday, shortday, day, yearhort year<br />
      * on text:  wap, html, shorted, uppercase, lowercase <br />
@@ -2031,7 +2035,7 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
 
     /**
      * @deprecated This method will be finalized in MMBase 1.9 and removed afterwards.
-     *
+     * <p>
      * You can implement a new smart-path for your builders, with a class like {@link
      * org.mmbase.module.core.SmartPathFunction} in stead, and configure it in your builder xml as
      * the implementation for the 'smartpath' function. This makes extensions less dependent on
@@ -2514,12 +2518,12 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
      * Returns a HTML-version of a string.
      * This replaces a number of tokens with HTML sequences.
      * The default output does not match well with the new xhtml standards (ugly html), nor does it replace all tokens.
-     *
+     * <p>
      * Default replacements can be overridden by setting the builder properties in your <builder>.xml:
-     *
+     * <p>
      * html.alinea
      * html.endofline
-     *
+     * <p>
      * Example:
      * <properties>
      *   <property name="html.alinea"> &lt;br /&gt; &lt;br /&gt;</property>
@@ -2900,7 +2904,7 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
 
     /**
      * Equals must be implemented because of the list of MMObjectBuilder which is used for ancestors
-     *
+     * <p>
      * Declared the method final, because the instanceof operator is used. This is the only
      * MMObjectBuilder is frequently extended and subclasses will always break
      * the equals contract.
@@ -2979,6 +2983,7 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
      * this method covers for both node and relation events.
      * @since MMBase-1.8
      */
+    @Override
     public void notify(NodeEvent event) {
         if (log.isDebugEnabled()) {
             log.debug("" + this + " received node event " + event);
@@ -2990,6 +2995,7 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
     /**
      * @since MMBase-1.8
      */
+    @Override
     public void notify(RelationEvent event) {
         if (log.isDebugEnabled()) {
             log.debug("" + this + " received relation event " + event);

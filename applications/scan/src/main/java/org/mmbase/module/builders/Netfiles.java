@@ -81,7 +81,8 @@ public class Netfiles extends MMObjectBuilder {
      * @param field the name field of the field to display
      * @return the display of the node's field as a <code>String</code>, null if not specified
      */
-    public String getGUIIndicator(String field,MMObjectNode node) {
+    @Override
+    public String getGUIIndicator(String field, MMObjectNode node) {
         if (field.equals("status")) {
             int val=node.getIntValue("status");
             switch(val) {
@@ -107,7 +108,8 @@ public class Netfiles extends MMObjectBuilder {
      * @param ctype command type, 'c'=changed, 'd'=deleted', 'r'=relations changed, 'n'=new
      * @return <code>true</code> if maintenance was performed, <code>false</code> (the default) otherwise
      */
-    public boolean nodeRemoteChanged(String machine, String number,String builder,String ctype) {
+    @Override
+    public boolean nodeRemoteChanged(String machine, String number, String builder, String ctype) {
         super.nodeRemoteChanged(machine, number,builder,ctype);
         // vpro-thingy, has to go
         if (mmb.getMachineName().equals("twohigh")) {
@@ -133,7 +135,8 @@ public class Netfiles extends MMObjectBuilder {
      * @param ctype command type, 'c'=changed, 'd'=deleted', 'r'=relations changed, 'n'=new
      * @return <code>true</code> if maintenance was performed, <code>false</code> (the default) otherwise
      */
-    public boolean nodeLocalChanged(String machine, String number,String builder,String ctype) {
+    @Override
+    public boolean nodeLocalChanged(String machine, String number, String builder, String ctype) {
         super.nodeLocalChanged(machine, number,builder,ctype);
         // vpro-thingy, has to go
         if (mmb.getMachineName().equals("twohigh")) {

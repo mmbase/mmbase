@@ -26,7 +26,7 @@
          mimetype="text/html">
     <title xml:lang="en">Search &amp; Relate</title>
     <title xml:lang="nl">Search &amp; Relate</title>
-    <xi:include href="http://www.mmbase.org/components/docbook.head.xml" />
+    <xi:include href="https://www.mmbase.org/components/docbook.head.xml" />
     <body>
       <class name="org.mmbase.framework.DocumentationRenderer">
         <param name="docbook">index.xml</param>
@@ -43,7 +43,7 @@
     <title xml:lang="en">mm-sr:documentation</title>
     <body>
       <class name="org.mmbase.framework.IFrameRenderer">
-        <param name="url">http://www.mmbase.org/tags/mm/searchrelate/mm-sr/tld-summary.html</param>
+        <param name="url">https://www.mmbase.org/tags/mm/searchrelate/mm-sr/tld-summary.html</param>
       </class>
     </body>
   </block>

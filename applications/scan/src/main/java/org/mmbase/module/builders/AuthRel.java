@@ -19,7 +19,8 @@ public class AuthRel extends InsRel {
 	/**
 	* setDefaults for a node
 	*/
-	public void setDefaults(MMObjectNode node) {
+	@Override
+    public void setDefaults(MMObjectNode node) {
 	    super.setDefaults(node);
 		node.setValue("creat",1);
 		node.setValue("us",1);
@@ -27,7 +28,8 @@ public class AuthRel extends InsRel {
 	}
 
 
-	public String getGUIIndicator(String field,MMObjectNode node) {
+	@Override
+    public String getGUIIndicator(String field, MMObjectNode node) {
 		if (field.equals("creat")) {
 			int val=node.getIntValue("creat");
 			switch(val) {

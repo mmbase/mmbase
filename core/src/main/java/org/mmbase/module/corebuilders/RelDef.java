@@ -159,6 +159,7 @@ public class RelDef extends MMObjectBuilder {
      * @param node Relation definition to describe
      * @return A <code>String</code> of descriptive text
      */
+    @Override
     public String getGUIIndicator(MMObjectNode node) {
         int dir = node.getIntValue("dir");
         if (dir == DIR_UNIDIRECTIONAL) {
@@ -287,6 +288,7 @@ public class RelDef extends MMObjectBuilder {
      * Tests whether the data in a node is valid (throws an exception if this is not the case).
      * @param node The node whose data to check
      */
+    @Override
     public void testValidData(MMObjectNode node) throws InvalidDataException{
         int dir=node.getIntValue("dir");
         if ((dir!=DIR_UNIDIRECTIONAL) && (dir!=DIR_BIDIRECTIONAL)) {
@@ -310,6 +312,7 @@ public class RelDef extends MMObjectBuilder {
      * @param node The object to insert. The object need be of the same type as the current builder.
      * @return An <code>int</code> value which is the new object's unique number, -1 if the insert failed.
      */
+    @Override
     public int insert(String owner, MMObjectNode node) {
         // check RelDef for duplicates
         String sname = node.getStringValue("sname");
@@ -333,6 +336,7 @@ public class RelDef extends MMObjectBuilder {
      * @param node The node to be committed
      * @return a <code>boolean</code> indicating success
      */
+    @Override
     public boolean commit(MMObjectNode node) {
         boolean success = super.commit(node);
         if (success) {
@@ -345,6 +349,7 @@ public class RelDef extends MMObjectBuilder {
      * Remove a node from the cloud.
      * @param node The node to remove.
      */
+    @Override
     public void removeNode(MMObjectNode node) {
         // check occurrences in TypeRel
         // perhaps this can also be done using getAllowedRelations() ?
@@ -388,6 +393,7 @@ public class RelDef extends MMObjectBuilder {
      * Initializes a relation to be bidirectional, and, if applicable, to use the 'insrel' builder.
      *    @param node Node to be initialized
      */
+    @Override
     public void setDefaults(MMObjectNode node) {
         node.setValue("dir", DIR_BIDIRECTIONAL);
         if (usesbuilder) {
@@ -412,7 +418,8 @@ public class RelDef extends MMObjectBuilder {
      * @return A descriptive text for the field's contents, or null if no description could be generated
      */
 
-    public String getGUIIndicator(String field,MMObjectNode node) {
+    @Override
+    public String getGUIIndicator(String field, MMObjectNode node) {
         try {
             if (field.equals("dir")) {
                 switch (node.getIntValue("dir")) {
@@ -594,6 +601,7 @@ public class RelDef extends MMObjectBuilder {
      * @since MMBase-1.7.1
 
      */
+    @Override
     public boolean nodeRemoteChanged(String machine, String number, String builder, String ctype) {
         if (builder.equals(getTableName())) {
             if (ctype.equals("c") || ctype.equals("n")) {
