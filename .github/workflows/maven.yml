@@ -62,7 +62,7 @@ jobs:
               example-webapp/target/*.war
               example-webapp/Dockerfile
               base-webapp/target/*.war
-              base-webapp/target/Dockerfile
+              base-webapp/Dockerfile
   docker:
     needs: maven
     runs-on: ubuntu-latest
