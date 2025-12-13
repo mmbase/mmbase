@@ -34,9 +34,9 @@ jobs:
         with:
           path: |
             ~/.m2/repository
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          key: mvnrepo
           restore-keys: |
-            ${{ runner.os }}-m2-
+            mvnrepo
       - name: Build with Maven
         run: ./build-all.sh
         env:
@@ -84,9 +84,9 @@ jobs:
         with:
           path: |
             ~/.m2/repository
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          key: mvnrepo
           restore-keys: |
-            ${{ runner.os }}-m2-
+            mvnrepo
       - run: |
           cd tests
           make all
