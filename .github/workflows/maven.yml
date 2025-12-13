@@ -90,6 +90,11 @@ jobs:
       - run: |
           cd tests
           make all
+      - uses: actions/upload-artifact@v6
+        with:
+          name: logs
+          path: |
+            work
   docker:
     needs: maven
     runs-on: ubuntu-latest
