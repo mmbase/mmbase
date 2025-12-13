@@ -55,7 +55,7 @@ jobs:
           echo "commit_timestamp=${commit_timestamp}" >> "$GITHUB_OUTPUT"
           echo project_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout) >>  "$GITHUB_OUTPUT"
         shell: bash
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: wars
           path: |
@@ -63,6 +63,17 @@ jobs:
               example-webapp/Dockerfile
               base-webapp/target/*.war
               base-webapp/Dockerfile
+
+  intergration-tests:
+    needs: maven
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/mmbase/build:latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: |
+          cd tests
+          make all
   docker:
     needs: maven
     runs-on: ubuntu-latest
@@ -75,7 +86,7 @@ jobs:
         directory: [ example-webapp, base-webapp ]
     steps:
       - name: Download WAR artifact
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: "wars"
           path: .
@@ -118,6 +129,7 @@ jobs:
             CI_COMMIT_TITLE=${{ github.event.head_commit.message }}
             CI_COMMIT_TIMESTAMP=${{ needs.build.outputs.outputs.commit_timestamp }}
             PROJECT_VERSION=${{ needs.build.outputs.outputs.project_version }}
+
 
 
 
