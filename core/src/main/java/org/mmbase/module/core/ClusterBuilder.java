@@ -153,6 +153,7 @@ public class ClusterBuilder extends VirtualBuilder {
      * @param owner The administrator creating the new node (ignored).
      * @return A newly initialized <code>VirtualNode</code>.
      */
+    @Override
     public MMObjectNode getNewNode(String owner) {
         throw new UnsupportedOperationException("One cannot create new ClusterNodes");
     }
@@ -164,6 +165,7 @@ public class ClusterBuilder extends VirtualBuilder {
      * @param node The node to display
      * @return the display of the node as a <code>String</code>
      */
+    @Override
     public String getGUIIndicator(MMObjectNode node) {
         // Return "name"-field when available.
         String s = node.getStringValue("name");
@@ -199,6 +201,7 @@ public class ClusterBuilder extends VirtualBuilder {
      * @param pars Parameters, see {@link MMObjectBuilder#GUI_PARAMETERS}
      * @return the display of the node's field as a <code>String</code>, null if not specified
      */
+    @Override
     public String getGUIIndicator(MMObjectNode node, Parameters pars) {
 
         if (node == null) throw new RuntimeException("Tried to get GUIIndicator for  " + pars + " with NULL node");
@@ -266,6 +269,7 @@ public class ClusterBuilder extends VirtualBuilder {
      * @param fieldName the requested field's name
      * @return the field
      */
+    @Override
     public FieldDefs getField(String fieldName) {
         String builderName = getBuilderNameFromField(fieldName);
         if (builderName.length() > 0) {
@@ -284,6 +288,7 @@ public class ClusterBuilder extends VirtualBuilder {
         return null;
     }
 
+    @Override
     public List<CoreField> getFields(int order) {
         throw new UnsupportedOperationException("Cluster-nodes can have any field.");
     }

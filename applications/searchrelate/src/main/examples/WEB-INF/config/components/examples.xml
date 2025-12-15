@@ -1,11 +1,10 @@
 <?xml version="1.0" ?>
 <component
-    name="searchrelate_examples"
-    version="9"
-    xmlns="http://www.mmbase.org/xmlns/component"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.mmbase.org/xmlns/component
+  name="searchrelate_examples"
+  version="9"
+  xmlns="http://www.mmbase.org/xmlns/component"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.mmbase.org/xmlns/component
                         https://www.mmbase.org/xmlns/component.xsd">
 
 

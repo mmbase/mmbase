@@ -99,17 +99,19 @@
       <artifactId>oscache</artifactId>
       <version>2.4.1</version> <!-- do not use 2.4.1, because then you also need commons logging -->
       <exclusions>
-        <!-- would also be provided by e.g. lucene
         <exclusion>
-
           <groupId>commons-logging</groupId>
           <artifactId>commons-logging</artifactId>
         </exclusion>
-        -->
         <exclusion>
           <!-- we never used jms-->
           <groupId>javax.jms</groupId>
           <artifactId>jms</artifactId>
+        </exclusion>
+        <exclusion>
+          <!-- provided by tomcat-->
+          <groupId>javax.servlet</groupId>
+          <artifactId>servlet-api</artifactId>
         </exclusion>
       </exclusions>
     </dependency>

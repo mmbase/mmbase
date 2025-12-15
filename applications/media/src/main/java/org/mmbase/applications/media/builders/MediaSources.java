@@ -175,6 +175,7 @@ public class MediaSources extends MMObjectBuilder {
     /**
      * Used in the editors
      */
+    @Override
     public String getGUIIndicator(MMObjectNode source) {
 	    return "" + Format.get(source.getIntValue("format")) + "/" + source.getStringValue("bitrate") + "/" + source.getStringValue("channels");
 	/*
@@ -229,6 +230,7 @@ public class MediaSources extends MMObjectBuilder {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected Object executeFunction(MMObjectNode node, String function, List<?> args) {
         if (log.isDebugEnabled()) {
             log.debug("executeFunction  " + function + "(" + args + ") on mediasources " + node);

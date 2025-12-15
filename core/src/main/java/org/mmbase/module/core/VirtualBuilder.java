@@ -78,6 +78,7 @@ public class VirtualBuilder extends MMObjectBuilder {
      * This method does not perform any action in a virtual builder, as there is
      * no actual table associated with it.
      */
+    @Override
     public boolean create() {
         return true;
     }
@@ -89,7 +90,8 @@ public class VirtualBuilder extends MMObjectBuilder {
      * @param node The object to insert
      * @return -1 (the insert failed)
      */
-    public int insert(String owner,MMObjectNode node) {
+    @Override
+    public int insert(String owner, MMObjectNode node) {
         // no insert allowed on this builder, so signal -1
         return -1;
     }
@@ -100,6 +102,7 @@ public class VirtualBuilder extends MMObjectBuilder {
      * @param owner The administrator creating the new node.
      * @return A newly initialized <code>VirtualNode</code>.
      */
+    @Override
     public MMObjectNode getNewNode(String owner) {
         VirtualNode node = new VirtualNode(this);
         node.setValue("number",-1);
@@ -117,6 +120,7 @@ public class VirtualBuilder extends MMObjectBuilder {
      * @param node The node to display
      * @return either the name field of the node or "no info"
      */
+     @Override
      public String getGUIIndicator(MMObjectNode node) {
         String s= node.getStringValue("name");
         if (s != null) {
@@ -132,6 +136,7 @@ public class VirtualBuilder extends MMObjectBuilder {
      * @param fieldName the requested field's name
      * @return <code>DBSTATE_VIRTUAL</code>
      */
+    @Override
     public int getDBState(String fieldName) {
         return Field.STATE_VIRTUAL;
     }
@@ -144,6 +149,7 @@ public class VirtualBuilder extends MMObjectBuilder {
      * @param node
      * @return <code>null</code>
      */
+    @Override
     protected String getShortedText(String fieldName, MMObjectNode node) {
         return null;
     }
@@ -157,6 +163,7 @@ public class VirtualBuilder extends MMObjectBuilder {
      * @param node
      * @return <code>null</code>
      */
+    @Override
     protected byte[] getShortedByte(String fieldName, MMObjectNode node) {
         return null;
     }

@@ -129,6 +129,7 @@ public class MMServers extends MMObjectBuilder implements MMBaseObserver, org.mm
     /**
      * @javadoc
      */
+    @Override
     public Object getValue(MMObjectNode node, String field) {
         if (field.equals("showstate")) {
             return getGUIIndicator("state", node);
@@ -357,10 +358,12 @@ public class MMServers extends MMObjectBuilder implements MMBaseObserver, org.mm
      * MMServer object are field by field equals.
      */
 
+    @Override
     public boolean equals(MMObjectNode o1, MMObjectNode o2) {
         return o1 == null ? o2 == null : o2 != null && (o1.getNumber() == o2.getNumber() && o1.getValue("name").equals(o2.getValue("name")) && o1.getValue("host").equals(o2.getValue("host")));
     }
 
+    @Override
     public String toString(MMObjectNode n) {
         return "" + n.getValue("name") + "@" + n.getValue("host");
     }

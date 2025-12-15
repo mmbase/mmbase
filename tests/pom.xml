@@ -70,8 +70,8 @@ See http://www.MMBase.org/license
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
+          <source>8</source>
+          <target>8</target>
           <maxmem>256M</maxmem>
           <fork>${compiler.fork}</fork>
           <warSourceDirectory>${basedir}</warSourceDirectory>
@@ -115,9 +115,9 @@ See http://www.MMBase.org/license
           </execution>
         </executions>
         <configuration>
-          <tasks>
-            <antcall target="run.all"  />
-          </tasks>
+          <target xmlns:mvn="http://maven.apache.org/ANTRUN">
+
+          </target>
         </configuration>
       </plugin>
     </plugins>

@@ -150,7 +150,8 @@ public class MMEvents extends MMObjectBuilder {
         }
     }
 
-    public int insert(String owner,MMObjectNode node) {
+    @Override
+    public int insert(String owner, MMObjectNode node) {
         int val = node.getIntValue("start");
         int newval = (int)(System.currentTimeMillis()/1000);
         if (val == -1) {
@@ -165,6 +166,7 @@ public class MMEvents extends MMObjectBuilder {
         return super.insert(owner, node);
     }
 
+    @Override
     public boolean commit(MMObjectNode node) {
         int val = node.getIntValue("start");
         int newval= ( int)(System.currentTimeMillis()/1000);

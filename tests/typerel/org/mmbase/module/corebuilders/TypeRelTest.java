@@ -1,6 +1,7 @@
 package org.mmbase.module.corebuilders;
 
 import org.mmbase.bridge.*;
+import org.mmbase.bridge.Module;
 import java.util.*;
 import java.util.regex.Pattern;
 

@@ -201,6 +201,7 @@ public class Jumpers extends MMObjectBuilder {
     /**
      * @since MMBase-1.7.1
      */
+    @Override
     public String getGUIIndicator(MMObjectNode node, Parameters args) {
         String field = (String) args.get("field");
         if (field == null || field.equals("url")) {
@@ -604,6 +605,7 @@ public class Jumpers extends MMObjectBuilder {
         super.notify(event);
     }
 
+    @Override
     protected Object executeFunction(MMObjectNode node, String function, List arguments) {
         if (function.equals("gui")) {
             String rtn;

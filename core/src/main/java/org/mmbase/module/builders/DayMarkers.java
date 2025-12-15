@@ -328,6 +328,7 @@ public class DayMarkers extends MMObjectBuilder {
      * COUNTNEXTDELTAMONTH-X-Y gets an object number of X+Y months after 1970
      * TIMETOOBJECTNUMBER gets an object number of X seconds after 1970
      **/
+    @Override
     public String replace(PageInfo sp, StringTokenizer command) {
         String rtn="";
         int ival;
@@ -501,6 +502,7 @@ public class DayMarkers extends MMObjectBuilder {
      *  @param node The node of which the gui information is wanted
      *  @return a <code>String</code> in which the current date is shown
      */
+    @Override
     public String getLocaleGUIIndicator(Locale locale, MMObjectNode node) {
         return DateFormat.getDateInstance(DateFormat.LONG, locale).format(getDate(node));
 

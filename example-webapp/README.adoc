@@ -1,0 +1,11 @@
+= mmbase/example-webapp:latest
+
+This e.g. is then based on `mmbase/tomcat` but also installs the 'example-webapp' (currently `1.9-SNAPSHOT`)
+
+You may run it like so:
+[source, base]
+----
+docker run --name mmbase-example-webapp -p 8080:8080 mmbase/example-webapp:latest
+----
+
+This will start the 'example' application on 8080. It is running on a non-persistent hsql database then.

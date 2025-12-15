@@ -23,6 +23,7 @@ import org.mmbase.util.logging.*;
 public class Urls extends MMObjectBuilder {
     private static final Logger log = Logging.getLoggerInstance(Urls.class);
 
+    @Override
     public String getGUIIndicator(MMObjectNode node) {
         String str = node.getStringValue("url");
         if (str != null) {
@@ -34,7 +35,8 @@ public class Urls extends MMObjectBuilder {
         return str;
     }
 
-    public String getGUIIndicator(String field,MMObjectNode node) {
+    @Override
+    public String getGUIIndicator(String field, MMObjectNode node) {
         if (field.equals("url")) {
             String url = node.getStringValue("url");
             if (url != null) {

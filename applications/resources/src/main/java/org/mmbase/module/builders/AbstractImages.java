@@ -107,6 +107,7 @@ public abstract class AbstractImages extends AbstractServletBuilder implements I
         }
     }
 
+    @Override
     protected BlobCache getBlobCache(String fieldName) {
         if (fieldName.equals(Imaging.FIELD_HANDLE)) {
             return handleCache;
@@ -371,6 +372,7 @@ public abstract class AbstractImages extends AbstractServletBuilder implements I
      *
      */
 
+    @Override
     protected Object executeFunction(MMObjectNode node, String function, List<?> args) {
         if (function.equals("mimetype")) {
             return getMimeType(node);

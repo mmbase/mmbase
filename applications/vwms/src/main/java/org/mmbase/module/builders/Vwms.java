@@ -105,6 +105,7 @@ public class Vwms extends MMObjectBuilder implements MMBaseObserver {
      * @param field the name field of the field to display
      * @return the display of the node's field as a <code>String</code>, null if not specified
      */
+    @Override
     public String getGUIIndicator (String field, MMObjectNode node) {
       if (field.equals ("status")) {
           int val = node.getIntValue ("status");
@@ -302,7 +303,8 @@ public class Vwms extends MMObjectBuilder implements MMBaseObserver {
      * @param ctype command type, not very well documented
      * @return always <code>true</code>
      */
-    public boolean nodeRemoteChanged(String machine,String number,String builder,String ctype) {
+    @Override
+    public boolean nodeRemoteChanged(String machine, String number, String builder, String ctype) {
         // signal to parent class
         super.nodeRemoteChanged(machine,number,builder,ctype);
 
@@ -336,7 +338,8 @@ public class Vwms extends MMObjectBuilder implements MMBaseObserver {
      * @param ctype command type, not very well documented
      * @return always <code>true</code>
      */
-    public boolean nodeLocalChanged(String machine,String number,String builder,String ctype) {
+    @Override
+    public boolean nodeLocalChanged(String machine, String number, String builder, String ctype) {
         super.nodeLocalChanged(machine,number,builder,ctype);
 
         // always return true

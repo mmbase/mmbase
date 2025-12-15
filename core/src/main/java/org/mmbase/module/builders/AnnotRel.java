@@ -46,6 +46,7 @@ public class AnnotRel extends InsRel {
      * Initializes all numeric fields to 0, and sets the annotation type to {@link #MILLIS}.
      * @param node The node to set the defaults of.
      */
+    @Override
     public void setDefaults(MMObjectNode node) {
         super.setDefaults(node);
         // Set the default value for pos and length to 0 (0:0:0.0)
@@ -64,6 +65,7 @@ public class AnnotRel extends InsRel {
      * @param field the name field of the field to display
      * @return the display of the node's field as a <code>String</code>, null if not specified
      */
+    @Override
     public String getGUIIndicator(String field, MMObjectNode node) {
         if (field.equals("pos")) {
             int time = node.getIntValue("pos");
@@ -125,6 +127,7 @@ public class AnnotRel extends InsRel {
      * @param command the command to execute
      * @return the result value as a <code>String</code>
      */
+    @Override
     public String replace(PageInfo sp, StringTokenizer command) {
         log.debug("replace: This method isn't implemented yet.");
         return "";
@@ -159,6 +162,7 @@ public class AnnotRel extends InsRel {
         return true;
     }
 
+    @Override
     public Object getValue(MMObjectNode node, String field) {
         if (field.equals("ms_pos")) {
             int pos = node.getIntValue("pos");
