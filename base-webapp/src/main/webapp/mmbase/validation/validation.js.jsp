@@ -671,7 +671,6 @@ MMBaseValidator.prototype.getDataTypeXml = function(el) {
                 const parser = new DOMParser();
                 dataType = parser.parseFromString(html, "application/xml");
                 MMBaseValidator.dataTypeCache[el.mm_key] = dataType;
-                // console.log('found ', dataType);
             })
             .catch(function(error) {
                 console.error('Error fetching datatype XML -' + error);
@@ -810,7 +809,7 @@ MMBaseValidator.prototype.checkPrefetch = function() {
                 }
             })
             .catch((err) => {
-                console.error('Error prefetching datatypes: ', err);
+                console.error('Error prefetching datatypes -', err);
             });
     }
 };
@@ -1004,23 +1003,8 @@ MMBaseValidator.prototype.binaryServerValidation = function(el) {
                 self.showServerErrors(el, doc, el.initialId);
             })
             .catch(function(error) {
-                self.log('There has been a problem with binaryServerValidation: ' + error.message);
+                self.log('binaryServerValidation error - ' + error.message);
             });
-
-        /* $.ajax({async: true, url: validationUrl, type: "GET", dataType: "xml",
-                    complete: function(res, status){
-                    var result;
-                    if (status == "success") {
-                        el.serverValidated = true;
-                        result = res.responseXML;
-                        //console.log("" + res);
-                    } else {
-                        el.serverValidated = true;
-                        result = $("<result valid='true' />")[0];
-                    }
-                    self.showServerErrors(el, result, el.initialId);
-                }
-            }); */
     }
 };
 
@@ -1041,7 +1025,6 @@ MMBaseValidator.prototype.serverValidation = function(el) {
         if (this.isCheckEquality(el)) { // Not yet supported
             el.serverValidated = true;
             const msg = document.querySelector('result[valid="true"].implicit_checkequality');
-            // this.showServerErrors(el, $("<result valid='true' class='implicit_checkequality' />")[0]);
             this.showServerErrors(el, msg);
             return;
         }
@@ -1180,8 +1163,8 @@ MMBaseValidator.prototype.updateValidity = function(element, valid, server) {
     if (this.validateHook) {
         this.validateHook(valid, element);
     }
-    // $(element).trigger("mmValidate", [this, valid, server]);
-    element.dispatchEvent(new CustomEvent("mmValidate", {detail: {validator: this, valid: valid, server: server}}));
+
+    element.dispatchEvent(new CustomEvent("mmValidate", { detail: { validator: this, valid: valid, server: server } }));
     return valid;
 };
 
@@ -1273,7 +1256,6 @@ MMBaseValidator.prototype.removeValidationFromElement = function(el) {
         if (! el.prevValid) {
             self.invalidElements--;
         }
-        // $(el).unbind();
         el.removeEventListener('change');
         const newElements = [];
         self.elements.forEach(function(elem) {
