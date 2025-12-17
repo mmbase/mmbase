@@ -30,7 +30,7 @@ public abstract class BridgeTest extends MMBaseTest {
     public BridgeTest(String name) {
         super(name);
     }
-    static boolean ensuredDeployed = false;
+    static Set<String> ensuredDeployed = new HashSet<>();
 
     int tryCount = 0;
 
@@ -73,7 +73,10 @@ public abstract class BridgeTest extends MMBaseTest {
 
     protected Cloud getCloud(String userName) {
         try {
-            CloudThreadLocal.unbind();
+            Cloud previous = CloudThreadLocal.unbind();
+            if (previous != null) {
+                log.debug("Unbound " + previous);
+            }
             Map<String, Object> loginInfo = new HashMap<String, Object>();
             loginInfo.put("username", userName);
             Cloud c = getCloudContext().getCloud("mmbase", "class", loginInfo);
@@ -149,15 +152,20 @@ public abstract class BridgeTest extends MMBaseTest {
         };
 
     protected void ensureDeployed(Cloud cloud) {
-        if (ensuredDeployed) return;
         String uri = cloud.getCloudContext().getUri();
+
+        if (ensuredDeployed.contains(uri)) {
+            //System.out.println(uri + " already marked deployed");
+            return;
+        }
+        System.out.println("Ensuring " + uri + " to be deploy");
         while(true) {
             // make sure basic app is deployed
             if (cloud.hasRelationManager("bb", "cc", "posrel") &&
                 cloud.hasRelationManager("aa", "bb", "related") &&
                 cloud.hasRelationManager("bb", "aa", "related")
                 ) {
-                ensuredDeployed = true;
+                ensuredDeployed.add(uri);
                 return;
             }
             if (!cloud.hasRelationManager("bb", "cc", "posrel")) {

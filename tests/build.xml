@@ -393,15 +393,15 @@
   <target name="run.all" description="Run all tests">
     <echo message="========================================DBSQ========================================" />
     <antcall target="run.dbsq" inheritRefs="true"/>
-    <echo message="sleeping.." />
+    <echo message="sleeping 10s.." />
     <sleep seconds="10" />
     <echo message="========================================TYPEREL========================================" />
     <antcall target="run.typerel" inheritRefs="true"/>
-    <echo message="sleeping.." />
+    <echo message="sleeping 10s.." />
     <sleep seconds="10" />
 
     <antcall target="run.all.bridge" inheritRefs="true"/>
-    <echo message="sleeping.." />
+    <echo message="sleeping 10s.." />
     <sleep seconds="10" />
 
     <echo message="========================================CLUSTERING========================================" />
