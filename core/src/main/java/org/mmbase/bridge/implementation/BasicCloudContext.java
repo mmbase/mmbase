@@ -142,9 +142,15 @@ public abstract class BasicCloudContext implements CloudContext {
         if ( !localClouds.contains(cloudName) ) {
             throw new NotFoundException("Cloud '" + cloudName + "' does not exist.");
         }
-        if (mmb == null || ! mmb.getState()) {
-            throw new NotFoundException("MMBase is not yet initialized");
+        if (mmb == null) {
+            throw new NotFoundException("MMBase is not yet initialized (null)");
         }
+        if (mmb.isShutdown()) {
+            throw new NotFoundException("MMBase is shut down");
+        }
+        if (! mmb.getState()) {
+            throw new NotFoundException("MMBase is not yet initialized: " + mmb.getMMBaseState());
+         }
     }
     public Cloud getCloud(String cloudName) {
         checkExists(cloudName);
