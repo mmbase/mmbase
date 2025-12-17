@@ -207,7 +207,7 @@ public class MMBase extends ProcessorModule {
     private int mmbaseState = STATE_START_UP;
 
     /**
-     * This set contains the names of buidlers that are in the process of being loaded.
+     * This set contains the names of builders that are in the process of being loaded.
      * The map is used to prevent circular references when extending builders.
      *
      * @since MMBase-1.6
@@ -275,7 +275,7 @@ public class MMBase extends ProcessorModule {
             return;
         } else if (mmbaseState == STATE_SHUT_DOWN) {
             log.warn("was shutdown... should NOT restart again!");
-        return;
+            return;
         }
         log.service("Init of " + org.mmbase.Version.get() + " (" + this + ")");
 
@@ -483,6 +483,7 @@ public class MMBase extends ProcessorModule {
      */
     @Override
     public void shutdown() {
+        log.info("Shutting down MMBase");
         mmbaseState = STATE_SHUT_DOWN;
 
         //shutdown in the reverse order as init does
@@ -1310,6 +1311,14 @@ public class MMBase extends ProcessorModule {
      */
     public boolean getState() {
         return mmbaseState == STATE_UP;
+    }
+
+    /**
+     * @since MMBase-1.9.7
+     * @return
+     */
+    public int getMMBaseState() {
+        return mmbaseState;
     }
 
     /**
