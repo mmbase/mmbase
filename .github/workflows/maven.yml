@@ -73,6 +73,8 @@ jobs:
               base-webapp/Dockerfile
 
   integration-tests:
+    env:
+      MAVEN_ARGS: '--no-transfer-progress'
     needs: maven
     runs-on: ubuntu-latest
     container:
@@ -92,6 +94,7 @@ jobs:
           make all
           echo "============ ABSTRACT"
           cat work/all.log  | grep -E "=====|Tests run|OK"
+
       - uses: actions/upload-artifact@v6
         with:
           name: logs
