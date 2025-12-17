@@ -93,7 +93,8 @@ jobs:
         run: |
           cd tests
           make all
-          echo "============ ABSTRACT"
+      - name: Show summary of results
+        run: |
           cat work/all.log  | grep -E "=====|Tests run|OK"d
       - uses: actions/upload-artifact@v6
         with:
