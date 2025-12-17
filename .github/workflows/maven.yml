@@ -90,6 +90,8 @@ jobs:
       - run: |
           cd tests
           make all
+          echo "============ ABSTRACT"
+          cat work/all.log  | grep -E "=====|Tests run|OK"
       - uses: actions/upload-artifact@v6
         with:
           name: logs
