@@ -74,7 +74,6 @@ See http://www.MMBase.org/license
           <target>8</target>
           <maxmem>256M</maxmem>
           <fork>${compiler.fork}</fork>
-          <warSourceDirectory>${basedir}</warSourceDirectory>
           <excludes>
             <exclude>vpro-wizards/**</exclude> <!-- much too complicated for now -->
             <exclude>framework/**</exclude> <!-- unfinished -->

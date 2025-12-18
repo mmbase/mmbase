@@ -129,8 +129,10 @@
         <include name="mmbase-richtext-${version}-classes.jar" />
       </fileset>
     </path>
+    <pathconvert property="run.rmmci.client.path" refid="run.rmmci.client" />
 
-    <echo  message="${run.rmmci.client}" />
+
+    <echo  message="${run.rmmci.client.path}" />
 
   </target>
 
@@ -421,12 +423,12 @@
     <antcall target="run.bridge" inheritRefs="true" />
     <echo message="sleeping.." />
     <sleep seconds="10" />
-    <echo message="========================================RMMCI========================================" />
+    <echo message="========================================BRIDGE RMMCI========================================" />
     <antcall target="run.bridge.rmmci" inheritRefs="true" />
   </target>
 
   <target name="run.all.rmmci">
-    <echo message="========================================RMMCI========================================" />
+    <echo message="========================================BRIDGE RMMCI========================================" />
     <antcall target="run.bridge.rmmci" inheritRefs="true"/>
     <echo message="========================================CLUSTERING========================================" />
     <echo message="sleeping.." />
