@@ -118,7 +118,7 @@ public class ConvertImageTest extends org.mmbase.tests.BridgeTest {
     // files, it simply returns a string containing the access times. For test cases 'equals' on the
     //string should suffice.
 
-    public String get005ImagesAccessTimes() {
+    public String getImagesAccessTimes() {
         CharTransformer accessTimes = new AbstractCommandStringTransformer() {
                 public String[] getCommand() {
                     return new String[] {"xargs", "ls", "-lu"};
