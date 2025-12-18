@@ -1,5 +1,7 @@
 package org.mmbase.bridge.tests;
 
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 import org.mmbase.bridge.*;
 import org.mmbase.bridge.util.Queries;
 import java.io.*;
@@ -17,6 +19,7 @@ import org.mmbase.util.functions.Parameters;
  * @author Michiel Meeuwissen
  * @version $Id$
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ConvertImageTest extends org.mmbase.tests.BridgeTest {
 
     private final static String JPG_IMAGE_NAME = "testimage.jpg";
@@ -27,7 +30,7 @@ public class ConvertImageTest extends org.mmbase.tests.BridgeTest {
         return Queries.count(nodeManager.createQuery());
     }
 
-    public void testImportedJpegImage() {
+    public void test001ImportedJpegImage() {
         Cloud cloud = getCloud();
         Node node = cloud.getNode("jpeg.test.image");
         node.getByteValue("handle");
@@ -36,7 +39,7 @@ public class ConvertImageTest extends org.mmbase.tests.BridgeTest {
     }
 
     //test if an image can be converted using the getIntValue
-    public void testGetInvalueCachedImage() {
+    public void test002GetInvalueCachedImage() {
         Cloud cloud = getCloud();
         Node node = cloud.getNode("jpeg.test.image");
         int icacheNodeNumber = node.getIntValue("cache(s(30x30))");
@@ -48,7 +51,7 @@ public class ConvertImageTest extends org.mmbase.tests.BridgeTest {
     }
 
     // test if an image can be converted using getFunctionValue
-    public void testFunctionValueCachedImage() {
+    public void test003FunctionValueCachedImage() {
         Cloud cloud = getCloud();
         Node node = cloud.getNode("jpeg.test.image");
         Function f = node.getFunction("cache");
@@ -77,7 +80,7 @@ public class ConvertImageTest extends org.mmbase.tests.BridgeTest {
     }
 
 
-    public void testFailAnImage() {
+    public void test004FailAnImage() {
         // MMB-495
         Map<String, String> originalParameters = breakImaging();
 
@@ -115,7 +118,7 @@ public class ConvertImageTest extends org.mmbase.tests.BridgeTest {
     // files, it simply returns a string containing the access times. For test cases 'equals' on the
     //string should suffice.
 
-    public String getImagesAccessTimes() {
+    public String get005ImagesAccessTimes() {
         CharTransformer accessTimes = new AbstractCommandStringTransformer() {
                 public String[] getCommand() {
                     return new String[] {"xargs", "ls", "-lu"};
@@ -124,7 +127,7 @@ public class ConvertImageTest extends org.mmbase.tests.BridgeTest {
         return accessTimes.transform(System.getProperty("user.dir") + "/data/test/mmbasetests_images");
     }
 
-    public void testAccessTime() throws InterruptedException {
+    public void test006AccessTime() throws InterruptedException {
         if(System.getProperty("os.name") != null && System.getProperty("os.name").startsWith("Windows")) {
             System.err.println("Pretty sure this test won't work in Windows. Skippig it.");
         } else {
@@ -146,7 +149,7 @@ public class ConvertImageTest extends org.mmbase.tests.BridgeTest {
 
 
     //test what happens if template is errorneous
-    public void testErrorneousTemplate() {
+    public void test007ErrorneousTemplate() {
         Cloud cloud = getCloud();
         Query q = cloud.getNodeManager("icaches").createQuery();
 
