@@ -11,6 +11,8 @@ See http://www.MMBase.org/license
 package org.mmbase.tests;
 import junit.framework.TestCase;
 import java.util.*;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 import org.mmbase.bridge.*;
 import org.mmbase.bridge.util.Queries;
 import org.mmbase.storage.search.*;
@@ -21,6 +23,7 @@ import org.w3c.dom.Document;
  * @author Michiel Meeuwissen
  * @since MMBase-1.8
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Clustering extends BridgeTest {
 
     protected static Cloud cloud1;
@@ -80,13 +83,13 @@ public class Clustering extends BridgeTest {
         }
     }
 
-    public void testCreateNode() {
+    public void test01CreateNode() {
         assertTrue(cloud2.hasNode(nodea1.getNumber()));
         Node nodea2 = cloud2.getNode(nodea1.getNumber());
         fieldEquals(nodea1, nodea2);
     }
 
-    public void testList() {
+    public void test02List() {
         NodeList aa2List1 = cloud1.getNodeManager("aa").getList(null, null, null); // a node of type aa was created, so list must now be size 1.
         assertEquals(aa2List1.size(), 1);
 
@@ -127,7 +130,7 @@ public class Clustering extends BridgeTest {
         return (RelationManager) newTypeRel;
     }
 
-    public void testCreateTypeRel() {
+    public void test03CreateTypeRel() {
         // create new typerel, and see if that has influence on cloud 2.
         RelationManager rm = createTypeRel(cloud1, "posrel", "bb", "aa");
 
@@ -175,7 +178,7 @@ public class Clustering extends BridgeTest {
                    ".\nUsed query: " + nq2, related2.size() == 0); // remote
     }
 
-    public void testInstallBuilder() {
+    public void test04InstallBuilder() {
 
         // create a builder only in of the clouds (1).
         NodeManager typedef = cloud1.getNodeManager("typedef");
@@ -197,7 +200,7 @@ public class Clustering extends BridgeTest {
 
     }
 
-    public void testCreateNodeUnknownType() {
+    public void test05CreateNodeUnknownType() {
         // creating a node of this new type, and look what happens in the cloud which does not know this type.
         Node zNode = cloud1.getNodeManager("zz").createNode();
         zNode.commit();
@@ -212,7 +215,7 @@ public class Clustering extends BridgeTest {
 
     }
 
-    public void testCreateTypeRelUnknownType() {
+    public void test06CreateTypeRelUnknownType() {
         NodeManager zz = cloud1.getNodeManager("zz");
         // now create a typerel from aa to zz (which in cloud2 will look quite odd).
 
@@ -238,7 +241,7 @@ public class Clustering extends BridgeTest {
 
     }
 
-    public void testRelatedUnknownType() {
+    public void test07RelatedUnknownType() {
         // in cloud 1 should be ok
         List related1 = nodea1.getRelatedNodes("zz");
         assertTrue("Size: " + related1.size() + " != 2", related1.size() == 2); // create 2 related nodes...
@@ -253,7 +256,7 @@ public class Clustering extends BridgeTest {
 
     }
 
-    public void testRelatedUnknownType2() {
+    public void test08RelatedUnknownType2() {
 
         NodeManager object1 = cloud1.getNodeManager("object");
         NodeManager object2 = cloud2.getNodeManager("object");
@@ -267,7 +270,7 @@ public class Clustering extends BridgeTest {
         assertTrue("Nr of remote relations reported is not " + related1.size() + " but " + related2.size(), related1.size() == related2.size());
     }
 
-    public void testCreateRelDef() {
+    public void test09CreateRelDef() {
         // create new reldef in cloud1, and see what happens in cloud 2.
         NodeManager reldef = cloud1.getNodeManager("reldef");
 
@@ -297,7 +300,7 @@ public class Clustering extends BridgeTest {
 
 
 
-    public void testShutDown() {
+    public void test100ShutDown() {
         cloud1.shutdown();
         cloud2.shutdown();
     }
