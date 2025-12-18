@@ -11,6 +11,8 @@ See http://www.MMBase.org/license
 package org.mmbase.security.implementation.cloudcontext;
 
 import java.util.*;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 import org.mmbase.security.Operation;
 import org.mmbase.tests.BridgeTest;
 import org.mmbase.bridge.*;
@@ -22,7 +24,7 @@ import org.mmbase.util.functions.Parameters;
  * @author Michiel Meeuwissen
  * @since MMBase-1.9.1
  */
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CloudContext extends BridgeTest {
 
     static boolean started = false;
@@ -39,7 +41,7 @@ public class CloudContext extends BridgeTest {
     }
 
 
-    public void testImplementation() {
+    public void test001Implementation() {
         assertNotNull(getCloud());
         assertNotNull(getCloud().getCloudContext());
         assertNotNull(getCloud().getCloudContext().getAuthentication());
@@ -50,7 +52,7 @@ public class CloudContext extends BridgeTest {
     }
 
 
-    public void testCreateRights() {
+    public void test002CreateRights() {
         Cloud cloud = getCloud("foo");
         assertFalse(cloud.getNodeManager("mmbasecontexts").mayCreateNode());
         assertTrue(cloud.getNodeManager("news").mayCreateNode());
@@ -67,7 +69,7 @@ public class CloudContext extends BridgeTest {
         n3.commit();
     }
 
-    public void testWriteRights() {
+    public void test003WriteRights() {
         Cloud cloud = getCloud("foo");
         Node context = cloud.getNodeManager("mmbasecontexts").getList(null).get(0);
         Node news = cloud.getNodeManager("news").getList(null).get(0);
@@ -85,7 +87,7 @@ public class CloudContext extends BridgeTest {
 
     }
 
-    public void testDeleteRights() {
+    public void test004DeleteRights() {
         Cloud cloud = getCloud("foo");
         Node context = cloud.getNodeManager("mmbasecontexts").getList(null).get(0);
         Node news = cloud.getNodeManager("news").getList(null).get(0);
@@ -103,7 +105,7 @@ public class CloudContext extends BridgeTest {
     }
 
 
-    public void testChangeContextRights() {
+    public void test005ChangeContextRights() {
         Cloud cloud = getCloud("foo");
         Node context = cloud.getNodeManager("mmbasecontexts").getList(null).get(0);
         Node news = cloud.getNodeManager("news").getList(null).get(0);
@@ -122,16 +124,16 @@ public class CloudContext extends BridgeTest {
         assertFalse(news.mayChangeContext());
 
     }
-    public void testReadRights() {
+    public void test006ReadRights() {
         // TODO, cannot be tested right now, because read all property
     }
 
-    public void testChangeRelationRights() {
+    public void test007ChangeRelationRights() {
         // TODO, cannot be tested right now, probably because I don't
         // understand it properly
     }
 
-    public void testSetOwnPassord() {
+    public void test008SetOwnPassord() {
         Cloud cloud = getCloud("foo");
         Node userNode = cloud.getNode(cloud.getCloudContext().getAuthentication().getNode(cloud.getUser()));
         assertEquals("foo", userNode.getStringValue("username"));
@@ -141,7 +143,7 @@ public class CloudContext extends BridgeTest {
         assertEquals(new org.mmbase.util.transformers.MD5().transform("bar2"), userNode.getStringValue("password"));
     }
 
-    public void testDeleteOwnNode() {
+    public void test009DeleteOwnNode() {
         Cloud cloud = getCloud("foo");
         Node userNode = cloud.getNode(cloud.getCloudContext().getAuthentication().getNode(cloud.getUser()));
         try {
@@ -151,7 +153,7 @@ public class CloudContext extends BridgeTest {
             // ok
         }
     }
-    public void testChangedPassword() {
+    public void test010ChangedPassword() {
         Map<String, Object> loginInfo = new HashMap<String, Object>();
         loginInfo.put("username", "foo");
         loginInfo.put("password", "bar");
@@ -169,7 +171,7 @@ public class CloudContext extends BridgeTest {
 
     }
 
-    public void testGrantToUser() throws InterruptedException {
+    public void test011GrantToUser() throws InterruptedException {
         Cloud cloud = getCloud("foo");
         Node userNode = cloud.getNode(cloud.getCloudContext().getAuthentication().getNode(cloud.getUser()));
 
@@ -194,7 +196,7 @@ public class CloudContext extends BridgeTest {
         n3.setStringValue("name", "testcontextoffoo");
         n3.commit();
     }
-    public void testRevokeFromUser() throws InterruptedException {
+    public void test012RevokeFromUser() throws InterruptedException {
         Cloud cloud = getCloud("foo");
         Node userNode = cloud.getNode(cloud.getCloudContext().getAuthentication().getNode(cloud.getUser()));
 
@@ -224,7 +226,7 @@ public class CloudContext extends BridgeTest {
         }
     }
 
-    public void testGrantToGroup() throws InterruptedException {
+    public void test013GrantToGroup() throws InterruptedException {
         Cloud adminCloud = getCloud();
         Node contextNode = SearchUtil.findNode(adminCloud, "mmbasecontexts", "name", "security");
         Node groupNode   = SearchUtil.findNode(adminCloud, "mmbasegroups",   "name", "users");
@@ -245,7 +247,7 @@ public class CloudContext extends BridgeTest {
         n3.commit();
     }
 
-    public void testRevokeFromGroup() throws InterruptedException {
+    public void test014RevokeFromGroup() throws InterruptedException {
 
         Cloud adminCloud = getCloud();
         Node contextNode = SearchUtil.findNode(adminCloud, "mmbasecontexts", "name", "security");
