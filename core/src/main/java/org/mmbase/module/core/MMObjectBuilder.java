@@ -696,7 +696,7 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
     public boolean commit(MMObjectNode node) {
         if (node.getOldBuilder() != null) {
             assert node.getNumber() > 0;
-            assert node.getIntValue("otype") > 0;
+            assert node.getIntValue(FIELD_OBJECT_TYPE) > 0;
             mmb.getStorageManager().setNodeType(node, node.getBuilder());
         }
         mmb.getStorageManager().change(node);
@@ -1066,7 +1066,7 @@ public class MMObjectBuilder extends MMTable implements NodeEventListener, Relat
             if (node.getNumber() > 0 ) {
                 nodeCache.remove(node.getNumber());
             }
-            assert node.getIntValue("otype") > 0;
+            assert node.getIntValue(FIELD_OBJECT_TYPE) > 0;
             assert node.getNumber() > 0;
             res = node.commit();
         } finally {

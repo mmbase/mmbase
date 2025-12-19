@@ -131,7 +131,6 @@
     </path>
     <pathconvert property="run.rmmci.client.path" refid="run.rmmci.client" />
 
-
     <echo  message="${run.rmmci.client.path}" />
 
   </target>
@@ -197,6 +196,7 @@
   <target name="run.bridge.rmmci" depends="init,clean.database" description="Bridge tests (through RMMCI)">
     <parallel>
       <daemons>
+        <sequential>
         <echo message="starting mmbase server" />
         <java
             classname="org.mmbase.tests.MMBaseTest"
@@ -210,19 +210,22 @@
           <jvmarg value="-Drmmci.RMIRegistryServer=localhost" />
           <jvmarg value="-Duser.dir=${tests.work.dir}" />
         </java>
+        </sequential>
       </daemons>
-      <echo message="starting client ${run.rmmci.client}  " />
-      <java
+      <sequential>
+        <echo message="starting client ${run.rmmci.client}  " />
+        <java
           classname="${ui.class}"
           fork="true"
           timeout="1000000"
           classpathref="run.rmmci.client"
-          >
-        <arg value="org.mmbase.bridge.AllTests" />
-        <jvmarg value="-Dnostartmmbase=" />
-        <jvmarg value="-Dmmbase.defaultcloudcontext=rmi://localhost:1221/remotecontext" />
-        <assertions><enable /></assertions>
-      </java>
+        >
+          <arg value="org.mmbase.bridge.AllTests" />
+          <jvmarg value="-Dnostartmmbase=" />
+          <jvmarg value="-Dmmbase.defaultcloudcontext=rmi://localhost:1221/remotecontext" />
+          <assertions><enable /></assertions>
+        </java>
+      </sequential>
     </parallel>
     <antcall target="stop.database" inheritRefs="true" />
   </target>
