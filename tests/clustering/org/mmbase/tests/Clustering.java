@@ -31,10 +31,13 @@ public class Clustering extends BridgeTest {
     protected static NodeList aa2list;
     protected static NodeList bb2related;
     protected static Node     nodea1;
+
     public void setUp() {
+        System.out.println("Needing 2 remote clouds");
         if (cloud1 == null) {
+            System.out.println("Not yet done, so doing that now");
             cloud1 =   getRemoteCloud("rmi://127.0.0.1:1221/remotecontext");
-            cloud2 =   getRemoteCloud("rmi://127.0.0.1:1222/remotecontext");
+            cloud2 =   getRemoteCloud("rmi://127.0.0.1:1223/remotecontext"); // This was 1222
 
             NodeManager aa2 = cloud2.getNodeManager("aa");
             NodeManager aa1 = cloud1.getNodeManager("aa");
@@ -49,6 +52,7 @@ public class Clustering extends BridgeTest {
             NodeManager object2 = cloud2.getNodeManager("object");
             NodeQuery nq2 = Queries.createRelatedNodesQuery(cloud2.getNode(nodea1.getNumber()), object2, null, null);
             object2.getList(nq2); // just to put it in some cache or so..
+
         }
     }
 

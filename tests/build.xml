@@ -29,6 +29,7 @@
   </target>
 
   <target name="start.database" depends="init">
+    <echo message="starting hsqldb" />
     <java classname="org.hsqldb.Server" fork="true" >
       <arg value="-database.0" />
       <arg value ="${tests.database.dir}/test" />
@@ -285,13 +286,15 @@
       <echo message="${tests.source.dir}/config" />
       <daemons>
         <antcall target="start.database" inheritRefs="true"/>
+        <sequential>
+          <echo message="Starting mmbase1" />
         <java
             classname="org.mmbase.tests.MMBaseTest"
             fork="true"
             timeout="300000"
             classpathref="run.classpath.clustering"
             >
-          <jvmarg value="-Dnostartdb=" />
+          <jvmarg value="-Dnostartdb=true" />
           <jvmarg value="-Dmmbase.config=${tests.source.dir}/config" />
           <jvmarg value="-Dmmbaseroot.machinename=mmbase1" />
           <jvmarg value="-Drmmci.port=1221" />
@@ -300,19 +303,22 @@
           <jvmarg value="-Duser.dir=${tests.work.dir}" />
           <assertions><enable /></assertions>
         </java>
+        </sequential>
         <sequential>
           <!-- this should not be necessary, but MMBase's get a bit confused if they both at same time start to make the same tables -->
+          <echo message="Starting mmbase2 in 20 seconds" />
           <sleep seconds="20" />
+          <echo message="Starting mmbase2 now" />
           <java
               classname="org.mmbase.tests.MMBaseTest"
               fork="true"
               timeout="300000"
               classpathref="run.classpath.clustering"
               >
-            <jvmarg value="-Dnostartdb=" />
+            <jvmarg value="-Dnostartdb=true" />
             <jvmarg value="-Dmmbase.config=${tests.source.dir}/config" />
             <jvmarg value="-Dmmbaseroot.machinename=mmbase2" />
-            <jvmarg value="-Drmmci.port=1222" />
+            <jvmarg value="-Drmmci.port=1223" /> <!-- This was 1222, but something opening that already ?? -->
             <jvmarg value="-Drmmci.bindname=remotecontext" />
             <jvmarg value="-Drmmci.RMIRegistryServer=localhost" />
             <jvmarg value="-Duser.dir=${tests.work.dir}" />

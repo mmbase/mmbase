@@ -116,6 +116,7 @@ public abstract class BridgeTest extends MMBaseTest {
     }
 
     protected Cloud getRemoteCloud(String uri) {
+        System.out.println("Creating cloud for " + uri);
         Cloud c = null;
         while(c == null) {
             try {
