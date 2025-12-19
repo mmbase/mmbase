@@ -10,6 +10,8 @@ See http://www.MMBase.org/license
 
 package org.mmbase.bridge;
 
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 import org.mmbase.tests.*;
 import org.mmbase.bridge.util.*;
 import org.mmbase.util.logging.Logger;
@@ -23,6 +25,7 @@ import org.mmbase.util.logging.Logging;
  * @version $Id$
  * @since MMBase-1.8.6
   */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TransactionTest extends BridgeTest {
     private static final Logger log = Logging.getLoggerInstance(TransactionTest.class);
 
@@ -56,7 +59,7 @@ public class TransactionTest extends BridgeTest {
     }
 
 
-    public void testCancel() {
+    public void test001Cancel() {
         Cloud cloud = getCloud();
         Transaction t = cloud.getTransaction("cancel1");
         Node node = t.getNode(newNode);
@@ -70,7 +73,7 @@ public class TransactionTest extends BridgeTest {
     }
 
 
-    public void testCancel2() {
+    public void test002Cancel2() {
         Cloud cloud = getCloud();
         {
             Transaction t = cloud.getTransaction("cancel2");
@@ -87,7 +90,7 @@ public class TransactionTest extends BridgeTest {
         }
     }
 
-    public void testGetTransaction() {
+    public void test003GetTransaction() {
         Cloud cloud = getCloud();
 
         {
@@ -103,7 +106,7 @@ public class TransactionTest extends BridgeTest {
         }
     }
 
-    public void testCommit() {
+    public void test004Commit() {
         Cloud cloud = getCloud();
         Transaction t = cloud.getTransaction("bar3");
         Node node = t.getNode(newNode);
@@ -116,7 +119,7 @@ public class TransactionTest extends BridgeTest {
         assertEquals("yyyyy", node.getStringValue("title"));
     }
 
-    public void testMMB1546() {
+    public void test005MMB1546() {
         Cloud cloud = getCloud();
         Transaction t = cloud.getTransaction("test0");
         Node nt = t.getNode(newNode);
@@ -134,7 +137,7 @@ public class TransactionTest extends BridgeTest {
 
 
     //Test for http://www.mmbase.org/jira/browse/MMB-1621
-    public void testGetValue() {
+    public void test006GetValue() {
         Cloud cloud = getCloud();
 
         String value = cloud.getNode(newNode).getStringValue("title");
@@ -157,7 +160,7 @@ public class TransactionTest extends BridgeTest {
 
     }
 
-    public void testReuseTransaction() {
+    public void test007ReuseTransaction() {
         Cloud cloud = getCloud();
         {
             Node node = cloud.getNode(newNode);
@@ -181,7 +184,7 @@ public class TransactionTest extends BridgeTest {
 
     }
 
-    public void testCancelDelete() {
+    public void test008CancelDelete() {
         Cloud cloud = getCloud();
         Transaction t = cloud.getTransaction("bar5");
         Node node = t.getNode(newNode);
@@ -191,7 +194,7 @@ public class TransactionTest extends BridgeTest {
 
     }
 
-    public void testCommitDelete() {
+    public void test009CommitDelete() {
         Cloud cloud = getCloud();
         Transaction t = cloud.getTransaction("bar6");
         Node node = t.getNode(newNode);
@@ -201,7 +204,7 @@ public class TransactionTest extends BridgeTest {
 
     }
 
-    public void testSetContext() {
+    public void test010SetContext() {
         Cloud cloud = getCloud();
         Transaction t = cloud.getTransaction("bar7");
         Node n = t.getNodeManager("news").createNode();
@@ -225,7 +228,7 @@ public class TransactionTest extends BridgeTest {
 
     }
 
-    public void testSetContextSubTransaction() {
+    public void test011SetContextSubTransaction() {
         Cloud cloud = getCloud();
 
         Transaction ot = cloud.getTransaction("bar8");
@@ -243,7 +246,7 @@ public class TransactionTest extends BridgeTest {
         assertEquals("non_default", n3.getContext());
     }
 
-    public void testEditNodeOutsideTransaction() {
+    public void test012EditNodeOutsideTransaction() {
         Cloud cloud = getCloud();
         Transaction t = cloud.getTransaction("bar10");
         Node nodeInTransaction = t.getNode(newNode2);
@@ -260,7 +263,7 @@ public class TransactionTest extends BridgeTest {
         //assertEquals("foo2", nodeOutTransaction.getStringValue("title")); // not sure what this should have done, but anyhow, it now fails
 
     }
-    public void testEditNodeOutsideTransaction2() {
+    public void test013EditNodeOutsideTransaction2() {
         Cloud cloud = getCloud();
         Transaction t = cloud.getTransaction("bar10");
         Node nodeInTransaction = t.getNode(newNode2);
@@ -278,7 +281,7 @@ public class TransactionTest extends BridgeTest {
 
     }
 
-    public void testDeleteNodeOutsideTransaction() {
+    public void test014DeleteNodeOutsideTransaction() {
         Cloud cloud = getCloud();
         Transaction t = cloud.getTransaction("bar11");
         Node nodeInTransaction = t.getNode(newNode2);
@@ -302,7 +305,7 @@ public class TransactionTest extends BridgeTest {
     }
 
     // same case as above, only no changes are made to the node.
-    public void testDeleteNodeOutsideTransactionNodeInTransactionButNotChanged() {
+    public void test015DeleteNodeOutsideTransactionNodeInTransactionButNotChanged() {
         Cloud cloud = getCloud();
         Transaction t = cloud.getTransaction("bar11");
         Node nodeInTransaction = t.getNode(newNode2);
@@ -334,7 +337,7 @@ public class TransactionTest extends BridgeTest {
 
 
 
-    public void testAlias() {
+    public void test016Alias() {
         Cloud cloud = getCloud();
         {
             Node node = cloud.getNode(newNode2);
@@ -366,7 +369,7 @@ public class TransactionTest extends BridgeTest {
 
     }
 
-    public void testGetNodeTwiceWhileChanged() {
+    public void test017GetNodeTwiceWhileChanged() {
         Cloud cloud1 = getCloud();
         String originalTitleValue = cloud1.getNode(newNode2).getStringValue("title");
         {
@@ -391,7 +394,7 @@ public class TransactionTest extends BridgeTest {
 
     }
 
-    public void testCreateRelationBetweenNewNodes() {
+    public void test018CreateRelationBetweenNewNodes() {
         Cloud cloud = getCloud();
         Transaction t = cloud.getTransaction("createrelationtrans");
         NodeManager news = t.getNodeManager("news");
@@ -404,7 +407,7 @@ public class TransactionTest extends BridgeTest {
     }
 
     // new node as argument
-    public void testCreateRelationToNewNode() {
+    public void test019CreateRelationToNewNode() {
         Cloud cloud = getCloud();
         Transaction t = cloud.getTransaction("createrelationtrans");
         Node n = t.getNode(newNode);
@@ -416,7 +419,7 @@ public class TransactionTest extends BridgeTest {
     }
 
     // old node as argument
-    public void testCreateRelationToNewNode2() {
+    public void test020CreateRelationToNewNode2() {
         Cloud cloud = getCloud();
         Transaction t = cloud.getTransaction("createrelationtrans");
         Node n = t.getNode(newNode);
@@ -428,7 +431,7 @@ public class TransactionTest extends BridgeTest {
     }
 
 
-    public void testTransactionsAreEqual() {
+    public void test021TransactionsAreEqual() {
         Cloud cloud = getCloud();
         Transaction t1 = cloud.getTransaction("testequals");
         Transaction t2 = cloud.getTransaction("testequals");
@@ -447,7 +450,7 @@ public class TransactionTest extends BridgeTest {
 
 
     // MMB-1857
-    public void testGetNodes() {
+    public void test022GetNodes() {
         Cloud cloud = getCloud();
         Transaction t = cloud.getTransaction("testgetnodes");
         Node n = t.getNode(newNode);
@@ -471,7 +474,7 @@ public class TransactionTest extends BridgeTest {
         t.cancel();
     }
 
-    public void testGetNode() {
+    public void test023GetNode() {
         // Create new node. Request the node again.
         // Should work
 
@@ -495,7 +498,7 @@ public class TransactionTest extends BridgeTest {
 
 
     // MMB-1860
-    public void testCreateAndDelete() {
+    public void test024CreateAndDelete() {
         // Create new node. Delete it. Commit the transaction.
         // The new node must not exist.
 
@@ -516,7 +519,7 @@ public class TransactionTest extends BridgeTest {
 
     }
 
-    public void testCreateAndDelete2() {
+    public void test025CreateAndDelete2() {
         // Create new node. Request the node again. Delete  that. Commit the transaction.
         // The new node must not exist.
 
@@ -542,7 +545,7 @@ public class TransactionTest extends BridgeTest {
     }
 
     // MMB-1860 (2)
-    public void testCreateRelateAndDelete() {
+    public void test026CreateRelateAndDelete() {
 
         // Create new node. Make a relation to it. Delete the node again. Commit the transaction.
         // The new node must not exist, but the relation shouldn't have caused errors
@@ -568,7 +571,7 @@ public class TransactionTest extends BridgeTest {
     }
 
     // MMB-1860 (3)
-    public void testCreateRelateAndDeleteRelation() {
+    public void test027CreateRelateAndDeleteRelation() {
 
         // Create new node. Make a relation to it. Delete the relation again. Commit the transaction.
         // The new node must exist, but the relation shouldn't.
@@ -603,7 +606,7 @@ public class TransactionTest extends BridgeTest {
 
 
     // MMB-1889
-    public void testCreateRelationAndDeleteNode() {
+    public void test028CreateRelationAndDeleteNode() {
         // Make a relation to an existing node. Then delete that node with the 'delete relations' option'. Commit the transaction.
         // The new relations should not exist, since the node was deleted.
         // No errors.
@@ -635,7 +638,7 @@ public class TransactionTest extends BridgeTest {
 
 
     // MMB-1893
-    public void testDeleteNodeWitRelationsAndCancel() {
+    public void test029DeleteNodeWitRelationsAndCancel() {
         Cloud cloud = getCloud();
 
         int urlCount0 = Queries.count(cloud.getNodeManager("urls").createQuery());

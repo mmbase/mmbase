@@ -1,5 +1,7 @@
 package org.mmbase.module.corebuilders;
 
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 import org.mmbase.bridge.*;
 import org.mmbase.bridge.Module;
 import java.util.*;
@@ -11,6 +13,7 @@ import java.util.regex.Pattern;
  * @author  Michiel Meeuwissen
  * @version $Id$
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TypeRelTest extends org.mmbase.tests.BridgeTest {
 
     static protected String  UNIDIR_ROLE = "unidirectionalrelation";
@@ -44,7 +47,7 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
     }
 
 
-    public void testListRelations() {
+    public void test001ListRelations() {
         RelationManagerList rml = cloud.getRelationManagers();
         assertTrue(rml != null);
         assertTrue(rml.size() > 0);
@@ -73,7 +76,7 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
     /**
      * Create bidirection relation type, and check if relationmanager in both directions can be found.
      */
-    public void testBidirectionalCloud1() {
+    public void test002BidirectionalCloud1() {
         Node reldef = createRelDefNode(BIDIR_ROLE, 2);
         typerel = typeRelManager.createNode();
         typerel.setNodeValue("snumber", newsManager);
@@ -89,46 +92,46 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
         assertTrue(rml.contains(typerel));
     }
 
-    public void testBidirectionalCloud2() {
+    public void test003BidirectionalCloud2() {
         RelationManagerList rml = cloud.getRelationManagers(urlsManager, newsManager, BIDIR_ROLE);
         assertTrue(rml.size() > 0);
         assertTrue(rml.contains(typerel));
     }
 
 
-    public void testBidirectionalNodeManagerAllowedRelations1() {
+    public void test004BidirectionalNodeManagerAllowedRelations1() {
         // by source-manager
         RelationManagerList rml = newsManager.getAllowedRelations((NodeManager) null, null, null);
         assertTrue(rml.contains(typerel));
     }
-    public void testBidirectionalNodeManagerAllowedRelations2() {
+    public void test005BidirectionalNodeManagerAllowedRelations2() {
         // by source-manager
         RelationManagerList rml = newsManager.getAllowedRelations(urlsManager, null, null);
         assertTrue(rml.contains(typerel));
     }
-    public void testBidirectionalNodeManagerAllowedRelations3() {
+    public void test006BidirectionalNodeManagerAllowedRelations3() {
         // by source-manager
         RelationManagerList rml = newsManager.getAllowedRelations(urlsManager, BIDIR_ROLE, null);
         assertTrue(rml.contains(typerel));
     }
 
 
-    public void testBidirectionalNodeManagerAllowedRelations4() {
+    public void test007BidirectionalNodeManagerAllowedRelations4() {
         // by source-manager
         RelationManagerList rml = newsManager.getAllowedRelations(urlsManager, BIDIR_ROLE, DESTINATION);
         assertTrue(rml.contains(typerel));
     }
-    public void testBidirectionalNodeManagerAllowedRelations5() {
+    public void test008BidirectionalNodeManagerAllowedRelations5() {
         // by source-manager
         RelationManagerList rml = newsManager.getAllowedRelations(urlsManager, BIDIR_ROLE, SOURCE);
         assertFalse(rml.contains(typerel));
     }
-    public void testBidirectionalNodeManagerAllowedRelations6() {
+    public void test009BidirectionalNodeManagerAllowedRelations6() {
         // by source-manager
         RelationManagerList rml = newsManager.getAllowedRelations(urlsManager, BIDIR_ROLE, BOTH);
         assertTrue(rml.contains(typerel));
     }
-    public void testBidirectionalNodeManagerAllowedRelations7() {
+    public void test010BidirectionalNodeManagerAllowedRelations7() {
         // by source-manager
         try {
             newsManager.getAllowedRelations(urlsManager, OTHER_ROLE, null);
@@ -136,20 +139,20 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
         } catch (NotFoundException e) {
         };
     }
-    public void testBidirectionalNodeManagerAllowedRelations8() {
+    public void test011BidirectionalNodeManagerAllowedRelations8() {
         // by source-manager
         RelationManagerList rml = newsManager.getAllowedRelations(urlsManager, RELATED_ROLE, null);
         assertFalse(rml.contains(typerel));
     }
 
-    public void testBidirectionalNodeManagerAllowedRelations9() {
+    public void test012BidirectionalNodeManagerAllowedRelations9() {
         // by source-manager
         RelationManagerList rml = newsManager.getAllowedRelations();
         assertTrue(rml.contains(typerel));
     }
 
 
-    public void testBidirectionalNodeManagerAllowedRelations10() {
+    public void test013BidirectionalNodeManagerAllowedRelations10() {
         // by destination-manager
         RelationManagerList rml = urlsManager.getAllowedRelations();
         assertTrue(rml.contains(typerel));
@@ -158,7 +161,7 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
 
 
 
-    public void testBidirectionalNode1() {
+    public void test014BidirectionalNode1() {
         RelationManager rm = newsManager.getAllowedRelations(urlsManager, BIDIR_ROLE, DESTINATION).getRelationManager(0);
         Relation r = rm.createRelation(news, url);
         r.commit();
@@ -166,14 +169,14 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
         // no exception should have occured.
     }
 
-    public void testBidirectionalNode2() {
+    public void test015BidirectionalNode2() {
         RelationManager rm = newsManager.getAllowedRelations(urlsManager, BIDIR_ROLE, DESTINATION).getRelationManager(0);
         Relation r = rm.createRelation(url, news);
         r.commit();
         createdNodes.add(r);
     }
 
-    public void testBidirectionalNode3() {
+    public void test016BidirectionalNode3() {
         RelationManager rm = newsManager.getAllowedRelations(urlsManager, BIDIR_ROLE, DESTINATION).getRelationManager(0);
         try {
             Relation r = rm.createRelation(news, object);
@@ -187,17 +190,17 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
 
 
 
-    public void testBidirectionalNode4() {
+    public void test017BidirectionalNode4() {
         // make sure it is the right direction now.
         NodeList nl = news.getRelatedNodes(urlsManager, BIDIR_ROLE, null);
         assertTrue("" + nl, nl.contains(url));
     }
-    public void testBidirectionalNode5() {
+    public void test018BidirectionalNode5() {
         NodeList nl = url.getRelatedNodes(newsManager);
         assertTrue(nl.contains(news));
     }
 
-    public void testBidirectionalRelations() {
+    public void test019BidirectionalRelations() {
 
     }
 
@@ -207,7 +210,7 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
      * Create unidirection relation type, and check if relationmanager in only one direction can be found.
      */
 
-    public void testUnidirectionalCloud1() {
+    public void test020UnidirectionalCloud1() {
         Node reldef = createRelDefNode(UNIDIR_ROLE, 1);
 
         typerel = typeRelManager.createNode();
@@ -224,70 +227,70 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
         assertTrue(rml.contains(typerel));
     }
 
-    public void testUnidirectionalCloud2() {
+    public void test021UnidirectionalCloud2() {
         RelationManagerList rml = cloud.getRelationManagers(urlsManager, newsManager, UNIDIR_ROLE);
         assertTrue(rml.size() == 0);
         assertFalse(rml.contains(typerel));
     }
 
 
-    public void testUnidirectionalNodeManagerAllowedRelations1() {
+    public void test022UnidirectionalNodeManagerAllowedRelations1() {
         // by source-manager
         RelationManagerList rml = newsManager.getAllowedRelations((NodeManager) null, null, null);
         assertTrue(rml.contains(typerel));
     }
-    public void testUnidirectionalNodeManagerAllowedRelations2() {
+    public void test023UnidirectionalNodeManagerAllowedRelations2() {
         // by source-manager
         RelationManagerList rml = newsManager.getAllowedRelations(urlsManager, null, null);
         assertTrue(rml.contains(typerel));
     }
-    public void testUnidirectionalNodeManagerAllowedRelations3() {
+    public void test024UnidirectionalNodeManagerAllowedRelations3() {
         // by source-manager
         RelationManagerList rml = newsManager.getAllowedRelations(urlsManager, UNIDIR_ROLE, null);
         assertTrue(rml.contains(typerel));
     }
 
 
-    public void testUnidirectionalNodeManagerAllowedRelations4() {
+    public void tes025tUnidirectionalNodeManagerAllowedRelations4() {
         // by source-manager
         RelationManagerList rml = newsManager.getAllowedRelations(urlsManager, UNIDIR_ROLE, DESTINATION);
         assertTrue(rml.contains(typerel));
     }
-    public void testUnidirectionalNodeManagerAllowedRelations5() {
+    public void test026UnidirectionalNodeManagerAllowedRelations5() {
         // by source-manager
         RelationManagerList rml = newsManager.getAllowedRelations(urlsManager, UNIDIR_ROLE, SOURCE);
         assertFalse(rml.contains(typerel));
     }
-    public void testUnidirectionalNodeManagerAllowedRelations6() {
+    public void test027UnidirectionalNodeManagerAllowedRelations6() {
         // by source-manager
         RelationManagerList rml = newsManager.getAllowedRelations(urlsManager, UNIDIR_ROLE, BOTH);
         assertTrue(rml.contains(typerel));
     }
-    public void testUnidirectionalNodeManagerAllowedRelations7() {
+    public void test028UnidirectionalNodeManagerAllowedRelations7() {
         try {
             newsManager.getAllowedRelations(urlsManager, OTHER_ROLE, null);
             fail("Should have thrown exception for non-existing relations");
         } catch (NotFoundException e) {
         };
     }
-    public void testUnidirectionalNodeManagerAllowedRelations8() {
+    public void test029UnidirectionalNodeManagerAllowedRelations8() {
         RelationManagerList rml = newsManager.getAllowedRelations(urlsManager, RELATED_ROLE, null);
         assertFalse(rml.contains(typerel));
     }
 
-    public void testUnidirectionalNodeManagerAllowedRelations9() {
+    public void test030UnidirectionalNodeManagerAllowedRelations9() {
         RelationManagerList rml = newsManager.getAllowedRelations();
         assertTrue(rml.contains(typerel));
     }
 
-    public void testUnidirectionalNodeManagerAllowedRelations10() {
+    public void test031UnidirectionalNodeManagerAllowedRelations10() {
         RelationManagerList rml = urlsManager.getAllowedRelations();
         assertFalse(rml.contains(typerel));
     }
 
 
 
-    public void testUnidirectionalNode1() {
+    public void test032UnidirectionalNode1() {
         RelationManager rm = newsManager.getAllowedRelations(urlsManager, UNIDIR_ROLE, DESTINATION).getRelationManager(0);
         Relation r = rm.createRelation(news, url);
         r.commit();
@@ -295,7 +298,7 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
         // no exception should have occured.
     }
 
-    public void testUnidirectionalNode2() {
+    public void test033UnidirectionalNode2() {
         RelationManager rm = newsManager.getAllowedRelations(urlsManager, UNIDIR_ROLE, DESTINATION).getRelationManager(0);
         Relation r = rm.createRelation(url, news);
         r.commit();
@@ -303,19 +306,19 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
 
     }
 
-    public void testUnidirectionalNode3() {
+    public void test034UnidirectionalNode3() {
         // make sure it is the right direction now.
         NodeList nl = news.getRelatedNodes(urlsManager, UNIDIR_ROLE, null);
         assertTrue(nl.contains(url));
     }
-    public void testUnidirectionalNode4() {
+    public void test035UnidirectionalNode4() {
         NodeList nl = url.getRelatedNodes(newsManager, UNIDIR_ROLE, null);
         assertFalse(nl.contains(news));
     }
 
 
 
-    public void testInheritanceRelations() {
+    public void test036InheritanceRelations() {
         Node reldef = createRelDefNode(INH_ROLE, 2);
 
         Node typerel = typeRelManager.createNode();
@@ -351,7 +354,7 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
     }
 
 
-    public void testMultiLevelQuery() {
+    public void test037MultiLevelQuery() {
         Node reldef = createRelDefNode(MULTILEVEL_ROLE, 2);
         Node typerel = typeRelManager.createNode();
         typerel.setNodeValue("snumber", objectManager);
@@ -402,7 +405,7 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
         }
     }
 
-    public void testDestinationManagers() {
+    public void test039DestinationManagers() {
         testDestinationManagers(newsManager);
         testDestinationManagers(urlsManager);
         testDestinationManagers(objectManager);
@@ -417,14 +420,14 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
                        rm.getDestinationManager().equals(destinationManager));
         }
     }
-    public void testSourceManagers() {
+    public void test040SourceManagers() {
         testSourceManagers(newsManager);
         testSourceManagers(urlsManager);
         testSourceManagers(objectManager);
     }
 
     Pattern OK = Pattern.compile(".*loaded ok.*");
-    public void testInstallBridge2() { // Trigger MMB-1728
+    public void test041InstallBridge2() { // Trigger MMB-1728
         // try to install another role 'related'
         Module mmadmin = getCloud().getCloudContext().getModule("mmadmin");
         Map<String, Object> params = new HashMap<String, Object>();
@@ -434,7 +437,7 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
         assertTrue(OK + " did not match " + lastmsg, OK.matcher(lastmsg).matches());
     }
 
-    public void testInstallBridge3() {
+    public void test042InstallBridge3() {
         // try to install another role 'related'
         Module mmadmin = getCloud().getCloudContext().getModule("mmadmin");
         Map<String, Object> params = new HashMap<String, Object>();
@@ -466,14 +469,14 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
         }
     }
 
-    public void testManagers() {
+    public void test043Managers() {
         testManagers(newsManager);
         testManagers(urlsManager);
         testManagers(objectManager);
     }
 
 
-    public void testClearUpMess() {
+    public void test044ClearUpMess() {
         //        System.out.println("Clearing up the mess");
         NodeIterator i = createdNodes.nodeIterator();
         while (i.hasNext()) i.next(); // fast forward.
@@ -486,7 +489,7 @@ public class TypeRelTest extends org.mmbase.tests.BridgeTest {
     }
 
 
-    public void testShutdown() {
+    public void test100Shutdown() {
         getCloud("admin").shutdown();
     }
 

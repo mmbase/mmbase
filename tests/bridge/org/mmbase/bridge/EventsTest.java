@@ -11,6 +11,7 @@ See http://www.MMBase.org/license
 package org.mmbase.bridge;
 
 import java.util.*;
+import static org.junit.Assert.assertTrue;
 import org.mmbase.tests.*;
 import org.mmbase.core.event.*;
 
@@ -27,19 +28,21 @@ public class EventsTest extends BridgeTest {
     }
 
     public void testEvents() throws InterruptedException {
+        final List<Event> events = new ArrayList<Event>();
 
         // register a event listener here.
         AllEventListener listener = new AllEventListener() {
-                List<Event> events = new ArrayList<Event>();
                 public void notify(Event e) {
                     events.add(e);
                 }
             };
+        EventManager.getInstance().addEventListener(listener);
 
         Thread thread1 = new Thread() {
                 public void run() {
                     // cause events
                     Event event = new Event("thismachine") { };
+                    EventManager.getInstance().propagateEvent(event);
                     // how to send it?
 
                     Cloud cloud = getCloud();
@@ -55,7 +58,9 @@ public class EventsTest extends BridgeTest {
         thread1.start();
         thread1.join();
 
+        System.out.println("Received events: " + events);
         // assert if expected events are in listener
+        assertTrue(events.size() == 2);
 
     }
 

@@ -34,9 +34,9 @@ jobs:
         with:
           path: |
             ~/.m2/repository
-          key: mvnrepo
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}-${{ github.ref }}
           restore-keys: |
-            mvnrepo
+            ${{ runner.os }}-m2-
       - name: Build with Maven
         run: ./build-all.sh
         env:
@@ -73,6 +73,8 @@ jobs:
               base-webapp/Dockerfile
 
   integration-tests:
+    env:
+      MAVEN_ARGS: '--no-transfer-progress'
     needs: maven
     runs-on: ubuntu-latest
     container:
@@ -84,17 +86,21 @@ jobs:
         with:
           path: |
             ~/.m2/repository
-          key: mvnrepo
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}-${{ github.ref }}
           restore-keys: |
-            mvnrepo
-      - run: |
+            ${{ runner.os }}-m2-
+      - name: Run integration tests
+        run: |
           cd tests
           make all
+      - name: Show summary of results
+        run: |
+          grep -E "=====|Tests run|OK" tests/work/all.log
       - uses: actions/upload-artifact@v6
         with:
           name: logs
           path: |
-            work
+            tests/work
   docker:
     needs: maven
     runs-on: ubuntu-latest

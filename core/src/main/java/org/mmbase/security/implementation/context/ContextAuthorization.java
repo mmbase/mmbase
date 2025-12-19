@@ -9,23 +9,29 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.security.implementation.context;
 
+import java.util.*;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import org.mmbase.bridge.Query;
 import org.mmbase.cache.Cache;
-import org.mmbase.storage.search.*;
-import java.util.*;
-
-import org.w3c.dom.*;
-import org.xml.sax.InputSource;
-
-import javax.xml.xpath.*;
-
 import org.mmbase.module.core.MMBase;
+import static org.mmbase.module.core.MMObjectBuilder.FIELD_OWNER;
 import org.mmbase.module.core.MMObjectNode;
 import org.mmbase.security.*;
-import org.mmbase.security.SecurityException; // must be imported explicity, because it is also in
-                                              // java.lang
+import org.mmbase.security.SecurityException;
+import org.mmbase.storage.search.CompositeConstraint;
+import org.mmbase.storage.search.Constraint;
+import org.mmbase.storage.search.Step;
+import org.mmbase.storage.search.StepField;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 /**
  * Authorization based on a XML-configuration file. The XML file contains users, groups and
@@ -130,7 +136,7 @@ public class ContextAuthorization extends Authorization {
         }
         // don't even bother if the context was already set.
         MMObjectNode node = getMMNode(nodeNumber);
-        if (node.getStringValue("owner").equals(context)) return;
+        if (node.getStringValue(FIELD_OWNER).equals(context)) return;
 
         // check if is a valid context for us..
         Set<String> possible = getPossibleContexts(user, nodeNumber);
@@ -142,7 +148,7 @@ public class ContextAuthorization extends Authorization {
         verify(user, nodeNumber, Operation.CHANGE_CONTEXT);
 
         // well now really set it...
-        node.setValue("owner", context);
+        node.setValue(FIELD_OWNER, context);
         node.commit();
         if (log.isDebugEnabled()) {
             log.debug("changed context settings of node #"+nodeNumber+" to context: "+context+ " by user: " +user);

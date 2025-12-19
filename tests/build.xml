@@ -29,6 +29,7 @@
   </target>
 
   <target name="start.database" depends="init">
+    <echo message="starting hsqldb" />
     <java classname="org.hsqldb.Server" fork="true" >
       <arg value="-database.0" />
       <arg value ="${tests.database.dir}/test" />
@@ -129,8 +130,9 @@
         <include name="mmbase-richtext-${version}-classes.jar" />
       </fileset>
     </path>
+    <pathconvert property="run.rmmci.client.path" refid="run.rmmci.client" />
 
-    <echo  message="${run.rmmci.client}" />
+    <echo  message="${run.rmmci.client.path}" />
 
   </target>
 
@@ -195,6 +197,7 @@
   <target name="run.bridge.rmmci" depends="init,clean.database" description="Bridge tests (through RMMCI)">
     <parallel>
       <daemons>
+        <sequential>
         <echo message="starting mmbase server" />
         <java
             classname="org.mmbase.tests.MMBaseTest"
@@ -208,19 +211,22 @@
           <jvmarg value="-Drmmci.RMIRegistryServer=localhost" />
           <jvmarg value="-Duser.dir=${tests.work.dir}" />
         </java>
+        </sequential>
       </daemons>
-      <echo message="starting client ${run.rmmci.client}  " />
-      <java
+      <sequential>
+        <echo message="starting client ${run.rmmci.client}  " />
+        <java
           classname="${ui.class}"
           fork="true"
           timeout="1000000"
           classpathref="run.rmmci.client"
-          >
-        <arg value="org.mmbase.bridge.AllTests" />
-        <jvmarg value="-Dnostartmmbase=" />
-        <jvmarg value="-Dmmbase.defaultcloudcontext=rmi://localhost:1221/remotecontext" />
-        <assertions><enable /></assertions>
-      </java>
+        >
+          <arg value="org.mmbase.bridge.AllTests" />
+          <jvmarg value="-Dnostartmmbase=" />
+          <jvmarg value="-Dmmbase.defaultcloudcontext=rmi://localhost:1221/remotecontext" />
+          <assertions><enable /></assertions>
+        </java>
+      </sequential>
     </parallel>
     <antcall target="stop.database" inheritRefs="true" />
   </target>
@@ -280,13 +286,15 @@
       <echo message="${tests.source.dir}/config" />
       <daemons>
         <antcall target="start.database" inheritRefs="true"/>
+        <sequential>
+          <echo message="Starting mmbase1" />
         <java
             classname="org.mmbase.tests.MMBaseTest"
             fork="true"
             timeout="300000"
             classpathref="run.classpath.clustering"
             >
-          <jvmarg value="-Dnostartdb=" />
+          <jvmarg value="-Dnostartdb=true" />
           <jvmarg value="-Dmmbase.config=${tests.source.dir}/config" />
           <jvmarg value="-Dmmbaseroot.machinename=mmbase1" />
           <jvmarg value="-Drmmci.port=1221" />
@@ -295,19 +303,22 @@
           <jvmarg value="-Duser.dir=${tests.work.dir}" />
           <assertions><enable /></assertions>
         </java>
+        </sequential>
         <sequential>
           <!-- this should not be necessary, but MMBase's get a bit confused if they both at same time start to make the same tables -->
+          <echo message="Starting mmbase2 in 20 seconds" />
           <sleep seconds="20" />
+          <echo message="Starting mmbase2 now" />
           <java
               classname="org.mmbase.tests.MMBaseTest"
               fork="true"
               timeout="300000"
               classpathref="run.classpath.clustering"
               >
-            <jvmarg value="-Dnostartdb=" />
+            <jvmarg value="-Dnostartdb=true" />
             <jvmarg value="-Dmmbase.config=${tests.source.dir}/config" />
             <jvmarg value="-Dmmbaseroot.machinename=mmbase2" />
-            <jvmarg value="-Drmmci.port=1222" />
+            <jvmarg value="-Drmmci.port=1223" /> <!-- This was 1222, but something opening that already ?? -->
             <jvmarg value="-Drmmci.bindname=remotecontext" />
             <jvmarg value="-Drmmci.RMIRegistryServer=localhost" />
             <jvmarg value="-Duser.dir=${tests.work.dir}" />
@@ -393,15 +404,15 @@
   <target name="run.all" description="Run all tests">
     <echo message="========================================DBSQ========================================" />
     <antcall target="run.dbsq" inheritRefs="true"/>
-    <echo message="sleeping.." />
+    <echo message="sleeping 10s.." />
     <sleep seconds="10" />
     <echo message="========================================TYPEREL========================================" />
     <antcall target="run.typerel" inheritRefs="true"/>
-    <echo message="sleeping.." />
+    <echo message="sleeping 10s.." />
     <sleep seconds="10" />
 
     <antcall target="run.all.bridge" inheritRefs="true"/>
-    <echo message="sleeping.." />
+    <echo message="sleeping 10s.." />
     <sleep seconds="10" />
 
     <echo message="========================================CLUSTERING========================================" />
@@ -421,12 +432,12 @@
     <antcall target="run.bridge" inheritRefs="true" />
     <echo message="sleeping.." />
     <sleep seconds="10" />
-    <echo message="========================================RMMCI========================================" />
+    <echo message="========================================BRIDGE RMMCI========================================" />
     <antcall target="run.bridge.rmmci" inheritRefs="true" />
   </target>
 
   <target name="run.all.rmmci">
-    <echo message="========================================RMMCI========================================" />
+    <echo message="========================================BRIDGE RMMCI========================================" />
     <antcall target="run.bridge.rmmci" inheritRefs="true"/>
     <echo message="========================================CLUSTERING========================================" />
     <echo message="sleeping.." />

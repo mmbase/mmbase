@@ -69,7 +69,7 @@ transactions:  ## transactions tests
 
 dependencies:
 	mkdir -p work
-	$(mvn) validate
+	$(mvn) -o validate
 
 .PHONY: compile
 compile:

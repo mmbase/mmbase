@@ -9,23 +9,33 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.module.core;
 
-import java.util.*;
 import java.io.*;
-
-import org.mmbase.cache.*;
+import java.util.*;
 import org.mmbase.bridge.Field;
 import org.mmbase.bridge.Node;
-import org.mmbase.core.CoreField;
-import org.mmbase.storage.*;
-import org.mmbase.module.corebuilders.InsRel;
+import org.mmbase.cache.BlobCache;
+import org.mmbase.cache.RelatedNodesCache;
+import org.mmbase.cache.RelationsCache;
 import org.mmbase.module.builders.DayMarkers;
-import org.mmbase.security.*;
-import org.mmbase.storage.search.*;
-import org.mmbase.storage.search.implementation.NodeSearchQuery;
+import static org.mmbase.module.core.MMObjectBuilder.FIELD_NUMBER;
+import static org.mmbase.module.core.MMObjectBuilder.FIELD_OBJECT_TYPE;
+import org.mmbase.module.corebuilders.InsRel;
+import org.mmbase.security.MMBaseCop;
+import org.mmbase.security.UserContext;
+import org.mmbase.storage.search.RelationStep;
+import org.mmbase.storage.search.SearchQuery;
+import org.mmbase.storage.search.SearchQueryException;
+import org.mmbase.storage.search.StepField;
 import org.mmbase.storage.search.implementation.BasicFieldValueConstraint;
-import org.mmbase.util.*;
-import org.mmbase.util.logging.*;
-import org.mmbase.util.functions.*;
+import org.mmbase.storage.search.implementation.NodeSearchQuery;
+import org.mmbase.util.Casting;
+import org.mmbase.util.DynamicDate;
+import org.mmbase.util.SerializableInputStream;
+import org.mmbase.util.SizeOf;
+import org.mmbase.util.functions.Function;
+import org.mmbase.util.functions.Parameters;
+import org.mmbase.util.logging.Logger;
+import org.mmbase.util.logging.Logging;
 import org.w3c.dom.Document;
 
 /**
@@ -300,7 +310,7 @@ public class MMObjectNode implements org.mmbase.util.SizeMeasurable, java.io.Ser
             oldBuilder = builder;
         }
         assert bul.getNumber() > 0;
-        storeValue(MMObjectBuilder.FIELD_OBJECT_TYPE, bul.getNumber());
+        storeValue(FIELD_OBJECT_TYPE, bul.getNumber());
         delRelationsCache();
         builder = bul;
         parent = bul;
@@ -338,7 +348,7 @@ public class MMObjectNode implements org.mmbase.util.SizeMeasurable, java.io.Ser
      * @return <code>true</code> if the commit was succesfull, <code>false</code> is it failed
      */
     public boolean commit() {
-        assert values.get("number") != null;
+        assert values.get(FIELD_NUMBER) != null;
         boolean success = parent.commit(this);
         if (success) {
             isNew = false; // perhaps it is always already false (otherwise insert is called, I think), but no matter, now it certainly isn't new!
@@ -385,11 +395,16 @@ public class MMObjectNode implements org.mmbase.util.SizeMeasurable, java.io.Ser
             MMBaseCop mmbaseCop = parent.getMMBase().getMMBaseCop();
             mmbaseCop.getAuthorization().create(user, nodeID);
             if (nc != null) {
+                // this node is new, so these don't actually should count as changes.
+                changed.remove(FIELD_NUMBER);
+                changed.remove(FIELD_OBJECT_TYPE);
                 mmbaseCop.getAuthorization().setContext(user, nodeID, nc);
                 if (log.isDebugEnabled()) {
                     log.debug("Context was set " + newContext + " " + this);
                 }
                 newContext = null;
+
+
                 parent.safeCommit(this);
             } else {
                 if (log.isDebugEnabled()) {
@@ -844,7 +859,7 @@ public class MMObjectNode implements org.mmbase.util.SizeMeasurable, java.io.Ser
      * @return the number of the node
      */
     public int getNumber() {
-        return Casting.toInt(values.get(MMObjectBuilder.FIELD_NUMBER));
+        return Casting.toInt(values.get(FIELD_NUMBER));
     }
 
     /**
@@ -853,7 +868,7 @@ public class MMObjectNode implements org.mmbase.util.SizeMeasurable, java.io.Ser
      * @return the object type number of the node
      */
     public int getOType() {
-        return Casting.toInt(values.get(MMObjectBuilder.FIELD_OBJECT_TYPE));
+        return Casting.toInt(values.get(FIELD_OBJECT_TYPE));
     }
 
     /**
@@ -1138,7 +1153,7 @@ public class MMObjectNode implements org.mmbase.util.SizeMeasurable, java.io.Ser
      * @return the field's value as an <code>int</code>
      */
     public MMObjectNode getNodeValue(String fieldName) {
-        if (fieldName == null || fieldName.equals(MMObjectBuilder.FIELD_NUMBER)) return this;
+        if (fieldName == null || fieldName.equals(FIELD_NUMBER)) return this;
         Object value = getValue(fieldName);
         MMObjectNode res = null;
         if (value instanceof MMObjectNode) {
@@ -1887,9 +1902,9 @@ public class MMObjectNode implements org.mmbase.util.SizeMeasurable, java.io.Ser
 
                 MMObjectNode convert = new MMObjectNode(parent.mmb.getBuilder(builderName), false);
                 // parent needs to be set or else mmbase does nag nag nag on a setValue()
-                convert.setValue(MMObjectBuilder.FIELD_NUMBER, node.getValue(type + ".number"));
+                convert.setValue(FIELD_NUMBER, node.getValue(type + ".number"));
                 assert ootype > 0;
-                convert.setValue(MMObjectBuilder.FIELD_OBJECT_TYPE, ootype);
+                convert.setValue(FIELD_OBJECT_TYPE, ootype);
                 list.add(convert);
             }
             // first and only list or last list, return real values
