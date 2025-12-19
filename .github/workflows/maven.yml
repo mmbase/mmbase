@@ -95,7 +95,7 @@ jobs:
           make all
       - name: Show summary of results
         run: |
-          cat tests/work/all.log  | grep -E "=====|Tests run|OK"
+          grep -E "=====|Tests run|OK" tests/work/all.log
       - uses: actions/upload-artifact@v6
         with:
           name: logs
