@@ -39,11 +39,9 @@ Widgets.instance = new Widgets();
 Widgets.prototype.switchEnumerationSuggestion = function(ev) {
     var target = ev.target;
     if ('OTHER' == target.value) {
-        // var text = $("<input type='text'> </input>");
 		var textInput = document.createElement('input');
 		textInput.type = "text";
 
-        // var t = $(target);
 		target.after(textInput);
 		textInput.className = target.className;
 		textInput.id = target.id;
@@ -78,7 +76,12 @@ Widgets.prototype.switchEnumerationSuggestion = function(ev) {
  * automaticly changed into a text input box. (and back if this input box is made empty and left that way for 2 seconds).
  */
 Widgets.prototype.enumerationSuggestion = function(selector) {
-	domReady(() => selector.addEventListener("change",	Widgets.prototype.switchEnumerationSuggestion));
+	const elem = document.querySelector(selector);
+	if (!elem) {
+		return;
+	}
+
+	domReady(() => elem.addEventListener("change",	Widgets.prototype.switchEnumerationSuggestion));
 };
 
 
@@ -97,7 +100,6 @@ Widgets.prototype.setToString = function(set) {
 };
 
 Widgets.prototype.singleBoxes = function(select, min, max) {
-    var t = $(select);
     var text = document.createElement("div");
     text.className = "mm_boxes";
     text.setAttribute("id", select.id);
@@ -129,7 +131,7 @@ Widgets.prototype.singleBoxes = function(select, min, max) {
 			} catch (err) {
 				input = document.createElement("input");
 				input.setAttribute("type", "radio");
-				input.setAttribute("name", t.attr("name"));
+				input.setAttribute("name", select.getAttribute("name"));
 				if (option.selected) {
 					input.setAttribute("checked", option.selected);
 				}
@@ -149,7 +151,6 @@ Widgets.prototype.singleBoxes = function(select, min, max) {
 				text.append("<br />");
 			}
 		} else {
-			// var span = $("<span class='head' />");
 			var span = document.createElement("span");
 			span.className = "head";
 
@@ -167,60 +168,76 @@ Widgets.prototype.singleBoxes = function(select, min, max) {
 };
 
 Widgets.prototype.multipleBoxes = function(select) {
-    var t = $(select);
-    var text = $("<div class='mm_boxes' />");
-    text.attr("id", t.attr("id"));
-    text.addClass(t.attr("class"));
-    var hidden = $("<input type='hidden' />");
-    text.append(hidden);
-    hidden.attr("name", t.attr("name"));
-    hidden[0].values = new Object();
-    var first = true;
-    var div = $("<div />");
-    text.append(div);
-    var options = select.options;
-    for (var i = 0; i < options.length; i++) {
-        var opt = options[i];
-        try {
-            if (! $(opt).hasClass("head")) {
-                var nobr = $("<nobr />");
-                nobr.addClass(t.attr('name'));
-                nobr.addClass($(opt).attr('class'));
-                var input = $("<input type='checkbox' value='" + opt.value + "' " + (opt.selected ? "checked='checked'" : "") + " />");
-                input.attr('name', t.attr('name') + "___" + opt.value);
-                if (opt.selected) {
-                    hidden[0].values[opt.value] = true;
-                }
-                nobr.append(input);
-                nobr.append($(opt).text());
-                div.append(nobr);
-                input.change(function() {
-                    hidden[0].values[this.value] = this.checked;
-                    hidden[0].value = Widgets.prototype.setToString(hidden[0].values);
+	// var t = $(select);
+	// var text = $("<div class='mm_boxes' />");
+	// text.attr("id", t.attr("id"));
+	// text.addClass(t.attr("class"));
+	var text = document.createElement("div");
+	text.className = "mm_boxes" + ` ${select.className}`;
+	text.id = select.id;
 
-                });
-                first = false;
-            } else if ($(opt).text() == "--") {
-                if (! first) {
-                    div.append("<br />");
-                }
-            } else {
-                if (! first) {
-                    div = $("<div />");
-                    text.append(div);
-                }
-                var span = $("<span class='head' />");
-                div.append(span);
-                span.text($(opt).text());
-                first = false;
-            }
-        } catch(err) {
-            //console.log(err);
-        }
-    }
-    hidden.attr("value", Widgets.prototype.setToString(hidden[0].values));
-    t.after(text);
-    t.remove();
+	// var hidden = $("<input type='hidden' />");
+	var hidden = document.createElement("input");
+	hidden.setAttribute("type", "hidden");
+	hidden.setAttribute("name", select.name);
+	hidden[0].values = new Object();
+	text.append(hidden);
+	// hidden.attr("name", t.attr("name"));
+	// hidden[0].values = new Object();
+
+	var first = true;
+	var div = $("<div />");
+	text.append(div);
+	var options = select.options;
+	for (var i = 0; i < options.length; i++) {
+		var opt = options[i];
+		try {
+			if (!$(opt).hasClass("head")) {
+				var nobr = $("<nobr />");
+				nobr.addClass(t.attr("name"));
+				nobr.addClass($(opt).attr("class"));
+				var input = $(
+					"<input type='checkbox' value='" +
+						opt.value +
+						"' " +
+						(opt.selected ? "checked='checked'" : "") +
+						" />"
+				);
+				input.attr("name", t.attr("name") + "___" + opt.value);
+				if (opt.selected) {
+					hidden[0].values[opt.value] = true;
+				}
+				nobr.append(input);
+				nobr.append($(opt).text());
+				div.append(nobr);
+				input.change(function () {
+					hidden[0].values[this.value] = this.checked;
+					hidden[0].value = Widgets.prototype.setToString(
+						hidden[0].values
+					);
+				});
+				first = false;
+			} else if ($(opt).text() == "--") {
+				if (!first) {
+					div.append("<br />");
+				}
+			} else {
+				if (!first) {
+					div = $("<div />");
+					text.append(div);
+				}
+				var span = $("<span class='head' />");
+				div.append(span);
+				span.text($(opt).text());
+				first = false;
+			}
+		} catch (err) {
+			//console.log(err);
+		}
+	}
+	hidden.attr("value", Widgets.prototype.setToString(hidden[0].values));
+	t.after(text);
+	t.remove();
 };
 
 
