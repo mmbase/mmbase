@@ -402,11 +402,11 @@
   <!-- Run the tests -->
   <!-- =================================================================== -->
   <target name="run.all" description="Run all tests">
-    <echo message="========================================DBSQ========================================" />
+    <echo message="===== DBSQ  ======================================" />
     <antcall target="run.dbsq" inheritRefs="true"/>
     <echo message="sleeping 10s.." />
     <sleep seconds="10" />
-    <echo message="========================================TYPEREL========================================" />
+    <echo message="==== TYPEREL =====================================" />
     <antcall target="run.typerel" inheritRefs="true"/>
     <echo message="sleeping 10s.." />
     <sleep seconds="10" />
@@ -415,31 +415,31 @@
     <echo message="sleeping 10s.." />
     <sleep seconds="10" />
 
-    <echo message="========================================CLUSTERING========================================" />
+    <echo message="==== CLUSTERING   ================================" />
     <antcall target="run.clustering" inheritRefs="true"/>
     <sleep seconds="10" />
-    <echo message="========================================RELEASESTRATEGY========================================" />
+    <echo message="==== RELEASESTRATEGY =============================" />
     <antcall target="run.releasestrategy" inheritRefs="true"/>
     <sleep seconds="10" />
-    <echo message="========================================CONVERTIMAGE========================================" />
+    <echo message="==== CONVERTIMAGE ================================" />
     <antcall target="run.convertimage" inheritRefs="true"/>
-    <echo message="========================================CLOUD CONTEXT SECURITY========================= ====" />
+    <echo message="==== CLOUD CONTEXT SECURITY=======================" />
     <antcall target="run.cloudcontext" inheritRefs="true" />
   </target>
 
   <target name="run.all.bridge">
-    <echo message="========================================BRIDGE========================================" />
+    <echo message="==== BRIDGE ======================================" />
     <antcall target="run.bridge" inheritRefs="true" />
     <echo message="sleeping.." />
     <sleep seconds="10" />
-    <echo message="========================================BRIDGE RMMCI========================================" />
+    <echo message="==== BRIDGE RMMCI ================================" />
     <antcall target="run.bridge.rmmci" inheritRefs="true" />
   </target>
 
   <target name="run.all.rmmci">
-    <echo message="========================================BRIDGE RMMCI========================================" />
+    <echo message="==== BRIDGE RMMCI ================================" />
     <antcall target="run.bridge.rmmci" inheritRefs="true"/>
-    <echo message="========================================CLUSTERING========================================" />
+    <echo message="==== CLUSTERING ==================================" />
     <echo message="sleeping.." />
     <sleep seconds="10" />
     <antcall target="run.clustering" inheritRefs="true"/>
