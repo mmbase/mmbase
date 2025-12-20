@@ -21,7 +21,7 @@ jobs:
   maven:
     runs-on: ubuntu-latest
     container:
-     image: ghcr.io/mmbase/build:4
+     image: ghcr.io/mmbase/build:6-jdk8
     env:
       MAVEN_ARGS: '--no-transfer-progress'
     steps:
@@ -78,7 +78,7 @@ jobs:
     needs: maven
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/mmbase/build:4
+      image: ghcr.io/mmbase/build:6-jdk8
     steps:
       - uses: actions/checkout@v6
       - name: Cache Maven local repository
