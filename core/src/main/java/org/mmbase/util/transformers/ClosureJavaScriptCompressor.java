@@ -62,6 +62,9 @@ public class ClosureJavaScriptCompressor extends  ReaderTransformer {
                 options
             );
 
+            if (result.warnings != null && !result.warnings.isEmpty()) {
+                LOG.warn("JavaScript compilation warning: " + result.warnings);
+            }
             if (result.success) {
                 if (initialNewline) {
                     writer.write('\n');
@@ -71,7 +74,7 @@ public class ClosureJavaScriptCompressor extends  ReaderTransformer {
                 LOG.debug("Ready (compiled)");
                 return writer;
             } else {
-                LOG.error("JavaScript compilation failed");
+                LOG.error("JavaScript compilation failed: " + result.errors);
             }
         } catch (Exception e) {
             LOG.error("Error during JavaScript compression: " + e.getMessage(), e);
