@@ -71,7 +71,10 @@ Widgets.prototype.switchEnumerationSuggestion = function (ev) {
  * automaticly changed into a text input box. (and back if this input box is made empty and left that way for 2 seconds).
  */
 Widgets.prototype.enumerationSuggestion = function (selector) {
-	domReady(() => selector.addEventListener("change", Widgets.prototype.switchEnumerationSuggestion));
+	const element = document.querySelector(selector);
+	if (element) {
+		domReady(() => element.addEventListener("change", Widgets.prototype.switchEnumerationSuggestion));
+	}
 };
 
 
