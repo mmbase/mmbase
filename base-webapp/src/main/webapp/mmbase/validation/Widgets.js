@@ -228,7 +228,8 @@ Widgets.prototype.multipleBoxes = function (select) {
  */
 Widgets.prototype.boxes = function (selector, multiple, min, max) {
 	domReady(function () {
-		selector.forEach(function (select) {
+		const elems = document.querySelectorAll(selector);
+		elems.forEach(function (select) {
 			if (multiple || select.multiple) {
 				Widgets.prototype.multipleBoxes(select);
 			} else {
@@ -258,7 +259,8 @@ Widgets.prototype.moveFromAToB = function (option, a, b) {
 
 Widgets.prototype.twoMultiples = function (selector) {
 	domReady(function () {
-		selector.forEach(function (select) {
+		const elems = document.querySelectorAll(selector);
+		elems.forEach(function (select) {
 			var text = document.createElement("div");
 			text.className = "mm_twomultiples";
 
@@ -349,7 +351,6 @@ Widgets.prototype.twoMultiples = function (selector) {
 			select.after(text);
 			select.remove();
 		});
-
 	});
 };
 
@@ -359,7 +360,8 @@ Widgets.prototype.labelsToInputs = function (selector, options) {
 	//var ignornon         = options && options['emptyisuntouched'];
 
 	domReady(function () {
-		selector.forEach(function (label) {
+		const elems = document.querySelectorAll(selector);
+		elems.forEach(function (label) {
 			var labelText = label.innerText;
 			var inputId = label.getAttribute("for");
 			var input = document.getElementById(inputId);

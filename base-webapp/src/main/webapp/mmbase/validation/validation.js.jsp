@@ -1256,7 +1256,7 @@ MMBaseValidator.prototype.removeValidationFromElement = function(el) {
         if (! el.prevValid) {
             self.invalidElements--;
         }
-        el.removeEventListener('change');
+        el.removeEventListener("change", function() {});
         const newElements = [];
         self.elements.forEach(function(elem) {
             if (el.initialId !== elem.initialId) {
