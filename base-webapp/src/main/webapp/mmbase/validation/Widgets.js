@@ -205,7 +205,8 @@ Widgets.prototype.multipleBoxes = function (select) {
 				}
 			} else {
 				if (!first) {
-					text.append(document.createElement("div"));
+					div = document.createElement("div")
+					text.append(div);
 				}
 				var span = document.createElement("span");
 				span.className = "head";

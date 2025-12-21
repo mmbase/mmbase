@@ -552,11 +552,15 @@ MMBaseValidator.prototype.typeValid = function(el) {
  * Small utility to just get the dom attribute 'value', but also parse to float, if 'numeric' is true.
  */
 MMBaseValidator.prototype.getValueAttribute = function(numeric, el) {
-    if (el == null) return null;
+    if (el == null) {
+        return null;
+    }
 
     let value = el.getAttribute("value");
-    const evalled = el.getAttribute("eval");
-    if (evalled && evalled !== "") value = evalled;
+    const eval = el.getAttribute("eval");
+    if (eval) {
+        value = eval;
+    }
 
     if (numeric) {
         if (value === "") return null;
@@ -1259,6 +1263,8 @@ MMBaseValidator.prototype.removeValidationFromElement = function(el) {
         if (! el.prevValid) {
             self.invalidElements--;
         }
+
+        // @TODO fix removing
         el.removeEventListener("change", function() {});
         const newElements = [];
         self.elements.forEach(function(elem) {
@@ -1312,7 +1318,7 @@ MMBaseValidator.prototype.addValidationForElements = function(els) {
             entry.addEventListener("change", function(ev) { self.serverValidate(ev); }, false);
             break;
         case "file":
-            entry.addEventListener("change", function(ev) { self.setLastChange(ev); self.validate(ev); }, false);
+            entry.addEventListener("change", function(ev) { self.setLastChange(ev); self.serverValidate(ev); }, false);
             break;
         case "select-one":
         case "select-multiple":
