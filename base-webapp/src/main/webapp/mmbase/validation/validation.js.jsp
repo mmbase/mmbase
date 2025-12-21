@@ -663,7 +663,8 @@ MMBaseValidator.prototype.getDataTypeXml = function(el) {
             needsAmp = true;
         }
 
-        await fetch(url)
+        const self = this;
+        return fetch(url)
             .then(function(response) {
                 if (response.ok || response.status === 404) {
                     return response.text();
@@ -674,13 +675,12 @@ MMBaseValidator.prototype.getDataTypeXml = function(el) {
                 const parser = new DOMParser();
                 dataType = parser.parseFromString(html, "application/xml");
                 MMBaseValidator.dataTypeCache[el.mm_key] = dataType;
+
+                self.log("Found " + dataType);
             })
             .catch(function(error) {
                 console.error('Error fetching datatype XML -' + error);
             });
-
-        this.log("Found " + dataType);
-
     } else {
         this.trace("Found in cache " + dataType);
     }
@@ -1195,7 +1195,6 @@ MMBaseValidator.prototype.validateElement = function(element, server) {
 
         return valid;
     }
-
 };
 
 /**
