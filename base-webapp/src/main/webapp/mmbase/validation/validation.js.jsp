@@ -992,7 +992,7 @@ MMBaseValidator.prototype.binaryServerValidation = function(el) {
         //form.append('<input type="hidden" name="' + p + '" value="' + params[p] + '" />');
     }
     if (params.length != null) {
-        console.log('binaryServerValidation -', validationUrl);
+        this.log('binaryServerValidation -', validationUrl);
         fetch(validationUrl)
             .then(function(response) {
                 if (response.ok) {
