@@ -12,6 +12,7 @@ package org.mmbase.applications.media.builders;
 
 import org.mmbase.applications.media.urlcomposers.URLComposer;
 import org.mmbase.applications.media.urlcomposers.URLComposerFactory;
+import org.mmbase.framework.FrameworkFilter;
 import org.mmbase.module.core.*;
 import org.mmbase.bridge.Cloud;
 import org.mmbase.util.logging.*;
@@ -45,13 +46,28 @@ public class MediaProviders extends MMObjectBuilder {
             }
             @Override
             public String getFunctionValue(Node node, Parameters parameters) {
-                String protocol = node.getStringValue("protocol");
-                if ("".equals(protocol)) protocol = "http";
+                String protocol;
+                HttpServletRequest req = parameters.get(Parameter.REQUEST);
+                if (req == null) {
+                    Parameters framework = FrameworkFilter.FRAMEWORK_PARAMETERS.get();
+                    if (framework != null) {
+                        req = framework.get(Parameter.REQUEST);
+                    }
+                }
+                String nodesProtocol =  node.getStringValue("protocol");
+
+                if (req != null) {
+                    protocol =  req.getProtocol();
+                    if (!nodesProtocol.isEmpty() && ! nodesProtocol.equals(protocol)) {
+                        log.warn("Protocol mismatch between request (" + protocol + ") and node (" + nodesProtocol + ")");
+                    }
+                } else {
+                    protocol = nodesProtocol;
+                }
 
                 String host = node.getStringValue("host");
                 int port = -1;
                 if ("".equals(host)) {
-                    HttpServletRequest req = parameters.get(Parameter.REQUEST);
                     if (req == null) {
 
                         // TODO: a bit of a hack, the function in MediaFragments should be updated to decently pass Request objects as a parameters
@@ -75,7 +91,7 @@ public class MediaProviders extends MMObjectBuilder {
 
                     }
                 }
-                //String rootpath = node.getStringValue("rootpath").replace("${CONTEXT}", MMBaseContext.getServletContext().getContextPath());  // servlet >= 2.5
+                //String rootpath = node.getStringValue("rootpath").replace("${CONTEXT}", MMBaseContext.getServletContext().getCo());  // servlet >= 2.5
                 String rootpath = node.getStringValue("rootpath").replace("${CONTEXT}", MMBaseContext.getHtmlRootUrlPath());  // servlet < 2.5
                 if ("".equals(host)) {
                     return rootpath;

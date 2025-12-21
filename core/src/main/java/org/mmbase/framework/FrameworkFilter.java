@@ -32,7 +32,7 @@ import org.mmbase.util.logging.Logging;
  * recognized by the framework as an 'userfriendly' one, it just gets forwarded in its original
  * form. The filtering and conversion to an URL pointing to an existing JSP template is done by
  * an {@link org.mmbase.framework.basic.UrlConverter}.
- *
+ * <p>
  * Regular expressions that define URL's to be excluded from filtering should be listed in the
  * 'excludes' parameter in web.xml.
  *
@@ -42,6 +42,12 @@ import org.mmbase.util.logging.Logging;
  */
 
 public class FrameworkFilter implements Filter, MMBaseStarter  {
+
+    /**
+     * Access to the implicit framework parameters for the current thread. This incluses e.g. the current request
+     * @since 1.9.7
+     */
+    public static final ThreadLocal<Parameters> FRAMEWORK_PARAMETERS = ThreadLocal.withInitial(() -> null);
 
     public static final String PARAMS_KEY = "org.mmbase.framework.filter.parameters";
 
@@ -217,9 +223,10 @@ public class FrameworkFilter implements Filter, MMBaseStarter  {
                 if (frameworkParameters.containsParameter(Parameter.CLOUD)) {
                     frameworkParameters.set(Parameter.CLOUD, org.mmbase.bridge.ContextProvider.getDefaultCloudContext().getCloud("mmbase"));
                 }
+                FRAMEWORK_PARAMETERS.set(frameworkParameters);
                 try {
                     @SuppressWarnings("unchecked")
-                        String forwardUrl = fw.getInternalUrl(path, req.getParameterMap(), frameworkParameters);
+                    String forwardUrl = fw.getInternalUrl(path, req.getParameterMap(), frameworkParameters);
 
                     if (log.isDebugEnabled()) {
                         log.debug("Received '" + forwardUrl + "' from framework, forwarding. rp:" + req.getParameterMap() + " fwp:" + frameworkParameters);
@@ -272,6 +279,8 @@ public class FrameworkFilter implements Filter, MMBaseStarter  {
             }
         } finally {
             Logging.getMDC().put("IP", prevIp);
+            FRAMEWORK_PARAMETERS.remove();
+
         }
     }
 
