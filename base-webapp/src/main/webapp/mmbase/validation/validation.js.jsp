@@ -552,11 +552,15 @@ MMBaseValidator.prototype.typeValid = function(el) {
  * Small utility to just get the dom attribute 'value', but also parse to float, if 'numeric' is true.
  */
 MMBaseValidator.prototype.getValueAttribute = function(numeric, el) {
-    if (el == null) return null;
+    if (el == null) {
+        return null;
+    }
 
     let value = el.getAttribute("value");
-    const evalled = el.getAttribute("eval");
-    if (evalled && evalled !== "") value = evalled;
+    const evalue = el.getAttribute("eval");
+    if (evalue) {
+        value = evalue;
+    }
 
     if (numeric) {
         if (value === "") return null;
@@ -640,7 +644,7 @@ MMBaseValidator.prototype.minMaxValid  = function(el) {
  * Given a certain form element, this returns an XML representing its mmbase Data Type.
  * This will do a request to MMBase, unless this XML was cached already.
  */
-MMBaseValidator.prototype.getDataTypeXml = function(el) {
+MMBaseValidator.prototype.getDataTypeXml = async function(el) {
     this.checkPrefetch();
     const key = this.getDataTypeKey(el);
     if (el.mm_key == null) {
@@ -664,7 +668,7 @@ MMBaseValidator.prototype.getDataTypeXml = function(el) {
         }
 
         const self = this;
-        return fetch(url)
+        await fetch(url)
             .then(function(response) {
                 if (response.ok || response.status === 404) {
                     return response.text();
@@ -675,8 +679,9 @@ MMBaseValidator.prototype.getDataTypeXml = function(el) {
                 const parser = new DOMParser();
                 dataType = parser.parseFromString(html, "application/xml");
                 MMBaseValidator.dataTypeCache[el.mm_key] = dataType;
-
                 self.log("Found " + dataType);
+
+                return dataType;
             })
             .catch(function(error) {
                 console.error('Error fetching datatype XML -' + error);
@@ -767,7 +772,7 @@ MMBaseValidator.prototype.prefetchNodeManager = function(nodemanager) {
     }
 };
 
-MMBaseValidator.prototype.checkPrefetch = function() {
+MMBaseValidator.prototype.checkPrefetch = async function() {
     const nodemanagers = [];
 
     // MMBaseValidator.prefetchedNodeManagers
@@ -794,7 +799,7 @@ MMBaseValidator.prototype.checkPrefetch = function() {
             params.append("cloud", "mmbase");
         }
 
-        fetch(url + '?' + params.toString())
+        await fetch(url + '?' + params.toString())
             .then((res) => res.text())
             .then((html) => {
                 const parser = new DOMParser();
@@ -991,7 +996,7 @@ MMBaseValidator.prototype.binaryServerValidation = function(el) {
         //form.append('<input type="hidden" name="' + p + '" value="' + params[p] + '" />');
     }
     if (params.length != null) {
-        console.log('binaryServerValidation -', validationUrl);
+        this.log('binaryServerValidation -', validationUrl);
         fetch(validationUrl)
             .then(function(response) {
                 if (response.ok) {
@@ -1258,6 +1263,8 @@ MMBaseValidator.prototype.removeValidationFromElement = function(el) {
         if (! el.prevValid) {
             self.invalidElements--;
         }
+
+        // @TODO fix removing
         el.removeEventListener("change", function() {});
         const newElements = [];
         self.elements.forEach(function(elem) {
@@ -1311,7 +1318,7 @@ MMBaseValidator.prototype.addValidationForElements = function(els) {
             entry.addEventListener("change", function(ev) { self.serverValidate(ev); }, false);
             break;
         case "file":
-            entry.addEventListener("change", function(ev) { self.setLastChange(ev); self.validate(ev); }, false);
+            entry.addEventListener("change", function(ev) { self.setLastChange(ev); self.serverValidate(ev); }, false);
             break;
         case "select-one":
         case "select-multiple":

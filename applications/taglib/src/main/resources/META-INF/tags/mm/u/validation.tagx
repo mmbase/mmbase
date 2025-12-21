@@ -51,15 +51,17 @@
 
       <c:if test="${!empty submit}">
         buttons.forEach(function(button) {
-          if (button.clicked) {
+          button.addEventListener('click', function(ev) {
+            if (button.clicked) {
               return false;
-          } else {
-            buttons.forEach(function(but) { but.clicked = true; });
-            return true;
-          }
+            } else {
+              buttons.forEach(function (b) { b.clicked = true; });
+              return true;
+            }
+          });
         });
       </c:if>
-    });
+      });
     </mm:escape>
   </script>
 </jsp:root>
