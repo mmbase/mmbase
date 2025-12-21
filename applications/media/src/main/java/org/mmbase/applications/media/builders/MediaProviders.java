@@ -57,7 +57,7 @@ public class MediaProviders extends MMObjectBuilder {
                 String nodesProtocol =  node.getStringValue("protocol");
 
                 if (req != null) {
-                    protocol =  req.getProtocol();
+                    protocol =  req.getScheme();
                     if (!nodesProtocol.isEmpty() && ! nodesProtocol.equals(protocol)) {
                         log.warn("Protocol mismatch between request (" + protocol + ") and node (" + nodesProtocol + ")");
                     }
