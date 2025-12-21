@@ -196,6 +196,7 @@ public class FrameworkFilter implements Filter, MMBaseStarter  {
 
 
                 String path = getPath(req);
+                Logging.getMDC().put("path", path);
                 if (log.isDebugEnabled()) log.debug("Processing path: " + path);
                 if (path != null) {
                     if (excludePattern != null && excludePattern.matcher(path).find()) {
@@ -279,6 +280,7 @@ public class FrameworkFilter implements Filter, MMBaseStarter  {
             }
         } finally {
             Logging.getMDC().put("IP", prevIp);
+            Logging.getMDC().put("path", null);
             FRAMEWORK_PARAMETERS.remove();
 
         }
