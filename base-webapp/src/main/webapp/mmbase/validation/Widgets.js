@@ -114,7 +114,7 @@ Widgets.prototype.singleBoxes = function (select, min, max) {
 				// JQuery doesn't help either, with this.
 				input = document.createElement("input");
 				input.setAttribute("type", "radio");
-				input.setAttribute("name", t.attr("name"));
+				input.setAttribute("name", select.getAttribute("name"));
 				if (option.selected) {
 					input.setAttribute("checked", option.selected);
 				}
@@ -122,7 +122,7 @@ Widgets.prototype.singleBoxes = function (select, min, max) {
 			} catch (err) {
 				input = document.createElement("input");
 				input.setAttribute("type", "radio");
-				input.setAttribute("name", t.attr("name"));
+				input.setAttribute("name", select.getAttribute("name"));
 				if (option.selected) {
 					input.setAttribute("checked", option.selected);
 				}
@@ -176,7 +176,7 @@ Widgets.prototype.multipleBoxes = function (select) {
 	for (var i = 0; i < options.length; i++) {
 		var opt = options[i];
 		try {
-			if (opt.classList.contains("head")) {
+			if (!opt.classList.contains("head")) {
 				var nobr = document.createElement("span");
 				nobr.classList.add(select.getAttribute("name"), opt.getAttribute("class"));
 
@@ -205,8 +205,7 @@ Widgets.prototype.multipleBoxes = function (select) {
 				}
 			} else {
 				if (!first) {
-					var dv = document.createElement("div");
-					text.append(dv);
+					text.append(document.createElement("div"));
 				}
 				var span = document.createElement("span");
 				span.className = "head";
@@ -215,7 +214,7 @@ Widgets.prototype.multipleBoxes = function (select) {
 				first = false;
 			}
 		} catch (err) {
-			console.log("some error occured - ", err);
+			console.log("some error occurred - ", err);
 		}
 	}
 	hidden.setAttribute("value", Widgets.prototype.setToString(hidden[0].values));
@@ -392,18 +391,18 @@ Widgets.prototype.labelsToInputs = function (selector, options) {
 
 				var focus = function () {
 					// if entered for the first time, remove the label value
-					if (label.classList.contains("untouched")) {
+					if (input.classList.contains("untouched")) {
 						if (emptyisuntouched) {
-							label.classList.remove("untouched");
+							input.classList.remove("untouched");
 						}
-						label.value = "";
-						if (label.classList.contains("password")) {
+						input.value = "";
+						if (input.classList.contains("password")) {
 							try {
-								label.setAttribute("type", "password");
+								input.setAttribute("type", "password");
 							} catch (err) {
-								label.realInput.style.display = "block";
-								label.realInput.focus();
-								label.style.display = "none";
+								input.realInput.style.display = "block";
+								input.realInput.focus();
+								input.style.display = "none";
 								// happens in text/html FF, never mind...
 							}
 						}

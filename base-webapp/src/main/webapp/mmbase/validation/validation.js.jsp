@@ -217,7 +217,7 @@ MMBaseValidator.prototype.warnedUpload = false;
 
 MMBaseValidator.prototype.showWarning = function(e) {
     if (! MMBaseValidator.prototype.warnedUpload) {
-      const warning = "<div style='background-color: yellow; color: black; position: absolute; right: 0; top: 0; z-index: 2000;'>I'm sorry, your browser cannot determin the size of the upload. Please use e.g. FireFox, Safari or Chromium. Please DO NOT USE Internet Explorer. That is an unuseable, crappy, sorry excuse for a browser. (" + e + ")</div>";
+      const warning = "<div style='background-color: yellow; color: black; position: absolute; right: 0; top: 0; z-index: 2000;'>I'm sorry, your browser cannot determine the size of the upload. Please use e.g. FireFox, Safari or Chromium. Please DO NOT USE Internet Explorer. That is an unusable, crappy, sorry excuse for a browser. (" + e + ")</div>";
       const div = document.createElement("div");
       div.innerHTML = warning;
       document.body.appendChild(div);
