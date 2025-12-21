@@ -54,7 +54,7 @@
           if (button.clicked) {
               return false;
           } else {
-            button.forEach(function(but) { but.clicked = true; });
+            buttons.forEach(function(but) { but.clicked = true; });
             return true;
           }
         });
