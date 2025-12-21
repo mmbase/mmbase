@@ -12,7 +12,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
   <description>
-    MMBase is an open-source content managment system. See http://www.mmbase.org/
+    MMBase is an open-source content managment system. See https://www.mmbase.org/
   </description>
 
   <display-name>MMBase distro</display-name>
