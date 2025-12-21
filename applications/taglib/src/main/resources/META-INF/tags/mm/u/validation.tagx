@@ -22,7 +22,7 @@
   <script type="text/javascript">
     <mm:escape escape="javascript-compress,trimmer">
       document.addEventListener('DOMContentLoaded', function() {
-      var validator = new MMBaseValidator();
+      const validator = new MMBaseValidator();
       <c:if test="${!empty nodemanagers}">
          validator.prefetchNodeManager('${nodemanagers}');
       </c:if>
@@ -36,10 +36,10 @@
       </mm:import>
 
       <c:if test="${!empty submit}">
-        var buttons = document.querySelectorAll("${submit}");
+        const buttons = document.querySelectorAll("${submit}");
         validator.validateHook = function(valid, entry) {
           buttons.forEach(function(button) {
-            button.disabled = validator.invalidElements != 0;
+            button.disabled = validator.invalidElements !== 0;
           });
         };
       </c:if>
