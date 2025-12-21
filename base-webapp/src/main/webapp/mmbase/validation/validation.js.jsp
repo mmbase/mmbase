@@ -218,11 +218,13 @@ MMBaseValidator.prototype.warnedUpload = false;
 MMBaseValidator.prototype.showWarning = function(e) {
     if (! MMBaseValidator.prototype.warnedUpload) {
       const warning = "<div style='background-color: yellow; color: black; position: absolute; right: 0; top: 0; z-index: 2000;'>I'm sorry, your browser cannot determin the size of the upload. Please use e.g. FireFox, Safari or Chromium. Please DO NOT USE Internet Explorer. That is an unuseable, crappy, sorry excuse for a browser. (" + e + ")</div>";
-      document.body.appendChild(warning);
+      const div = document.createElement("div");
+      div.innerHTML = warning;
+      document.body.appendChild(div);
 
       MMBaseValidator.prototype.warnedUpload = true;
       setTimeout(function() {
-        warning.classList.add("slow");
+        div.classList.add("slow");
         }, 3000);
     }
 
@@ -551,9 +553,10 @@ MMBaseValidator.prototype.typeValid = function(el) {
  */
 MMBaseValidator.prototype.getValueAttribute = function(numeric, el) {
     if (el == null) return null;
+
     let value = el.getAttribute("value");
     const evalled = el.getAttribute("eval");
-    if (evalled !== "") value = evalled;
+    if (evalled && evalled !== "") value = evalled;
 
     if (numeric) {
         if (value === "") return null;
@@ -660,7 +663,7 @@ MMBaseValidator.prototype.getDataTypeXml = function(el) {
             needsAmp = true;
         }
 
-        fetch(url)
+        await fetch(url)
             .then(function(response) {
                 if (response.ok || response.status === 404) {
                     return response.text();
