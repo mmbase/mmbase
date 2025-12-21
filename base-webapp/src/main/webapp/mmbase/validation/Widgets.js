@@ -130,16 +130,16 @@ Widgets.prototype.singleBoxes = function (select, min, max) {
 			}
 
 			nobr.appendChild(input);
-			nobr.classList.add("index" + 1);
+			nobr.classList.add("index" + i);
 
 			if (!min) {
 				nobr.appendChild(document.createTextNode(option.innerText));
 			}
 			text.appendChild(nobr);
 			first = false;
-		} else if (option.innerText == "---") {
+		} else if (option.innerText == "--") {
 			if (!first) {
-				text.append("<br />");
+				text.append(document.createElement("br"));
 			}
 		} else {
 			var span = document.createElement("span");
@@ -273,7 +273,7 @@ Widgets.prototype.twoMultiples = function (selector) {
 			right.setAttribute("multiple", "multiple");
 
 			var parent = select.parentElement;
-			if (parent.tagName.toLowerCase() == "form") {
+			if (parent.tagName.toLowerCase() === "form") {
 				parent.addEventListener("submit", function () {
 					for (var i = 0; i < left[0].options.length; i++) {
 						left[0].options[i].selected = true;
@@ -289,7 +289,7 @@ Widgets.prototype.twoMultiples = function (selector) {
 			}
 			for (var i = 0; i < opts.length; i++) {
 				var option = opts[i];
-				if (option.value == null || option.value == "") {
+				if (option.value === null || option.value === "") {
 				} else if (option.selected) {
 					left.append(option);
 				} else {
@@ -324,7 +324,7 @@ Widgets.prototype.twoMultiples = function (selector) {
 
 			right.addEventListener("dblclick", function (ev) {
 				var option;
-				if (ev.target.tagName.toUpperCase() == "SELECT") {
+				if (ev.target.tagName.toUpperCase() === "SELECT") {
 					// Happens in ***** IE
 					option = ev.target.querySelector("option[value=" + ev.target.value + "]");
 				} else {
@@ -335,7 +335,7 @@ Widgets.prototype.twoMultiples = function (selector) {
 
 			left.addEventListener("dblclick", function (ev) {
 				var option;
-				if (ev.target.tagName.toUpperCase() == "SELECT") {
+				if (ev.target.tagName.toUpperCase() === "SELECT") {
 					// Happens in ***** IE
 					option = ev.target.querySelector("option[value=" + ev.target.value + "]");
 				} else {
@@ -366,7 +366,7 @@ Widgets.prototype.labelsToInputs = function (selector, options) {
 			var inputId = label.getAttribute("for");
 			var input = document.getElementById(inputId);
 
-			if (input.value.toString.trim() == "") {
+			if (input.value.toString().trim() == "") {
 				if (input.getAttribute("type") == 'password') {
 					try {
 						input.setAttribute("type", "text");
@@ -415,7 +415,7 @@ Widgets.prototype.labelsToInputs = function (selector, options) {
 			input.addEventListener("select", focus);
 			input.addEventListener("blur", function (ev) {
 				// if leaving, the value is empty, and empty is equivalent to 'untouched', put the label back in.
-				if (input.value.toString.trim() == "") {
+				if (input.value.toString().trim() == "") {
 					if (emptyisuntouched) {
 						input.classList.add("untouched");
 					}
