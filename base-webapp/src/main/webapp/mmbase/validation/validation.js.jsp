@@ -557,9 +557,9 @@ MMBaseValidator.prototype.getValueAttribute = function(numeric, el) {
     }
 
     let value = el.getAttribute("value");
-    const eval = el.getAttribute("eval");
-    if (eval) {
-        value = eval;
+    const evalue = el.getAttribute("eval");
+    if (evalue) {
+        value = evalue;
     }
 
     if (numeric) {
