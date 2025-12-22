@@ -361,8 +361,12 @@ public class CommandServer {
                 }
             };
             try (ServerSocket server = new ServerSocket()) {
-                SocketAddress address = new InetSocketAddress(host, port);
-                server.bind(address);
+                if (host == null) {
+                    server.bind(new InetSocketAddress(port));
+                } else {
+                    SocketAddress address = new InetSocketAddress(host, port);
+                    server.bind(address);
+                }
                 System.out.println("Started " + server + " (using " + numberOfThreads + " threads, " + maxDuration + " ms)");
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 while (true) {
