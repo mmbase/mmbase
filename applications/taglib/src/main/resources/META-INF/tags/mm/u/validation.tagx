@@ -21,40 +21,47 @@
 
   <script type="text/javascript">
     <mm:escape escape="javascript-compress,trimmer">
-    $(document).ready(function() {
-       var validator = new MMBaseValidator();
-       <c:if test="${! empty nodemanagers}">
+      document.addEventListener('DOMContentLoaded', function() {
+      const validator = new MMBaseValidator();
+      <c:if test="${!empty nodemanagers}">
          validator.prefetchNodeManager('${nodemanagers}');
-       </c:if>
-       validator.lang = "${requestScope['javax.servlet.jsp.jstl.fmt.locale.request']}";
-       <mm:import id="els">
-         <c:choose>
-           <c:when test="${empty elements}">#${requestScope['org.mmbase.componentId']}</c:when>
-           <c:otherwise>${elements}</c:otherwise>
-         </c:choose>
-       </mm:import>
-       <c:if test="${! empty submit}">
-       validator.validateHook = function(valid, entry) {
-          $("${submit}").each(function() {
-              this.disabled = validator.invalidElements != 0;
-           });
-       };
-       </c:if>
-       $("${els}").each(function() {
-           validator.setup(this);
-           });
-        <c:if test="${! empty submit}">
-          $("${submit}").click(function() {
-            if (this.clicked) {
-               return false;
-            } else {
-               $("${submit}").each(function() { this.clicked = true;});
-               return true;
-             }
+      </c:if>
+      validator.lang = "${requestScope['javax.servlet.jsp.jstl.fmt.locale.request']}";
+
+      <mm:import id="els">
+        <c:choose>
+          <c:when test="${empty elements}">#${requestScope['org.mmbase.componentId']}</c:when>
+          <c:otherwise>${elements}</c:otherwise>
+        </c:choose>
+      </mm:import>
+
+      <c:if test="${!empty submit}">
+        const buttons = document.querySelectorAll("${submit}");
+        validator.validateHook = function(valid, entry) {
+          buttons.forEach(function(button) {
+            button.disabled = validator.invalidElements !== 0;
           });
-        </c:if>
-});
+        };
+      </c:if>
+
+      var elems = document.querySelectorAll("${els}");
+      elems.forEach(function(el) {
+        validator.setup(el);
+      });
+
+      <c:if test="${!empty submit}">
+        buttons.forEach(function(button) {
+          button.addEventListener('click', function(ev) {
+            if (button.clicked) {
+              return false;
+            } else {
+              buttons.forEach(function (b) { b.clicked = true; });
+              return true;
+            }
+          });
+        });
+      </c:if>
+      });
     </mm:escape>
   </script>
-
 </jsp:root>
