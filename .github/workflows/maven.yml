@@ -110,7 +110,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        directory: [ example-webapp, base-webapp ]
+        include:
+         - directory: example-webapp
+           name: example-webapp
+         - directory: base-webapp
+           name: base-webapp
+         - directory: applications/commandserver
+           name: commandserver
     steps:
       - name: Download WAR artifact
         uses: actions/download-artifact@v7
@@ -129,7 +135,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/mmbase/${{matrix.directory}}
+          images: ghcr.io/mmbase/${{matrix.name}}
           tags: |
             type=ref,event=branch
             type=ref,event=tag
