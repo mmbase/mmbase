@@ -26,7 +26,7 @@ function domReady(fn) {
 	} else {
 		document.addEventListener("DOMContentLoaded", fn);
 	}
-};
+}
 Widgets.instance = new Widgets();
 
 
@@ -34,8 +34,8 @@ Widgets.instance = new Widgets();
  * This function is used by {@link $enumerationSuggestion}.
  */
 Widgets.prototype.switchEnumerationSuggestion = function (ev) {
-	var target = ev.target;
-	if ('OTHER' == target.value) {
+	const target = ev.target;
+	if ('OTHER' === target.value) {
 		var textInput = document.createElement('input');
 		textInput.type = "text";
 
@@ -49,15 +49,15 @@ Widgets.prototype.switchEnumerationSuggestion = function (ev) {
 		target.remove();
 
 		textInput.addEventListener('keyup', function (ev) {
-			if (ev.target.value == "") {
+			if (ev.target.value === "") {
 				var t = ev.target;
 				setTimeout(function () {
-					if (t.value == "") {
+					if (t.value === "") {
 						t.original.selectedIndex = 0;
 
 						t.after(t.original);
 						t.remove();
-						t.original.addEventListener("change", Widgets.prototype.swichEnumerationSuggestion);
+						t.original.addEventListener("change", Widgets.prototype.switchEnumerationSuggestion);
 					}
 				}, 2000);
 			}
@@ -84,7 +84,7 @@ Widgets.prototype.enumerationSuggestion = function (selector) {
 Widgets.prototype.setToString = function (set) {
 	var v = "";
 	for (var i in set) {
-		if (set[i] == true) {
+		if (set[i] === true) {
 			if (v.length > 0) v += ",";
 			v += i;
 		}
@@ -93,7 +93,7 @@ Widgets.prototype.setToString = function (set) {
 };
 
 Widgets.prototype.singleBoxes = function (select, min, max) {
-	var text = document.createElement("div");
+	const text = document.createElement("div");
 	text.className = "mm_boxes";
 	text.setAttribute("id", select.id);
 
@@ -106,8 +106,8 @@ Widgets.prototype.singleBoxes = function (select, min, max) {
 		var option = select.options[i];
 
 		if (!option.classList.contains("head")) {
-			var nobr = document.createElement("span");
-			var input;
+			const nobr = document.createElement("span");
+            let input;
 			try {
 				// This is just for IE. IE sucks incredibly, since it does not support basic DOM manipulation,
 				// and we have to use this convulated trick, which would even throw an exception in other browers.
@@ -137,12 +137,12 @@ Widgets.prototype.singleBoxes = function (select, min, max) {
 			}
 			text.appendChild(nobr);
 			first = false;
-		} else if (option.innerText == "--") {
+		} else if (option.innerText === "--") {
 			if (!first) {
 				text.append(document.createElement("br"));
 			}
 		} else {
-			var span = document.createElement("span");
+			const span = document.createElement("span");
 			span.className = "head";
 
 			text.append(span);
@@ -158,29 +158,29 @@ Widgets.prototype.singleBoxes = function (select, min, max) {
 };
 
 Widgets.prototype.multipleBoxes = function (select) {
-	var text = document.createElement("div");
+	const text = document.createElement("div");
 	text.className = "mm_boxes" + ` ${select.className}`;
 	text.id = select.id;
 
-	var hidden = document.createElement("input");
+    const hidden = document.createElement("input");
 	hidden.setAttribute("type", "hidden");
 	hidden.setAttribute("name", select.name);
-	hidden[0].values = new Object();
+	hidden[0].values = {};
 	text.append(hidden);
 
-	var first = true;
-	var div = document.createElement("div");
+    let first = true;
+    let div = document.createElement("div");
 	text.append(div);
 
-	var options = select.options;
-	for (var i = 0; i < options.length; i++) {
-		var opt = options[i];
+    const options = select.options;
+	for (let i = 0; i < options.length; i++) {
+		const opt = options[i];
 		try {
 			if (!opt.classList.contains("head")) {
-				var nobr = document.createElement("span");
+				const nobr = document.createElement("span");
 				nobr.classList.add(select.getAttribute("name"), opt.getAttribute("class"));
 
-				var input = document.createElement("input");
+                const input = document.createElement("input");
 				input.setAttribute("type", "checkbox");
 				input.setAttribute("value", opt.value);
 				input.setAttribute("name", select.name + "___" + opt.value);
@@ -198,7 +198,7 @@ Widgets.prototype.multipleBoxes = function (select) {
 					hidden[0].value = Widgets.prototype.setToString(hidden[0].values);
 				});
 				first = false;
-			} else if (opt.innerText == "--") {
+			} else if (opt.innerText === "--") {
 				if (!first) {
 					var br = document.createElement("br");
 					div.append(br);
@@ -208,7 +208,7 @@ Widgets.prototype.multipleBoxes = function (select) {
 					div = document.createElement("div")
 					text.append(div);
 				}
-				var span = document.createElement("span");
+                const span = document.createElement("span");
 				span.className = "head";
 				div.append(span);
 				span.innerText = opt.innerText;
@@ -261,18 +261,18 @@ Widgets.prototype.twoMultiples = function (selector) {
 	domReady(function () {
 		const elems = document.querySelectorAll(selector);
 		elems.forEach(function (select) {
-			var text = document.createElement("div");
+			const text = document.createElement("div");
 			text.className = "mm_twomultiples";
 
-			var left = document.createElement("select");
+            const left = document.createElement("select");
 			left.setAttribute("multiple", "multiple");
 			left.setAttribute("name", select.getAttribute("name"));
 			left.setAttribute("id", select.getAttribute("id"));
 
-			var right = document.createElement("select");
+            const right = document.createElement("select");
 			right.setAttribute("multiple", "multiple");
 
-			var parent = select.parentElement;
+            const parent = select.parentElement;
 			if (parent.tagName.toLowerCase() === "form") {
 				parent.addEventListener("submit", function () {
 					for (var i = 0; i < left[0].options.length; i++) {
@@ -281,14 +281,14 @@ Widgets.prototype.twoMultiples = function (selector) {
 				});
 			}
 
-			var opts = [];
-			for (var i = 0; i < select.options.length; i++) {
-				var option = select.options[i];
+			const opts = [];
+			for (let i = 0; i < select.options.length; i++) {
+				const option = select.options[i];
 				opts[i] = option;
 				option.originalPosition = option.index;
 			}
 			for (var i = 0; i < opts.length; i++) {
-				var option = opts[i];
+                const option = opts[i];
 				if (option.value === null || option.value === "") {
 				} else if (option.selected) {
 					left.append(option);
@@ -297,25 +297,25 @@ Widgets.prototype.twoMultiples = function (selector) {
 				}
 			}
 
-			var buttonToLeft = document.createElement("input");
+            const buttonToLeft = document.createElement("input");
 			buttonToLeft.type = "button";
 			buttonToLeft.value = " &lt; ";
 			buttonToLeft.addEventListener("click", function (ev) {
 				ev.preventDefault();
-				for (var i = right[0].options.length - 1; i >= 0; i--) {
-					var o = right[0].options[i];
+				for (const i = right[0].options.length - 1; i >= 0; i--) {
+                    const o = right[0].options[i];
 					if (o.selected) {
 						Widgets.prototype.moveFromAToB(o, right, left);
 					}
 				}
 			});
 
-			var buttonToRight = document.createElement("input");
+            const buttonToRight = document.createElement("input");
 			buttonToRight.type = "button";
 			buttonToRight.value = " &gt; ";
 			buttonToRight.addEventListener("click", function () {
-				for (var i = left[0].options.length - 1; i >= 0; i--) {
-					var o = left[0].options[i];
+				for (let i = left[0].options.length - 1; i >= 0; i--) {
+					const o = left[0].options[i];
 					if (o.selected) {
 						Widgets.prototype.moveFromAToB(o, left, right);
 					}
@@ -323,7 +323,7 @@ Widgets.prototype.twoMultiples = function (selector) {
 			});
 
 			right.addEventListener("dblclick", function (ev) {
-				var option;
+				let option;
 				if (ev.target.tagName.toUpperCase() === "SELECT") {
 					// Happens in ***** IE
 					option = ev.target.querySelector("option[value=" + ev.target.value + "]");
@@ -334,7 +334,7 @@ Widgets.prototype.twoMultiples = function (selector) {
 			});
 
 			left.addEventListener("dblclick", function (ev) {
-				var option;
+				let option;
 				if (ev.target.tagName.toUpperCase() === "SELECT") {
 					// Happens in ***** IE
 					option = ev.target.querySelector("option[value=" + ev.target.value + "]");
@@ -356,18 +356,18 @@ Widgets.prototype.twoMultiples = function (selector) {
 
 
 Widgets.prototype.labelsToInputs = function (selector, options) {
-	var emptyisuntouched = options && options['emptyisuntouched'];
+	const emptyisuntouched = options && options['emptyisuntouched'];
 	//var ignornon         = options && options['emptyisuntouched'];
 
 	domReady(function () {
 		const elems = document.querySelectorAll(selector);
 		elems.forEach(function (label) {
-			var labelText = label.innerText;
-			var inputId = label.getAttribute("for");
-			var input = document.getElementById(inputId);
+			let labelText = label.innerText;
+            let inputId = label.getAttribute("for");
+            let input = document.getElementById(inputId);
 
-			if (input.value.toString().trim() == "") {
-				if (input.getAttribute("type") == 'password') {
+			if (input.value.toString().trim() === "") {
+				if (input.getAttribute("type") === 'password') {
 					try {
 						input.setAttribute("type", "text");
 					} catch (err) {
@@ -390,7 +390,7 @@ Widgets.prototype.labelsToInputs = function (selector, options) {
 				input.classList.add("untouched");
 				label.style.display = "none";
 
-				var focus = function () {
+				const focus = function () {
 					// if entered for the first time, remove the label value
 					if (input.classList.contains("untouched")) {
 						if (emptyisuntouched) {
@@ -415,7 +415,7 @@ Widgets.prototype.labelsToInputs = function (selector, options) {
 			input.addEventListener("select", focus);
 			input.addEventListener("blur", function (ev) {
 				// if leaving, the value is empty, and empty is equivalent to 'untouched', put the label back in.
-				if (input.value.toString().trim() == "") {
+				if (input.value.toString().trim() === "") {
 					if (emptyisuntouched) {
 						input.classList.add("untouched");
 					}
