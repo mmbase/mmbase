@@ -76,15 +76,14 @@ MMBaseValidator.watcher = function() {
 };
 
 
-
 MMBaseValidator.prototype.setup = function(el) {
-    var docReady = (fn) => {
+    function docReady(fn) {
         if (document.readyState === "complete" || document.readyState === "interactive") {
             setTimeout(fn, 0);
         } else {
             document.addEventListener("DOMContentLoaded", fn);
         }
-    };
+    }
 
     if (el != null) {
         this.root = el;
@@ -94,7 +93,7 @@ MMBaseValidator.prototype.setup = function(el) {
     }
 
     if (this.root != null) {
-        var self = this;
+        const self = this;
         docReady(function(event) {
             self.onLoad(event);
         });
@@ -183,11 +182,11 @@ MMBaseValidator.prototype.find = function(el, path, r) {
     if (r == null) r = [];
     if (typeof(path) === "string") path = path.split(/\s+/);
 
-    var tagName = path.shift();
-    var tag = el == null ? null : el.firstChild;
+    const tagName = path.shift();
+    let tag = el == null ? null : el.firstChild;
     while (tag != null) {
 	    if (tag.nodeType === 1) {
-	        var name = tag.nodeName.replace(/^.*:/,'');
+	        const name = tag.nodeName.replace(/^.*:/,'');
 	        if (name === tagName) {
 		        if (path.length === 0) {
 		            r.push(tag);
@@ -390,7 +389,7 @@ MMBaseValidator.prototype.javaScriptPattern = function(javaPattern) {
     try {
 
         // This code tries to translate a java regexp to a javascript regexp.
-        var flags = "";
+        let flags = "";
         if (javaPattern.indexOf("(?i)") === 0) {
             flags += "i";
             javaPattern = javaPattern.substring(4);
@@ -441,7 +440,7 @@ MMBaseValidator.prototype.hasJavaClass = function(el, javaClass) {
     const key = this.getDataTypeKey(el).string() + ":" + javaClass;
     if (MMBaseValidator.hasJavaClassesCache[key] == null) {
         const pattern = new RegExp(javaClass);
-        const xml = this.getDataTypeXml(el);
+        const xml =  this.getDataTypeXml(el);
         const javaClassElement = this.find(xml, 'datatype class')[0];
         if (! javaClassElement) {
             MMBaseValidator.hasJavaClassesCache[key] = false;
@@ -645,13 +644,13 @@ MMBaseValidator.prototype.minMaxValid  = function(el) {
  * This will do a request to MMBase, unless this XML was cached already.
  */
 MMBaseValidator.prototype.getDataTypeXml = async function(el) {
-    this.checkPrefetch();
+    await this.checkPrefetch();
     const key = this.getDataTypeKey(el);
     if (el.mm_key == null) {
         el.mm_key = key.string();
     }
 
-    var dataType = MMBaseValidator.dataTypeCache[el.mm_key];
+    let dataType = MMBaseValidator.dataTypeCache[el.mm_key];
     if (dataType == null) {
         let url = '<mm:url page="/mmbase/validation/datatype.jspx" />';
         const params = this.getDataTypeArguments(key);
@@ -720,11 +719,11 @@ MMBaseValidator.prototype.getDataTypeKey = function(el) {
         const result = new Key();
         result.uri   = this.uri;
         result.cloud = this.cloud;
-        for (var i = 0; i < classNames.length; i++) {
-            var className = classNames[i];
+        for (let  i = 0; i < classNames.length; i++) {
+            const className = classNames[i];
             if (className.indexOf("mm_dt_") === 0) {
                 result.dataType = className.substring(6);
-	    } else if (className.indexOf("mm_dto_") === 0) {
+            } else if (className.indexOf("mm_dto_") === 0) {
                 result.origin = className.substring(7);
             } else if (className.indexOf("mm_f_") === 0) {
                 result.field = className.substring(5);
@@ -740,8 +739,7 @@ MMBaseValidator.prototype.getDataTypeKey = function(el) {
 
         }
         if (result.field == null && result.datatype == null) {
-            //console.log("FOOOOOUUTTTT");
-            //console.log(el);
+            console.log("unexpectedly not datatype for ", el);
         }
         this.trace("got " + result.string());
         el.mm_dataTypeStructure = result;
@@ -776,7 +774,7 @@ MMBaseValidator.prototype.checkPrefetch = async function() {
     const nodemanagers = [];
 
     // MMBaseValidator.prefetchedNodeManagers
-    for (var k in MMBaseValidator.prefetchedNodeManagers) {
+    for (let k in MMBaseValidator.prefetchedNodeManagers) {
         if (MMBaseValidator.prefetchedNodeManagers[k] === "requested") {
             nodemanagers.push(k);
         }
@@ -889,7 +887,7 @@ MMBaseValidator.prototype.getDateValue = function(el) {
         let second = 0;
         const els = el.childNodes;
         for (let  i = 0; i < els.length; i++) {
-            var entry = els[i];
+            const entry = els[i];
             if (entry.type == null) continue;
             if (entry.classList.contains("mm_datetime_year")) {
                 year = entry.value;
@@ -986,8 +984,8 @@ MMBaseValidator.prototype.binaryServerValidation = function(el) {
     if (params.length == null) {
         delete params.length;
     }
-    var needsAmp = false;
-    for (var p in params) {
+    let needsAmp = false;
+    for (let p in params) {
         if (needsAmp) {
             validationUrl += "&";
         }
@@ -1279,7 +1277,7 @@ MMBaseValidator.prototype.removeValidationFromElement = function(el) {
 
 
 MMBaseValidator.prototype.setLastChange = function(event) {
-    var target = this.getElement(event);
+    const target = this.getElement(event);
     target.lastChange = new Date();
     target.serverValidated = false;
 };
@@ -1330,7 +1328,7 @@ MMBaseValidator.prototype.addValidationForElements = function(els) {
         }
         entry.serverValidated = true; // It starts out server-validated
         entry.originalValue = this.getValue(entry);
-        var valid = this.valid(entry);
+        const valid = this.valid(entry);
         entry.prevValid = valid;
         this.elements.push(entry);
         this.setClassName(valid, entry);
@@ -1356,7 +1354,7 @@ MMBaseValidator.prototype.addValidation = function(el) {
     if (el == null) {
         el = document.documentElement;
     }
-    var els = el.querySelectorAll(".mm_validate");
+    const els = el.querySelectorAll(".mm_validate");
 
     this.log("Will validate elements in " + el + " (" + els.length + " elements)");
     this.addValidationForElements(els);
