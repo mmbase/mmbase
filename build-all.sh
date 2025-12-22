@@ -9,7 +9,7 @@ PROFILES="${PROFILES:-default}"
 #MVN="mvn -ntp -fae -Duser.home=$HOME -Dmaven.repo.local=/Users/michiel/.m2/repository_clean"
 TARGET=deploy
 if [ ! -z "$1" ] ; then
-    TARGET=$1
+    TARGET=$@
 fi
 
 if [ -z "$PROFILES" ]; then
@@ -45,9 +45,9 @@ MVN="mvn"
 #exit
 for d in  . maven-base maven maven/maven-mmbase-plugin maven-base/applications applications   ; do
     echo "========== Running with -N clean $TARGET in $d"
-    (cd $DIR/$d &&  $MVN -N clean "$TARGET")
+    (cd $DIR/$d &&  $MVN -N clean $TARGET)
 done
 
 echo "============= Now running the rest $(pwd) $DIR"
-(cd $DIR && $MVN -P'!development,${PROFILE_ARG}' clean "$TARGET")
+(cd $DIR && $MVN -P"!development,${PROFILE_ARG}" clean $TARGET)
 
