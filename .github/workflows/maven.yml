@@ -71,7 +71,8 @@ jobs:
               example-webapp/Dockerfile
               base-webapp/target/*.war
               base-webapp/Dockerfile
-
+              applications/commandserver/Dockerfile
+              applications/commandserver/target/*.jar
   integration-tests:
     env:
       MAVEN_ARGS: '--no-transfer-progress'
