@@ -20,3 +20,6 @@ docker.run: docker
 
 explore:
 	docker run -it --entrypoint bash -v $(PWD)/work:/work -v $(PWD)/data:/data $(IMAGE)
+
+docker.push:
+	docker buildx build --platform linux/amd64,linux/arm64  -t $(IMAGE) --push .
