@@ -2,7 +2,7 @@ ARG TAG=latest
 
 FROM ghcr.io/mmbase/env:latest-jdk25
 
-ENV JPDA_ADDRESS=*:8001
+ENV JPDA_ADDRESS="*:8001"
 
 RUN apt-get update && \
     apt-get -y  install ffmpeg && \
@@ -10,6 +10,6 @@ RUN apt-get update && \
 
 COPY target/mmbase-commandserver-*.jar /mmbase-commandserver.jar
 
-ENTRYPOINT ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${JPDA_ADDRESS}", "-jar", "/mmbase-commandserver.jar", "1679" ]
+ENTRYPOINT java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${JPDA_ADDRESS} -jar /mmbase-commandserver.jar 1679
 
 

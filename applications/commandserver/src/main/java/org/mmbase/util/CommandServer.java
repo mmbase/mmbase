@@ -338,11 +338,12 @@ public class CommandServer {
             run.run();
         } else {
             String host = args.size() > 1 ? args.get(0) : null;
-            if ("*".equals(host)) {
+            if ("*".equals(host) || host == null) {
                 host = null;
+                System.out.println("Binding to all interfaces");
             }
             int port = args.size() == 1 ? Integer.parseInt(args.get(0)) : Integer.parseInt(args.get(1));
-
+            System.out.println("Starting command server on " + (host == null ? "*" : host) + ":" + port);
 
             final BlockingQueue<Runnable> socketQueue = new LinkedBlockingQueue<Runnable>();
             threads.setCorePoolSize(numberOfThreads * 7);
