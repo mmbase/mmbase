@@ -270,9 +270,9 @@ See http://www.MMBase.org/license
         </plugin>
 
         <plugin>
-          <groupId>org.mortbay.jetty</groupId>
+          <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-maven-plugin</artifactId>
-          <version>8.1.16.v20140903</version>
+          <version>10.0.26</version>
           <configuration>
             <systemProperties>
               <systemProperty>

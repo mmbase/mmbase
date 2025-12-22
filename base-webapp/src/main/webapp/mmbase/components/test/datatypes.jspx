@@ -1,10 +1,9 @@
 <jsp:root
-    version="1.2"
-    xmlns:c="http://java.sun.com/jsp/jstl/core"
-    xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
-    xmlns:mm="http://www.mmbase.org/mmbase-taglib-2.0"
-    xmlns:jsp="http://java.sun.com/JSP/Page"
-    >
+  version="1.2"
+  xmlns:c="http://java.sun.com/jsp/jstl/core"
+  xmlns:mm="http://www.mmbase.org/mmbase-taglib-2.0"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+>
   <jsp:directive.page import="org.mmbase.bridge.*" />
   <jsp:output omit-xml-declaration="true" />
   <div
@@ -14,25 +13,27 @@
   <script type="text/javascript">
     $(function() {
        $("table.tests tr").each(function() {
-          var actual = $(this).find("td:eq(1)").text();
-          var expected = $(this).find("td:eq(4)").text();
-          if (actual != expected) {
+          const actual = $(this).find("td:eq(1)").text();
+          const expected = $(this).find("td:eq(4)").text();
+          if (actual !== expected) {
             $(this).find("td:eq(1)").addClass('todo');
           }
         });
-       var val = new MMBaseValidator(null);
+      const val = new MMBaseValidator(null);
        $("table.tests tr td:nth-child(2) div").each(function() {
-           var expected = $(this).parents("tr").find("td:eq(4)").text();
-           var jsvalid = "" + val.validate(this, false);
-           $(this).parents("tr").find("td:eq(2)").text(jsvalid);
-           if (jsvalid != expected) {
-             $(this).parents("tr").find("td:eq(2)").addClass("todo");
-           }
-           var ajaxvalid = "" + val.validate(this, true);
-           $(this).parents("tr").find("td:eq(3)").text(ajaxvalid);
-           if (ajaxvalid != expected) {
-             $(this).parents("tr").find("td:eq(3)").addClass("todo");
-           }
+         const expected = $(this).parents("tr").find("td:eq(4)").text();
+         const jsvalid = "" + val.validate(this, false);
+         console.log("jsvalid", jsvalid);
+         $(this).parents("tr").find("td:eq(2)").text(jsvalid);
+         if (jsvalid !== expected) {
+           $(this).parents("tr").find("td:eq(2)").addClass("todo");
+         }
+         const ajaxvalid = "" + val.validate(this, true);
+         //console.log("ajaxvalid", jsvalid);
+         $(this).parents("tr").find("td:eq(3)").text(ajaxvalid);
+         if (ajaxvalid !== expected) {
+           $(this).parents("tr").find("td:eq(3)").addClass("todo");
+         }
 
 
        });
