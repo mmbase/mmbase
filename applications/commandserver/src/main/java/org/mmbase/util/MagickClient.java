@@ -39,10 +39,11 @@ public class MagickClient {
         }
 
         public synchronized void run()  {
-            try {
-                System.out.println(number + " command = " + command);
+            System.out.println(number + " command = " + command);
+            try (
+
                 InputStream is = new FileInputStream(file);
-                OutputStream result = new FileOutputStream("/tmp/testresult" + number);
+                OutputStream result = new FileOutputStream("/share/testresult" + number)) {
 
                 try {
                     Socket socket = new Socket("localhost" , 1679);
@@ -70,14 +71,13 @@ public class MagickClient {
                     socket.close();
                     System.out.println(number + " Result in /tmp/testresult" + number);
                 } catch (java.net.ConnectException ce) {
-                    System.err.println(ce.getMessage());
+                    System.err.println(ce.getClass() + " " + ce.getMessage());
                     PipedInputStream input = new PipedInputStream();
                     OutputStream out = new PipedOutputStream(input);
                     out.write(1);
                     CommandServer.Copier copier = new CommandServer.Copier(input, out, ";file -> cout");
                     Thread listen = new Thread(copier);
                     listen.start();
-
 
                     Runnable run = new CommandServer.Command(input, result, System.err, "stdin/stdout", null);
                     run.run();
@@ -110,7 +110,7 @@ public class MagickClient {
         List<Job> jobs = new ArrayList<Job>();
         for (int i = 1; i <= 100; i++) {
             Job j = new Job(file, command, env);
-            Thread t = new Thread(null, j, "magicclient" + i);
+            Thread t = new Thread(null, j, "magickclient" + i);
             t.start();
             jobs.add(j);
         }

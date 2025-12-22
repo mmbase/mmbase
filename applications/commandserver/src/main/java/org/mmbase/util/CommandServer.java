@@ -337,7 +337,10 @@ public class CommandServer {
             Runnable run = new Command(System.in, System.out, System.err, "stdin/stdout", null);
             run.run();
         } else {
-            String host = args.size() > 1 ? args.get(0) : "localhost";
+            String host = args.size() > 1 ? args.get(0) : null;
+            if ("*".equals(host)) {
+                host = null;
+            }
             int port = args.size() == 1 ? Integer.parseInt(args.get(0)) : Integer.parseInt(args.get(1));
 
 
