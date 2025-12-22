@@ -74,10 +74,10 @@ public class ClosureJavaScriptCompressor extends  ReaderTransformer {
                 LOG.debug("Ready (compiled)");
                 return writer;
             } else {
-                LOG.error("JavaScript compilation failed: " + result.errors);
+                LOG.error("JavaScript compilation failed: " + result.errors + "\nOriginal code:\n" + writerBuffer);
             }
         } catch (Exception e) {
-            LOG.error("Error during JavaScript compression: " + e.getMessage(), e);
+            LOG.error("Error during JavaScript compression: " + e.getMessage() + "\nOriginal code:\n" + writerBuffer , e);
         }
         // unsuccessful, return original
         CopyCharTransformer.INSTANCE.transform(new StringReader(writerBuffer.toString()), writer);
