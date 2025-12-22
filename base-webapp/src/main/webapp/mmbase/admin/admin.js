@@ -1,7 +1,9 @@
-$(document).ready(function() {
-    $("div.mm_c.iframe iframe").height($(window).height());
-});
+function setIframeHeight() {
+    const iframes = document.querySelectorAll('div.mm_c.iframe iframe');
+    iframes.forEach(iframe => {
+        iframe.style.height = window.innerHeight + 'px';
+    });
+}
 
-$(window).resize(function() {
-    $("div.mm_c.iframe iframe").height($(window).height());
-});
+document.addEventListener('DOMContentLoaded', setIframeHeight);
+window.addEventListener('resize', setIframeHeight);
