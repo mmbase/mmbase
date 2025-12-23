@@ -43,11 +43,6 @@ import org.mmbase.util.logging.Logging;
 
 public class FrameworkFilter implements Filter, MMBaseStarter  {
 
-    /**
-     * Access to the implicit framework parameters for the current thread. This incluses e.g. the current request
-     * @since 1.9.7
-     */
-    public static final ThreadLocal<Parameters> FRAMEWORK_PARAMETERS = ThreadLocal.withInitial(() -> null);
 
     public static final String PARAMS_KEY = "org.mmbase.framework.filter.parameters";
 
@@ -224,7 +219,6 @@ public class FrameworkFilter implements Filter, MMBaseStarter  {
                 if (frameworkParameters.containsParameter(Parameter.CLOUD)) {
                     frameworkParameters.set(Parameter.CLOUD, org.mmbase.bridge.ContextProvider.getDefaultCloudContext().getCloud("mmbase"));
                 }
-                FRAMEWORK_PARAMETERS.set(frameworkParameters);
                 try {
                     @SuppressWarnings("unchecked")
                     String forwardUrl = fw.getInternalUrl(path, req.getParameterMap(), frameworkParameters);
@@ -281,8 +275,6 @@ public class FrameworkFilter implements Filter, MMBaseStarter  {
         } finally {
             Logging.getMDC().put("IP", prevIp);
             Logging.getMDC().put("path", null);
-            FRAMEWORK_PARAMETERS.remove();
-
         }
     }
 
