@@ -61,7 +61,10 @@ public class MediaProviders extends MMObjectBuilder {
                 String nodesProtocol =  node.getStringValue("protocol");
 
                 if (req != null) {
-                    protocol =  req.getScheme();
+                    protocol = req.getHeader("x-forwarded-proto");
+                    if (protocol == null || protocol.length() == 0) {
+                        protocol = req.getScheme();
+                    }
                     if (!nodesProtocol.isEmpty() && ! nodesProtocol.equals(protocol)) {
                         log.warn("Protocol mismatch between request (" + protocol + ") and node (" + nodesProtocol + ")");
                     }
@@ -73,8 +76,14 @@ public class MediaProviders extends MMObjectBuilder {
                 int port = -1;
                 if ("".equals(host)) {
                     if (req != null) {
-                        host = req.getServerName();
-                        port = req.getServerPort();
+                        host = req.getHeader("x-forwarded-host");
+                        if (host == null) {
+                            req.getServerName();
+                        }
+                        port = req.getIntHeader("x-forwarded-port");
+                        if (port == -1) {
+                            req.getServerPort();
+                        }
                     } else {
                         log.debug("No request found");
 
@@ -133,7 +142,7 @@ public class MediaProviders extends MMObjectBuilder {
             if (log.isDebugEnabled()) {
                 log.debug("No cloud found ", new Exception());
             }
-            cloud = ContextProvider.getDefaultCloudContext().getCloud("mmbase", "class", null);
+            cloud = getDefaultCloudContext().getCloud("mmbase", "class", null);
             return  (HttpServletRequest) cloud.getProperty(org.mmbase.bridge.Cloud.PROP_REQUEST);
         }
     }
