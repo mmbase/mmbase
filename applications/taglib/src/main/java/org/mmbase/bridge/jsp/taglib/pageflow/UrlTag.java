@@ -289,7 +289,7 @@ public class UrlTag extends CloudReferrerTag  implements  ParamHandler, Framewor
      */
     protected StringBuilder makeRelative(StringBuilder show) {
         HttpServletRequest req = (HttpServletRequest)pageContext.getRequest();
-        if (show.charAt(0) == '/') { // absolute on servletcontex
+        if (show.charAt(0) == '/') { // absolute on servletcontext
             if (show.length() > 1 && show.charAt(1) == '/') {
                 log.debug("'absolute' url, not making relative");
                 show.deleteCharAt(0);

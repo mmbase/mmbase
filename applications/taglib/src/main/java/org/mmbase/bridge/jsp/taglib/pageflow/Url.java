@@ -286,10 +286,20 @@ public class Url implements Comparable, CharSequence, Casting.Unwrappable {
                 show.append(p);
                 return true;
             } else {
-                String scheme = req.getScheme();
+                String scheme = req.getHeader("x-forwarded-proto");
+                if (scheme == null) {
+                    scheme = req.getScheme();
+                }
                 show.append(scheme).append("://");
-                show.append(req.getServerName());
-                int port = req.getServerPort();
+                String host = req.getHeader("x-forwarded-host");
+                if (host == null) {
+                    host = req.getServerName();
+                }
+                show.append(host);
+                int port = req.getIntHeader("x-forwarded-port");
+                if (port == -1) {
+                    port = req.getServerPort();
+                }
                 show.append((port == 80 && "http".equals(scheme)) ||
                             (port == 443 && "https".equals(scheme))
                             ? "" : ":" + port);
