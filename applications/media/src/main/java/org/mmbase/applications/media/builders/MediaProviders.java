@@ -10,18 +10,25 @@ See http://www.MMBase.org/license
 
 package org.mmbase.applications.media.builders;
 
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
 import org.mmbase.applications.media.urlcomposers.URLComposer;
 import org.mmbase.applications.media.urlcomposers.URLComposerFactory;
-import org.mmbase.framework.FrameworkFilter;
-import org.mmbase.module.core.*;
 import org.mmbase.bridge.Cloud;
-import org.mmbase.util.logging.*;
-import java.util.*;
-import java.lang.reflect.Method;
-
-import javax.servlet.http.HttpServletRequest;
-import org.mmbase.util.functions.*;
-import org.mmbase.bridge.*;
+import static org.mmbase.bridge.ContextProvider.*;
+import org.mmbase.bridge.Node;
+import org.mmbase.module.core.MMBaseContext;
+import org.mmbase.module.core.MMObjectBuilder;
+import org.mmbase.module.core.MMObjectNode;
+import org.mmbase.util.functions.GuiFunction;
+import org.mmbase.util.functions.NodeFunction;
+import org.mmbase.util.functions.Parameter;
+import org.mmbase.util.functions.Parameters;
+import org.mmbase.util.logging.Logger;
+import org.mmbase.util.logging.Logging;
 
 /**
  * A MediaProvider builder describes a service that offers a media service. The mediaprovider
@@ -49,10 +56,7 @@ public class MediaProviders extends MMObjectBuilder {
                 String protocol;
                 HttpServletRequest req = parameters.get(Parameter.REQUEST);
                 if (req == null) {
-                    Parameters framework = FrameworkFilter.FRAMEWORK_PARAMETERS.get();
-                    if (framework != null) {
-                        req = framework.get(Parameter.REQUEST);
-                    }
+                    req = getCurrentRequest();
                 }
                 String nodesProtocol =  node.getStringValue("protocol");
 
@@ -68,21 +72,6 @@ public class MediaProviders extends MMObjectBuilder {
                 String host = node.getStringValue("host");
                 int port = -1;
                 if ("".equals(host)) {
-                    if (req == null) {
-
-                        // TODO: a bit of a hack, the function in MediaFragments should be updated to decently pass Request objects as a parameters
-                        //Cloud cloud = node.getCloud();
-                        Cloud cloud = org.mmbase.bridge.util.CloudThreadLocal.currentCloud();
-                        if (cloud != null) {
-                            req = (HttpServletRequest) cloud.getProperty(org.mmbase.bridge.Cloud.PROP_REQUEST);
-                        } else {
-                            if (log.isDebugEnabled()) {
-                                log.debug("No cloud found ", new Exception());
-                            }
-                            cloud = ContextProvider.getDefaultCloudContext().getCloud("mmbase", "class", null);
-                            req = (HttpServletRequest) cloud.getProperty(org.mmbase.bridge.Cloud.PROP_REQUEST);
-                        }
-                    }
                     if (req != null) {
                         host = req.getServerName();
                         port = req.getServerPort();
@@ -92,7 +81,8 @@ public class MediaProviders extends MMObjectBuilder {
                     }
                 }
                 //String rootpath = node.getStringValue("rootpath").replace("${CONTEXT}", MMBaseContext.getServletContext().getCo());  // servlet >= 2.5
-                String rootpath = node.getStringValue("rootpath").replace("${CONTEXT}", MMBaseContext.getHtmlRootUrlPath());  // servlet < 2.5
+                String rootpath = node.getStringValue("rootpath")
+                    .replace("${CONTEXT}", MMBaseContext.getHtmlRootUrlPath());  // servlet < 2.5
                 if ("".equals(host)) {
                     return rootpath;
                 } else {
@@ -130,6 +120,23 @@ public class MediaProviders extends MMObjectBuilder {
     }
 
     private URLComposerFactory urlComposerFactory;
+
+
+    private HttpServletRequest getCurrentRequest() {
+
+        // TODO: a bit of a hack, the function in MediaFragments should be updated to decently pass Request objects as a parameters
+        //Cloud cloud = node.getCloud();
+        Cloud cloud = org.mmbase.bridge.util.CloudThreadLocal.currentCloud();
+        if (cloud != null) {
+            return  (HttpServletRequest) cloud.getProperty(org.mmbase.bridge.Cloud.PROP_REQUEST);
+        } else {
+            if (log.isDebugEnabled()) {
+                log.debug("No cloud found ", new Exception());
+            }
+            cloud = ContextProvider.getDefaultCloudContext().getCloud("mmbase", "class", null);
+            return  (HttpServletRequest) cloud.getProperty(org.mmbase.bridge.Cloud.PROP_REQUEST);
+        }
+    }
 
     @Override
     public boolean init() {
