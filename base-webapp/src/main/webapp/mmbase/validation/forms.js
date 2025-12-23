@@ -3,7 +3,7 @@
 /*
  * Return true if the input field has had input (a radio was selected, text has been entered etc.)
  * throw in the formitem itself, not it's value.
- * TODO: only input type="text", input type="checkbox", input type="radio", select and textarea 
+ * TODO: only input type="text", input type="checkbox", input type="radio", select and textarea
  * have been implemented so far.
  *
  * @param   formfield   the form field to check
@@ -12,11 +12,11 @@
 function hasInput(formfield) {
   if (formfield) {
     if (formfield.type) {
-      if (formfield.type.toUpperCase()=="TEXT" || formfield.type.toUpperCase()=="TEXTAREA") {
+      if (formfield.type.toUpperCase()==="TEXT" || formfield.type.toUpperCase()==="TEXTAREA") {
         if (formfield.value&&formfield.value.length>=1) {
           return true;
         }
-      } else if (formfield.nodeName.toUpperCase() == "SELECT") {
+      } else if (formfield.nodeName.toUpperCase() === "SELECT") {
         switch (formfield.selectedIndex) {
           case -1:
             return false;
@@ -26,7 +26,7 @@ function hasInput(formfield) {
             }
             break;
           default:
-            return true;            
+            return true;
         }
       }
     } else {
@@ -36,9 +36,9 @@ function hasInput(formfield) {
   return false;
 }
 
-/* 
+/*
  * This one is called by hasInput(), checks a group of radiobuttons for a value.
- * 
+ *
  * @param   radioGroup  id of group of radiobuttons to check
  * @return  true when there is value, false when not
  */
@@ -59,7 +59,7 @@ function checkRadio(radioGroup) {
 /*
  * Checks a Dutch postcode '1234 AB'.
  * Allows a space between '1234' and 'AB', checks case-insensitive
- * 
+ *
  * @param   str String containing a postcode
  * @return  true when postcode seams OK, false when not
  */
@@ -70,18 +70,18 @@ function checkPostcode(str) {
 
 /*
  * Checks an email address, this method follows these rules:
- * 
+ *
  * The address should start with at least 1 character before the at sign (@).
  * A dot (.) and a hyphen (_) can't be next to each other and not next to an at sign.
  * The address should contain an at sign.
  * There have to be at least two characters after the at sign.
  * The address has to end with one of the Top Level Domains (TLD's) menthioned below
  * and the TLD should be prefixed with a dot.
- * 
+ *
  * @param   str an email address
  * @return  true when the address seems valid, false if otherwise
  */
-function emailCheck(str) {  
+function emailCheck(str) {
     var domStr = "";
     // Well known official top level domains
     domStr += "com|edu|gov|int|mil|net|org|arpa|nato|info|aero|biz|coop|museum|name|pro|";
@@ -112,9 +112,9 @@ function emailCheck(str) {
     domStr += "ye|yt|yu|";
     domStr += "za|zm|zr|zw";
     // custom domains for testing purposes
-    //domStr += "mad|local";        
+    //domStr += "mad|local";
 
     var re = new RegExp("^[A-Z0-9_]+([\.-]?[A-Z0-9_])*@([A-Z0-9_-]{2,}[\.]{1})+("+ domStr +")$","i");
-    
+
     return re.test(str);
 }
