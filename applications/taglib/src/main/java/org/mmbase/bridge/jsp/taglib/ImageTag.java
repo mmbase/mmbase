@@ -17,6 +17,7 @@ import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.JspException;
 
 import org.mmbase.bridge.*;
+import org.mmbase.util.HttpServletRequestUtils;
 import org.mmbase.util.functions.*;
 import org.mmbase.util.images.*;
 import org.mmbase.util.UriParser;
@@ -283,13 +284,7 @@ public class ImageTag extends FieldTag {
             HttpServletRequest req = (HttpServletRequest) getPageContext().getRequest();
             if ("true".equals(a)) {
                 StringBuilder show = new StringBuilder();
-                String scheme = req.getScheme();
-                show.append(scheme).append("://");
-                show.append(req.getServerName());
-                int port = req.getServerPort();
-                show.append((port == 80 && "http".equals(scheme)) ||
-                            (port == 443 && "https".equals(scheme))
-                            ? "" : ":" + port);
+                HttpServletRequestUtils.appendAbsolute(req, show);
                 show.append(url);
                 url = show.toString();
             } else if ("context".equals(a)) {
@@ -418,7 +413,7 @@ public class ImageTag extends FieldTag {
      * @return template for image
      */
     public String getTemplate(Node node, String t, int widthTemplate, int heightTemplate, String cropTemplate) {
-        String template = "";  
+        String template = "";
         if ((widthTemplate > 0) || (heightTemplate > 0)) {
             if (cropTemplate != null && cropTemplate.length() != 0) {
                 template = getCropTemplate(node, widthTemplate, heightTemplate, cropTemplate);
@@ -427,7 +422,7 @@ public class ImageTag extends FieldTag {
             }
         }
         if (t != null && t.length() != 0) {
-           if (template.length() == 0) {  
+           if (template.length() == 0) {
              template = t;
            } else {
              template = template + "+" + t;

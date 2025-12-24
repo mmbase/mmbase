@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.mmbase.bridge.jsp.taglib.TaglibException;
 import org.mmbase.bridge.jsp.taglib.ContextReferrerTag;
 import org.mmbase.util.Casting;
+import org.mmbase.util.HttpServletRequestUtils;
 import org.mmbase.util.functions.*;
 import org.mmbase.framework.*;
 import org.mmbase.framework.basic.State;
@@ -286,23 +287,7 @@ public class Url implements Comparable, CharSequence, Casting.Unwrappable {
                 show.append(p);
                 return true;
             } else {
-                String scheme = req.getHeader("x-forwarded-proto");
-                if (scheme == null) {
-                    scheme = req.getScheme();
-                }
-                show.append(scheme).append("://");
-                String host = req.getHeader("x-forwarded-host");
-                if (host == null) {
-                    host = req.getServerName();
-                }
-                show.append(host);
-                int port = req.getIntHeader("x-forwarded-port");
-                if (port == -1) {
-                    port = req.getServerPort();
-                }
-                show.append((port == 80 && "http".equals(scheme)) ||
-                            (port == 443 && "https".equals(scheme))
-                            ? "" : ":" + port);
+                HttpServletRequestUtils.appendAbsolute(req, show);
             }
         } else if (abs.equals("server")) {
             if (ABSOLUTE_URLS.matcher(page).matches()) {
