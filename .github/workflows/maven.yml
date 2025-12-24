@@ -1,5 +1,7 @@
 ---
 name: build
+run-name: build ${{  github.ref_name }} ('${{ github.event.head_commit.message }}')
+
 on:
   push:
     branches: [MMBase-1_9, main]
@@ -21,7 +23,7 @@ jobs:
   maven:
     runs-on: ubuntu-latest
     container:
-     image: ghcr.io/mmbase/build:6-jdk8
+     image: ghcr.io/mmbase/build:7-jdk8
     env:
       MAVEN_ARGS: '--no-transfer-progress'
     steps:
@@ -79,7 +81,7 @@ jobs:
     needs: maven
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/mmbase/build:6-jdk8
+      image: ghcr.io/mmbase/build:7-jdk8
     steps:
       - uses: actions/checkout@v6
       - name: Cache Maven local repository
