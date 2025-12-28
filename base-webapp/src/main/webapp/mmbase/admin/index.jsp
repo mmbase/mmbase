@@ -52,7 +52,6 @@
                 </mm:function>
               </mm:functioncontainer>
             </mm:notpresent>
-            <mm:include page="/mmbase/jquery/jquery.jspx" />
             <mm:link page="/mmbase/admin/admin.js">
               <script src="${_}" type="text/javascript"><jsp:text> </jsp:text></script>
             </mm:link>

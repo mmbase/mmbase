@@ -44,7 +44,7 @@
     <title xml:lang="en">Welcome</title>
     <title xml:lang="nl">Welkom</title>
     <description xml:lang="en">Shows welcome page for MMBase admin pages</description>
-    <description xml:lang="nl">Welkompagina voor de MMBase admin pagina's</description>
+    <description xml:lang="nl">Welkomspagina voor de MMBase admin pagina's</description>
     <body jsp="about.jspx" />
   </block>
 
@@ -162,7 +162,7 @@
       Overzicht van datatypes
     </description>
     <body jsp="datatypes.jspx">
-      <param name="nodemanager"      type="String" />
+      <param name="nodemanager"   type="String" />
       <param name="field"   type="String" />
     </body>
   </block>
@@ -320,7 +320,7 @@
          mimetype="text/html">
     <title xml:lang="en">Caches</title>
     <title xml:lang="nl">Caches</title>
-    <description xml:lang="en">This tools hows the performance of the various MMBase
+    <description xml:lang="en">This tools shows the performance of the various MMBase
     caches. You can also (temporary) turn on/off the cache here. For a persistant
     change you should change caches.xml.</description>
     <description xml:lang="nl">Deze pagina toont de performance van de verschillende MMBase
