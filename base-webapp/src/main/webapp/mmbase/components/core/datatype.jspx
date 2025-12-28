@@ -24,8 +24,10 @@
   <script type="text/javascript">
     var validator = new MMBaseValidator();
     validator.logEnabled = false;
+    validator.traceEnabled = false;
     validator.validateHook = function(valid) {
-    document.getElementById('submit').disabled = ! valid;
+      //console.log("Overall valid: ",  valid);
+      document.getElementById('submit').disabled = ! valid;
     }
     validator.lang = '${requestScope['javax.servlet.jsp.jstl.fmt.locale.request']}';
     validator.prefetchNodeManager("object"); // not actually used on this page, just an example
@@ -72,7 +74,7 @@
     <input type="submit" id="submit" />
     </p>
   </form>
-  
+
   <p>
   <mm:link page="datatypes" referids="nodemanager?,field?">
       <a href="${_}"><img src="${mm:link('/mmbase/style/images/back.png')}" alt="back" width="21" height="20" /></a>

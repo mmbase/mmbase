@@ -77,7 +77,7 @@ tab_width = 4
 ij_continuation_indent_size = 8
 ij_gherkin_keep_indents_on_empty_lines = false
 
-[*.java]
+[{*.java,*.js,*.js.jsp}]
 indent_size = 4
 indent_style = space
 tab_width = 4
