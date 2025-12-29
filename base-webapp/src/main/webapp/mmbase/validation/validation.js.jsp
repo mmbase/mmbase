@@ -2,8 +2,8 @@
 %><%@ taglib uri="http://www.opensymphony.com/oscache" prefix="os"
 %><jsp:directive.page session="false" />
 *///<mm:content type="text/javascript" expires="3600" postprocessor="none"><os:cache
-time="0" key="<%=request.getServletPath()%>"
-refresh="${param.flush eq 'true' ? true : false}" ><mm:escape escape="none">
+time="3600" key="<%=request.getServletPath()%>"
+refresh="${param.flush eq 'true' ? true : false}" ><mm:escape escape="javascript-compress">
 /*
  * See test.jspx for example usage.
 
