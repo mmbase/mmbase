@@ -947,7 +947,7 @@ MMBaseValidator.prototype.valid = async function(el) {
         }
     }
     if (! await this.typeValid(el)) return false;
-    if (! await this.lengthValid(el)) return false;
+    if (! this.lengthValid(el)) return false;
     if (! await this.minMaxValid(el)) return false;
     if (! await this.patternValid(el)) return false; // not perfect yet
     // @todo of course we can go a bit further here.
@@ -1318,13 +1318,13 @@ MMBaseValidator.prototype.addValidationForElements = async function(els) {
         this.invalidElements++;
       }
       if (this.validateHook) {
-        this.validateHook(valid, entry);
+        return this.validateHook(valid, entry);
       }
     }
 
     if (els.length === 0) {
         if (this.validateHook) {
-            this.validateHook(this.invalidElements === 0);
+            return this.validateHook(this.invalidElements === 0);
         }
     }
 };
