@@ -4,6 +4,7 @@
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /><mm:write value="" request="org.mmbase.validation" />
     <link rel="StyleSheet" type="text/css" href="css/<mm:write referid="config.style_sheet" />"/>
     <jsp:directive.include file="/mmbase/validation/javascript.jspxf" />
+    <jsp:include page="/mmbase/jquery/jquery.jspx" /> <!-- used by search/relate -->
     <meta name="MMBase-Language"     content="${config.lang}" />
     <mm:link page="/mmbase/validation/Widgets.js">
       <script type="text/javascript" src="${_}"> </script>
