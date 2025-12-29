@@ -68,7 +68,7 @@ Widgets.prototype.switchEnumerationSuggestion = function (ev) {
 
 /**
  * Makes a select only a suggestion. If the user selects the option with value 'OTHER', the select is
- * automaticly changed into a text input box. (and back if this input box is made empty and left that way for 2 seconds).
+ * automatically changed into a text input box. (and back if this input box is made empty and left that way for 2 seconds).
  */
 Widgets.prototype.enumerationSuggestion = function (selector) {
 	const element = document.querySelector(selector);
