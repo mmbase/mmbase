@@ -2,7 +2,6 @@
     version="2.0"
     xmlns:jsp="http://java.sun.com/JSP/Page"
     xmlns:mm="http://www.mmbase.org/mmbase-taglib-2.0" >
-  <mm:include page="/mmbase/jquery/jquery.form.jspx" />
   <mm:context>
     <mm:import id="__javascript_validation" from="request" externid="org.mmbase.validation" />
     <mm:isempty referid="__javascript_validation">
