@@ -1283,33 +1283,33 @@ MMBaseValidator.prototype.addValidationForElements = async function(els) {
           case "text":
           case "password":
           case "textarea":
-            entry.addEventListener("keyup", async function(ev) { await self.setLastChange(ev); await self.validate(ev); }, false);
+            entry.addEventListener("keyup", async function(ev) { self.setLastChange(ev); await self.validate(ev); }, false);
             entry.addEventListener("change", async function(ev) { await self.serverValidate(ev); }, false);
             entry.addEventListener("blur", async function(ev) { await self.serverValidate(ev); }, false);
             // IE calls this when the user does a right-click paste
-            entry.addEventListener("paste", async function(ev) { await self.setLastChange(ev); await self.validate(ev); }, false);
+            entry.addEventListener("paste", async function(ev) { self.setLastChange(ev); await self.validate(ev); }, false);
             // FireFox calls this when the user does a right-click paste
             break;
 
           case "radio":
           case "checkbox":
-            entry.addEventListener("click", async function(ev) { await self.setLastChange(ev); await self.validate(ev); }, false);
+            entry.addEventListener("click", async function(ev) { self.setLastChange(ev); await self.validate(ev); }, false);
             entry.addEventListener("blur", async function(ev) { await self.serverValidate(ev); }, false);
             entry.addEventListener("change", async function(ev) { await self.serverValidate(ev); }, false);
             break;
           case "file":
-            entry.addEventListener("change", async function(ev) { await self.setLastChange(ev); await self.serverValidate(ev); }, false);
+            entry.addEventListener("change", async function(ev) { self.setLastChange(ev); await self.serverValidate(ev); }, false);
             break;
           case "select-one":
           case "select-multiple":
           default:
             this.log("Adding eventhandler to " + entry + " (" + entry.type + ")");
             this.log(entry);
-            entry.addEventListener("change", async function(ev) { await self.setLastChange(ev); await self.validate(ev); }, false);
+            entry.addEventListener("change", async function(ev) { self.setLastChange(ev); await self.validate(ev); }, false);
             entry.addEventListener("blur", async function(ev) { await self.serverValidate(ev); }, false);
         }
       entry.serverValidated = true; // It starts out server-validated
-      entry.originalValue = await this.getValue(entry)[0];
+      entry.originalValue = (await this.getValue(entry))[0];
       const valid = await this.valid(entry);
       entry.prevValid = valid;
       this.elements.push(entry);
