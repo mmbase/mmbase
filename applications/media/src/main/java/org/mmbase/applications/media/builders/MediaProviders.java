@@ -78,11 +78,11 @@ public class MediaProviders extends MMObjectBuilder {
                     if (req != null) {
                         host = req.getHeader("x-forwarded-host");
                         if (host == null) {
-                            req.getServerName();
+                            host = req.getServerName();
                         }
                         port = req.getIntHeader("x-forwarded-port");
                         if (port == -1) {
-                            req.getServerPort();
+                            port = req.getServerPort();
                         }
                     } else {
                         log.debug("No request found");
