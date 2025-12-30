@@ -7,14 +7,14 @@
   <parent>
     <groupId>org.mmbase.maven</groupId>
     <artifactId>mmbase-maven</artifactId>
-    <version>1.9-SNAPSHOT</version>
+    <version>1.9.7-rc2</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>maven-mmbase-plugin</artifactId>
   <name>MMBase Maven Plugin</name>
   <packaging>maven-plugin</packaging>
-  <version>1.9-SNAPSHOT</version>
+  <version>1.9.7-rc2</version>
 
   <prerequisites>
     <maven>2.0.9</maven>

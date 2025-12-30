@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.mmbase</groupId>
     <artifactId>mmbase-application-parent</artifactId>
-    <version>1.9-SNAPSHOT</version>
+    <version>1.9.7-rc2</version>
   </parent>
 
   <artifactId>mmbase-principletracker</artifactId>

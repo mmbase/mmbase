@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.mmbase</groupId>
     <artifactId>mmbase-application-parent</artifactId>
-    <version>1.9-SNAPSHOT</version>
+    <version>1.9.7-rc2</version>
     <relativePath>../../maven-base/applications/pom.xml</relativePath>
   </parent>
 
@@ -111,7 +111,7 @@
     <dependency>
       <groupId>org.mmbase</groupId>
       <artifactId>mmbase-rmmci</artifactId>
-      <version>1.9-SNAPSHOT</version>
+      <version>1.9.7-rc2</version>
       <classifier>client-skinny</classifier>
       <scope>test</scope>
     </dependency>

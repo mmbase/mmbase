@@ -552,7 +552,7 @@
          mimetype="text/html">
     <body>
       <class name="org.mmbase.framework.ConnectionRenderer">
-        <param name="url">http://www.mmbase.org/jira/sr/jira.issueviews:searchrequest-rss/temp/SearchRequest.xml?pid=10000&amp;fixfor=10231&amp;sorter/field=issuekey&amp;sorter/order=DESC&amp;tempMax=1000</param>
+        <param name="url">TODO</param>
         <param name="xslt">xslt/rss.xslt</param>
       </class>
     </body>
