@@ -1,20 +1,30 @@
-$Id$
-
+= How to make a release
 
 - Make sure all automated test-cases succeed. Check the nightly build, or run 'make all' in tests.
 - Manually test. Build or download an example war. Deploy it on recent tomcat version.
-    - No warnings, errors in the log
-    - No easily found problems in the example webapp
-    - run test jsps? tests/taglib?  All pages under /mmbase/admin/tests?
+    * No warnings, errors in the log
+    *  No easily found problems in the example webapp
+    *  run test jsps? tests/taglib?  All pages under /mmbase/admin/tests?
 
 
-- Make a tag or branch
-   svn cp -m "Tagged 1.9.1"  https://scm.mmbase.org/mmbase/branches/MMBase-1_9  https://scm.mmbase.org/mmbase/tags/MMBase-1_9_1_Final
+- Make a branch
+
+NOTE: It's a bit odd to make a branch and not a tag, but the following will do some changes necessary for the release. In subversion you could just do changes in a tag, for now we leave the procedure as is.
+
+[source, bash]
+----
+   git branch MMBase-1_9_7_rc2
+----
 
 - Check it out
-  svn co  https://scm.mmbase.org/mmbase/tags/MMBase-1_9_1_Final
 
-   And edit:
+[source, bash]
+----
+  git co MMBase-1_9_7_rc2
+----
+
+And edit:
+
   - core/src/main/java/org/mmbase/Version.java
   - core/src/main/config/components/core.xml (make release notes point to right RSS)
   - pom.xml
@@ -23,11 +33,9 @@ $Id$
 
   - Fix the other poms:
    for i in `find . -name pom.xml` ; do cat $i | sed s/1.9-SNAPSHOT/1.9.1/g > $i.new ; mv $i.new $i   ; done
-
   - Check this in
 
-
-- Make sure you use java 5
+ - Make sure you use java 8
 
  - Build following dirs first with -N
    maven-base
@@ -38,9 +46,10 @@ $Id$
    /
 
  - Then:
-   mvn -P'deploy,!development,!servlet25' clean deploy
-   cd base-app
-   mvn -P'deploy,!development,servlet25' clean deploy
+[source, bash]
+----
+   mvn -P'deploy,!development' clean deploy
+----
 
 
 
