@@ -1,4 +1,4 @@
-var validator;
+let validator;
 
 (function () {
     document.addEventListener("DOMContentLoaded", function() {
@@ -8,7 +8,7 @@ var validator;
         validator = new MMBaseValidator();
         validator.logEnabled = false;
         validator.traceEnabled = false;
-        validator.validateHook = function () {
+        validator.validateHook = function (valid, element) {
             const okbutton = document.getElementById("okbutton");
             if (okbutton != null) {
                 okbutton.disabled = this.invalidElements !== 0;
@@ -29,6 +29,7 @@ var validator;
 
         const forms = document.querySelectorAll("form[name=change], form[name=create]");
         forms.forEach((form) => {
+            // noinspection JSIgnoredPromiseFromCall
             validator.addValidation(form);
         });
     });
