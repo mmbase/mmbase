@@ -7,9 +7,9 @@ $(document).ready(
 
         var validator = new MMBaseValidator();
 	if (els.length > 0) {
-	    var form = $(els[0]).closest("form");
+	    const form = $(els[0]).closest("form");
 	    validator.saveToForm = $(form).find("input[name=mm_form_name]").val();
-            validator.addValidationForElements(els);
+        validator.addValidationForElements(els);
 	}
 
 	$("form.mm_form").

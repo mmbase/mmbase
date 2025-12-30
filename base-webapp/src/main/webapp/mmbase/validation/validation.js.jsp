@@ -107,7 +107,7 @@ MMBaseValidator.prototype.onLoad = async function(event) {
         this.root = event.target;
     }
     //console.log("Root" + this.root);
-    await this.addValidation(this.root);
+    this.addValidation(this.root);
     //validatePage(target);
 };
 
@@ -1324,7 +1324,7 @@ MMBaseValidator.prototype.addValidationForElements = async function(els) {
 
     if (els.length === 0) {
         if (this.validateHook) {
-            return this.validateHook(this.invalidElements === 0);
+            this.validateHook(this.invalidElements === 0);
         }
     }
 };
@@ -1339,7 +1339,8 @@ MMBaseValidator.prototype.addValidation = async function(el) {
     const els = el.querySelectorAll(".mm_validate");
 
     this.log("Will validate elements in " + el + " (" + els.length + " elements)");
-    await this.addValidationForElements(els);
-    el = null;
+    // fire and forget
+    // noinspection ES6MissingAwait
+    this.addValidationForElements(els);
 };
 //</mm:escape></os:cache></mm:content>
