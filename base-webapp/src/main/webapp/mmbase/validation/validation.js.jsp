@@ -1318,7 +1318,7 @@ MMBaseValidator.prototype.addValidationForElements = async function(els) {
         this.invalidElements++;
       }
       if (this.validateHook) {
-        return this.validateHook(valid, entry);
+        this.validateHook(valid, entry);
       }
     }
 
