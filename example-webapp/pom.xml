@@ -218,13 +218,13 @@
     <dependency>
       <groupId>org.mmbase</groupId>
       <artifactId>mmbase-statistics</artifactId>
-      <version>0.4-SNAPSHOT</version>
+      <version>0.4</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>org.mmbase</groupId>
       <artifactId>mmbase-mmsite</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.0</version>
       <type>war</type>
     </dependency>
 

@@ -12,8 +12,7 @@
   <name>MMBase MMBob</name>
   <packaging>war</packaging>
 
-  <description>
-  </description>
+  <description>This is a forum system somewhat like phpbb but based on mmbase, it can be integrated with a mmbase site</description>
 
 
   <dependencies>
