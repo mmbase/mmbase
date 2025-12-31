@@ -26,11 +26,11 @@
   </div>
   <div class="row">
     <label for="username">Name</label>
-    <input type="text" id="username" name="username" tabindex="1" />
+    <input type="text" id="username" name="username" />
   </div>
   <div class="row">
     <label for="password">Password</label>
-    <input type="password" id="password" name="password" tabindex="2" />
+    <input type="password" id="password" name="password" autocomplete="off" />
   </div>
   <div class="lastrow">
     <input type="submit" name="Login" value="login" />

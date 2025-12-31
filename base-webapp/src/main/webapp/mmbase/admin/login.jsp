@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html" session="false" 
+<%@ page language="java" contentType="text/html" session="false"
     import="org.mmbase.security.AuthenticationData,org.mmbase.bridge.ContextProvider"
-%><%@ taglib uri="http://www.mmbase.org/mmbase-taglib-2.0" prefix="mm" 
+%><%@ taglib uri="http://www.mmbase.org/mmbase-taglib-2.0" prefix="mm"
 %><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <mm:content expires="0" escaper="none">
@@ -46,7 +46,7 @@
   </div>
   <div class="row">
     <label for="password">Password</label>
-    <input type="password" id="password" name="password" />
+    <input type="password" id="password" name="password" autocomplete="off" />
   </div>
   <div class="row">
     <label for="authenticate">Type</label>
