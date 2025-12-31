@@ -13,6 +13,7 @@
   <packaging>war</packaging>
 
   <description>
+    The ThemeManager application helps to manage themes (look and feel) for MMBase based websites.
   </description>
 
 

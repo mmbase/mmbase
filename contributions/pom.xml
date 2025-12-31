@@ -13,8 +13,7 @@
   <packaging>pom</packaging>
   <name>MMBase Contributions</name>
 
-  <description>
-  </description>
+  <description>parent for mmbase contributions</description>
 
   <build>
     <defaultGoal>install</defaultGoal>

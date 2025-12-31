@@ -32,23 +32,20 @@ And edit:
     Such as 1.9.2 and -20091104
 
   - Fix the other poms:
+[source, bash]
+----
    for i in `find . -name pom.xml` ; do cat $i | sed s/1.9-SNAPSHOT/1.9.1/g > $i.new ; mv $i.new $i   ; done
+----
   - Check this in
 
  - Make sure you use java 8
 
- - Build following dirs first with -N
-   maven-base
-   maven
-   maven/maven-mmbase-plugin
-   maven-base/applications
-  applications
-   /
+ -
 
  - Then:
 [source, bash]
 ----
-   mvn -P'deploy,!development' clean deploy
+michiel@mitulo:(MMBase-1_9_7_rc2,12)~/github/mmbase/mmbase$ PROFILES=deploy ./build-all.sh deploy
 ----
 
 

@@ -12,7 +12,8 @@
   <name>MMBase MultilanguageGui</name>
   <packaging>war</packaging>
 
-  <description>
+  <description>MultilanguageGui is a very basic tool to allow multilanguage support on
+    a basic mmbase code without changes to the core
   </description>
 
 
