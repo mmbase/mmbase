@@ -1,5 +1,8 @@
 = How to make a release
 
+:target-version: MMBase-1_9_7_rc2
+
+
 - Make sure all automated test-cases succeed. Check the nightly build, or run 'make all' in tests.
 - Manually test. Build or download an example war. Deploy it on recent tomcat version.
     * No warnings, errors in the log
@@ -11,16 +14,16 @@
 
 NOTE: It's a bit odd to make a branch and not a tag, but the following will do some changes necessary for the release. In subversion you could just do changes in a tag, for now we leave the procedure as is.
 
-[source, bash]
+[source,sh,subs="attributes"]
 ----
-   git branch MMBase-1_9_7_rc2
+   git branch {target-version}
 ----
 
 - Check it out
 
-[source, bash]
+[source,sh,subs="attributes"]
 ----
-  git co MMBase-1_9_7_rc2
+  git co {target-version}
 ----
 
 And edit:
@@ -32,7 +35,7 @@ And edit:
     Such as 1.9.2 and -20091104
 
   - Fix the other poms:
-[source, bash]
+[source,sh,subs="attributes"]
 ----
    for i in `find . -name pom.xml` ; do cat $i | sed s/1.9-SNAPSHOT/1.9.1/g > $i.new ; mv $i.new $i   ; done
 ----
@@ -40,7 +43,6 @@ And edit:
 
  - Make sure you use java 8
 
- -
 
  - Then:
 [source, bash]
@@ -48,6 +50,16 @@ And edit:
 michiel@mitulo:(MMBase-1_9_7_rc2,12)~/github/mmbase/mmbase$ PROFILES=deploy ./build-all.sh deploy
 ----
 
+Now also create tag, and let's delete the branch, so avoid more edits.
+[source,sh,subs="attributes"]
+----
+	git tag -a {target-version} -m "released"
+	git push origin tag {target-version}
+	git co MMBase-1_9
+	git branch -D {target-version}
+	git push -d {target-version}
+
+----
 
 
 

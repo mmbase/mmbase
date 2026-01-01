@@ -22,10 +22,7 @@ It was on java 5 before MMBase 9.7, but that is not supported anymore. It works 
 
 So there is a https://github.com/mmbase/docker/build[docker image that contains all the necessary tools to build MMBase] which is also used in the github actions.
 
-=== Act?
-So, to build locally you could try out https://github.com/nektos/act[act] to avoid having to arrange everything yourself. Just install docker and act.
 
-It seems that act isn't well maintained?
 
 == Just start docker
 
