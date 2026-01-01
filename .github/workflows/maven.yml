@@ -5,8 +5,11 @@ run-name: build ${{  github.ref_name }} ('${{ github.event.head_commit.message }
 on:
   push:
     branches: [MMBase-1_9, main]
+    tags:
+      - '*' # Push events to every tag
   pull_request:
     branches: [MMBase-1_9, main]
+
   workflow_dispatch:
     inputs:
       skipTests:
