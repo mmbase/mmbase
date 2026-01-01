@@ -128,7 +128,6 @@ public class XSLTransformer {
      * @since MMBase-1.8
      */
     public static void transform(Source xml, URL xslFile, Result result, Map<String, Object> params, boolean considerDir) throws TransformerException {
-        TemplateCache cache= TemplateCache.getCache();
         Source xsl;
         try {
             xsl = new StreamSource(xslFile.openStream());
@@ -139,6 +138,7 @@ public class XSLTransformer {
             xsl.setSystemId(xslFile.toString());
         } catch (Exception e) {
         }
+
         URIResolver uri;
         if (considerDir) {
             try {
@@ -150,6 +150,22 @@ public class XSLTransformer {
         } else {
             uri = new org.mmbase.util.xml.URIResolver();
         }
+        transform(xml, xsl, uri, result, params);
+    }
+
+    /**
+     * @since MMBase-1.9.7
+     */
+    public static void transform(Source xml, Source xsl, Result result, Map<String, Object> params) throws TransformerException {
+        transform( xml, xsl, new org.mmbase.util.xml.URIResolver(), result, params );
+    }
+
+    /**
+     * @since MMBase-1.9.7
+     */
+    protected static void transform(Source xml, Source xsl, URIResolver uri, Result result, Map<String, Object> params) throws TransformerException {
+        TemplateCache cache = TemplateCache.getCache();
+
         Templates cachedXslt = cache.getTemplates(xsl, uri);
         if (log.isDebugEnabled()) {
             // log.debug("Size of cached XSLT " + SizeOf.getByteSize(cachedXslt) + " bytes");
@@ -181,8 +197,8 @@ public class XSLTransformer {
     }
 
     /**
-     * Perfoms XSL Transformation on XML-file which is parsed MMBase
-     * specificly (useing MMBasse EntityResolver and Errorhandler).
+     * Performs XSL Transformation on XML-file which is parsed MMBase
+     * specifically (using MMBasse EntityResolver and Errorhandler).
      * @javadoc
      *
      * @since MMBase-1.6
