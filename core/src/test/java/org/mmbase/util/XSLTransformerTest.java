@@ -11,6 +11,7 @@ import org.junit.Assert;
 
 public class XSLTransformerTest extends TestCase {
 
+    // Seems to be hit by https://issues.apache.org/jira/browse/XALANJ-2617
     public void testTransform() throws TransformerException {
         StringWriter sw = new StringWriter();
         Result result = new StreamResult(sw);

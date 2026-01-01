@@ -26,7 +26,7 @@
       <mm:import externid="subcategory"></mm:import>
       <mm:import externid="component" />
       <mm:import externid="block" />
-      <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nl">
+      <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
         <mm:formatter xslt="xslt/framework/head.xslt" escape="none">
           <head>
             <title>MMBase<mm:present referid="category"> - <mm:write referid="category" /></mm:present><mm:present referid="block"> : <mm:write referid="block" /></mm:present></title>

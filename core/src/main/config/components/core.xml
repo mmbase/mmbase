@@ -504,7 +504,7 @@
          mimetype="text/html">
     <body>
       <class name="org.mmbase.framework.ConnectionRenderer">
-        <param name="url">http://www.mmbase.org/rss</param>
+        <param name="url">https://www.mmbase.org/rss</param>
         <param name="xslt">xslt/rss.xslt</param>
       </class>
     </body>
@@ -527,7 +527,7 @@
          mimetype="text/html">
     <body>
       <class name="org.mmbase.framework.ConnectionRenderer">
-        <param name="url">https://nitter.net/search/rss?f=tweets&amp;q=%40mmbase</param>
+        <param name="url">https://rss.app/feeds/NL0siqnunwlmyCpP.xml</param>
         <param name="xslt">xslt/rss.xslt</param>
       </class>
     </body>
@@ -554,6 +554,7 @@
       <class name="org.mmbase.framework.ConnectionRenderer">
         <param name="url">https://openrss.org/github.com/mmbase/mmbase/releases</param>
         <param name="xslt">xslt/rss.xslt</param>
+        <param name="timeout">50000</param>
       </class>
     </body>
   </block>
