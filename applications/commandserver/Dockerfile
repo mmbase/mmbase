@@ -1,6 +1,6 @@
 ARG TAG=latest
 
-FROM ghcr.io/mmbase/env:latest-jdk25
+FROM ghcr.io/mmbase/env:8-jdk25
 
 ENV JPDA_ADDRESS="*:8001"
 
