@@ -2,10 +2,8 @@ ARG PROJECT_VERSION
 FROM ghcr.io/mmbase/tomcat:9-jdk25
 
 USER root
-ARG HSQLDB_VERSION=1.8.0.10
-RUN  curl --fail -L  \
-     https://repo1.maven.org/maven2/hsqldb/hsqldb/${HSQLDB_VERSION}/hsqldb-${HSQLDB_VERSION}.jar -o ${CATALINA_BASE}/lib/hsqldb-${HSQLDB_VERSION}.jar
 
+RUN mv /catalina-base/webapps/ROOT/WEB-INF/lib/hsqldb-*.jar  ${CATALINA_BASE}/lib/hsqldb-${HSQLDB_VERSION}.jar
 
 USER mmbase
 LABEL org.mmbase.authors="michiel@mmbase.org"

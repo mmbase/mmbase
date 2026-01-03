@@ -1,0 +1,38 @@
+---
+name: MMBase Example
+services:
+  web:
+    hostname: mmbase1
+    image: ghcr.io/mmbase/example-webapp:latest
+    pull_policy: always
+    container_name: web
+    restart: unless-stopped
+    ports:
+      - "8080:8080" # web
+      - "8000:8000" # debugger
+      - "3400:3400" # jmx
+    configs:
+      - source: example.xml
+        target: /catalina-base/conf/Catalina/localhost/ROOT.xml
+    volumes:
+      - ./data:/data
+      - ./work:/work
+    environment:
+      TZ: "Europe/Amsterdam"
+      JMX_PORT: 3400
+configs:
+  example.xml:
+      content: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <Context
+          swallowOutput="false"
+          privileged="false" >
+
+          <Environment name="mmbase/mmbaseroot/datadir" value="/data" type="java.lang.String" />
+          <Environment name="mmbase/mmbaseroot/database" value="hsqldb_csv" type="java.lang.String" />
+          <Environment name="mmbase/jdbc/url"   value="jdbc:hsqldb:file:/data/database/mmb" type="java.lang.String" />
+        </Context>
+
+
+
+

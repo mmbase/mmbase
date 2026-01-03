@@ -30,3 +30,8 @@ docker:  ## build docker image, no push, current platform. Handy for local testi
 docker_run:   ## run the docker image
 		mkdir -p work data
 		docker run -it --user $(shell id -u):$(shell id -g) -p 8080:8080 -p 8000:8000 -v $(PWD)/data:/data -v $(PWD)/work:/work $(REGISTRY)$(NAME):$(TAG)
+
+
+docker_explore:   ## run the docker image
+		mkdir -p work data
+		docker run -it --user $(shell id -u):$(shell id -g) -p 8080:8080 -p 8000:8000 -v $(PWD)/data:/data -v $(PWD)/work:/work --entrypoint /bin/bash $(REGISTRY)$(NAME):$(TAG)

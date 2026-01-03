@@ -8,7 +8,7 @@
     <Arg>
       <New class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <Set name="driverClass">org.hsqldb.jdbcDriver</Set>
-        <Set name="jdbcUrl"><SystemProperty name="jdbcUrl" default="jdbc:hsqldb:file:data/mmbase" /></Set>
+        <Set name="jdbcUrl"><SystemProperty name="jdbcUrl" default="jdbc:hsqldb:file:data/database/mmbase" /></Set>
         <Set name="user">sa</Set>
         <Set name="password"></Set>
       </New>
