@@ -29,7 +29,6 @@ configs:
           swallowOutput="false"
           privileged="false" >
 
-          <Environment name="mmbase/mmbaseroot/datadir" value="/data" type="java.lang.String" />
           <Environment name="mmbase/mmbaseroot/database" value="hsqldb_csv" type="java.lang.String" />
           <Environment name="mmbase/jdbc/url"   value="jdbc:hsqldb:file:/data/database/mmb" type="java.lang.String" />
         </Context>
