@@ -6,6 +6,7 @@
     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
     xmlns:mm="http://www.mmbase.org/mmbase-taglib-2.0"
     >
+  <jsp:directive.page import="org.mmbase.util.HttpServletRequestUtils"/>
   <mm:cloud>
     <jsp:output omit-xml-declaration="true" />
     <div
@@ -66,6 +67,30 @@
             </td>
           </tr>
         </c:forEach>
+      </table>
+
+      <table class="requestObjet">
+        <caption>Request calls</caption>
+        <tr>
+          <th>request.getServerName()</th>
+          <td><mm:escape>${pageContext.request.serverName}</mm:escape></td>
+        </tr>
+        <tr>
+          <th>request.getServerPort()</th>
+          <td><mm:escape>${pageContext.request.serverPort}</mm:escape></td>
+        </tr>
+        <tr>
+          <th>request.getScheme()</th>
+          <td><mm:escape>${pageContext.request.scheme}</mm:escape></td>
+        </tr>
+        <tr>
+          <th>HttpRequestUtils.getServerName(request)</th>
+          <td><mm:escape><jsp:expression>HttpServletRequestUtils.getServerName(request)</jsp:expression></mm:escape></td>
+        </tr>
+        <tr>
+          <th>HttpRequestUtils.getServerPort(request)</th>
+          <td><mm:escape><jsp:expression>HttpServletRequestUtils.getServerPort(request)</jsp:expression></mm:escape></td>
+        </tr>
       </table>
 
       <table class="cookie">
