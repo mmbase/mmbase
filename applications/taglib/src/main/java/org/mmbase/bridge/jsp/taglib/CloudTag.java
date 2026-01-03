@@ -24,6 +24,7 @@ import org.mmbase.bridge.*;
 import org.mmbase.bridge.ContextProvider;
 import org.mmbase.security.*;
 
+import org.mmbase.util.HttpServletRequestUtils;
 import org.mmbase.util.functions.*;
 import org.mmbase.util.StringSplitter;
 
@@ -392,7 +393,7 @@ public class CloudTag extends ContextReferrerTag implements CloudProvider, Param
 
     private String getRealmName() {
         String contextPath = request.getContextPath().replace('/', '_');
-        return "MMBase" + contextPath + "@" + request.getServerName();
+        return "MMBase" + contextPath + "@" + HttpServletRequestUtils.getServerName(request);
     }
 
     /**

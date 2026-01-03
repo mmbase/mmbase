@@ -27,6 +27,7 @@ import org.mmbase.datatypes.processors.Processor;
 import org.mmbase.storage.search.FieldCompareConstraint;
 import org.mmbase.util.Casting;
 import org.mmbase.util.GenericResponseWrapper;
+import org.mmbase.util.HttpServletRequestUtils;
 import org.mmbase.util.functions.Function;
 import org.mmbase.util.functions.Parameters;
 import org.mmbase.util.logging.Logger;
@@ -331,10 +332,10 @@ public class VerifyEmailProcessor implements CommitProcessor, Processor, java.io
 
 
                 if (req != null) {
-                    String scheme = req.getScheme();
+                    String scheme = HttpServletRequestUtils.getScheme(req);
                     u.append(scheme).append("://");
-                    u.append(req.getServerName());
-                    int port = req.getServerPort();
+                    u.append(HttpServletRequestUtils.getServerName(req));
+                    int port = HttpServletRequestUtils.getServerPort(req);
                     u.append((port == 80 && "http".equals(scheme)) ||
                              (port == 443 && "https".equals(scheme))
                              ? "" : ":" + port);

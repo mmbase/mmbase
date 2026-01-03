@@ -235,12 +235,12 @@ public abstract class Util {
             }
             try {
                 URL hostPart = new URL(matcher.group(1));
-                String scheme = request.getScheme();
+                String scheme = HttpServletRequestUtils.getScheme(request);
                 if (scheme == null) {
                     log.warn("Request " + request + " " + request.getRequestURI() + " gave 'null'  scheme" + request.getServerName() + ":" + request.getServerPort() + " " + request.getContextPath());
                 }
-                String host   = request.getServerName();
-                int port      = request.getServerPort();
+                String host   = HttpServletRequestUtils.getServerName(request);
+                int port      = HttpServletRequestUtils.getServerPort(request);
                 URL foundHost = scheme != null ? new URL(scheme, host, port, "") : null;
                 if (scheme != null && hostPart.sameFile(foundHost)) {
                     String result = matcher.group(2);

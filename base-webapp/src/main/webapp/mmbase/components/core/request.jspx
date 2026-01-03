@@ -91,6 +91,10 @@
           <th>HttpRequestUtils.getServerPort(request)</th>
           <td><mm:escape><jsp:expression>HttpServletRequestUtils.getServerPort(request)</jsp:expression></mm:escape></td>
         </tr>
+        <tr>
+          <th>HttpRequestUtils.getScheme(request)</th>
+          <td><mm:escape><jsp:expression>HttpServletRequestUtils.getScheme(request)</jsp:expression></mm:escape></td>
+        </tr>
       </table>
 
       <table class="cookie">

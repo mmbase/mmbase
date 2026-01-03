@@ -622,8 +622,8 @@ public abstract class AbstractServletBuilder extends MMObjectBuilder {
                             }
 
                             if ("true".equals(absolute) && request != null) {
-                                int port = request.getServerPort();
-                                root = request.getScheme() + "://" + request.getServerName() + (port == 80 ? "" : ":" + port) + root;
+                                int port = HttpServletRequestUtils.getServerPort(request);
+                                root = HttpServletRequestUtils.getScheme(request) + "://" + HttpServletRequestUtils.getServerName(request) + (port == 80 ? "" : ":" + port) + root;
                             }
                             String iconRoot = (String) parameters.get("iconroot");
                             if (root.endsWith("/") && iconRoot.startsWith("/")) iconRoot = iconRoot.substring(1);
