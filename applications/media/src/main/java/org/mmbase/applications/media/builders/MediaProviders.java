@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.mmbase.applications.media.urlcomposers.URLComposer;
 import org.mmbase.applications.media.urlcomposers.URLComposerFactory;
 import org.mmbase.bridge.Cloud;
-import static org.mmbase.bridge.ContextProvider.*;
+import static org.mmbase.bridge.ContextProvider.getDefaultCloudContext;
 import org.mmbase.bridge.Node;
 import org.mmbase.module.core.MMBaseContext;
 import org.mmbase.module.core.MMObjectBuilder;
@@ -76,14 +76,8 @@ public class MediaProviders extends MMObjectBuilder {
                 int port = -1;
                 if ("".equals(host)) {
                     if (req != null) {
-                        host = req.getHeader("x-forwarded-host");
-                        if (host == null) {
-                            host = req.getServerName();
-                        }
-                        port = req.getIntHeader("x-forwarded-port");
-                        if (port == -1) {
-                            port = req.getServerPort();
-                        }
+                        host = org.mmbase.util.HttpServletRequestUtils.getServerName(req);
+                        port = org.mmbase.util.HttpServletRequestUtils.getServerPort(req);
                     } else {
                         log.debug("No request found");
 
