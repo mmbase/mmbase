@@ -7,6 +7,7 @@ services:
     pull_policy: always
     container_name: web
     restart: unless-stopped
+    user: $DOCKER_USER
     ports:
       - "8080:8080" # web
       - "8000:8000" # debugger
