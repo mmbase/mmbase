@@ -16,8 +16,8 @@ services:
       - source: context.xml
         target: /catalina-base/conf/Catalina/localhost/ROOT.xml
     volumes:
-      - ./data:/data
-      - ./work:/work
+      - ./data:/data   # blobs, logs, database
+      - ./work:/work   # work dir of tomcat, compiled jsps etc.
     environment:
       TZ: "Europe/Amsterdam"
       JMX_PORT: 3400
