@@ -1,5 +1,5 @@
 ARG PROJECT_VERSION
-FROM ghcr.io/mmbase/tomcat:latest-jdk8
+FROM ghcr.io/mmbase/tomcat:9-jdk8
 
 
 USER root

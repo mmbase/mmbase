@@ -1,5 +1,5 @@
 ARG PROJECT_VERSION
-FROM ghcr.io/mmbase/tomcat:latest-jdk25
+FROM ghcr.io/mmbase/tomcat:9-jdk25
 
 USER root
 ARG HSQLDB_VERSION=1.8.0.10
