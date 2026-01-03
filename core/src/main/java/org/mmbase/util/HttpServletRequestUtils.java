@@ -8,10 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 public class HttpServletRequestUtils {
 
     public static void appendAbsolute(HttpServletRequest req, StringBuilder show) {
-        String scheme = req.getHeader("x-forwarded-proto");
-        if (scheme == null) {
-            scheme = req.getScheme();
-        }
+        String scheme = getServerName(req);
         show.append(scheme).append("://");
         appendHostWithPort(scheme, req, show);
     }
@@ -38,6 +35,13 @@ public class HttpServletRequestUtils {
             port = req.getServerPort();
         }
         return port;
+    }
+    public static String getScheme(HttpServletRequest req) {
+        String scheme = req.getHeader("x-forwarded-proto");
+        if (scheme == null) {
+            scheme = req.getScheme();
+        }
+        return scheme;
     }
 
 }
