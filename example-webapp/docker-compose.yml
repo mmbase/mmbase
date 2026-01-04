@@ -24,11 +24,7 @@ services:
 configs:
   context.xml:
       content: |
-        <?xml version="1.0" encoding="UTF-8"?>
-        <Context
-          swallowOutput="false"
-          privileged="false" >
-
+        <Context privileged="false" >
           <Environment name="mmbase/mmbaseroot/database" value="hsqldb_csv" type="java.lang.String" />
           <Environment name="mmbase/jdbc/url"   value="jdbc:hsqldb:file:/data/database/mmb" type="java.lang.String" />
         </Context>

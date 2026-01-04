@@ -2,8 +2,8 @@ ARG PROJECT_VERSION
 FROM ghcr.io/mmbase/tomcat:latest-jdk25
 
 USER root
-
-RUN mv /catalina-base/webapps/ROOT/WEB-INF/lib/hsqldb-*.jar  ${CATALINA_BASE}/lib/hsqldb-${HSQLDB_VERSION}.jar
+# would only b needed if database managed by tomcat itself.
+#RUN mv /catalina-base/webapps/ROOT/WEB-INF/lib/hsqldb-*.jar  ${CATALINA_BASE}/lib/
 
 USER mmbase
 LABEL org.mmbase.authors="michiel@mmbase.org"
