@@ -27,7 +27,7 @@ public class UploadInfo implements java.io.Serializable {
     long bytesRead = 0;
     long elapsedTime = -1;
 
-    public static enum Status {
+    public enum Status {
         INIT,
         START,
         PROGRESS,
@@ -85,7 +85,7 @@ public class UploadInfo implements java.io.Serializable {
     }
 
     public boolean isInProgress() {
-        return Status.PROGRESS == status || Status.PROGRESS == status;
+        return  Status.PROGRESS == status;
     }
 
     public int getFileIndex() {
@@ -96,10 +96,10 @@ public class UploadInfo implements java.io.Serializable {
         this.fileIndex = fileIndex;
     }
     public float getFraction() {
-        return isInProgress() ? ((float) bytesRead  / totalSize) : 1.0f;
+        return ((float) bytesRead  / totalSize);
     }
     public int getPercentage() {
-        return isInProgress() ? (int) (bytesRead  * 100 / totalSize) : 100;
+        return Math.round(getFraction() * 100);
     }
     @Override
     public String toString() {
