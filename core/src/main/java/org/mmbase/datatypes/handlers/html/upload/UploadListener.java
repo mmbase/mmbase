@@ -10,6 +10,7 @@
 package org.mmbase.datatypes.handlers.html.upload;
 import javax.servlet.http.HttpServletRequest;
 import org.mmbase.datatypes.handlers.html.MultiPart;
+import org.mmbase.util.HttpServletRequestUtils;
 import org.mmbase.util.logging.Logging;
 /**
  *
@@ -34,7 +35,7 @@ public class UploadListener implements OutputStreamListener {
         this.request = request;
         this.delay = debugDelay;
         this.startTime = System.currentTimeMillis();
-        this.uploadInfo = new UploadInfo(request.getContentLength());
+        this.uploadInfo = new UploadInfo(HttpServletRequestUtils.getContentLength(request));
     }
 
     public void start() {

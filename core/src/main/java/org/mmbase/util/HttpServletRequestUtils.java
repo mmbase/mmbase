@@ -44,4 +44,16 @@ public class HttpServletRequestUtils {
         return scheme;
     }
 
+    public static long getContentLength(HttpServletRequest req) {
+        String contentLength = req.getHeader("Content-Length");
+        if (contentLength != null) {
+            try {
+                return Long.parseLong(contentLength);
+            } catch (NumberFormatException e) {
+                //
+            }
+        }
+        return req.getContentLength();
+    }
+
 }
