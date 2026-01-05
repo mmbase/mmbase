@@ -115,9 +115,9 @@
       </plugin>
       -->
       <plugin>
-        <groupId>org.mortbay.jetty</groupId>
+        <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
-        <version>7.0.0.pre5</version>
+        <version>10.0.26</version>
         <configuration>
           <!--
           <jettyEnvXml>${basedir}/jetty-env.xml</jettyEnvXml>
@@ -125,12 +125,12 @@
           <systemProperties>
           </systemProperties>
           <webXml>${basedir}/src/test/webapp/WEB-INF/web.xml</webXml>
-          <webAppConfig>
+          <webApp>
             <contextPath>/mmbase-taglib-test</contextPath>
             <baseResource implementation="org.mortbay.resource.ResourceCollection">
               <resourcesAsCSV>src/main/webapp,${basedir}/target/classes,src/test/webapp</resourcesAsCSV>
             </baseResource>
-          </webAppConfig>
+          </webApp>
         </configuration>
         <dependencies>
           <dependency>

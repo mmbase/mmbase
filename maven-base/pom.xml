@@ -275,23 +275,14 @@ See http://www.MMBase.org/license
           <version>10.0.26</version>
           <configuration>
             <systemProperties>
-              <systemProperty>
-                <name>com.sun.management.jmxremote</name>
-                <value>true</value>
-              </systemProperty>
-              <systemProperty>
-                <!-- Avoids the incredibly silly 'Laucher' in the windowlist of OSX -->
-                <name>java.awt.headless</name>
-                <value>true</value>
-              </systemProperty>
-              <systemProperty>
-                <!--
+              <com.sun.management.jmxremote />
+              <!-- Avoids the incredibly silly 'Laucher' in the windowlist of OSX -->
+              <java.awt.headless>false</java.awt.headless>
+              <!--
                     This may not be very safe, but we use jetty only for developing
                     See: http://communitymapbuilder.org/display/JETTY/How+to+enable+serving+aliased+files
                 -->
-                <name>org.mortbay.util.FileResource.checkAliases</name>
-                <value>false</value>
-              </systemProperty>
+              <org.mortbay.util.FileResource.checkAliases>false</org.mortbay.util.FileResource.checkAliases>
             </systemProperties>
           </configuration>
           <dependencies>

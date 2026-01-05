@@ -24,23 +24,19 @@
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
-        <version>9.4.44.v20210927</version>
+        <version>10.0.26</version>
         <configuration>
           <webApp>
             <jettyEnvXml>${basedir}/jetty-env.xml</jettyEnvXml>
           </webApp>
           <systemProperties>
-            <systemProperty>
-              <name>com.sun.management.jmxremote</name>
-              <value></value>
-            </systemProperty>
+            <com.sun.management.jmxremote />
             <systemProperty>
               <!--
               This may not be very safe, but we use jetty only for developing
               See: http://communitymapbuilder.org/display/JETTY/How+to+enable+serving+aliased+files
               -->
-              <name>org.mortbay.util.FileResource.checkAliases</name>
-              <value>false</value>
+              <org.mortbay.util.FileResource.checkAliases>false</org.mortbay.util.FileResource.checkAliases>
             </systemProperty>
           </systemProperties>
           <scanTargets>

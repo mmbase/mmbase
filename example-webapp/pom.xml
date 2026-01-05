@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -20,7 +20,7 @@
   <properties>
     <my.postfix>${mmbase.version.postfix}</my.postfix>
     <base.version>${mmbase.version.number}${my.postfix}</base.version>
-    <jdbcUrl>jdbc:hsqldb:file:data/mmbase</jdbcUrl>
+    <jdbcUrl>jdbc:hsqldb:file:${project.basedir}/data/mmbase</jdbcUrl>
     <!-- E.g. use
          -DjdbcUrl=jdbc:hsqldb:hsql://localhost/testb
          to connect to a running hsql, e.g. needed when testing clustering
@@ -49,22 +49,11 @@
             <jettyEnvXml>${basedir}/jetty-env.xml</jettyEnvXml>
           </webApp>
           <systemProperties>
-            <systemProperty>
-              <name>jdbcUrl</name>
-              <value>${jdbcUrl}</value>
-            </systemProperty>
-            <systemProperty>
-              <name>com.sun.management.jmxremote</name>
-              <value></value>
-            </systemProperty>
-            <systemProperty>
-              <name>java.awt.headless</name>
-              <value>true</value>
-            </systemProperty>
-            <systemProperty>
-              <name>org.mmbase.XSLTransformer.validation</name>
-              <value>false</value>
-            </systemProperty>
+            <jdbcUrl>${jdbcUrl}</jdbcUrl>
+            <basedir>${project.basedir}</basedir>
+            <com.sun.management.jmxremote />
+            <java.awt.headless>true</java.awt.headless>
+            <org.mmbase.XSLTransformer.validation>false</org.mmbase.XSLTransformer.validation>
           </systemProperties>
         </configuration>
         <dependencies>
