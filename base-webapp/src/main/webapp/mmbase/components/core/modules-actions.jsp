@@ -13,7 +13,7 @@
   id="${requestScope['org.mmbase.componentId']}">
 
 <%
-Module mmAdmin=ContextProvider.getDefaultCloudContext().getModule("mmadmin");
+org.mmbase.bridge.Module mmAdmin=ContextProvider.getDefaultCloudContext().getModule("mmadmin");
     String msg="";
 %>
 

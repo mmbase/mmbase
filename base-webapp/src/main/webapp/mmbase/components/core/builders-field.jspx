@@ -1,27 +1,27 @@
 <mm:cloud rank="administrator" jspvar="cloud"
           xmlns:jsp="http://java.sun.com/JSP/Page"
-          xmlns:mm="http://www.mmbase.org/mmbase-taglib-2.0" 
+          xmlns:mm="http://www.mmbase.org/mmbase-taglib-2.0"
           >
   <jsp:directive.page  import="org.mmbase.module.core.MMBase,org.mmbase.bridge.*,java.util.*" />
   <jsp:output omit-xml-declaration="true" />
   <mm:import externid="builder" jspvar="builder" />
   <mm:import externid="field"   jspvar="field" />
   <mm:import externid="cmd"     jspvar="cmd" />
-  
+
   <div
       class="mm_c c_core b_builders-field ${requestScope['org.mmbase.componentClassName']}"
       id="${requestScope['org.mmbase.componentId']}">
 
-    
+
       <h3>View field '${field}' of builder '${builder}'</h3>
-    <jsp:scriptlet> 
-       Module mmAdmin=ContextProvider.getDefaultCloudContext().getModule("mmadmin");
+    <jsp:scriptlet>
+       org.mmbase.bridge.Module mmAdmin=ContextProvider.getDefaultCloudContext().getModule("mmadmin");
     </jsp:scriptlet>
     <table summary="builder field properties" cellspacing="0" cellpadding="3">
       <caption>
    	    ${mm:string(requestScope['org.mmbase.framework.state'].renderer.block.description)}
       </caption>
-    
+
       <tr>
         <th>Property</th>
         <th>Value</th>
@@ -62,15 +62,15 @@
         <td><jsp:expression>mmAdmin.getInfo("GETBUILDERFIELD-"+builder+"-"+field+"-dbsize",request,response)</jsp:expression> </td>
         <td class="center"><a href="http://www.mmbase.org/mmdocs18/informationanalysts/builders.html#field_size" target="_blank"><img src="${mm:link('/mmbase/style/images/help.png')}" alt="doc" width="21" height="20" /></a></td>
       </tr>
-      
+
       <tr><td colspan="3"> </td></tr>
-      
+
       <tr>
         <th>Editor property</th>
         <th>Value</th>
         <th class="center">Documentation</th>
       </tr>
-      
+
       <tr>
         <td>Input</td>
         <td><jsp:expression>mmAdmin.getInfo("GETBUILDERFIELD-"+builder+"-"+field+"-editorinput",request,response)</jsp:expression> </td>
@@ -86,15 +86,15 @@
         <td><jsp:expression>mmAdmin.getInfo("GETBUILDERFIELD-"+builder+"-"+field+"-editorsearch",request,response)</jsp:expression> </td>
         <td class="center"><a href="http://www.mmbase.org/mmdocs18/informationanalysts/builders.html#field_search" target="_blank"><img src="${mm:link('/mmbase/style/images/help.png')}" alt="doc" width="21" height="20" /></a></td>
       </tr>
-      
+
       <tr><td colspan="3"> </td></tr>
-      
+
       <tr>
         <th>GUI Property</th>
         <th>Value</th>
         <th class="center">Documentation</th>
       </tr>
-      
+
     <jsp:scriptlet>
        java.util.Map params = new java.util.Hashtable();
        params.put("CLOUD", cloud);
@@ -102,22 +102,22 @@
        for (int i=0; i&lt;names.size(); i++) {
             Node name=names.getNode(i);
     </jsp:scriptlet>
-    
+
       <tr>
         <td>Field Name for ISO 639 <jsp:expression>name.getStringValue("item1")</jsp:expression></td>
         <td><jsp:expression>name.getStringValue("item2")</jsp:expression></td>
         <td class="center"><a href="http://www.mmbase.org/mmdocs18/informationanalysts/builders.html#field_guiname" target="_blank"><img src="${mm:link('/mmbase/style/images/help.png')}" alt="doc" width="21" height="20" /></a></td>
       </tr>
     <jsp:scriptlet> } </jsp:scriptlet>
-    
+
       <tr><td colspan="3"> </td></tr>
-      
+
       <tr>
         <th>GUI Descriptions</th>
         <th>Value</th>
         <th class="center">Documentation</th>
       </tr>
-    
+
     <jsp:scriptlet>
         params.clear();
         params.put("CLOUD", cloud);
@@ -131,16 +131,16 @@
         <td class="center"><a href="http://www.mmbase.org/mmdocs18/informationanalysts/builders.html#field_description" target="_blank"><img src="${mm:link('/mmbase/style/images/help.png')}" alt="doc" width="21" height="20" /></a></td>
       </tr>
     <jsp:scriptlet> } </jsp:scriptlet>
-    
+
     </table>
-    
+
     <p>
       <mm:link page="builders-actions" referids="builder">
         <a href="${_}"><img src="${mm:link('/mmbase/style/images/back.png')}" alt="back" width="21" height="20" /></a>
       </mm:link>
       Return to builder '${builder}'
     </p>
-    
+
   </div>
 
 </mm:cloud>
