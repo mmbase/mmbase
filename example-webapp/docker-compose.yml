@@ -1,11 +1,11 @@
 ---
 name: MMBase Example
 services:
-  mmbase_example_app:
+  webapp:
     hostname: mmbase1
     image: ghcr.io/mmbase/example-webapp:latest
     pull_policy: always
-    container_name: web
+    container_name: MMBase_Example_Webapp
     restart: unless-stopped
     user: $DOCKER_USER
     ports:
