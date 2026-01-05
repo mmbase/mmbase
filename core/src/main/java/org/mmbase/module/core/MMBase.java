@@ -1401,72 +1401,75 @@ public class MMBase extends ProcessorModule {
 
 
     private boolean shownDataDir = false;
+    private File dataDir;
     /**
      * A setting 'datadir' can be specified in mmbaseroot.xml (and hence in your context xml). This
      * serves as a default for the 'blobs on disk' directory, but it can be used on other spots as well.
      * @since MMBase-1.8.6
      */
-    public File getDataDir() {
-        String dataDirString = getInitParameter("datadir");
+    public synchronized File getDataDir() {
+        if (dataDir == null) {
+            String dataDirString = getInitParameter("datadir");
 
-        javax.servlet.ServletContext sc = MMBaseContext.getServletContext();
-        if (dataDirString == null || dataDirString.equals("")) {
-            if (sc == null) {
-                dataDirString = "data";
-            } else {
-                dataDirString = "WEB-INF/data";
-            }
-        }
-        File dataDir = new File(dataDirString);
-
-        if (! dataDir.isAbsolute()) {
-            if (sc != null && sc.getRealPath("/" + dataDirString) != null) {
-                log.debug(" "  + sc.getRealPath("/" + dataDirString));
-                dataDir = new File(sc.getRealPath("/" + dataDirString));
-            } else {
-                dataDir = new File(System.getProperty("user.dir"), dataDirString);
-            }
-        }
-
-        if (! dataDir.exists()) {
-            try {
-                if (dataDir.mkdirs()) {
-                    log.info("Created " + dataDir);
+            javax.servlet.ServletContext sc = MMBaseContext.getServletContext();
+            if (dataDirString == null || dataDirString.equals("")) {
+                if (sc == null) {
+                    dataDirString = "data";
+                } else {
+                    dataDirString = "WEB-INF/data";
                 }
-            } catch (SecurityException  se) {
-                log.warn(se);
             }
-        }
+            dataDir = new File(dataDirString);
 
-        if (! dataDir.isDirectory()) {
-            log.warn("Datadir " + dataDir + " is not a directory");
-        }
-        if (! dataDir.canRead()) {
-            log.warn("Datadir " + dataDir + " is not readable");
-        }
-        {
-            boolean  canWrite = false;
-            try {
-                canWrite = dataDir.canWrite();
-            } catch (SecurityException se) {
+            if (!dataDir.isAbsolute()) {
+                if (sc != null && sc.getRealPath("/" + dataDirString) != null) {
+                    log.debug(" " + sc.getRealPath("/" + dataDirString));
+                    dataDir = new File(sc.getRealPath("/" + dataDirString));
+                } else {
+                    dataDir = new File(System.getProperty("user.dir"), dataDirString);
+                }
             }
-            if (! canWrite) {
+
+            if (!dataDir.exists()) {
                 try {
-                    File proposal = sc != null ? (File) sc.getAttribute("javax.servlet.context.tempdir") : new File(System.getProperty("java.io.tmpdir"));
-                    if (proposal.canWrite()) {
-                        log.warn("Datadir " + dataDir + " is not writable. Falling back to " + proposal);
-                        dataDir = proposal;
-                    } else {
-                        log.warn("Datadir " + dataDir + " is not writable.");
+                    if (dataDir.mkdirs()) {
+                        log.info("Created " + dataDir);
                     }
                 } catch (SecurityException se) {
-                    log.warn(se.getMessage(), se);
+                    log.warn(se);
                 }
-                String explicit = getInitParameter("datadir");
-                if (explicit != null &&  explicit.length() > 0) {
-                    log.warn("Configured data-dir " + dataDir + " is not writeable");
-                }
+            }
 
+            if (!dataDir.isDirectory()) {
+                log.warn("Datadir " + dataDir + " is not a directory");
+            }
+            if (!dataDir.canRead()) {
+                log.warn("Datadir " + dataDir + " is not readable");
+            }
+            {
+                boolean canWrite = false;
+                try {
+                    canWrite = dataDir.canWrite();
+                } catch (SecurityException se) {
+                }
+                if (!canWrite) {
+                    try {
+                        File proposal = sc != null ? (File) sc.getAttribute("javax.servlet.context.tempdir") : new File(System.getProperty("java.io.tmpdir"));
+                        if (proposal.canWrite()) {
+                            log.warn("Datadir " + dataDir + " is not writable. Falling back to " + proposal);
+                            dataDir = proposal;
+                        } else {
+                            log.warn("Datadir " + dataDir + " is not writable.");
+                        }
+                    } catch (SecurityException se) {
+                        log.warn(se.getMessage(), se);
+                    }
+                    String explicit = getInitParameter("datadir");
+                    if (explicit != null && explicit.length() > 0) {
+                        log.warn("Configured data-dir " + dataDir + " is not writeable");
+                    }
+
+                }
             }
         }
         if (shownDataDir) {
