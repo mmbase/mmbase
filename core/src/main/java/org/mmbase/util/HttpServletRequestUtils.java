@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 public class HttpServletRequestUtils {
 
     public static void appendAbsolute(HttpServletRequest req, StringBuilder show) {
-        String scheme = getServerName(req);
+        String scheme = getScheme(req);
         show.append(scheme).append("://");
         appendHostWithPort(scheme, req, show);
     }
