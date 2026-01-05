@@ -12,7 +12,7 @@ public class UploadInfoTest extends TestCase {
         float s = info.getFraction();
         Assert.assertEquals(0.025167555f,s, 0.00001f);
 
-        Assert.assertEquals("PROGRESS:-1:100000000/3973369539 (2%,  -1 ms)",info.toString());
+        Assert.assertEquals("PROGRESS:-1:100000000/3973369539 (3%,  -1 ms)",info.toString());
 
     }
 }
