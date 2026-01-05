@@ -48,7 +48,7 @@
               type="text/css" />]]></param>
       </class>
     </head>
-    <xi:include href="http://www.mmbase.org/components/validation.head.xml" />
+    <xi:include href="https://www.mmbase.org/components/validation.head.xml" />
 
     <body jsp="change.jspx">
       <param name="node" />
@@ -69,7 +69,7 @@
               type="text/css" />]]></param>
       </class>
     </head>
-    <xi:include href="http://www.mmbase.org/components/validation.head.xml" />
+    <xi:include href="https://www.mmbase.org/components/validation.head.xml" />
     <body jsp="create.jspx">
       <param name="nodemanager" />
       <param name="pagesize" />
