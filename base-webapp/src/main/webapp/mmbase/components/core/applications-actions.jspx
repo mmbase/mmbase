@@ -1,6 +1,6 @@
 <mm:cloud rank="administrator"
           xmlns:jsp="http://java.sun.com/JSP/Page"
-          xmlns:mm="http://www.mmbase.org/mmbase-taglib-2.0" 
+          xmlns:mm="http://www.mmbase.org/mmbase-taglib-2.0"
           >
   <jsp:directive.page  import="org.mmbase.module.core.MMBase,org.mmbase.bridge.*,java.util.*" />
   <jsp:output omit-xml-declaration="true" />
@@ -11,9 +11,9 @@
   <div
     class="mm_c c_core b_applications-actions ${requestScope['org.mmbase.componentClassName']}"
     id="${requestScope['org.mmbase.componentId']}">
-  
+
     <h3>Applications results</h3>
-    
+
     <table summary="results" border="0" cellspacing="0" cellpadding="3">
       <caption>
         Results of your ${cmd} action on application <mm:write referid="application" />.
@@ -25,11 +25,11 @@
           <mm:compare referid="cmd" value="LOAD">
             <mm:nodefunction module="mmadmin" name="LOAD" referids="application">
               <mm:field name="RESULT" escape="p" />
-            </mm:nodefunction>      
+            </mm:nodefunction>
             <mm:import externid="app" jspvar="app" />
     <jsp:scriptlet>
        // String cmd = request.getParameter("cmd");
-       Module mmAdmin = ContextProvider.getDefaultCloudContext().getModule("mmadmin");
+       org.mmbase.bridge.Module mmAdmin = ContextProvider.getDefaultCloudContext().getModule("mmadmin");
        String msg="";
        if (cmd != null) {
         try {
@@ -46,25 +46,25 @@
           } catch (Throwable e ) {
           msg="&lt;p&gt; Error: " + e + "&lt;/p&gt;";
           }
-    
+
        }
     </jsp:scriptlet>
           </mm:compare>
           <mm:compare referid="cmd" value="SAVE">
             <mm:nodefunction module="mmadmin" name="SAVE" referids="application,path">
               <mm:field name="RESULT" escape="p" />
-            </mm:nodefunction>      
+            </mm:nodefunction>
           </mm:compare>
         </td>
       </tr>
       </table>
-      
+
       <p>
         <mm:link page="applications">
           <a href="${_}"><mm:link page="/mmbase/style/images/back.png"><img src="${_}" alt="back" width="21" height="20" /></mm:link></a>
           <a href="${_}">Return to Applications Administration</a>
         </mm:link>
       </p>
-       
+
   </div>
 </mm:cloud>
