@@ -17,7 +17,7 @@
     <title xml:lang="nl">MMExamples</title>
     <description xml:lang="en">
       The MMExamples are several examples of components, applications and other
-      functionaliteits which are build with MMBase. In the list below you will find
+      functionalities which are build with MMBase. In the list below you will find
       several examples that are (yet) not rewritten as components. These can be found
       in the /mmexamples directory. It is adviced to remove these from a production
       environment.
