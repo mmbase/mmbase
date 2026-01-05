@@ -9,6 +9,7 @@ response.setDateHeader("Date",  now);
 %><%@ page language="java" contentType="text/html; charset=utf-8"
 %><%@ page import="java.util.*"
 %><%@ page import="org.mmbase.bridge.*"
+%><%@ page import="org.mmbase.bridge.Module"
 %><%@ taglib uri="http://www.mmbase.org/mmbase-taglib-1.0"  prefix="mm"
 %><%!
   String translate(Module mmlanguage, String value) {
