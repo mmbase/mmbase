@@ -48,14 +48,20 @@
   </New>
 
 
+  <New  class="org.eclipse.jetty.plus.jndi.EnvEntry">
+    <Arg type="java.lang.String">mmbase-builders/mmservers/ProbeInterval</Arg>
+    <Arg type="java.lang.Integer">-1</Arg>
+    <Arg type="boolean">true</Arg>
+  </New>
 
 
-   <!--
-       Put all mmbase date files there too.
-   -->
+
+  <!--
+      Put all mmbase date files there too.
+  -->
   <New  class="org.eclipse.jetty.plus.jndi.EnvEntry">
     <Arg type="java.lang.String">mmbase/mmbaseroot/datadir</Arg>
-    <Arg type="java.lang.String">data</Arg>
+    <Arg type="java.lang.String"><SystemProperty name="basedir" />/data</Arg>
     <Arg type="boolean">true</Arg>
   </New>
 
