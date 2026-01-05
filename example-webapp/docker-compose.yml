@@ -1,7 +1,7 @@
 ---
 name: MMBase Example
 services:
-  web:
+  mmbase_example_app:
     hostname: mmbase1
     image: ghcr.io/mmbase/example-webapp:latest
     pull_policy: always
