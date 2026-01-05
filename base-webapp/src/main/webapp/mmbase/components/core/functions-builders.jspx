@@ -15,7 +15,7 @@
         <ul>
           <c:forEach items="${nodeManager.functions}" var="fun">
             <li>
-              ${fun.class}
+              ${fun.getClass()}:
               <mm:escape>${fun}</mm:escape>
               <p><mm:write value="${fun.description}" /></p>
             </li>
