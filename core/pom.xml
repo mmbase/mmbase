@@ -218,19 +218,32 @@ See http://www.MMBase.org/license
       <scope>test</scope>
     </dependency>-->
 
-    <!--
     <dependency>
       <groupId>xalan</groupId>
       <artifactId>xalan</artifactId>
       <version>2.7.3</version>
     </dependency>
+    <dependency>
+      <groupId>xalan</groupId>
+      <artifactId>serializer</artifactId>
+      <version>2.7.3</version>
+    </dependency>
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <version>2.12.2</version>
+    </dependency>
+
+    <!-- Saxon Home Editon doesn't support extension function as xalan does
+    It does not have the bug with unicode in 'microblog', but will break the editwizards.
     -->
+    <!--
     <dependency>
       <groupId>net.sf.saxon</groupId>
       <artifactId>Saxon-HE</artifactId>
       <version>12.9</version>
     </dependency>
-
+-->
   </dependencies>
 
   <reporting>
