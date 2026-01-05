@@ -12,18 +12,21 @@ package org.mmbase.storage.implementation.database;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
-
-import org.mmbase.module.database.MultiConnection;
-
 import org.mmbase.bridge.Field;
 import org.mmbase.bridge.NodeManager;
-import org.mmbase.datatypes.*;
 import org.mmbase.cache.Cache;
 import org.mmbase.cache.NodeCache;
 import org.mmbase.core.CoreField;
 import org.mmbase.core.util.Fields;
+import org.mmbase.datatypes.DataType;
+import org.mmbase.datatypes.DecimalDataType;
+import org.mmbase.datatypes.LengthDataType;
+import org.mmbase.datatypes.StringDataType;
 import org.mmbase.module.core.*;
-import org.mmbase.storage.*;
+import org.mmbase.module.database.MultiConnection;
+import org.mmbase.storage.StorageException;
+import org.mmbase.storage.StorageManager;
+import org.mmbase.storage.StorageNotFoundException;
 import org.mmbase.storage.search.CompositeConstraint;
 import org.mmbase.storage.search.SearchQueryException;
 import org.mmbase.storage.search.Step;
@@ -31,13 +34,15 @@ import org.mmbase.storage.search.StepField;
 import org.mmbase.storage.search.implementation.BasicCompositeConstraint;
 import org.mmbase.storage.search.implementation.BasicFieldValueConstraint;
 import org.mmbase.storage.search.implementation.NodeSearchQuery;
-import org.mmbase.storage.util.*;
+import org.mmbase.storage.util.Index;
+import org.mmbase.storage.util.Scheme;
+import org.mmbase.storage.util.TypeMapping;
 import org.mmbase.util.Casting;
 import org.mmbase.util.IOUtil;
 import org.mmbase.util.SerializableInputStream;
+import org.mmbase.util.logging.Level;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
-import org.mmbase.util.logging.Level;
 import org.mmbase.util.transformers.CharTransformer;
 
 /**
@@ -351,7 +356,17 @@ public class DatabaseStorageManager implements StorageManager<DatabaseStorageMan
      */
     protected void commitChange(MMObjectNode node, String change) {
         if (inTransaction && factory.supportsTransactions()) {
-            changes.put(node, change);
+            String existingChange = changes.get(node);
+            if (existingChange ==  null) {
+                changes.put(node, change);
+            } else {
+                for (char c : change.toCharArray()) {
+                    if (existingChange.indexOf(c) == -1) {
+                        existingChange += c;
+                    }
+                }
+                changes.put(node, existingChange);
+            }
         } else {
             try {
                 factory.getChangeManager().commit(node, change);

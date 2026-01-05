@@ -31,9 +31,9 @@ public class TransactionManager {
 
 
     /**
-     * NO:   The node does not exists yet, but will be created on commit
-     * YES:  The node already existed befor the transaction started.
-     * NOLONGER: The node alreayd existed, but will be deleted by the transaction. Or, it was created and deleted in the transaction.
+     * NO:   The node does not exist yet, but will be created on commit
+     * YES:  The node already existed before the transaction started.
+     * NOLONGER: The node already existed, but will be deleted by the transaction. Or, it was created and deleted in the transaction.
      * UNDEFINED: Just a value used to indicate that the corresponding _exists field is not filled
      */
     public enum Exists {
@@ -374,7 +374,7 @@ public class TransactionManager {
                 if (node.getBuilder() instanceof InsRel) {
                     NodeState state = stati.get(node.getNumber());
                     if (state.changed) {
-                            NodeState sstate = stati.get(node.getIntValue("snumber"));
+                        NodeState sstate = stati.get(node.getIntValue("snumber"));
                         if (sstate != null) sstate.changed = true;
                         NodeState dstate = stati.get(node.getIntValue("dnumber"));
                         if (dstate != null) dstate.changed = true;
