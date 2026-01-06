@@ -8,7 +8,7 @@ See http://www.MMBase.org/license
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 
   <!--
       This pom is responsible for building the mmbase jar, and perhaps the maven site.
@@ -219,9 +219,9 @@ See http://www.MMBase.org/license
     </dependency>-->
 
     <dependency>
-      <groupId>xalan</groupId>
+      <groupId>org.mmbase.xalan</groupId>
       <artifactId>xalan</artifactId>
-      <version>2.7.3</version>
+      <version>2.7.3-1</version>
     </dependency>
     <dependency>
       <groupId>xalan</groupId>
