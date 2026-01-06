@@ -1,4 +1,4 @@
-<mm:edit type="example">
+<mm:edit type="basic" >
   <%--
       optional parameters
 
