@@ -527,7 +527,7 @@
          mimetype="text/html">
     <body>
       <class name="org.mmbase.framework.ConnectionRenderer">
-        <param name="url">https://rss.app/feeds/NL0siqnunwlmyCpP.xml</param>
+        <param name="url">https://www.mmbase.org/twitter/rss.xml</param> <!-- just store the lastest version of that. Twitter/X does not provide an RSS feed any more -->
         <param name="xslt">xslt/rss.xslt</param>
       </class>
     </body>
