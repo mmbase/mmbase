@@ -16,15 +16,15 @@
   <mm:import externid="post" />
 
   <mm:present referid="post">
-    <p>a: ${a.class}: ${a}: ${a.class.name ne 'java.lang.String' ? 'ok' : 'NOT OK'}</p>
+    <p>a: ${a.getClass()}: ${a}: ${a.getClass().name ne 'java.lang.String' ? 'ok' : 'NOT OK'}</p>
   </mm:present>
 
   <mm:notpresent referid="post" >
-    <p>a: ${a.class}: ${a}: ${a.class.name eq 'java.lang.String' ? 'ok' : 'NOT OK'}</p>
+    <p>a: ${a.getClass()}: ${a}: ${a.getClass().name eq 'java.lang.String' ? 'ok' : 'NOT OK'}</p>
   </mm:notpresent>
 
-  <p>b: ${b.class}: ${b}: ${b.class.name eq 'java.lang.Integer' ? 'ok' : 'NOT OK'}</p>
-  <p>c: ${c.class}: ${c}: ${c.class.name eq 'java.lang.String' ? 'ok' : 'NOT OK'}: value: ${c eq 'ii' ? 'ok' : 'NOT OK'}</p>
+  <p>b: ${b.getClass()}: ${b}: ${b.getClass().name eq 'java.lang.Integer' ? 'ok' : 'NOT OK'}</p>
+  <p>c: ${c.getClass()}: ${c}: ${c.getClass().name eq 'java.lang.String' ? 'ok' : 'NOT OK'}: value: ${c eq 'ii' ? 'ok' : 'NOT OK'}</p>
 
 
 
