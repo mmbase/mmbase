@@ -222,6 +222,12 @@ See http://www.MMBase.org/license
       <groupId>org.mmbase.xalan</groupId>
       <artifactId>xalan</artifactId>
       <version>2.7.3-1</version>
+      <exclusions>
+        <exclusion>
+          <groupId>xalan</groupId>
+          <artifactId>serializer</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.mmbase.xalan</groupId>
