@@ -42,6 +42,10 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}-${{ github.ref }}
           restore-keys: |
             ${{ runner.os }}-m2-
+      - name: Show dependencies
+        run: |
+          cd core
+          mvn dependency:tree
       - name: Build with Maven
         run: ./build-all.sh
         env:
