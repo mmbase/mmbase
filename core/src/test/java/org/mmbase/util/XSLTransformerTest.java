@@ -26,6 +26,6 @@ public class XSLTransformerTest extends TestCase {
             result,
             null
         );
-        Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<root>text\uD83D\uDC4D</root>\n", sw.toString());
+        Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root>text\uD83D\uDC4D</root>\n", sw.toString());
     }
 }
