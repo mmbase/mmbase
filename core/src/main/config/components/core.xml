@@ -504,7 +504,7 @@
          mimetype="text/html">
     <body>
       <class name="org.mmbase.framework.ConnectionRenderer">
-        <param name="url">https://www.mmbase.org/rss</param>
+        <param name="url">https://github.com/orgs/mmbase/discussions.atom</param>
         <param name="xslt">xslt/rss.xslt</param>
       </class>
     </body>
@@ -552,7 +552,7 @@
          mimetype="text/html">
     <body>
       <class name="org.mmbase.framework.ConnectionRenderer">
-        <param name="url">https://openrss.org/github.com/mmbase/mmbase/releases</param>
+        <param name="url">https://github.com/mmbase/mmbase/releases.atom</param>
         <param name="xslt">xslt/rss.xslt</param>
         <param name="timeout">50000</param>
       </class>
