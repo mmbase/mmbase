@@ -195,10 +195,10 @@ function doSearch(el, cmd, sessionkey) {
             while (commaloc > -1) {
                var tmpfield = fieldname.substring(0, commaloc);
                fieldname = fieldname.substring(commaloc + 1, fieldname.length);
-               constraints += "LOWER("+tmpfield+") LIKE '%"+searchterm+"%' OR ";
+               constraints += "LOWER(["+tmpfield+"]) LIKE '%"+searchterm+"%' OR ";
                commaloc = fieldname.indexOf(',');
             }
-            constraints += "LOWER("+fieldname+") LIKE '%"+searchterm+"%'";
+            constraints += "LOWER(["+fieldname+"]) LIKE '%"+searchterm+"%'";
         } else {
             if (searchterm=="") searchterm="0";
             if (searchtype=="greaterthan") {
