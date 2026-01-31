@@ -28,7 +28,7 @@ jobs:
     container:
      image: ghcr.io/mmbase/build:9-jdk8
     env:
-      MAVEN_ARGS: '--no-transfer-progress'
+      MAVEN_ARGS: '--no-transfer-progress --color always'
     steps:
       - uses: actions/checkout@v6
       - name: Import GPG key
