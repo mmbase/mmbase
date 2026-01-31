@@ -23,7 +23,7 @@ else
   PROFILE_ARG="${PROFILES}"
 fi
 
-export MAVEN_ARGS="--no-transfer-progress -P${PROFILE_ARG}"
+export MAVEN_ARGS="--no-transfer-progress --color always -P${PROFILE_ARG}"
 echo "MAVEN_ARGS=${MAVEN_ARGS}"
 
 if [ $BATCH_MODE = 'true' ] ; then
