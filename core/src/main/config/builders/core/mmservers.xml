@@ -27,7 +27,7 @@
 
   <properties>
     <!--
-        Interval (in seconds) beteen updates in mmservers
+        Interval (in seconds) between updates in mmservers
         table. Defaults to 60 seconds.
         You can safely set it higher if you have only one server (and spare
         some SQL-queries)    -->
