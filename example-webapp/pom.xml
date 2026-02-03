@@ -202,7 +202,28 @@
       <version>${mmbase.version}</version>
       <type>war</type>
     </dependency>
+    <dependency>
+      <groupId>org.mmbase</groupId>
+      <artifactId>mmbase-lucene</artifactId>
+      <version>${mmbase.version}</version>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.mmbase</groupId>
+      <artifactId>mmbase-poll</artifactId>
+      <version>${mmbase.version}</version>
+      <type>war</type>
+    </dependency>
 
+    <!-- for some reaseon doesn't work in jetty?
+    <dependency>
+      <groupId>org.mmbase</groupId>
+      <artifactId>mmbase-calendar</artifactId>
+      <version>${mmbase.version}</version>
+      <type>war</type>
+    </dependency>
+
+-->
     <dependency>
       <groupId>org.mmbase</groupId>
       <artifactId>mmbase-statistics</artifactId>
