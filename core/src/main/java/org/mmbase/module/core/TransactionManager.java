@@ -387,6 +387,7 @@ public class TransactionManager {
             MMBase.getMMBase().getStorageManagerFactory().beginTransaction();
             boolean okay = false;
             try {
+                MMObjectNode.CLEAR_CHANGES.set(Boolean.FALSE);
                 // First commit all the NODES
                 for (MMObjectNode node : nodes) {
                     if (!(node.getBuilder() instanceof InsRel)) {
@@ -460,8 +461,12 @@ public class TransactionManager {
                 okay = false;
                 throw re;
             } finally {
-                if (! okay ) {
+                if (!okay) {
                     MMBase.getMMBase().getStorageManagerFactory().rollback();
+                }
+                MMObjectNode.CLEAR_CHANGES.remove();
+                for (MMObjectNode node : nodes) {
+                    node.clearChanged();
                 }
             }
         }

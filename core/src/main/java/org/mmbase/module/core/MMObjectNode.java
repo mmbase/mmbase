@@ -55,6 +55,13 @@ import org.w3c.dom.Document;
 
 public class MMObjectNode implements org.mmbase.util.SizeMeasurable, java.io.Serializable, org.mmbase.util.PublicCloneable<MMObjectNode> { // Comparable<MMObjectNode>  {
 
+    static final ThreadLocal<Boolean> CLEAR_CHANGES = new ThreadLocal() {
+        @Override
+        protected Boolean initialValue() {
+            return Boolean.TRUE;
+        }
+    };
+
     private static final Logger log = Logging.getLoggerInstance(MMObjectNode.class);
 
 
@@ -358,6 +365,7 @@ public class MMObjectNode implements org.mmbase.util.SizeMeasurable, java.io.Ser
             }
         }
         clearChanged();
+
         return success;
     }
 
@@ -1351,15 +1359,20 @@ public class MMObjectNode implements org.mmbase.util.SizeMeasurable, java.io.Ser
      * @return always <code>true</code>
      */
     public boolean clearChanged() {
-        oldBuilder = null;
-        newContext = null;
-        if (changed != null) {
-            changed.clear();
+        if (CLEAR_CHANGES.get()) {
+            oldBuilder = null;
+            newContext = null;
+            if (changed != null) {
+                changed.clear();
+            }
+            if (oldValues != null) {
+                oldValues.clear();
+            }
+            return true;
+        } else {
+            return false;
         }
-        if (oldValues != null) {
-            oldValues.clear();
-        }
-        return true;
+
     }
 
     /**

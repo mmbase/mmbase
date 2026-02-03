@@ -61,7 +61,7 @@ public final class ChangeManager {
         if(builder instanceof InsRel) {
             RelationEvent relEvent = NodeEventHelper.createRelationEventInstance(node, NodeEvent.oldTypeToNewType(change), null);
 
-            //the relation event broker will make shure that listeners
+            //the relation event broker will make sure that listeners
             //for node-relation changes to a specific builder, will be
             //notified if this builder is either source or destination type
             //in the relation event
