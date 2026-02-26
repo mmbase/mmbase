@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-"http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd">
+"https://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd">
 <article class="specification">
   <articleinfo>
     <title>The Richtext Functional Reference</title>
@@ -95,7 +95,7 @@
       path in this document assume that the webapp which you are using has the
       name richtext.
     </para>
-    
+
     <note>
       <para>
         Richtext depends on the latest XML parsers. So please read the
@@ -221,7 +221,7 @@
     </para>
 
     <programlisting>&lt;functionlist&gt;
-  &lt;function 
+  &lt;function
     name="url"
     key="{REQUEST.getContextPath}/{INITPARAM.npbsales.home}?article={NODE.number}&amp;amp;template=article"
     &gt;
@@ -476,8 +476,8 @@
       <para>The include article.div.jspx uses /util/body.jspx to show the
       richtext field.The body.jspx looks like:</para>
 
-      <programlisting>&lt;mm:formatter 
-  xmlns:mm="http://www.mmbase.org/mmbase-taglib-2.0" 
+      <programlisting>&lt;mm:formatter
+  xmlns:mm="http://www.mmbase.org/mmbase-taglib-2.0"
   xslt="xslt/2xhtml.xslt" escape="none"&gt;
    &lt;mm:listrelationscontainer role="idrel" searchdir="destination"&gt;
      &lt;mm:listrelations&gt;
@@ -583,7 +583,7 @@
         Still, it can be desirable to have your own customized XSL's. A good starting point is to
         extends "2xhtml.xslt", and only override behaviour which must be different. E.g. often
         people want 'external' links to pop up in a new browser windows. That would work with an XSL
-        like this:        
+        like this:
       </para>
     </section>
   </section>
