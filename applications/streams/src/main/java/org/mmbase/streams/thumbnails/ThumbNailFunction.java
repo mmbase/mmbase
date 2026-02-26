@@ -23,14 +23,8 @@ package org.mmbase.streams.thumbnails;
 
 import java.io.File;
 import java.util.List;
-
-import org.mmbase.bridge.Cloud;
-import org.mmbase.bridge.Node;
-import org.mmbase.bridge.NodeList;
-import org.mmbase.bridge.NodeManager;
-import org.mmbase.bridge.NodeQuery;
+import org.mmbase.bridge.*;
 import org.mmbase.bridge.util.Queries;
-
 import org.mmbase.streams.createcaches.Job;
 import org.mmbase.streams.createcaches.Processor;
 import org.mmbase.streams.createcaches.Stage;
@@ -127,15 +121,20 @@ public class ThumbNailFunction extends NodeFunction<Node> {
 
         Cloud myCloud = node.getCloud().getCloudContext().getCloud("mmbase", "class", null);
         NodeManager thumbs = myCloud.getNodeManager("thumbnails");
-        Node thumb;
-        synchronized(ThumbNailFunction.class) {
-            NodeQuery q = thumbs.createQuery();
-            Queries.addConstraint(q, q.createConstraint(q.getStepField(thumbs.getField("id")), sourceNode));
-            Queries.addConstraint(q, q.createConstraint(q.getStepField(thumbs.getField("time")), offset));
-            List<Node> thumbNodes = thumbs.getList(q);
-            if (thumbNodes.isEmpty()) {
+        Node thumb = findNode(thumbs, sourceNode, offset);
+        if (thumb != null) {
+            return thumb;
+        } else {
+            LOG.service("No thumbnail found for " + sourceNode + " at offset " + offset + ", creating one.");
+            synchronized (ThumbNailFunction.class) {
+                thumb = findNode(thumbs, sourceNode, offset);
+                if (thumb != null) {
+                    // created by other thread in the mean time.
+                    LOG.service("Thumbnail was created by other thread, returning that one.");
+                    return thumb;
+                }
                 File input = (File) sourceNode.getFunctionValue("file", null).get();
-                if (input == null || ! input.exists() || ! input.canRead() || input.length() == 0) {
+                if (input == null || !input.exists() || !input.canRead() || input.length() == 0) {
                     LOG.debug("Source seems broken, no point in creating a thumbnail");
                     return getDefault(node.getCloud());
                 }
@@ -143,14 +142,24 @@ public class ThumbNailFunction extends NodeFunction<Node> {
                 thumb.setValue("id", sourceNode);
                 thumb.setValue("time", offset);
                 thumb.setValue("height", sourceNode.getIntValue("height"));
-                thumb.setValue("width",  sourceNode.getIntValue("width"));
+                thumb.setValue("width", sourceNode.getIntValue("width"));
                 thumb.commit();
                 LOG.service("Created thumbnail " + thumb.getNumber());
-            } else {
-                thumb = thumbNodes.get(0);
+                return thumb;
             }
         }
-        return thumb;
+    }
+
+    private static Node findNode(NodeManager thumbs, Node sourceNode, long offset) {
+        NodeQuery q = thumbs.createQuery();
+        Queries.addConstraint(q, q.createConstraint(q.getStepField(thumbs.getField("id")), sourceNode));
+        Queries.addConstraint(q, q.createConstraint(q.getStepField(thumbs.getField("time")), offset));
+        List<Node> thumbNodes = thumbs.getList(q);
+        if (thumbNodes.isEmpty()) {
+            return null;
+        } else {
+            return thumbNodes.get(0);
+        }
     }
 
     @Override
