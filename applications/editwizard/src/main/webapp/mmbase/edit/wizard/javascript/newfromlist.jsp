@@ -2,7 +2,7 @@
 /**
  * list.jsp
  * Routines for NewFromList
- * 
+ *
  * @since    MMBase-1.9
  * @version  $Id$
  */
@@ -28,7 +28,7 @@ function doMySearch(el) {
     var relationRole = "<%=request.getParameter("relationRole")%>";
     var createDir = "<%=request.getParameter("relationCreateDir")%>";
     var objectType = "<%=request.getParameter("objecttype")%>";
-    
+
     var relationStartnodes = "<%= request.getParameter("relationStartnodes") %>";
     var relationNodepath = "<%= request.getParameter("relationNodepath") %>";
 
@@ -46,7 +46,7 @@ function doMySearch(el) {
         }
 
         if (searchtype=="like") {
-            constraints += "LOWER("+fieldname+") LIKE '%25"+searchterm+"%25'";
+            constraints += "LOWER(["+fieldname+"]) LIKE '%25"+searchterm+"%25'";
         } else {
             if (searchterm=="") searchterm="0";
             constraints += fieldname+" = '"+searchterm +"'";
@@ -70,7 +70,7 @@ function doMySearch(el) {
     url += setParam("relationCreateDir", createDir);
     url += setParam("constraints", constraints);
     url += setParam("age", searchage+"");
-   
+
     showPopup(url);
 }
 
