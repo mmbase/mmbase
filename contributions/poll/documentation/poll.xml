@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd">
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "https://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd">
 <article class="specification">
 
   <articleinfo>
@@ -43,7 +43,7 @@
     </para>
     <para>
       Component blocks are only supported in MMBase versions beyond 1.8.  The rest of the
-      functionality also works with MMBase 1.8. 
+      functionality also works with MMBase 1.8.
     </para>
     <para>
       An editwizard task definition is available in the directory 'tasks'.
