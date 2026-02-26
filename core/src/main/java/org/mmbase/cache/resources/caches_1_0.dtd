@@ -1,15 +1,15 @@
 <!-- Author: Michiel Meeuwissen -->
 <!-- Author: Ernst Bunders -->
-
-<!ELEMENT caches (releaseStrategies?, cache*) >
-<!ELEMENT cache (status?, size?, maxEntrySize?,releaseStrategies?, implementation? ) >
-<!ATTLIST cache  name  CDATA #REQUIRED >
-<!ELEMENT implementation (class, param*) >
-<!ELEMENT class (#PCDATA) >
-<!ELEMENT param (#PCDATA) >
-<!ATTLIST param name CDATA #REQUIRED >
-<!ELEMENT status (#PCDATA) >
-<!ELEMENT size (#PCDATA) >
-<!ELEMENT maxEntrySize (#PCDATA) >
-<!ELEMENT releaseStrategies (strategy+) >
-<!ELEMENT strategy (#PCDATA)>
+	<!ELEMENT caches (releaseStrategies?, defaultImplementation?, cache*) >
+	<!ELEMENT cache (status?, size?, maxEntrySize?,releaseStrategies?, implementation? ) >
+	<!ATTLIST cache  name  CDATA #REQUIRED >
+	<!ELEMENT implementation (class, param*) >
+	<!ELEMENT defaultImplementation (class, param*) >
+	<!ELEMENT class (#PCDATA) >
+	<!ELEMENT param (#PCDATA) >
+	<!ATTLIST param name CDATA #REQUIRED >
+	<!ELEMENT status (#PCDATA) >
+	<!ELEMENT size (#PCDATA) >
+	<!ELEMENT maxEntrySize (#PCDATA) >
+	<!ELEMENT releaseStrategies (strategy+) >
+	<!ELEMENT strategy (#PCDATA)>

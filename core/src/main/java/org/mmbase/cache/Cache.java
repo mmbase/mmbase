@@ -53,31 +53,23 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
 
     public Cache(int size) {
         // See: http://www.mmbase.org/jira/browse/MMB-1486
-        implementation = new LRUCache<K, V>(size);
+        implementation = CacheManager.getInstance().createDefaultImplementation(size);
         lock           = implementation.getLock();
         //implementation = new LRUHashtable<K, V>(size);
 
         log.service("Creating cache " + getName() + ": " + getDescription());
     }
 
-    @SuppressWarnings("unchecked")
-    void setImplementation(String clazz, Map<String,String> configValues) {
+    void setImplementation(int size, String clazz, Map<String,String> configValues) {
         synchronized(lock) {
             clear();
             try {
-
-                Class<?> clas = Class.forName(clazz);
-                if (implementation == null || (! clas.equals(implementation.getClass()))) {
-                    log.info("Setting implementation of " + this + " to " + clas);
-                    implementation = (CacheImplementationInterface<K,V>) clas.newInstance();
-                    implementation.config(configValues);
+                if (implementation == null || (! clazz.equals(implementation.getClass().getName()))) {
+                    log.info("Setting implementation of " + this + " to " + clazz);
+                    implementation = CacheManager.getInstance().createImplementation(size, clazz, configValues);
                     lock = implementation.getLock();
                 }
-            } catch (ClassNotFoundException cnfe) {
-                log.error("For cache " + this + " " + cnfe.getClass().getName() + ": " + cnfe.getMessage());
-            } catch (InstantiationException ie) {
-                log.error("For cache " + this + " " + ie.getClass().getName() + ": " + ie.getMessage());
-            } catch (IllegalAccessException iae) {
+            } catch (RuntimeException iae) {
                 log.error("For cache " + this + " " + iae.getClass().getName() + ": " + iae.getMessage());
             }
         }

@@ -9,18 +9,26 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.cache;
 
+import java.lang.management.ManagementFactory;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.regex.*;
-
-import org.mmbase.util.*;
+import java.util.concurrent.*;
+import java.util.function.IntFunction;
+import java.util.regex.Pattern;
+import javax.management.JMException;
+import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
+import javax.management.ObjectName;
+import org.mmbase.cache.implementation.LRUCache;
+import org.mmbase.util.ResourceLoader;
+import org.mmbase.util.ResourceWatcher;
+import org.mmbase.util.SizeOf;
+import org.mmbase.util.ThreadPools;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 import org.mmbase.util.xml.DocumentReader;
 import org.w3c.dom.Element;
-
-import java.util.concurrent.*;
-import java.lang.management.*;
-import javax.management.*;
 
 
 /**
@@ -45,6 +53,8 @@ public class CacheManager implements CacheManagerMBean {
 
     private static CacheManager instance = null;
 
+    @SuppressWarnings("rawtypes")
+    private static IntFunction<CacheImplementationInterface> createCache = LRUCache::new;
 
     private CacheManager() {
         // singleton
@@ -261,6 +271,19 @@ public class CacheManager implements CacheManagerMBean {
         } else {
             if (log.isDebugEnabled()) log.debug("Configuring cache " + only + " with file " + xmlReader.getSystemId());
         }
+        final Element defaultImpl = xmlReader.getElementByPath("caches.defaultImplementation");
+        if (defaultImpl != null) {
+            final String clazz = DocumentReader.getElementValue(DocumentReader.getElementByPath(defaultImpl, "defaultImplementation.class"));
+            final Map<String,String> configValues = new HashMap<>();
+            for (Element attrNode: DocumentReader.getChildElements(defaultImpl, "param")) {
+                String paramName = xmlReader.getElementAttributeValue(attrNode, "name");
+                String paramValue = DocumentReader.getElementValue(attrNode);
+                configValues.put(paramName, paramValue);
+            }
+            log.info("Default cache implementation: " + clazz + " with config " + configValues);
+            createCache = size -> createImplementation(size, clazz, configValues);
+        }
+
 
         for (Element cacheElement: xmlReader.getChildElements("caches", "cache")) {
             String cacheName =  cacheElement.getAttribute("name");
@@ -273,21 +296,21 @@ public class CacheManager implements CacheManagerMBean {
             if (cache == null) {
                 log.service("No cache " + cacheName + " is present (perhaps not used yet?)");
             } else {
-                String clazz = xmlReader.getElementValue(xmlReader.getElementByPath(cacheElement, "cache.implementation.class"));
+                String clazz = DocumentReader.getElementValue(DocumentReader.getElementByPath(cacheElement, "cache.implementation.class"));
                 if(!"".equals(clazz)) {
-                    Element cacheImpl = xmlReader.getElementByPath(cacheElement, "cache.implementation");
+                    Element cacheImpl = DocumentReader.getElementByPath(cacheElement, "cache.implementation");
                     Map<String,String> configValues = new HashMap<String,String>();
-                    for (Element attrNode: xmlReader.getChildElements(cacheImpl, "param")) {
+                    for (Element attrNode: DocumentReader.getChildElements(cacheImpl, "param")) {
                         String paramName = xmlReader.getElementAttributeValue(attrNode, "name");
-                        String paramValue = xmlReader.getElementValue(attrNode);
+                        String paramValue = DocumentReader.getElementValue(attrNode);
                         configValues.put(paramName, paramValue);
                     }
-                    cache.setImplementation(clazz, configValues);
+                    cache.setImplementation(cache.getMaxSize(), clazz, configValues);
                 }
-                String status = xmlReader.getElementValue(xmlReader.getElementByPath(cacheElement, "cache.status"));
+                String status = DocumentReader.getElementValue(DocumentReader.getElementByPath(cacheElement, "cache.status"));
                 cache.setActive(status.equalsIgnoreCase("active"));
                 try {
-                    Integer size = Integer.valueOf(xmlReader.getElementValue(xmlReader.getElementByPath(cacheElement, "cache.size")));
+                    Integer size = Integer.valueOf(DocumentReader.getElementValue(DocumentReader.getElementByPath(cacheElement, "cache.size")));
                     cache.setMaxSize(size.intValue());
                     log.service("Setting " + cacheName + " " + status + " with size " + size);
                 } catch (NumberFormatException nfe) {
@@ -295,7 +318,7 @@ public class CacheManager implements CacheManagerMBean {
                 } catch (Throwable t) {
                     log.error(" " + cacheName + " maxsize " + t.getMessage());
                 }
-                String maxSize = xmlReader.getElementValue(xmlReader.getElementByPath(cacheElement, "cache.maxEntrySize"));
+                String maxSize = DocumentReader.getElementValue(DocumentReader.getElementByPath(cacheElement, "cache.maxEntrySize"));
                 if (!"".equals(maxSize)) {
                     try {
                         cache.maxEntrySize = Integer.parseInt(maxSize);
@@ -499,6 +522,33 @@ public class CacheManager implements CacheManagerMBean {
     public String readConfiguration() {
         configWatcher.onChange("caches.xml");
         return "Read " + ResourceLoader.getConfigurationRoot().getResource("caches.xml");
+    }
+
+    @SuppressWarnings("unchecked")
+    public <K, V> CacheImplementationInterface<K, V> createDefaultImplementation(int size) {
+        return( CacheImplementationInterface<K, V>) createCache.apply(size);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <K, V> CacheImplementationInterface<K, V>  createImplementation(int size, String clazz, Map<String,String> configValues) {
+        try {
+            Class<?> clas = Class.forName(clazz);
+            CacheImplementationInterface<K, V> implementation;
+            try {
+                Constructor<?> cons = clas.getDeclaredConstructor(int.class);
+                implementation = (CacheImplementationInterface<K, V>) cons.newInstance(size);
+            } catch (NoSuchMethodException nsme) {
+                log.debug("No constructor with int argument for " + clazz + ", trying default constructor");
+                implementation = (CacheImplementationInterface<K,V>) clas.newInstance();
+            }
+            implementation.config(configValues);
+            return implementation;
+
+
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException cnfe) {
+            log.error("For cache " +  cnfe.getClass().getName() + ": " + cnfe.getMessage());
+            throw new RuntimeException(clazz + " " + cnfe);
+        }
     }
 
 

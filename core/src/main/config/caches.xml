@@ -16,7 +16,7 @@
 
   <!--
   	Here you can add release strategies to all QueryResultCache specializations.
-  	You can allso add them to individual (multilevel) caches.
+  	You can also add them to individual (multilevel) caches.
     For more information about the release strategies see the documentation
   -->
   <releaseStrategies>
@@ -29,6 +29,10 @@
     -->
   </releaseStrategies>
 
+  <defaultImplementation>
+    <class>org.mmbase.cache.implementation.LRUCache</class>
+    <!--class>org.mmbase.cache.implementation.NonBlockingLRUCache</class--->
+  </defaultImplementation>
 
   <!-- ================================================================================
   Node caches
