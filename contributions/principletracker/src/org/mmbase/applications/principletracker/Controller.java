@@ -232,7 +232,7 @@ public class Controller {
 	org.mmbase.bridge.Node node=cloud.getNode(setid);
 	if (node!=null) {
 	    String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-	    body += "<!DOCTYPE article PUBLIC \"-//OASIS//DTS DocBook XML V4.1.2//EN\" \"http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd\">\n";
+	    body += "<!DOCTYPE article PUBLIC \"-//OASIS//DTS DocBook XML V4.1.2//EN\" \"https://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd\">\n";
 	    body += "<article>\n";
 	    body += "  <articleinfo>\n";
 	    body += "    <title>MMBase princinples (demo version)</title>\n";
