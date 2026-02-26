@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" []>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "https://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" []>
 <article>
 	<articleinfo>
 		<title>MMBase Editwizard Front end</title>
@@ -84,11 +84,11 @@
 	<section id="example1">
 		<title>Example 1: logo in the header</title>
 		<para>This example shows how you can add a logo to the header of the wizards. The first thing you have to do is create a file base.xsl in your referrer directory. The new base.xsl will import the one from the editwizard home directory. The ew: prefix in the import points to the editwizard home directory. The new xsl overrides the headcontent template from the editwizard base.xsl to add an extra column for the logo.</para>
-		
+
 		<programlisting format="linespecific">
 		<![CDATA[
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
+<xsl:stylesheet
   version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:node="org.mmbase.bridge.util.xml.NodeFunction"
@@ -121,7 +121,7 @@
 		<programlisting format="linespecific">
 		<![CDATA[
 <?xml version="1.0" encoding="utf-8" ?>
-<xsl:stylesheet 
+<xsl:stylesheet
   version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:node="org.mmbase.bridge.util.xml.NodeFunction"
@@ -141,7 +141,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <xsl:template name="ftype-my-ftype">
     <input type="checkbox" name="{@fieldname}" value="{value}" id="{@fieldname}">
       <xsl:apply-templates select="@*" />

@@ -22,7 +22,7 @@
      additional notations, label your DTD as a variant of DocBook.  See
      the maintenance documentation for more information.
 
-     Please direct all questions, bug reports, or suggestions for 
+     Please direct all questions, bug reports, or suggestions for
      changes to the docbook@lists.oasis-open.org mailing list. For more
      information, see http://www.oasis-open.org/docbook/.
 -->
@@ -39,14 +39,14 @@
      declaration:
 
      <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-                    "http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd"
+                    "https://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd"
                     [...]>
 
      Or, if you have a higher-level driver file that customizes DocBook,
      use the FPI in the parameter entity declaration:
 
      <!ENTITY % DocBookDTD PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-                "http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd">
+                "https://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd">
      %DocBookDTD;
 
      See the documentation for detailed information on the parameter
@@ -60,7 +60,7 @@
 
 <!ENTITY % dbnotn.module "INCLUDE">
 <![%dbnotn.module;[
-<!ENTITY % dbnotn PUBLIC 
+<!ENTITY % dbnotn PUBLIC
 "-//OASIS//ENTITIES DocBook XML Notations V4.1.2//EN"
 "dbnotnx.mod">
 %dbnotn;
@@ -72,7 +72,7 @@
 <!ENTITY % dbcent.module "INCLUDE">
 <![%dbcent.module;[
 <!ENTITY euro "&#x20AC;"><!-- euro sign, U+20AC NEW -->
-<!ENTITY % dbcent PUBLIC 
+<!ENTITY % dbcent PUBLIC
 "-//OASIS//ENTITIES DocBook XML Character Entities V4.1.2//EN"
 "dbcentx.mod">
 %dbcent;
@@ -85,7 +85,7 @@
 
 <!ENTITY % dbpool.module "INCLUDE">
 <![ %dbpool.module; [
-<!ENTITY % dbpool PUBLIC 
+<!ENTITY % dbpool PUBLIC
 "-//OASIS//ELEMENTS DocBook XML Information Pool V4.1.2//EN"
 "dbpoolx.mod">
 %dbpool;
@@ -104,7 +104,7 @@
 
 <!ENTITY % dbhier.module "INCLUDE">
 <![ %dbhier.module; [
-<!ENTITY % dbhier PUBLIC 
+<!ENTITY % dbhier PUBLIC
 "-//OASIS//ELEMENTS DocBook XML Document Hierarchy V4.1.2//EN"
 "dbhierx.mod">
 %dbhier;

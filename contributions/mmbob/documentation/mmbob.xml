@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+"https://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 <article>
   <articleinfo>
      <title>MMBob Technical Overview</title>
@@ -8,9 +8,9 @@
        <author>
          <firstname>Gerard</firstname>
          <surname>van Enk</surname>
-       </author>      
+       </author>
      </authorgroup>
-     
+
      <revhistory>
        <revision>
          <revnumber>0.1</revnumber>
@@ -38,43 +38,43 @@
   <section id="Introduction">
     <title>Introduction</title>
     <para>
-      This document gives a technical overview of the MMBob forum package for MMBase. 
+      This document gives a technical overview of the MMBob forum package for MMBase.
       It contains both a global overview of the architecture of MMBob and an overview
       of the technical implementation details.
     </para>
     <para>This document is written for Kennisnet and because of this it contains some
-    information that's very specific for the Kennisnet situation. But most of these specific 
+    information that's very specific for the Kennisnet situation. But most of these specific
     parts can be used outside Kennisnet as well.</para>
     <section id="AboutMMBob">
       <title>About MMBob</title>
       <para>
-        MMBob is a forum package for the MMBase Content Magement System. When the package has 
+        MMBob is a forum package for the MMBase Content Magement System. When the package has
         been installed a forum like PHPBB is available to use within a website. There are two alternative
         uses of MMBob. The first one is to use it as it is and use the whole system (templates and forumengine).
         The second one is to only use the forum engine and create your own templates on top of it.
       </para>
       <para>
-        This document mainly describes the first option, but it will give the reader enough information 
+        This document mainly describes the first option, but it will give the reader enough information
         to start building their own templates and make changes to the forum engine.
       </para>
     </section>
 
   </section>
-  
+
   <section id="Concept">
     <title>Concept</title>
     <para>Before looking into the architecture of MMBase, let's look at the general concepts behind MMBob.</para>
-    <para>MMBob is a forum engine which can be used to create multiple Forums. Each forum within MMBob can 
-    be used as a standalone forum. They have their own users, moderators, administrators and can also have 
+    <para>MMBob is a forum engine which can be used to create multiple Forums. Each forum within MMBob can
+    be used as a standalone forum. They have their own users, moderators, administrators and can also have
     their own layout.</para>
-    <para>A forum within MMBob consists of one or more areas. These areas can only be created by an 
+    <para>A forum within MMBob consists of one or more areas. These areas can only be created by an
     administrator or a moderator and are the most important categorization of the discussions.</para>
     <para>An area consists of one or more threads. This is where the real discussions take place. The
     threads are made up of postings.</para>
-    <para>There are a lot of configuration options with which the default functioning of the 
+    <para>There are a lot of configuration options with which the default functioning of the
     system can be influenced, e.g., grant anonymous users to post messages, start threads and read the forum.</para>
   </section>
-  
+
   <section id="Architecture">
     <title>Architecture</title>
     <para>MMBob is build upon MMBase and uses both components/functionality from within MMBase
@@ -89,7 +89,7 @@
        <textobject><phrase>Overview of MMBob</phrase></textobject>
        </mediaobject>
     </figure>
-    <para>In this section the main components will be briefly discussed, first the external components 
+    <para>In this section the main components will be briefly discussed, first the external components
     and then the internal MMBase components. The sections after this one will be more detailed.</para>
     <section id="ArchitectureExternal">
       <title>External Components</title>
@@ -115,40 +115,40 @@
 	    </para>
 	    <para>
 	      All the elements of a theme are listed in an xml-configuration file. After this configuration file
-	      has been placed in the correct directory (WEB-INF/config/thememanager/themes/[name of the theme]) the 
+	      has been placed in the correct directory (WEB-INF/config/thememanager/themes/[name of the theme]) the
 	      theme can be chosen for a forum or an area from within the thememanager tool (mmbase/thememanager).
 	    </para>
-	  </section> 
+	  </section>
 	  <section id="ArchitectureMultilanguage">
 	    <title>Multilanguage</title>
-	    <para>The Multilanguage component is used for displaying texts on the MMBob pages. These texts can be different for 
-	    each forum. This can be used for internationalization (i18n) or just for using different names 
+	    <para>The Multilanguage component is used for displaying texts on the MMBob pages. These texts can be different for
+	    each forum. This can be used for internationalization (i18n) or just for using different names
 	    for parts of MMBob, e.g., message vs postings, threads vs discussion.</para>
-	    <para>The definition of which languageset to use takes place at the creation of a forum. 
+	    <para>The definition of which languageset to use takes place at the creation of a forum.
 	    After creation this can be configurated as well.</para>
-	    <para>The configuration of the languages is inside an xml file. This file is located in de directory 
-	    WEB-INF/config/multilanguagegui/sets/mmbob.xml. In this file all labels which can be internationalized 
+	    <para>The configuration of the languages is inside an xml file. This file is located in de directory
+	    WEB-INF/config/multilanguagegui/sets/mmbob.xml. In this file all labels which can be internationalized
 	    can be found.</para>
-	  </section> 
-	   
-    </section> 
+	  </section>
+
+    </section>
     <section id="ArchitectureInternal">
       <title>Internal Components</title>
-      <para>The most important internal components are the MMBase taglib, the Function framework and the 
+      <para>The most important internal components are the MMBase taglib, the Function framework and the
       Bridge (MMCI). Each of these are discussed very briefly in this section.
       </para>
       <section id="ArchitectureTaglib">
         <title>MMBase taglib</title>
-        <para>The MMBase taglib is a set of tags which can be used to create templates. 
+        <para>The MMBase taglib is a set of tags which can be used to create templates.
         The MMBob templates are (almost) completely created by using these tags. Sometimes a little
         pure java/jsp has been used. </para>
         <para>The tags communicate with the rest of MMBase.</para>
       </section>
       <section id="ArchitectureFunctionFramework">
         <title>Function framework</title>
-        <para>The function framework is a way to extend the existing MMBase taglib without having 
+        <para>The function framework is a way to extend the existing MMBase taglib without having
         to create different tags for each extension.</para>
-        <para>There are a few different ways to use the function framework and MMBob only uses 
+        <para>There are a few different ways to use the function framework and MMBob only uses
         one of them, i.e. the function set.</para>
         <para>The function set is a way to create taglib functions by defining them in an xml file.
         This xml file contains the method definitions (names, parameters and return values)
@@ -162,7 +162,7 @@
         The MMBase tags are using this api and so are the MMBob classes.</para>
       </section>
     </section>
-       
+
   </section>
 
   <section id="Detailed">
@@ -182,23 +182,23 @@
     <section id="Layers">
       <title>Layers</title>
       <para>The layers of MMBob are more or less compatible with the layers of the MVC design pattern.
-      <remark>More information about the MVC design pattern can be found at <ulink url="http://en.wikipedia.org/wiki/Model-view-controller"/></remark> 
+      <remark>More information about the MVC design pattern can be found at <ulink url="http://en.wikipedia.org/wiki/Model-view-controller"/></remark>
       </para>
-      
+
       <section id="LayersView">
         <title>View layer (Taglib and Function Tags)</title>
-        <para>The view (or presentation) layer of MMBob are the jsp-templates. The view is responsible 
-        for the output to the users and it produces HTML-pages with forum information 
+        <para>The view (or presentation) layer of MMBob are the jsp-templates. The view is responsible
+        for the output to the users and it produces HTML-pages with forum information
         (lists of messages, users, etc). It's also responsible for building forms with which the users
         can put their own information into the forum or administrators can manage the forum.</para>
-        <para>The jsp-templates are build by using the standard MMBase tag library and the MMBob 
-        functions. More information about the standard MMBase tag library can be found in the 
+        <para>The jsp-templates are build by using the standard MMBase tag library and the MMBob
+        functions. More information about the standard MMBase tag library can be found in the
         documentation included with the MMBase release.</para>
         <section id="LayersViewFunctions">
           <title>MMBob Functions</title>
           <para>The MMBob functions are build using the function framework, a relatively new part
           of MMBase.  The function tags that are being used in the MMBob templates are:
-          <itemizedlist> 
+          <itemizedlist>
             <listitem>
               <para>function</para>
               <para>The return value is a string which can be written to the page.</para>
@@ -209,29 +209,29 @@
             </listitem>
             <listitem>
               <para>nodefunction</para>
-              <para>The return value is a (virtual) node, which can be used by the normal 
+              <para>The return value is a (virtual) node, which can be used by the normal
               MMBase tags.</para>
             </listitem>
             <listitem>
               <para>nodelistfunction</para>
-              <para>The return value is a list of nodes and the body of the function is 
+              <para>The return value is a list of nodes and the body of the function is
               looped for all nodes in the list.</para>
             </listitem>
           </itemizedlist>
-          There are two more functions: listfunction and voidfunction, but these aren't used 
+          There are two more functions: listfunction and voidfunction, but these aren't used
           within the MMBob templates (at the moment).
           </para>
           <para>Every function has a set attribute. In case of MMBob this always will be 'mmbob'. This attribute
-          is linked to an xml configuration file with the name mmbob_functionset.xml. This file resides in the 
-          config/functions/sets/ dir, or it resides insided the mmbase-mmbob.jar. The latter is only possible 
+          is linked to an xml configuration file with the name mmbob_functionset.xml. This file resides in the
+          config/functions/sets/ dir, or it resides insided the mmbase-mmbob.jar. The latter is only possible
           with the latest MMBase releases (version > 1.8.0).
           </para>
-          <para>Every function also has a name attribute. This is the name of the function to be called. 
+          <para>Every function also has a name attribute. This is the name of the function to be called.
           This name corresponds to the name of a function in the xml configuration file.
           </para>
-          <para>A function can also have parameters. These can be specified by using the referids attribute or 
+          <para>A function can also have parameters. These can be specified by using the referids attribute or
           by putting the function call in a function container and using param-tags.</para>
-          <para>The xml configuration file defines every MMBob function which can be called from 
+          <para>The xml configuration file defines every MMBob function which can be called from
           within the templates. It contains the following information:
           <itemizedlist>
             <listitem><para>Name of the function</para></listitem>
@@ -241,7 +241,7 @@
             <listitem><para>Method name of the function implemention in the class</para></listitem>
             <listitem><para>Zero or more Parameters of the function</para></listitem>
             <listitem><para>Return type of the method (String, boolean, NodeList). Inside the return type
-            also the names of the fields inside the return Object can be defined.</para></listitem>            
+            also the names of the fields inside the return Object can be defined.</para></listitem>
           </itemizedlist>
           </para>
           <para>The working of the function framework can be explained as follows:
@@ -260,7 +260,7 @@
         </section>
         <section id="LayersViewStructure">
           <title>Structure</title>
-          <para>All the jsp-templates can be found in the mmbob directory in the webroot. There are many 
+          <para>All the jsp-templates can be found in the mmbob directory in the webroot. There are many
           subdirs inside the mmbob directory:
           <itemizedlist>
             <listitem>
@@ -273,7 +273,7 @@
             </listitem>
             <listitem>
               <para>generate</para>
-              <para>can be used for generating a forum with random postareas, threads, messages 
+              <para>can be used for generating a forum with random postareas, threads, messages
               and posters. Only for testing and developing purposes
               </para>
             </listitem>
@@ -303,14 +303,14 @@
             </listitem>
           </itemizedlist>
           </para>
-          <para>In the main directory 'mmbob' are a lot of pages. For every part of MMBob there's 
-          one page. There are 'overview'-pages (e.g. forums.jsp for a list of forums, postareas.jsp for a list of 
-          postareas, postthread.jsp for a list of threads, allmembers for a list of all members, etc). 
+          <para>In the main directory 'mmbob' are a lot of pages. For every part of MMBob there's
+          one page. There are 'overview'-pages (e.g. forums.jsp for a list of forums, postareas.jsp for a list of
+          postareas, postthread.jsp for a list of threads, allmembers for a list of all members, etc).
           There are pages for creating something new (e.g. newpost.jsp for creating a new post, newposter.jsp
           for creating a new poster, newprivemessage for creating a new privatemessage, etc). Furthermore there are
-          edit pages for editing an existing object (e.g. editpost.jsp for editing a post, editpostthread.jsp 
+          edit pages for editing an existing object (e.g. editpost.jsp for editing a post, editpostthread.jsp
           for editing a thread, etc).
-          The last category are some supporting pages, like pages for the users profile, pages for 
+          The last category are some supporting pages, like pages for the users profile, pages for
           bookmarking threads, etc.
           </para>
           <para>In all pages mentioned above there are a few standard includes:
@@ -349,18 +349,18 @@
       </section>
       <section id="LayersController">
          <title>Control layer (MMBob Controller)</title>
-         <para>The MMBob controller is the Java Class org.mmbase.applications.mmbob.gui.Controller. All 
-         methods that can be called from the jsp templates through the function framework 
+         <para>The MMBob controller is the Java Class org.mmbase.applications.mmbob.gui.Controller. All
+         methods that can be called from the jsp templates through the function framework
          (see previous section) are implemented in this class.
          <remark>There's one exception. The generate methods for testing and developing have their
-         own Controller, i.e. org.mmbase.applications.mmbob.generate.Generate</remark> 
+         own Controller, i.e. org.mmbase.applications.mmbob.generate.Generate</remark>
          </para>
          <para>The purpose of this class is initializing the Form engine, routing the method calls
          from the templates to the Model classes and routing their responsed back to the templates.
          </para>
-         <para>For some method calls the first validation of parameters is done inside the Controller. 
+         <para>For some method calls the first validation of parameters is done inside the Controller.
          Furthermore some methods need translation for the parameters before they can be routed to the Model
-         classes and some methods need translation of the results of the Model classes before they 
+         classes and some methods need translation of the results of the Model classes before they
          can be returned to the templates.</para>
          <note>
            <para>The function framework and the configuration file are strictly taken also part of the
@@ -380,8 +380,8 @@
              <textobject><phrase>Overview of MMBob's Classes</phrase></textobject>
            </mediaobject>
          </figure>
-         <para>Figure 3 is not a complete class diagram, only the most important classes are displayed. 
-         These main classes can be grouped into three types of classes, i.e. Forum classes, Config classes 
+         <para>Figure 3 is not a complete class diagram, only the most important classes are displayed.
+         These main classes can be grouped into three types of classes, i.e. Forum classes, Config classes
          and Util classes. These types will be discussed in the following sections.</para>
          <section id="LayersMMBobClassesForm">
            <title>Forum classes</title>
@@ -392,13 +392,13 @@
                <para>ForumManager</para>
                <para>This is the main class of the Forum Engine. This is where all the forums 'live'.
                </para>
-               <para>The ForumManager performs different kinds of tasks. When MMBob starts the ForumManager 
+               <para>The ForumManager performs different kinds of tasks. When MMBob starts the ForumManager
                will be initialized. During this initialization it first reads all needed
-               (default) configuration, second it gets all forums from MMBase and initializes them and 
-               last it starts all needed subprocesses (more information about these can be found in the 
+               (default) configuration, second it gets all forums from MMBase and initializes them and
+               last it starts all needed subprocesses (more information about these can be found in the
                section about subprocesses).</para>
-               <para>After the initialization the ForumManager is responsible for the creating of new 
-               forums, deleting of forums, putting nodes into the syncqueue and getting and setting 
+               <para>After the initialization the ForumManager is responsible for the creating of new
+               forums, deleting of forums, putting nodes into the syncqueue and getting and setting
                default configuration values.</para>
              </listitem>
              <listitem>
@@ -413,7 +413,7 @@
              </listitem>
              <listitem>
                <para>PostArea</para>
-               <para>The PostArea class maintains one PostArea instance. During initialization some default 
+               <para>The PostArea class maintains one PostArea instance. During initialization some default
                attributes will be set (e.g. name, description, id, the parent node, i.e. the Forum node to which
                this PostArea belongs to), the PostArea configuration will be read (PostArea is the last level which
                can have its own configuration) and the statistics will be (re)set.</para>
@@ -427,19 +427,19 @@
                During initialization some default attributes will be set (e.g. subject, creator, parentnode, etc) and some
                statistics will be (re)set (e.g. viewcount, postcount, etc).</para>
                <para>There are some special attributes in the PostThread class, i.e. state, type and mood.
-               The state attribute can be used to close a Thread or to make it 'pinned' at the top 
+               The state attribute can be used to close a Thread or to make it 'pinned' at the top
                of the PostThread listing.</para>
-               <para>The PostThread class is also responsible for adding a reply Posting to the thread, 
+               <para>The PostThread class is also responsible for adding a reply Posting to the thread,
                deleting a Posting from the thread and updating the statistics according to the adding or deleting
                of the posting.</para>
              </listitem>
              <listitem>
                <para>Posting</para>
-               <para>The Posting class contains one individual posting. It gets and sets the attributes of 
+               <para>The Posting class contains one individual posting. It gets and sets the attributes of
                the posting (e.g. posttime, edittime, subject, body, etc).</para>
                <para>If the posting is a reply, the body of the posting can include (a part of)
                the original message. Due to this requirement, the body is stored as xml. This xml
-               is transformed to html by xslt-transformation. Because this can give serious performance 
+               is transformed to html by xslt-transformation. Because this can give serious performance
                problems, the body is cached in the database. The xslt-transformation only has to take place
                when the body is accessed for the first time, or after the body is edited.</para>
              </listitem>
@@ -452,13 +452,13 @@
                <para>The Poster object also contains a list of bookmarked PostThreads.</para>
              </listitem>
            </itemizedlist>
-           
+
          </section>
          <section id="LayersMMBobClassesConfig">
            <title>Config classes</title>
-           <para>The Config classes are responsible for all the logic regarding configuration. This means 
-           they read the configuration file (xml file named mmbob.xml stored inside the 
-           WEB-INF/config/mmbob dir, or inside the 
+           <para>The Config classes are responsible for all the logic regarding configuration. This means
+           they read the configuration file (xml file named mmbob.xml stored inside the
+           WEB-INF/config/mmbob dir, or inside the
            mmbase-mmbob.jar) and they write back the configuration to these xml's when the settings are
            changed from the configuration jsp's by the administrator.</para>
            <para>There are three different layers of configuration possible withing MMBob:</para>
@@ -468,13 +468,13 @@
                <para>This can be seen as default settings for all the Forums. If a forum doesn't
                have any configuration of its own, these settings will be used.</para>
                <para>The ForumsConfig class is responsible for reading and writing this configuration.
-               This class also checks the MMBob-cloudmodel in the MMBase cloud. If a required typerel 
+               This class also checks the MMBob-cloudmodel in the MMBase cloud. If a required typerel
                is missing it'll create it.</para>
              </listitem>
              <listitem>
                <para>Configuration for one particular Forum</para>
                <para>The default configuration can be overridden for one specific forum. Every forum can
-               have some configuration of its own. This configuration is also stored in de mmbob.xml 
+               have some configuration of its own. This configuration is also stored in de mmbob.xml
                file, between forum-tags. The id attribute of this tag is the name of the forum.</para>
                <para>The ForumConfig class is responsible for reading and writing this configuration.
                </para>
@@ -482,7 +482,7 @@
              <listitem>
                <para>Configuration for one particular PostArea</para>
                <para>This is the lowest layer of the Forum structure which can have configuration of its own.
-               This configuration is also stored in the mmbob.xml configuration file, between postarea-tags. 
+               This configuration is also stored in the mmbob.xml configuration file, between postarea-tags.
                The id attribute of this tag is the name of the PostArea.</para>
                <para>The PostAreaConfig class is responsible for reading and writing this configuration.</para>
              </listitem>
@@ -490,7 +490,7 @@
          </section>
          <section id="LayersMMBobClassesUtil">
            <title>Util classes</title>
-           <para>Besides the 'main' classes there are a few more classes which are important in 
+           <para>Besides the 'main' classes there are a few more classes which are important in
            the whole process of the Forum engine, these are more like 'supporting' classes.</para>
            <para>There are a few different types of util classes:</para>
            <itemizedlist>
@@ -499,54 +499,54 @@
                <para>These are util classes that are really needed, MMBob won't work
                without them. The main tasks of these core util classes are syncing MMBob
                with the database and memory management.</para>
-               <para>The ForumMMBaseSyncer takes care of syncing the MMBob data to the database. 
+               <para>The ForumMMBaseSyncer takes care of syncing the MMBob data to the database.
                The ForumManager starts two syncing processes, a slow sync and a fast sync. The slow sync
-               synchronizes every 5 minutes and the fast sync synchronizes every 10 seconds. 
-               The fast sync handles all the urgent data (e.g. new postings, new threads, edit threads, 
+               synchronizes every 5 minutes and the fast sync synchronizes every 10 seconds.
+               The fast sync handles all the urgent data (e.g. new postings, new threads, edit threads,
                new posters, etc). The slow sync handles all the not so urgent data (e.g. statistics).
                </para>
                <para>In case of a jvm (java virtual machine) shutdown, the ForumMMBaseSyncerShutdown tries
                to handle both synchronizing threads one last time. When there's a normal clean shutdown
                this will be successfull. When there's a jvm crash it'll depend on the reason for the
-               crash, but in the worst case the urgent data of the last 10 seconds will be lost. 
-               The not so urgent data will be refreshed at the next startup of MMBob, so no data will be 
+               crash, but in the worst case the urgent data of the last 10 seconds will be lost.
+               The not so urgent data will be refreshed at the next startup of MMBob, so no data will be
                lost here in case of a crash.</para>
                <para>The class responsible for the MMBob memory management is the ForumSwapManager.
-               Because of the speed, MMBob keeps all postings, postthreads, postareas, forums, etc in 
+               Because of the speed, MMBob keeps all postings, postthreads, postareas, forums, etc in
                memory. When the forum grows (more threads, postings, posters, etc) MMBob will eventually
-               run out of memory. The ForumSwapManager removes posters from memory after a certain 
-               expire time. It also calls the maintainMemoryCaches method of all the Postareas loaded 
-               into memory at that moment. This method removes all Postareas from memory to which no 
+               run out of memory. The ForumSwapManager removes posters from memory after a certain
+               expire time. It also calls the maintainMemoryCaches method of all the Postareas loaded
+               into memory at that moment. This method removes all Postareas from memory to which no
                new messages have been posted during a certain time period.</para>
              </listitem>
              <listitem>
                <para>Layout</para>
-               <para>The layout util classes are 3 very different classes which take care 
+               <para>The layout util classes are 3 very different classes which take care
                of some layout related functionality.</para>
                <itemizedlist>
                  <listitem>
-                   <para>transformers.BBCode is a class which tranforms the body of a posting 
+                   <para>transformers.BBCode is a class which tranforms the body of a posting
                    into html in case it contains some BB-code. BB-code is a de facto standard for
-                   formatting text in webforums. 
-                   More information about BB-code can be found at 
+                   formatting text in webforums.
+                   More information about BB-code can be found at
                    <ulink url="http://www.phpbb.com/phpBB/faq.php?mode=bbcode">http://www.phpbb.com/phpBB/faq.php?mode=bbcode</ulink>
                    </para>
                  </listitem>
                  <listitem>
                    <para>transformers.PostingBody is a class which transforms the body of a posting
-                   into html in case it contains xml. The initial version of MMBob didn't support 
+                   into html in case it contains xml. The initial version of MMBob didn't support
                    BB-code, but in order to visualise quotes in postings, some structure was necessary.
                    This class is still in MMBob for legacy reasons, the preferred formatting of postings is
                    by using BB-code.
                    </para>
                  </listitem>
                  <listitem>
-                   <para>transformers.Smilies takes care of transforming text smilies into graphical 
-                   smilies. A user can select smilies from a list of images besides the posting, the 
+                   <para>transformers.Smilies takes care of transforming text smilies into graphical
+                   smilies. A user can select smilies from a list of images besides the posting, the
                    text version is stored in the text of the posting and when this text gets
                    displayed the Smilies class displays the images.</para>
-                   <para>The smilies are configured inside the theme.xml file of the thememanager. In 
-                   this file an imageset with the role 'smilies' can be defined. An imageset consists of 
+                   <para>The smilies are configured inside the theme.xml file of the thememanager. In
+                   this file an imageset with the role 'smilies' can be defined. An imageset consists of
                    one or more image tags, with an id and a file attribute. The id attribute is the text
                    version of a smiley (e.g. ;-) ), and the file is the filename of the graphical version.
                    </para>
@@ -555,23 +555,23 @@
              </listitem>
              <listitem>
                <para>External</para>
-               <para>MMBob uses about four external components, i.e. Multilanguagegui, 
-               Thememanager, Entree and Profiles. The first three are are only used in the 
-               templates so these don't have util classes (at least no util classes in MMBob, 
-               the first two do have their own java classes). The Profiles connector component 
+               <para>MMBob uses about four external components, i.e. Multilanguagegui,
+               Thememanager, Entree and Profiles. The first three are are only used in the
+               templates so these don't have util classes (at least no util classes in MMBob,
+               the first two do have their own java classes). The Profiles connector component
                is used from within the MMBob java code.</para>
-               <para>The Profiles connector can be used to synchronize the internal profile 
+               <para>The Profiles connector can be used to synchronize the internal profile
                information with the Kennisnet Profile system.</para>
-               <para>The whole process of these external profiles will be explained in the 'external 
+               <para>The whole process of these external profiles will be explained in the 'external
                components' section. For now all profile related classes will be describe briefly.</para>
                <para>If the poster information gets stored in an external profile, the Poster
-               object holds a reference to a ProfileInfo object. This object stores all profile 
+               object holds a reference to a ProfileInfo object. This object stores all profile
                related information. The information itself is stored in ProfileEntry objects inside
-               the ProfileInfo object. The ProfileEntry objects are definied by a ProfileEntryDef class. 
-               This class is instantiated during Forum initializing and its configuration is stored 
+               the ProfileInfo object. The ProfileEntry objects are definied by a ProfileEntryDef class.
+               This class is instantiated during Forum initializing and its configuration is stored
                inside the MMBob config xml.</para>
-               <para>There is one other class and that is the ExternalProfilesManager. This class 
-               takes care of syncing the profile information to the external Profiles system, 
+               <para>There is one other class and that is the ExternalProfilesManager. This class
+               takes care of syncing the profile information to the external Profiles system,
                using a profiles connector.</para>
                <para>Logging</para>
                <para>There is one class who's task it is to track user actions. At this moment only
@@ -587,17 +587,17 @@
                    only have one signature, but this can be changed in the configuration.</para>
                  </listitem>
                  <listitem>
-                   <para>Mailbox manages the Poster's mailboxes. A Poster has two mailboxes 
+                   <para>Mailbox manages the Poster's mailboxes. A Poster has two mailboxes
                    (Inbox, Outbox) for sending and receiving privemessages.</para>
                  </listitem>
                  <listitem>
                    <para>A user can bookmark a PostThread or subscribe to a PostThread. In either case a
-                   ThreadObserver will be created for the PostThread. This ThreadObserver observes a 
+                   ThreadObserver will be created for the PostThread. This ThreadObserver observes a
                    thread for changes. If a new post is added to the PostThread the observer will signal
                    this to the Poster. If the Poster subscribed to the PostThread, the email message
                    will not be sent immedialety after the ThreadObserver signals the Poster.
                    The ForumEmailSender class will take care of sending email to Posters. This is a thread
-                   which wakes up every minute and sents the waiting email messages. 
+                   which wakes up every minute and sents the waiting email messages.
                    </para>
                  </listitem>
                </itemizedlist>
@@ -620,7 +620,7 @@
            </mediaobject>
          </figure>
          <para>A few remarks about the datamodel. First of all, there are special relations between most
-         objects, e.g. forarearel. At the moment these relations are normal relations, but in the future 
+         objects, e.g. forarearel. At the moment these relations are normal relations, but in the future
          extra information or functions can be added to the relations.</para>
          <para>Some objects are using the prefix forum in their objectname, e.g. forummessagebox. This
          prefix is used to seperate the MMBob objects from existing objects. Some systems where MMBob
@@ -628,7 +628,7 @@
          <para>A last remark about the Datamodel is about the cache. MMBase normally uses different types
          of caches to store the results of database queries. MMBob uses its own caching mechanism, because
          MMBob must keep a lot of the data in memory to maintain a certain speedlevel.</para>
-         <para>MMBob can't keep all its data in memory because it will run out of memory. 
+         <para>MMBob can't keep all its data in memory because it will run out of memory.
          This is why there's a ForumSwapManager as explained in the 'Util classes' section.</para>
          <para>Because MMBob maintains its own cache, all data got stored twice, once in the MMBase cache and
          once in the MMBob cache. This caused MMBob to use large amounts of memory. To fix this
@@ -641,16 +641,16 @@
       <title>Subprocesses</title>
       <para>There are three subprocesses inside MMBob. These processes are running in their own thread.
       The three processes are: ExternalProfilesManager, ForumEmailSender and the ForumSwapManager.</para>
-      <para>The ExternalProfilesManager is responsibly for syncing profile information with an 
-      external profile system. When the thread gets active it checks a queu and if the queue contains 
+      <para>The ExternalProfilesManager is responsibly for syncing profile information with an
+      external profile system. When the thread gets active it checks a queu and if the queue contains
       data it starts the syncing process.</para>
       <para>The ForumEmailSender checks all posters to see if there's an email message to be sent.
-      Every time a new message has been posted to a postthread a user has subscribed to, information is added 
-      to the Poster class. The ForumEmailSender checks this information (mailbody field), if it's not 
+      Every time a new message has been posted to a postthread a user has subscribed to, information is added
+      to the Poster class. The ForumEmailSender checks this information (mailbody field), if it's not
       empty it will send the email message.</para>
       <para>When the ForumSwapManager thread wakes up it removes Posters from the active posters list who
-      weren't active during a certain time periode and it calls the ForumManager.maintainMemoryCaches 
-      method. This method removes all postthreads/areas were no activity was during a certain time 
+      weren't active during a certain time periode and it calls the ForumManager.maintainMemoryCaches
+      method. This method removes all postthreads/areas were no activity was during a certain time
       period.</para>
     </section>
     <section id="DetailedExternal">
@@ -661,38 +661,38 @@
       <section id="DetailedThememanager">
         <title>Thememanager</title>
         <para>The Thememanager config (config/thememanager/) defines a few themes in the themes.xml file.
-        Which theme will be used for MMBob can be found in assigned.xml. This can be changed manually or by 
+        Which theme will be used for MMBob can be found in assigned.xml. This can be changed manually or by
         using the themeconfig page (mmbase/thememanager/).</para>
-        <para>Every theme has its own configuration file. This file (theme.xml) can be found in a directory 
+        <para>Every theme has its own configuration file. This file (theme.xml) can be found in a directory
         with the name of the theme in the config/thememanager directory.</para>
         <para>All the other files needed for a theme can be found in the mmbase/thememanager directory.
-        The theme's stylesheet can be found in a directory with the themename inside the css directory 
-        and all needed images are inside a directory with the same name as the theme in de images 
+        The theme's stylesheet can be found in a directory with the themename inside the css directory
+        and all needed images are inside a directory with the same name as the theme in de images
         directory.</para>
         <para>The MMBob templates get information from the thememanager in the thememanager/loadvars.jsp
-        file. This file checks which theme is assigned to the forum (by the forumid). All forums inside 
-        an MMBob installation can have their own theme. The loadvars.jsp instantiates all needed 
+        file. This file checks which theme is assigned to the forum (by the forumid). All forums inside
+        an MMBob installation can have their own theme. The loadvars.jsp instantiates all needed
         variables, e.g. style_default, image_logo, image_newreply, etc. At the needed places inside
-        the MMBob templates these variables will be written to the page, e.g. 
+        the MMBob templates these variables will be written to the page, e.g.
         &lt;link rel="stylesheet" type="text/css" href="&lt;mm:write referid="style_default" /&gt;" /&gt;
         </para>
       </section>
       <section id="DetailedMultilanguage">
         <title>Multilanguage</title>
         <para>The Multilanguagegui config (config/multilanguagegui) defines sets of 'languages' which
-        can be used. The MMBob set is used for MMBob. The set itself has its config in the 
-        config/multilanguagegui/sets/mmbob.xml file. Every keyword that can be used in MMBob is defined 
-        in this file. Which language MMBob uses is set in the MMBob configuration file. Every forum 
-        inside an MMBob installation can use its own translation. If a keyword doesn't exist in a 
+        can be used. The MMBob set is used for MMBob. The set itself has its config in the
+        config/multilanguagegui/sets/mmbob.xml file. Every keyword that can be used in MMBob is defined
+        in this file. Which language MMBob uses is set in the MMBob configuration file. Every forum
+        inside an MMBob installation can use its own translation. If a keyword doesn't exist in a
         certain translation the default ('df') translation will be used.</para>
-        <para>A new translation can be added directlty to the mmbob.xml language set, but there's also 
+        <para>A new translation can be added directlty to the mmbob.xml language set, but there's also
         an editor which can be used. This editor can be found in /mmbase/mlg.</para>
       </section>
       <section id="DetailedExternalProfiles">
         <title>External Profiles Connector</title>
-        <para>The External Profile Connector can be used to store extra information about a Poster. 
-        This information is stored in an external Profile system, but MMBob also has a local profile 
-        system. This local system can be used in two ways, as a local profile storage or as a caching 
+        <para>The External Profile Connector can be used to store extra information about a Poster.
+        This information is stored in an external Profile system, but MMBob also has a local profile
+        system. This local system can be used in two ways, as a local profile storage or as a caching
         proxy.</para>
         <para>Which information can be stored in the profile system can be defined in the normal mmbob.xml
         configuration file, with so called profileentry tags.  This tag has the following attributes:</para>
@@ -710,11 +710,11 @@
         </itemizedlist>
         <para>The configuration above can only be edited inside the mmbob.xml configuration file, there
         is no editpage for this at the moment.</para>
-        <para>When a user logs in, the system will check if the user has an external profile, 
-        if this is true it will read all external profile values and caches them. These will only 
+        <para>When a user logs in, the system will check if the user has an external profile,
+        if this is true it will read all external profile values and caches them. These will only
         be reread after a timer has expired.</para>
         <para>When a user changes some profile values, the system checks again whether the user has
-        an external profile. If this is true it will write the value locally and set the sync flag. 
+        an external profile. If this is true it will write the value locally and set the sync flag.
         The ExternalProlilesManager will sync this value externally the next time it runs.</para>
         <para>More details about the flow of these processes can be found in the document (in dutch)
         'MMBase ProfilesConnector' by Daniel Ockeloen.</para>
@@ -725,32 +725,32 @@
         the Posters account and password stored inside the Posters object. The other two are
         using the Kennisnet Entree system.</para>
         <para>The entree login system uses some http-request parameters to check if an user
-        is authorized to login to MMBob. The sm_users parameter is used for the accountname and 
+        is authorized to login to MMBob. The sm_users parameter is used for the accountname and
         the aad_nummer as the password.</para>
         <para>The entree-ng uses the new Entree loging system. This Entree system will replace the
-        old version. The check of the entree-ng information is done in the entree-ng.jsp file. 
-        This file uses the nl.kennisnet.entreeng.gec.EntreeNGRequestHelper class to determine 
-        the user's entreeid (which is used as account), the users 'gebruikersnaam' (which is used 
+        old version. The check of the entree-ng information is done in the entree-ng.jsp file.
+        This file uses the nl.kennisnet.entreeng.gec.EntreeNGRequestHelper class to determine
+        the user's entreeid (which is used as account), the users 'gebruikersnaam' (which is used
         as account if the entreeid is empty), the users firstname, lastname and emailaddress.</para>
-      </section> 
+      </section>
     </section>
   </section>
-  
+
   <section id="Actions">
     <title>Actions</title>
     <para>This section discusses all main actions within MMBob
-    (e.g., Create forum, create area, create new user, edit user, etc). For each of these actions all 
-    related templates, functions and java classes will be described. For the functiontag, only the name 
+    (e.g., Create forum, create area, create new user, edit user, etc). For each of these actions all
+    related templates, functions and java classes will be described. For the functiontag, only the name
     of the function will be mentioned. More information about the specific function, e.g. parameters and
-    returnvalues can be found in the mmbob_functionset.xml file. This file resides in the 
+    returnvalues can be found in the mmbob_functionset.xml file. This file resides in the
     WEB-INF/config/functions/sets/ directory or inside the mmbase-mmbob.jar.</para>
-    <para>For the javaclasses only the first few classes and methods will be mentioned. 
+    <para>For the javaclasses only the first few classes and methods will be mentioned.
     The rest will have to be looked up in the source files.</para>
-    <para>The discussion will take place on the level of MMBob parts 
+    <para>The discussion will take place on the level of MMBob parts
     (e.g., Forum, Area, Thread, etc).</para>
-    <para>There's one part that will not be discussed and that's the privatemessaging part. With 
+    <para>There's one part that will not be discussed and that's the privatemessaging part. With
     private messaging the Users can communicate privately. The reason why it will not be discussed
-    is that there are a lot of functions not (fully) implemented, so the precise working can't be 
+    is that there are a lot of functions not (fully) implemented, so the precise working can't be
     described.</para>
     <section id="ActionsForum">
       <title>Forum</title>
@@ -761,21 +761,21 @@
         <para>This actions shows all forums inside the Forum engine.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/forums.jsp</para> 
+            <para>template: mmbob/forums.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: getForums</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,  
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager and org.mmbase.applications.mmbob.Forum</para>
           </listitem>
           <listitem>
             <para>Methods: Controller#getForums, ForumManager#getForums</para>
           </listitem>
           <listitem>
-            <para>Description: forums.jsp page displays a list of all forums. At the bottom 
-            of the page there's also a list of administrator tasks which will be discussed in the 
+            <para>Description: forums.jsp page displays a list of all forums. At the bottom
+            of the page there's also a list of administrator tasks which will be discussed in the
             rest of this section.</para>
           </listitem>
         </itemizedlist>
@@ -785,21 +785,21 @@
         <para>This actions adds a new Forum to the MMBob installation.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/admin/newforum.jsp</para> 
+            <para>template: mmbob/admin/newforum.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: newForum</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,  
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager and org.mmbase.applications.mmbob.Forum</para>
           </listitem>
           <listitem>
             <para>Methods: Controller#newForum, ForumManager#newForum</para>
           </listitem>
           <listitem>
-            <para>Description: The newforum.jsp page displays a form for all needed information (e.g 
-            name, description, admin account, admin password, etc). With this information the 
+            <para>Description: The newforum.jsp page displays a form for all needed information (e.g
+            name, description, admin account, admin password, etc). With this information the
             ForumManager#newForum method adds a new Forum and creates the needed admin Poster object.
             </para>
           </listitem>
@@ -810,23 +810,23 @@
         <para>This actions deletes a Forum from the MMBob installation.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/admin/removeforum.jsp and mmbob/admin/removeforum_confirm.jsp</para> 
+            <para>template: mmbob/admin/removeforum.jsp and mmbob/admin/removeforum_confirm.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: removeForum</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,  
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager and org.mmbase.applications.mmbob.Forum</para>
           </listitem>
           <listitem>
             <para>Methods: Controller#removeForum, ForumManager#removeForum, Forum#remove</para>
           </listitem>
           <listitem>
-            <para>Description: The removeforum.jsp page lists all Forums from the MMBob installation. 
-            If the users chooses one to be removed, the removeforum_confirm.jsp will ask for confirmation. 
+            <para>Description: The removeforum.jsp page lists all Forums from the MMBob installation.
+            If the users chooses one to be removed, the removeforum_confirm.jsp will ask for confirmation.
             After confirmation the ForumManager#removeForum method will call the Forum#remove method with which
-            the Forum removes itself. After it has been removed, the ForumManager#removeForum method removes 
+            the Forum removes itself. After it has been removed, the ForumManager#removeForum method removes
             the Forum from all the caches.</para>
           </listitem>
         </itemizedlist>
@@ -836,7 +836,7 @@
         <para>This action changes the default settings for all Forums inside the MMBob installation.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/admin/changeforums.jsp and mmbob/forums.jsp</para> 
+            <para>template: mmbob/admin/changeforums.jsp and mmbob/forums.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: changeForumsConfig</para>
@@ -849,10 +849,10 @@
             <para>Methods: Controller#changeForumsConfig(), ForumManager#set*, ForumManager#saveConfig</para>
           </listitem>
           <listitem>
-            <para>Description: The changeforums page lists all configuration options for all Forums inside 
+            <para>Description: The changeforums page lists all configuration options for all Forums inside
             the MMBob installation. When the users changes an option and submits the changes, the forums.jsp page
             page will be called. This page calls the functiontag changeForumsConfig. This results in calling
-            the Controller#changeForumsConfig method. This method uses the ForumManager#set methods to change 
+            the Controller#changeForumsConfig method. This method uses the ForumManager#set methods to change
             the configuration parameters and saves it.</para>
           </listitem>
         </itemizedlist>
@@ -862,7 +862,7 @@
         <para>This action displays some statistics on all Forums inside the MMBob installation.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/admin/stats.jsp and mmbob/forums.jsp</para> 
+            <para>template: mmbob/admin/stats.jsp and mmbob/forums.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: getForums (mode parameter has to be set to 'stats')</para>
@@ -875,10 +875,10 @@
             <para>Methods: Controller#getForums, ForumManager#getForums, Forum#get*</para>
           </listitem>
           <listitem>
-            <para>Description: The stats page displays statistics about the Forum enginge, e.g. memory 
-            usage, loaded threads, loaded postings, etc. The Controller gets this information by getting 
+            <para>Description: The stats page displays statistics about the Forum enginge, e.g. memory
+            usage, loaded threads, loaded postings, etc. The Controller gets this information by getting
             a list of forums and call the different get methods on the Forum.</para>
-          </listitem>  
+          </listitem>
         </itemizedlist>
       </section>
       <section id="ActionsForumEditForum">
@@ -886,50 +886,50 @@
         <para>This action changes the settings of one forum.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/admin/changeforum.jsp, mmbob/admin/actions.jsp and mmbob/index.jsp</para> 
+            <para>template: mmbob/admin/changeforum.jsp, mmbob/admin/actions.jsp and mmbob/index.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: for display all the options a lot of the get functiontags are used,
-            for changing (or setting) the options a lot of change tags are used. For a complete list 
+            for changing (or setting) the options a lot of change tags are used. For a complete list
             of used tags see the admin/changeforum.jsp and admin/action.jsp templates.</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager and org.mmbase.applications.mmbob.Forum</para>
           </listitem>
           <listitem>
             <para>Methods: Controller#get*, Controller#change*, Forum#get*, Forum#set* and Forum#saveConfig</para>
           </listitem>
           <listitem>
-            <para>Description: The changeforum page displays the configuration option for a forum. There are 
-            6 navigation tabs which will display different type of configuration options. The 6 different types 
+            <para>Description: The changeforum page displays the configuration option for a forum. There are
+            6 navigation tabs which will display different type of configuration options. The 6 different types
             are: info, layout, theme, login, rules, filter.</para>
           </listitem>
         </itemizedlist>
-      </section> 
+      </section>
       <section id="ActionsAddRemoveAdmin">
         <title>Add/Remove administrator</title>
         <para>This action adds or removes an administrator for a specific Forum</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/admin/newadministrator.jsp, mmbob/admin/removeadministrator.jsp, 
-            mmbob/admin/actions.jsp and mmbob/index.jsp</para> 
+            <para>template: mmbob/admin/newadministrator.jsp, mmbob/admin/removeadministrator.jsp,
+            mmbob/admin/actions.jsp and mmbob/index.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: getAdministrators, getNoneAdministrators, newadministrator and removeadminstrator</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager and org.mmbase.applications.mmbob.Forum</para>
           </listitem>
           <listitem>
-            <para>Methods: Controller#getAdministrators, Controller#getNonAdministrators, Controller#newAdministrator, 
-            Controller#removeAdministator, Forum#getAdministrators, Forum#getNonAdministrators, Forum#newAdministrator, 
+            <para>Methods: Controller#getAdministrators, Controller#getNonAdministrators, Controller#newAdministrator,
+            Controller#removeAdministator, Forum#getAdministrators, Forum#getNonAdministrators, Forum#newAdministrator,
             Forum#removeAdministator</para>
           </listitem>
           <listitem>
-            <para>Description: The newadministrator page shows all current administrators (by calling 
-            getAdministrators) and all possible administrators (by calling getNoneAdministrators). If a new 
+            <para>Description: The newadministrator page shows all current administrators (by calling
+            getAdministrators) and all possible administrators (by calling getNoneAdministrators). If a new
             adminstrator is selected, it will be added to the Forum by calling the newAdministrator method.
             The removeadminstrator page shows all current administrators and if one is selected to
             be removed, it will call the removeAdminsitrator method.</para>
@@ -937,7 +937,7 @@
         </itemizedlist>
       </section>
     </section>
-    
+
     <section id="ActionsArea">
       <title>Area</title>
       <para>This section gives an overview of all actions related to the PostArea.</para>
@@ -946,13 +946,13 @@
         <para>This action shows a list of all Postareas inside the selected Forum.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/index.jsp</para> 
+            <para>template: mmbob/index.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: getPostAreas</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum and
             org.mmbase.applications.mmbob.PostArea</para>
           </listitem>
@@ -961,7 +961,7 @@
           </listitem>
           <listitem>
             <para>Description: The index.jsp shows a list of PostAreas from the selected Forum.
-            The Controller#getPostAreas gets all PostAreas and creates a list of them. In this 
+            The Controller#getPostAreas gets all PostAreas and creates a list of them. In this
             list a lot of information is added by using the PostArea#get* methods.</para>
           </listitem>
         </itemizedlist>
@@ -971,13 +971,13 @@
         <para>This action adds a new postarea to a Forum.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/admin/newpostarea.jsp, mmbob/admin/actions.jsp and mmbob/index.jsp</para> 
+            <para>template: mmbob/admin/newpostarea.jsp, mmbob/admin/actions.jsp and mmbob/index.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: newPostArea</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum and
             org.mmbase.applications.mmbob.PostArea</para>
           </listitem>
@@ -985,97 +985,97 @@
             <para>Methods: Controller#newPostArea, Forum#newPostArea, PostArea#new</para>
           </listitem>
           <listitem>
-            <para>Description: The newpostarea page shows a form where a title and a description for the 
-            new postarea can be added. After submitting this information, the Controller#newPostArea method 
-            will be called. This method first replaces the '&lt;' and '&gt;' with '&amp;lt;' and '&amp;gt;' 
-            because these aren't allowed in the title or description. After this the call will be forwared 
+            <para>Description: The newpostarea page shows a form where a title and a description for the
+            new postarea can be added. After submitting this information, the Controller#newPostArea method
+            will be called. This method first replaces the '&lt;' and '&gt;' with '&amp;lt;' and '&amp;gt;'
+            because these aren't allowed in the title or description. After this the call will be forwared
             to the Forum class, which will create a new PostArea and add it to the database.</para>
           </listitem>
         </itemizedlist>
-      </section> 
+      </section>
       <section id="ActionsEditPostArea">
         <title>Edit Postarea</title>
         <para>This action changes a postarea (title, description but also some configuration).</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/admin/changepostarea.jsp, mmbob/admin/actions.jsp and mmbob/postarea.jsp</para> 
+            <para>template: mmbob/admin/changepostarea.jsp, mmbob/admin/actions.jsp and mmbob/postarea.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: getPostAreaConfig, changePostAreaConfig, changePostArea</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum and
             org.mmbase.applications.mmbob.PostArea</para>
           </listitem>
           <listitem>
-            <para>Methods: Controller#GetPostAreaConfig, Forum#GetPostArea, PostArea#get*, Controller#changePostArea, 
+            <para>Methods: Controller#GetPostAreaConfig, Forum#GetPostArea, PostArea#get*, Controller#changePostArea,
             Controller#changePostAreaConfig, PostArea.set*</para>
           </listitem>
           <listitem>
-            <para>Description: The changepostarea page first calls the getPostAreaConfig method to get 
+            <para>Description: The changepostarea page first calls the getPostAreaConfig method to get
             all the configuration options. If someone only changes the title or description, the changePostArea
             mehod will be called, otherwise the changePostAreaConfig method will be called.</para>
           </listitem>
         </itemizedlist>
-      </section> 
+      </section>
       <section id="ActionsRemovePostArea">
         <title>Remove Postarea</title>
         <para>This action removes the current postarea.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/admin/removepostarea.jsp, mmbob/admin/actions.jsp and mmbob/postarea.jsp</para> 
+            <para>template: mmbob/admin/removepostarea.jsp, mmbob/admin/actions.jsp and mmbob/postarea.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: removePostArea</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum and
             org.mmbase.applications.mmbob.PostArea</para>
           </listitem>
           <listitem>
-            <para>Methods: Controller#RemovePostArea, Forum#RemovePostArea, PostArea#remove, PostThread#remove, 
+            <para>Methods: Controller#RemovePostArea, Forum#RemovePostArea, PostArea#remove, PostThread#remove,
             Postings#remove</para>
           </listitem>
           <listitem>
-            <para>Description: The removepostarea page first calls the removePostArea method in the Controller, 
+            <para>Description: The removepostarea page first calls the removePostArea method in the Controller,
             this will get the PostArea's forum and calls the method removePostArea on this Forum. This call
-            will result in a cascading deletion of corresponding PostThreads and in the PostThreads the 
+            will result in a cascading deletion of corresponding PostThreads and in the PostThreads the
             corresponding Postings.</para>
           </listitem>
         </itemizedlist>
-      </section>       
+      </section>
       <section id="ActionsAddRemoveModerator">
         <title>Add/Remove moderator</title>
         <para>This action adds or removes a moderator for a specific PostArea</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/admin/newmoderator.jsp, mmbob/admin/removemoderator.jsp, 
-            mmbob/admin/actions.jsp and mmbob/postarea.jsp</para> 
+            <para>template: mmbob/admin/newmoderator.jsp, mmbob/admin/removemoderator.jsp,
+            mmbob/admin/actions.jsp and mmbob/postarea.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: getModerators, getNoneModerators, newmoderator and removemoderator</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum,
             org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.Posters</para>
           </listitem>
           <listitem>
-            <para>Methods: Controller#getModerators, Controller#getNonModerators, Controller#newModerator, 
-            Controller#removeModerator, PostArea#getModerators, PostArea#getNonModeratorps, PostArea#newModerator, 
+            <para>Methods: Controller#getModerators, Controller#getNonModerators, Controller#newModerator,
+            Controller#removeModerator, PostArea#getModerators, PostArea#getNonModeratorps, PostArea#newModerator,
             PostArea#removeModerator</para>
           </listitem>
           <listitem>
-            <para>Description: The newmoderator page shows all current moderators (by calling 
-            getModerators) and all possible moderators (by calling getNoneModerators). If a new 
+            <para>Description: The newmoderator page shows all current moderators (by calling
+            getModerators) and all possible moderators (by calling getNoneModerators). If a new
             moderator is selected, it will be added to the PostArea by calling the newModerator method.
             The removemoderator page shows all current moderators and if one is selected to
             be removed, it will call the removeModerator method.</para>
           </listitem>
         </itemizedlist>
-      </section>      
+      </section>
     </section>
     <section id="ActionsThread">
       <title>Thread</title>
@@ -1085,15 +1085,15 @@
         <para>This action shows a list of all PostThreads inside the selected PostArea.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/postarea.jsp</para> 
+            <para>template: mmbob/postarea.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: getPostThreads </para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
-            org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum, 
-            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
+            org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum,
+            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread,
             org.mmbase.applications.mmbob.Poster</para>
           </listitem>
           <listitem>
@@ -1102,7 +1102,7 @@
           </listitem>
           <listitem>
             <para>Description: The postarea.jsp page shows a list of all PostThreads of the
-            selected PostArea. The Controller#getPostThreads gets all PostThreads by first getting 
+            selected PostArea. The Controller#getPostThreads gets all PostThreads by first getting
             the selected Forum, the selected PostArea and then all the PostThreads of this PostArea.
             </para>
           </listitem>
@@ -1113,83 +1113,83 @@
         <para>This action adds a new PostThread to a PostArea.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/newpost.jsp, mmbob/actions.jsp and mmbob/postarea.jsp</para> 
+            <para>template: mmbob/newpost.jsp, mmbob/actions.jsp and mmbob/postarea.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: newPost, getPostAreaInfo </para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
-            org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum, 
-            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
+            org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum,
+            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread,
             org.mmbase.applications.mmbob.Poster</para>
           </listitem>
           <listitem>
             <para>Methods: Controller#newPostThread, PostArea#newPost, PostThread#new</para>
           </listitem>
           <listitem>
-            <para>Description: The newpost page shows a form where a topic, mood and text for a new 
-            postthread can be added. After submitting this information, the Controller#newPostThread 
+            <para>Description: The newpost page shows a form where a topic, mood and text for a new
+            postthread can be added. After submitting this information, the Controller#newPostThread
             method will be called. This method first checks a few things, e.g. if the users hasn't been
             blocked, if there are no illegal html tags inside the text, if there's enough time between
-            two subsequent postings, etc. If all turns out to be valid, the method PostArea#newPost will 
+            two subsequent postings, etc. If all turns out to be valid, the method PostArea#newPost will
             be called. The PostArea#newPost method creates the PostThread MMBase node and calls the
-            new method on the PostThread class. This new method intantiates the object and sets some 
+            new method on the PostThread class. This new method intantiates the object and sets some
             statistical information.</para>
           </listitem>
         </itemizedlist>
-      </section> 
+      </section>
       <section id="ActionsEditPostThread">
         <title>Edit PostThread</title>
         <para>This action changes a few flags which can be added to a PostThread (status, mood, type).</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/editpostthread.jsp, mmbob/actions.jsp and mmbob/postarea.jsp</para> 
+            <para>template: mmbob/editpostthread.jsp, mmbob/actions.jsp and mmbob/postarea.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: editPostThread</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum,
             org.mmbase.applications.mmbob.PostThread, org.mmbase.applications.mmbob.Poster</para>
           </listitem>
           <listitem>
-            <para>Methods: Controller#EditPostThread, Forum#GetPostArea, PostArea#getPostThread, 
+            <para>Methods: Controller#EditPostThread, Forum#GetPostArea, PostArea#getPostThread,
             PostThread#setType, PostThread#setMood, PostThread#setState, PostThread#save.</para>
           </listitem>
           <listitem>
             <para>Description: The editpostthread page shows three select boxes with options which can be
-            changed (status, mood, type). When this information gets submitted, the Controller#EditPostThread 
-            is called, the correct Forum, PostArea, PostThread is retrieved and the PostThread#setType, 
+            changed (status, mood, type). When this information gets submitted, the Controller#EditPostThread
+            is called, the correct Forum, PostArea, PostThread is retrieved and the PostThread#setType,
             PostThread#setMood, PostThread#setState, PostThread#save methods are called.</para>
           </listitem>
         </itemizedlist>
-      </section> 
+      </section>
       <section id="ActionsRemovePostThread">
         <title>Remove PostThread</title>
         <para>This action removes the current postthread.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/removepostthread.jsp, mmbob/actions.jsp and mmbob/postarea.jsp</para> 
+            <para>template: mmbob/removepostthread.jsp, mmbob/actions.jsp and mmbob/postarea.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: removePostThread</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
-            org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum, 
-            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
+            org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum,
+            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread,
             org.mmbase.applications.mmbob.Posting</para>
           </listitem>
           <listitem>
-            <para>Methods: Controller#RemovePostThread, Forum#getPostArea, PostArea#removePostThread, 
+            <para>Methods: Controller#RemovePostThread, Forum#getPostArea, PostArea#removePostThread,
             PostThread#remove, Posting#remove</para>
           </listitem>
           <listitem>
-            <para>Description: The removepostthread page first calls the removePostThread method in the 
-            Controller, this will get the PostArea where the PostThread is part of. On this PostArea the 
-            method PostArea#removePostThread method is called. The PostArea#removePostThread calls the 
+            <para>Description: The removepostthread page first calls the removePostThread method in the
+            Controller, this will get the PostArea where the PostThread is part of. On this PostArea the
+            method PostArea#removePostThread method is called. The PostArea#removePostThread calls the
             PostThread#remove method and before the PostThread removes itself, all related Postings will
             be removed by calling the Posting#remove method for every Posting.</para>
           </listitem>
@@ -1200,29 +1200,29 @@
         <para>This action moves the current postthread from one PostArea into another one.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/movepostthread.jsp, mmbob/actions.jsp and mmbob/postarea.jsp</para> 
+            <para>template: mmbob/movepostthread.jsp, mmbob/actions.jsp and mmbob/postarea.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: movePostThread</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
-            org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
+            org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum,
             org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread</para>
           </listitem>
           <listitem>
-            <para>Methods: Controller#movePostThread, Forum#getPostArea, PostArea#getPostThread, 
+            <para>Methods: Controller#movePostThread, Forum#getPostArea, PostArea#getPostThread,
             PostArea#movePostThread</para>
           </listitem>
           <listitem>
-            <para>Description: The movepostthread page shows a list of PostAreas. If a PostArea has 
-            been selected, the Controller#movePostThread method will be called. This method gets the 
+            <para>Description: The movepostthread page shows a list of PostAreas. If a PostArea has
+            been selected, the Controller#movePostThread method will be called. This method gets the
             PostArea and PostThread and calls the PostArea#movePostThread method. This method moves the
             PostThread and adds a Posting to the previous PostThread with a link to the new location, so
             users can find the new location.</para>
           </listitem>
         </itemizedlist>
-      </section>      
+      </section>
     </section>
     <section id="ActionsPosting">
       <title>Posting</title>
@@ -1232,25 +1232,25 @@
         <para>This action shows a list of all Postings inside the selected PostThread.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/thread.jsp</para> 
+            <para>template: mmbob/thread.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: getPostings</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
-            org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum, 
-            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
+            org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum,
+            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread,
             org.mmbase.applications.mmbob.Poster</para>
           </listitem>
           <listitem>
-            <para>Methods: Controller#getPostings, ForumManager#getForum, Forum#getPostArea, 
+            <para>Methods: Controller#getPostings, ForumManager#getForum, Forum#getPostArea,
             PostArea#getPostThread, PostArea#getPostings</para>
           </listitem>
           <listitem>
             <para>Description: The thread.jsp page shows a list of all Postings of the
-            selected PostThread. The Controller#getPostings gets all PostThreads by first getting 
-            the selected Forum, the selected PostArea, the selected PostThread and then all the 
+            selected PostThread. The Controller#getPostings gets all PostThreads by first getting
+            the selected Forum, the selected PostArea, the selected PostThread and then all the
             Postings of this PostThread. There is some math in the Controller#getPostings for the
             correct paginating of the Postings.</para>
           </listitem>
@@ -1258,97 +1258,97 @@
       </section>
       <section id="ActionsAddPosting">
         <title>New Posting</title>
-        <para>This action adds a new Posting to a PostThread. This can both be a quick reply 
-        (using the form at the bottom of a page) and a quoted reply (by using the quote button 
+        <para>This action adds a new Posting to a PostThread. This can both be a quick reply
+        (using the form at the bottom of a page) and a quoted reply (by using the quote button
         next to every Posting).</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/posting.jsp, mmbob/actions.jsp and mmbob/thread.jsp</para> 
+            <para>template: mmbob/posting.jsp, mmbob/actions.jsp and mmbob/thread.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: postReply</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
-            org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum, 
-            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
+            org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum,
+            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread,
             org.mmbase.applications.mmbob.Poster</para>
           </listitem>
           <listitem>
-            <para>Methods: Controller#postReply, ForumManager#getForum, Forum#getPostArea, 
+            <para>Methods: Controller#postReply, ForumManager#getForum, Forum#getPostArea,
             PostArea#getPostThread, PostThread#postReply</para>
           </listitem>
           <listitem>
-            <para>Description: the quick reply form at the bottom of every page only shows a text field, 
-            the quote form (posting.jsp) shows a text and a subject. After this for is submitted, 
+            <para>Description: the quick reply form at the bottom of every page only shows a text field,
+            the quote form (posting.jsp) shows a text and a subject. After this for is submitted,
             the Controller#postReply method is called. This method first checks a few things, e.g. if the users hasn't been
             blocked, if there are no illegal html tags inside the text, if there's enough time between
             two subsequent postings, etc. If all turns out to be valid, the method PostThread#postReply
             will be called. The PostThread#postReply method creates the Posting MMBase node and calls the
-            new method on the Posting class. The PostThread#postReply method also updates the PostThread 
+            new method on the Posting class. The PostThread#postReply method also updates the PostThread
             statistics.</para>
           </listitem>
         </itemizedlist>
-      </section> 
+      </section>
       <section id="ActionsEditPosting">
         <title>Edit Posting</title>
-        <para>This action edits a posting. There are two different types of edits: by the Poster or 
+        <para>This action edits a posting. There are two different types of edits: by the Poster or
         by a moderator. Both use the same page, tags, etc.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/editpost.jsp, mmbob/actions.jsp and mmbob/thread.jsp</para> 
+            <para>template: mmbob/editpost.jsp, mmbob/actions.jsp and mmbob/thread.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: getPosting, getPostAreaInfo, editPost</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum,
-            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread, 
+            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread,
             org.mmbase.applications.mmbob.Posting, org.mmbase.applications.mmbob.Poster</para>
           </listitem>
           <listitem>
-            <para>Methods: Controller#EditPost, ForumManager#getForum, Forum#getPostArea, 
-            PostArea#getPostThread, PostThread#getPosting, Posting#setSubject, Posting#setBody, 
+            <para>Methods: Controller#EditPost, ForumManager#getForum, Forum#getPostArea,
+            PostArea#getPostThread, PostThread#getPosting, Posting#setSubject, Posting#setBody,
             Posting#setEditTime, Posting#save.</para>
           </listitem>
           <listitem>
-            <para>Description: The editpost page shows a form with a field for the topic and a 
-            textarea for the body. With this the posting can be edited. After the form has been 
-            submitted the Controller#EditPost method is called. This method gets the Posting and 
-            sets the changed fields. It also sets the edit time field by using the 
+            <para>Description: The editpost page shows a form with a field for the topic and a
+            textarea for the body. With this the posting can be edited. After the form has been
+            submitted the Controller#EditPost method is called. This method gets the Posting and
+            sets the changed fields. It also sets the edit time field by using the
             Posting#setEditTime method. If the Posting is the first posting in a thread the lastsubject
             fields have to be updated also.</para>
           </listitem>
         </itemizedlist>
-      </section> 
+      </section>
       <section id="ActionsRemovePosting">
         <title>Remove Posting</title>
-        <para>This action removes the current posting. This action can be triggered by both the Poster 
+        <para>This action removes the current posting. This action can be triggered by both the Poster
         and a moderator.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/removepost.jsp, mmbob/actions.jsp and mmbob/postarea.jsp</para> 
+            <para>template: mmbob/removepost.jsp, mmbob/actions.jsp and mmbob/postarea.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: getPosting, removePost</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum,
-            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread, 
+            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread,
             org.mmbase.applications.mmbob.Posting, org.mmbase.applications.mmbob.Poster</para>
           </listitem>
           <listitem>
-            <para>Methods: Controller#RemovePost, ForumManager#getForum, Forum#getPostArea, 
+            <para>Methods: Controller#RemovePost, ForumManager#getForum, Forum#getPostArea,
             PostArea#getPostThread, PostThread#getPosting, Posting#remove</para>
           </listitem>
           <listitem>
-            <para>Description: The removepost page first calls the removePost method in the 
-            Controller, this will get the Posting. After it has been checked that the User has 
+            <para>Description: The removepost page first calls the removePost method in the
+            Controller, this will get the Posting. After it has been checked that the User has
             the right to remove the posting (i.e. the user is a moderator or the Posting is owned
             by the user), the Posting#remove method is called. This method first checks to see
-            if the Posting is somewhere referenced as a foreign key. If this is true, these 
+            if the Posting is somewhere referenced as a foreign key. If this is true, these
             will be removed. After these checks, the Posting gets removed.</para>
           </listitem>
         </itemizedlist>
@@ -1363,32 +1363,32 @@
         <para>This action edits the Poster's personal information.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/profile.jsp, mmbob/actions.jsp</para> 
+            <para>template: mmbob/profile.jsp, mmbob/actions.jsp</para>
           </listitem>
           <listitem>
-            <para>functiontag: getForumConfig, getPosterInfo, getProfileValues, editProfilePoster, 
+            <para>functiontag: getForumConfig, getPosterInfo, getProfileValues, editProfilePoster,
             setProfileValue</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum,
             org.mmbase.applications.mmbob.Poster</para>
           </listitem>
           <listitem>
             <para>Methods: Controller#getForumInfo, Controller#getPosterInfo, ForumManager#getForum,
-            Controller#editProfilePoster, Forum#getPoster, Poster#set*, Poster#save, 
-            Controllser#getProfileValues, Controller#setProfileValue, Poster#getProfileValues, 
+            Controller#editProfilePoster, Forum#getPoster, Poster#set*, Poster#save,
+            Controllser#getProfileValues, Controller#setProfileValue, Poster#getProfileValues,
             Poster#setProfileValue</para>
           </listitem>
           <listitem>
-            <para>Description: All Poster related actions use the profile.jsp page. Every action 
+            <para>Description: All Poster related actions use the profile.jsp page. Every action
             has its own tab. The first tab is for the poster's personal information. If the profile page
             is the active poster's profile, a form will be shown otherwise a listing of all the personal
             information will be shown.</para>
-            <para>The form and the listing use the Controller#getPosterInfo to get the personal 
+            <para>The form and the listing use the Controller#getPosterInfo to get the personal
             information. If the Poster has information stored in an external profile, this will also
             be displayed by calling the Controller#getProfileValues method.</para>
-            <para>If the form is submitted the Controller#editProfilePoster method is called. This 
+            <para>If the form is submitted the Controller#editProfilePoster method is called. This
             method will get the active Poster and call it's set* methods and saves the changes
             by calling the Poster#save method. It the Poster has information stored in an external profile
             the Controller#setProfileValue method will be called.</para>
@@ -1400,28 +1400,28 @@
         <para>This action adds or edits the Poster's signature.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/profile.jsp, mmbob/actions.jsp</para> 
+            <para>template: mmbob/profile.jsp, mmbob/actions.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: getForumConfig, getSingleSignature, getSignatures, changeSignature,
             setSingleSignature, addSignature</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum,
             org.mmbase.applications.mmbob.Poster, org.mmbase.applications.mmbob.Signature</para>
           </listitem>
           <listitem>
-            <para>Methods: Controller#getForumInfo, Controller#getSingleSignature, Controller#getSignatures, 
-            Controller#setSingleSignature, Controller#addSignature, ForumManager#getForum, 
-            Forum#getPoster, Poster#getSignatures, Poster#getSignature, Poster#addSignature, 
+            <para>Methods: Controller#getForumInfo, Controller#getSingleSignature, Controller#getSignatures,
+            Controller#setSingleSignature, Controller#addSignature, ForumManager#getForum,
+            Forum#getPoster, Poster#getSignatures, Poster#getSignature, Poster#addSignature,
             Signature#setBody, Signature#setEncoding, Signature#setMode</para>
           </listitem>
           <listitem>
             <para>Description: The second tab of the profile page, is the signature tab. This tab shows
             a textarea where a signature can be added. The maxsig parameter in the Forum config sets the
             number of signatures a user can have. If it's only one, the functions used for getting and
-            editing a signature are the getSingleSignature and setSingleSignature. If there are more 
+            editing a signature are the getSingleSignature and setSingleSignature. If there are more
             signatures allowed the getSignatures and addSignature are used.</para>
           </listitem>
         </itemizedlist>
@@ -1431,13 +1431,13 @@
         <para>This action allows a user to add, delete, choose an Avatar.</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/profile.jsp, mmbob/avatar_actions.jsp</para> 
+            <para>template: mmbob/profile.jsp, mmbob/avatar_actions.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: getForumConfig, getPosterInfo</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum,
             org.mmbase.applications.mmbob.Poster</para>
           </listitem>
@@ -1446,13 +1446,13 @@
             Poster#getAvatar.</para>
           </listitem>
           <listitem>
-            <para>Description: There are two different ways for a user to select an Avatar image. 
-            First the forum can have predefined avatarsets where a user can select an image form. 
+            <para>Description: There are two different ways for a user to select an Avatar image.
+            First the forum can have predefined avatarsets where a user can select an image form.
             This avatarset(s) must be definied in the thememanager config files. Second the user can
-            upload an image. When the image has been uploaded it's added to the user's avatarset. 
+            upload an image. When the image has been uploaded it's added to the user's avatarset.
             All images a user uploads will be added to this list.</para>
             <para>By using the Poster#getAvatar method the number of the Avatar image will be retrieved.
-            This is the only Java method which has something to do with Avatars. The rest of the avatar 
+            This is the only Java method which has something to do with Avatars. The rest of the avatar
             functionality is done by using the standard MMBase taglibrary.</para>
           </listitem>
         </itemizedlist>
@@ -1460,38 +1460,38 @@
     </section>
     <section id="ActionsUserFunctions">
       <title>User functions</title>
-      <para>There are a few things a user can do with the Forum besides reading and adding new 
+      <para>There are a few things a user can do with the Forum besides reading and adding new
       postings, e.g. subscribe to threads, bookmark threads, search, use privatemessaging.</para>
       <section id="ActionsUserFunctionsBookmark">
         <title>Bookmark Threads</title>
         <para>This action allows a user to bookmark a PostThread</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/thread.jsp, mmbob/bookmarked.jsp, mmbob/actions.jsp</para> 
+            <para>template: mmbob/thread.jsp, mmbob/bookmarked.jsp, mmbob/actions.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: setBookmarkedChange, getBookmarkedThreads.</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum,
-            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread, 
+            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread,
             org.mmbase.applications.mmbob.Poster,org.mmbase.applications.mmbob.ThreadObserver</para>
           </listitem>
           <listitem>
-            <para>Methods: Controller#setBookmarkedChange, Controller#getBookmarkedThreads, 
-            ForumManager#getForum, Forum#getPoster, Forum#setBookmarkedChange, 
+            <para>Methods: Controller#setBookmarkedChange, Controller#getBookmarkedThreads,
+            ForumManager#getForum, Forum#getPoster, Forum#setBookmarkedChange,
             ThreadObserver#setBookmarkedChange</para>
           </listitem>
           <listitem>
-            <para>Description: In every PostThread page (thread.jsp) there is a link 
-            'Bookmarked: off' (or 'Bookmarked: on' if the user already bookmarked it). 
-            If the user clicks on the 'Bookmarked: off' link, the method Controller#setBookmarkedChange 
-            is called. This method adds the user to the list of users who have this PostThread as a 
-            bookmark. If the user clicks on the 'Bookmarked: off' link, the user will be removed 
+            <para>Description: In every PostThread page (thread.jsp) there is a link
+            'Bookmarked: off' (or 'Bookmarked: on' if the user already bookmarked it).
+            If the user clicks on the 'Bookmarked: off' link, the method Controller#setBookmarkedChange
+            is called. This method adds the user to the list of users who have this PostThread as a
+            bookmark. If the user clicks on the 'Bookmarked: off' link, the user will be removed
             from this list.</para>
             <para>There is also a 'Bookmarked' link on almost every page. This link will show the bookmarked
-            page. This page shows a list of all the user's bookmarked PostThreads by calling the 
+            page. This page shows a list of all the user's bookmarked PostThreads by calling the
             Controller#getBookmarkedThreads method.
             </para>
           </listitem>
@@ -1499,32 +1499,32 @@
       </section>
       <section id="ActionsUserFunctionsEmail">
         <title>Email subscription Threads</title>
-        <para>This action allows a user to subscribe to a PostThread. This means the 
+        <para>This action allows a user to subscribe to a PostThread. This means the
         user will get an message by email when a new posting is added to the PostThread.
         </para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/thread.jsp, mmbob/bookmarked.jsp, mmbob/actions.jsp</para> 
+            <para>template: mmbob/thread.jsp, mmbob/bookmarked.jsp, mmbob/actions.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: setEmailOnChange.</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum,
-            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread, 
+            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread,
             org.mmbase.applications.mmbob.Poster, org.mmbase.applications.mmbob.ThreadObserver</para>
           </listitem>
           <listitem>
-            <para>Methods: Controller#setEmailOnChange, ForumManager#getForum, Forum#getPoster, 
+            <para>Methods: Controller#setEmailOnChange, ForumManager#getForum, Forum#getPoster,
             ThreadObserver#setEmailOnChange</para>
           </listitem>
           <listitem>
-            <para>Description: In every PostThread page (thread.jsp) there is a link 
-            'Email: off' (or 'Email: on' if the user already subscribed to it). 
-            If the user clicks on the 'Email: off' link, the method Controller#setEmailOnChange 
-            is called. This method adds the user to the list of users who have a subscription 
-            on this PostThread. If the user clicks on the 'Email: off' link, the user will be 
+            <para>Description: In every PostThread page (thread.jsp) there is a link
+            'Email: off' (or 'Email: on' if the user already subscribed to it).
+            If the user clicks on the 'Email: off' link, the method Controller#setEmailOnChange
+            is called. This method adds the user to the list of users who have a subscription
+            on this PostThread. If the user clicks on the 'Email: off' link, the user will be
             removed from this list.</para>
           </listitem>
         </itemizedlist>
@@ -1535,32 +1535,32 @@
         search (all PostArea or one specific PostArea)</para>
         <itemizedlist>
           <listitem>
-            <para>template: mmbob/search.jsp, mmbob/actions.jsp</para> 
+            <para>template: mmbob/search.jsp, mmbob/actions.jsp</para>
           </listitem>
           <listitem>
             <para>functiontag: getForumInfo, getPostAreas, searchPostings.</para>
           </listitem>
           <listitem>
-            <para>Classes: org.mmbase.applications.mmbob.gui.Controller, 
+            <para>Classes: org.mmbase.applications.mmbob.gui.Controller,
             org.mmbase.applications.mmbob.ForumManager, org.mmbase.applications.mmbob.Forum,
-            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread, 
+            org.mmbase.applications.mmbob.PostArea, org.mmbase.applications.mmbob.PostThread,
             org.mmbase.applications.mmbob.Posting</para>
           </listitem>
           <listitem>
-            <para>Methods: Controller#getForumInfo, Controller#getPostAreas, 
-            Controller#searchPostings, ForumManager#getForum, Forum#getPostArea, 
+            <para>Methods: Controller#getForumInfo, Controller#getPostAreas,
+            Controller#searchPostings, ForumManager#getForum, Forum#getPostArea,
             PostArea#getPostThread, PostThread#searchPostings, PostArea#searchPostings,
             Forum#searchPostings.</para>
           </listitem>
           <listitem>
-            <para>Description: the search page shows a list of PostAreas and a search textbox. 
-            If the users clicks on the search button, the Controller#searchPostings is called. 
-            This method determines if the search scope is the whole forum or only one PostArea. 
-            If the scope is the whole forum, the search method will get all PostAreas and 
-            calls the searchPostings method on every one of them. If the scope is only one 
+            <para>Description: the search page shows a list of PostAreas and a search textbox.
+            If the users clicks on the search button, the Controller#searchPostings is called.
+            This method determines if the search scope is the whole forum or only one PostArea.
+            If the scope is the whole forum, the search method will get all PostAreas and
+            calls the searchPostings method on every one of them. If the scope is only one
             PostArea, it calls the searchPostings method on the selected PostArea.</para>
-            <para>The PostArea#searchPostings method, will call the searchPostings method on 
-            all related PostThreads. The PostThread#searchPostings method will two search 
+            <para>The PostArea#searchPostings method, will call the searchPostings method on
+            all related PostThreads. The PostThread#searchPostings method will two search
             methods on every Posting in this PostThread: inBody and inSubject. These methods
             perform the real search.</para>
           </listitem>
@@ -1570,18 +1570,18 @@
   </section>
 
   <section id="Remarks">
-    <title>Remarks</title> 
+    <title>Remarks</title>
     <para>At the end of this technical overview of MMBob, a few remarks will be made about some
     issues discovered during the writing of this document. This is not a wishlist or a buglist, but
     a list of issues which need te be fixed or changed to create a better maintainable MMBob.</para>
-    <para>The first thing that needs to be done to reach this goal (create a better maintainable 
-    MMBob) is to start a 'feature freeze'. During this period no new features may be added. All 
+    <para>The first thing that needs to be done to reach this goal (create a better maintainable
+    MMBob) is to start a 'feature freeze'. During this period no new features may be added. All
     the new features or wishes must be added to a roadmap or wishlist.</para>
     <para>The next thing to do is create a buglist and prioritize these bugs. For this buglist extensive
-    testing of MMBob is needed. Especially the external profiles connector has to be tested, because 
-    it's a relatively new part of MMBob and it couldn't be tested during the writing of this 
+    testing of MMBob is needed. Especially the external profiles connector has to be tested, because
+    it's a relatively new part of MMBob and it couldn't be tested during the writing of this
     document.</para>
-    <para>Before starting to fix the bugs, it would be best to do a major cleanup of both the 
+    <para>Before starting to fix the bugs, it would be best to do a major cleanup of both the
     templates and the java code. The most important things during this cleaning are:</para>
     <itemizedlist>
       <listitem>
@@ -1607,14 +1607,14 @@
         converter has to be created to convert old MMBob installations.</para>
       </listitem>
     </itemizedlist>
-    <para>There is one part of MMBob where a lot of features are 'not implemented yet' and that is 
+    <para>There is one part of MMBob where a lot of features are 'not implemented yet' and that is
     the private messaging system. This must be removed completely or the missing features must be
     implemented.</para>
     <para>After the cleanup, the bugs that still exist can be fixed.</para>
-    <para>The result of these actions will be a more stable, cleaner, better maintainable MMBob 
+    <para>The result of these actions will be a more stable, cleaner, better maintainable MMBob
     where new features can be added.</para>
 
-    
+
   </section>
-  
-</article>  
+
+</article>
