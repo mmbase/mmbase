@@ -158,8 +158,8 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
         registerSystemID("http://www.w3.org/2001/03/datatypes.dtd", "datatypes.dtd", null);
         registerSystemID("https://www.w3.org/2001/03/datatypes.dtd", "datatypes.dtd", null);
 
-        //registerSystemID("http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd", "docbookx.dtd", null);
-        //registerSystemID("http://www.oasis-open.org/docbook/xml/4.1.2/dbnotnx.mod", "dbnotnx.mod", null);
+        //registerSystemID("https://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd", "docbookx.dtd", null);
+        //registerSystemID("https://www.oasis-open.org/docbook/xml/4.1.2/dbnotnx.mod", "dbnotnx.mod", null);
     }
 
 
