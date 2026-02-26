@@ -11,7 +11,7 @@
     omit-xml-declaration="no"
     standalone="no"
     doctype-public="-//OASIS//DTD DocBook XML V4.1.2//EN"
-    doctype-system="http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd"
+    doctype-system="https://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd"
     indent="yes"
     />
 
@@ -43,7 +43,7 @@
       </xsl:apply-templates>
     </article>
   </xsl:template>
-  
+
   <!-- one section per buildertype -->
   <xsl:template match="buildertype">
     <section id="buildertype-{@name}">
@@ -64,11 +64,11 @@
     </xsl:variable>
     <!-- one section per builder -->
     <section id="{$buildername}">
-      <!-- display descriptive name and buildername, 
+      <!-- display descriptive name and buildername,
            this way buildername will also be displayed in indexes
-           and it will be easier to find the builder you need :-) --> 
+           and it will be easier to find the builder you need :-) -->
       <title>
-        <xsl:value-of select="names/plural[@xml:lang=$language]"/> 
+        <xsl:value-of select="names/plural[@xml:lang=$language]"/>
         (<xsl:value-of select="$buildername"/>)
       </title>
 
@@ -128,7 +128,7 @@
       </section>
 
       <xsl:apply-templates select="fieldlist"/>
-   
+
     </section>
   </xsl:template>
 
