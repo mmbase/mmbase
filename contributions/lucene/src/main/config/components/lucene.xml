@@ -54,6 +54,7 @@
     <xi:include href="https://www.mmbase.org/components/docbook.head.xml" />
     <body>
       <class name="org.mmbase.framework.DocumentationRenderer">
+        <param name="project">mmbase</param>
         <param name="module">contributions/lucene</param>
         <param name="docbook">documentation/lucene.xml</param>
       </class>
