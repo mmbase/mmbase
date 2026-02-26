@@ -268,20 +268,21 @@ public class CacheManager implements CacheManagerMBean {
 
         if (only == null) {
             log.service("Configuring caches with " + xmlReader.getSystemId());
+
+            final Element defaultImpl = xmlReader.getElementByPath("caches.defaultImplementation");
+            if (defaultImpl != null) {
+                final String clazz = DocumentReader.getElementValue(DocumentReader.getElementByPath(defaultImpl, "defaultImplementation.class"));
+                final Map<String, String> configValues = new HashMap<>();
+                for (Element attrNode : DocumentReader.getChildElements(defaultImpl, "param")) {
+                    String paramName = xmlReader.getElementAttributeValue(attrNode, "name");
+                    String paramValue = DocumentReader.getElementValue(attrNode);
+                    configValues.put(paramName, paramValue);
+                }
+                log.info("Default cache implementation: " + clazz + " with config " + configValues);
+                createCache = size -> createImplementation(size, clazz, configValues);
+            }
         } else {
             if (log.isDebugEnabled()) log.debug("Configuring cache " + only + " with file " + xmlReader.getSystemId());
-        }
-        final Element defaultImpl = xmlReader.getElementByPath("caches.defaultImplementation");
-        if (defaultImpl != null) {
-            final String clazz = DocumentReader.getElementValue(DocumentReader.getElementByPath(defaultImpl, "defaultImplementation.class"));
-            final Map<String,String> configValues = new HashMap<>();
-            for (Element attrNode: DocumentReader.getChildElements(defaultImpl, "param")) {
-                String paramName = xmlReader.getElementAttributeValue(attrNode, "name");
-                String paramValue = DocumentReader.getElementValue(attrNode);
-                configValues.put(paramName, paramValue);
-            }
-            log.info("Default cache implementation: " + clazz + " with config " + configValues);
-            createCache = size -> createImplementation(size, clazz, configValues);
         }
 
 
