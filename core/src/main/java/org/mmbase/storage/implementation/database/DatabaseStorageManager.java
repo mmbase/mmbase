@@ -3684,13 +3684,17 @@ public class DatabaseStorageManager implements StorageManager<DatabaseStorageMan
             long p = 1;
             int c;
             InputStream stream = getBinaryStream();
+            byte[] buf = new byte[1024];
             try {
-                while((c = stream.read()) > -1) {
-                    if (p >= pos) {
-                        b.write(c);
+                while((c = stream.read(buf)) > -1) {
+                    for (int i = 0; i < c; i++) {
+                        if (p >= pos) {
+                            b.write(buf[i]);
+                            if (p >= pos + length) break;
+                        }
+                        p++;
                     }
-                    p++;
-                    if (p > pos + length) break;
+                    if (p >= pos + length) break;
                 }
             } catch (IOException ioe) {
                 log.error(ioe);
