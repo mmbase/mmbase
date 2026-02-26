@@ -151,6 +151,12 @@ public class DatabaseStorageManager implements StorageManager<DatabaseStorageMan
     }
 
 
+    protected final boolean logQuery(String query, long startTime, long afterExecute) {
+        long duration = afterExecute - startTime;
+        getFactory().logQuery("afterexecute:" + query, duration);
+        return logQuery(query, startTime);
+    }
+
     protected final boolean logQuery(String query, long startTime) {
         long duration = System.nanoTime() - startTime;
         return getFactory().logQuery(query, duration);
@@ -3871,10 +3877,13 @@ public class DatabaseStorageManager implements StorageManager<DatabaseStorageMan
     public void executeQuery(String sql, ResultSetReader reader) throws SQLException {
         long startTime = getLogStartTime();
         String message = null;
+        long afterExecute = startTime;
         try {
             Connection con = getActiveConnection();
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
+            afterExecute = getLogStartTime();
+
             reader.read(rs);
 
         } catch (SQLException e) {
@@ -3884,7 +3893,7 @@ public class DatabaseStorageManager implements StorageManager<DatabaseStorageMan
             throw e;
         } finally {
             releaseActiveConnection();
-            logQuery(sql + (message == null ? "" : " (" + message + ")"), startTime);
+            logQuery(sql + (message == null ? "" : " (" + message + ")"), startTime, afterExecute);
         }
     }
 
