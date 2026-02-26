@@ -9,9 +9,13 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.cache.implementation;
 
-import org.mmbase.cache.CacheImplementationInterface;
 import java.util.*;
-import org.mmbase.util.logging.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import org.mmbase.cache.CacheImplementationInterface;
+import org.mmbase.util.logging.Logger;
+import org.mmbase.util.logging.Logging;
 
 /**
  * A cache implementation backed by a {@link java.util.LinkedHashMap}, in access-order mode, and
@@ -28,6 +32,8 @@ public class LRUCache<K, V> implements CacheImplementationInterface<K, V> {
 
     public int maxSize = 100;
     private final Map<K, V> backing;
+    private final ReadWriteLock rwLock = new ReentrantReadWriteLock();
+    private final LinkedHashMap<K, Long> accessOrder;
 
     public LRUCache() {
         this(100);
@@ -35,44 +41,16 @@ public class LRUCache<K, V> implements CacheImplementationInterface<K, V> {
 
     public LRUCache(int size) {
         maxSize = size;
-        // caches can typically be accessed/modified by multipible thread, so we need to synchronize
-        backing = Collections.synchronizedMap(new LinkedHashMap<K, V>(size, 0.75f, true) {
+        // Use ConcurrentHashMap for non-blocking reads
+        backing = new ConcurrentHashMap<>(size);
+        // Track access order separately for LRU eviction
+        accessOrder = new LinkedHashMap<K, Long>(size, 0.75f, true) {
             private static final long serialVersionUID = 0L;
             @Override
-            protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
-                int overSized = size() - LRUCache.this.maxSize;
-                if (overSized <= 0) {
-                    return false;
-                } else if (overSized == 1) {
-                    // Using iterator to manualy remove the eldest rather then return true to make absolutely sure that one
-                    // disappears, because that seems to fail sometimes for QueryResultCache.
-
-                    final Iterator<K> i = keySet().iterator();
-                    K actualEldest = i.next();
-                    i.remove();
-                    overSized = size() - LRUCache.this.maxSize;
-                    while (overSized > 0) {
-                        // if for some reason a key changed in the cache, even 1 i.remove may not
-                        // shrink the cache.
-                        log.warn("cache didn't shrink (a)" + eldest.getKey() + " [" + eldest.getKey().getClass() + "] [" + eldest.getKey().hashCode() + "]");
-                        log.warn("cache didn't shrink (b)" + actualEldest + " [" + actualEldest.getClass() + "] [" + actualEldest.hashCode() + "]");
-                        actualEldest = i.next();
-                        i.remove();
-                        overSized = size() - LRUCache.this.maxSize;
-                    }
-                    assert overSized <= 0;
-                    return false;
-                } else {
-                    log.warn("How is this possible? Oversized: " + overSized);
-                    log.debug("because", new Exception());
-                    if (overSized > 10) {
-                        log.error("For some reason this cache grew much too big (" + size() + " >> " + LRUCache.this.maxSize + "). This must be some kind of bug. Resizing now.");
-                        clear();
-                    }
-                    return false;
-                }
+            protected boolean removeEldestEntry(Map.Entry<K, Long> eldest) {
+                return size() > LRUCache.this.maxSize;
             }
-        });
+        };
     }
 
     public int getCount(K key) {
@@ -88,17 +66,31 @@ public class LRUCache<K, V> implements CacheImplementationInterface<K, V> {
         if (size < 0 ) {
             throw new IllegalArgumentException("Cannot set size to negative value " + size);
         }
-        maxSize = size;
-        synchronized(backing) {
-            while (size() > maxSize) {
-                try {
-                    Iterator<K> i = keySet().iterator();
-                    i.next();
+        rwLock.writeLock().lock();
+        try {
+            maxSize = size;
+            evictExcessEntries();
+        } finally {
+            rwLock.writeLock().unlock();
+        }
+    }
+
+    /**
+     * Evict entries when cache exceeds maxSize.
+     * Must be called with write lock held.
+     */
+    private void evictExcessEntries() {
+        while (backing.size() > maxSize && !accessOrder.isEmpty()) {
+            try {
+                Iterator<K> i = accessOrder.keySet().iterator();
+                if (i.hasNext()) {
+                    K eldest = i.next();
                     i.remove();
-                } catch (Exception e) {
-                    log.warn(e);
-                    // ConcurentModification?
+                    backing.remove(eldest);
                 }
+            } catch (Exception e) {
+                log.warn("Exception during eviction", e);
+                break;
             }
         }
     }
@@ -122,22 +114,97 @@ public class LRUCache<K, V> implements CacheImplementationInterface<K, V> {
     }
 
     public Object getLock() {
-        return backing;
+        return rwLock;
     }
 
-    // wrapping for synchronization
-    public int size() { return backing.size(); }
-    public boolean isEmpty() { return backing.isEmpty();}
-    public boolean containsKey(Object key) { return backing.containsKey(key);}
-    public boolean containsValue(Object value){ return backing.containsValue(value);}
-    public V get(Object key) { return backing.get(key);}
-    public V put(K key, V value) { return backing.put(key, value);}
-    public V remove(Object key) { return backing.remove(key);}
-    public void putAll(Map<? extends K, ? extends V> map) { backing.putAll(map); }
-    public void clear() { backing.clear(); }
-    public Set<K> keySet() { return backing.keySet(); }
-    public Set<Map.Entry<K,V>> entrySet() { return backing.entrySet(); }
-    public Collection<V> values() { return backing.values();}
+    // wrapping for thread-safety with non-blocking reads
+    public int size() {
+        return backing.size();
+    }
+
+    public boolean isEmpty() {
+        return backing.isEmpty();
+    }
+
+    public boolean containsKey(Object key) {
+        return backing.containsKey(key);
+    }
+
+    public boolean containsValue(Object value) {
+        return backing.containsValue(value);
+    }
+
+    public V get(Object key) {
+        // Non-blocking read from ConcurrentHashMap
+        V value = backing.get(key);
+        // Optionally update access order asynchronously (best effort, may be skipped under contention)
+        if (value != null && key != null && rwLock.writeLock().tryLock()) {
+            try {
+                accessOrder.put((K) key, System.nanoTime());
+            } finally {
+                rwLock.writeLock().unlock();
+            }
+        }
+        return value;
+    }
+
+    public V put(K key, V value) {
+        rwLock.writeLock().lock();
+        try {
+            accessOrder.put(key, System.nanoTime());
+            V result = backing.put(key, value);
+            // Check if eldest entry should be removed
+            if (accessOrder.size() > maxSize) {
+                evictExcessEntries();
+            }
+            return result;
+        } finally {
+            rwLock.writeLock().unlock();
+        }
+    }
+
+    public V remove(Object key) {
+        rwLock.writeLock().lock();
+        try {
+            accessOrder.remove(key);
+            return backing.remove(key);
+        } finally {
+            rwLock.writeLock().unlock();
+        }
+    }
+
+    public void putAll(Map<? extends K, ? extends V> map) {
+        rwLock.writeLock().lock();
+        try {
+            for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+                put(entry.getKey(), entry.getValue());
+            }
+        } finally {
+            rwLock.writeLock().unlock();
+        }
+    }
+
+    public void clear() {
+        rwLock.writeLock().lock();
+        try {
+            backing.clear();
+            accessOrder.clear();
+        } finally {
+            rwLock.writeLock().unlock();
+        }
+    }
+
+    public Set<K> keySet() {
+        return backing.keySet();
+    }
+
+    public Set<Map.Entry<K,V>> entrySet() {
+        return backing.entrySet();
+    }
+
+    public Collection<V> values() {
+        return backing.values();
+    }
 
 
 }
