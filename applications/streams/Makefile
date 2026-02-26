@@ -52,7 +52,7 @@ samples: samples/basic.mpg samples/basic.mov samples/basic.mp3 samples/basic.mp4
 
 
 samples/%:
-	(mkdir -p samples; cd samples ; curl --create-dirs -o $* -L https://www.openbeelden.nl/files/TESTS/$*)
+	(mkdir -p samples; cd samples ; curl --create-dirs -o $* -L https://www.mmbase.org/samples/$*)
 
 
 
