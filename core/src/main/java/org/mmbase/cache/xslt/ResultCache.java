@@ -118,6 +118,10 @@ public class ResultCache extends Cache<String, String> {
      * @todo Generate this key faster and smaller
      */
     private String getKey(Source xsl, Map params, Properties props, Document src) {
+        if (xsl.getSystemId() == null) {
+            log.warn("Cannot generate key for XSLT Result cache, because systemid is null");
+            return null;
+        }
         StringBuilder key = new StringBuilder(xsl.getSystemId());
         key.append('/');
         if (params != null) {
@@ -147,10 +151,12 @@ public class ResultCache extends Cache<String, String> {
         String result = null;
         if (isActive()) {
             key = getKey(xsl, params, props, src);
-            if (log.isDebugEnabled()) {
-                log.debug("Getting result of XSL transformation: " + key);
+            if (key != null) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Getting result of XSL transformation: " + key);
+                }
+                result = get(key);
             }
-            result = get(key);
         }
         if (result == null) {
             try {
@@ -176,7 +182,7 @@ public class ResultCache extends Cache<String, String> {
                 result = e.toString();
             }
             // if result is not too big, then it can be cached:
-            if (isActive()) {
+            if (isActive() && key != null) {
                 if (result.length() < getMaxEntrySize()) {
                     if (log.isDebugEnabled()) {
                         log.debug("Put xslt Result in cache with key " + key);
