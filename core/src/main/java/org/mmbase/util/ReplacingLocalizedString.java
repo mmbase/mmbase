@@ -125,11 +125,24 @@ public class ReplacingLocalizedString extends WrappedLocalizedString {
         if (s == null) {
             return null;
         }
-        // sometimes, implementing java looks rather idiotic, but honestely, this is correct!
-        s =  s.replaceAll("\\\\",  "\\\\\\\\");
-        s =  s.replaceAll("\\.",   "\\\\.");
-        s =  s.replaceAll("\\+",     "\\\\+");
-        return s.replaceAll("\\$", "\\\\\\$");
+        // Single-pass replacement using StringBuilder for better performance
+        // Escapes special regex characters: \ . + $
+        StringBuilder sb = new StringBuilder(s.length() * 2);
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            switch (c) {
+                case '\\':
+                case '.':
+                case '+':
+                case '$':
+                    sb.append('\\');
+                    // Fall through to append the character
+                default:
+                    sb.append(c);
+                    break;
+            }
+        }
+        return sb.toString();
     }
 
 
