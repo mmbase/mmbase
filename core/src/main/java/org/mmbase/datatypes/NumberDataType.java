@@ -12,6 +12,8 @@ package org.mmbase.datatypes;
 import java.text.*;
 
 import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 import org.mmbase.bridge.*;
 import org.mmbase.util.Casting;
@@ -29,6 +31,9 @@ abstract public class NumberDataType<E extends Number & Comparable<E>> extends C
     private static final Logger log = Logging.getLoggerInstance(NumberDataType.class);
 
     private static final long serialVersionUID = 1L;
+
+    // Cache NumberFormat instances by Locale for performance
+    private static final Map<Locale, NumberFormat> NUMBER_FORMAT_CACHE = new ConcurrentHashMap<>();
 
     boolean allowSpecialNumbers = false;
     /**
@@ -60,10 +65,12 @@ abstract public class NumberDataType<E extends Number & Comparable<E>> extends C
     }
 
     protected Number castString(final Object preCast, final Cloud cloud) throws CastException {
-        if (preCast == null || "".equals(preCast)) {
+        // Handle null and empty string
+        if (preCast == null) {
             return null;
         }
 
+        // Handle String arrays
         if (preCast instanceof String[]) {
             String[] sa = (String[]) preCast;
             if (sa.length == 1) {
@@ -71,52 +78,74 @@ abstract public class NumberDataType<E extends Number & Comparable<E>> extends C
             }
         }
 
+        // Handle CharSequence (String, etc.)
         if (preCast instanceof CharSequence) {
-            String s = preCast.toString();
+            String s = (preCast instanceof String) ? (String) preCast : preCast.toString();
+
+            // Return early for empty string
+            if (s.isEmpty()) {
+                return null;
+            }
+
             Locale l = cloud != null ? cloud.getLocale() : Locale.getDefault();
-            NumberFormat nf = NumberFormat.getNumberInstance(l);
+
+            // Use cached NumberFormat for better performance
+            NumberFormat nf = NUMBER_FORMAT_CACHE.computeIfAbsent(l, locale -> {
+                NumberFormat fmt = NumberFormat.getNumberInstance(locale);
+                fmt.setGroupingUsed(false); // we never want to parse e.g. "1.2" to "12"
+                if (fmt instanceof DecimalFormat) {
+                    ((DecimalFormat) fmt).setParseBigDecimal(true);
+                } else {
+                    log.warn("Not a DecimalFormat for locale: " + locale);
+                }
+                return fmt;
+            });
 
             try {
-                nf.setGroupingUsed(false); // we never want to parse e.g. "1.2" to "12". It simply
-                                           // makes no sense, and hard to make backwards compatible
-                if (nf instanceof DecimalFormat) {
-                    ((DecimalFormat) nf).setParseBigDecimal(true);
-                } else {
-                    log.warn("Not a DecimalFormat");
-                }
                 ParsePosition p = new ParsePosition(0);
-                Number number =  nf.parse(s, p);
-                if (log.isDebugEnabled()) {
-                    log.debug("Parsed " + s + " to " + number + " (" + p + " " + l);
-                }
-                if (p.getIndex() < s.length() || p.getErrorIndex() >= 0) {
-                    log.debug("Not correct, falling back to toDouble");
-                    if (! StringDataType.DOUBLE_PATTERN.matcher(s).matches()) {
-                        log.debug("Not a valid double");
-                        throw new CastException("Not a number: '" + s + "'");
-                    } else {
-                        log.debug("Casting to decimal " + s);
-                        return toNumber(s);
+                Number number = nf.parse(s, p);
+
+                // Check if entire string was parsed
+                if (p.getIndex() == s.length() && p.getErrorIndex() < 0) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("Parsed " + s + " to " + number + " (" + p + " " + l);
                     }
+                    return number;
                 }
-                return number;
+
+                // Fallback: try to parse as double pattern
+                if (log.isDebugEnabled()) {
+                    log.debug("Not correct, falling back to toDouble for: " + s);
+                }
+                if (!StringDataType.DOUBLE_PATTERN.matcher(s).matches()) {
+                    throw new CastException("Not a number: '" + s + "'");
+                }
+                return toNumber(s);
+
             } catch (NumberFormatException nfe) {
-                log.debug("For "  + nf + " " + nfe.getMessage());
+                if (log.isDebugEnabled()) {
+                    log.debug("NumberFormatException for " + nf + ": " + nfe.getMessage());
+                }
             }
             return Casting.toDecimal(s);
         } else if (preCast instanceof Float) {
-            if (((Float) preCast).isInfinite()) {
-                // not supported by decimal
-                return (Float) preCast;
+            float f = (Float) preCast;
+            if (!Float.isInfinite(f)) {
+                return Casting.toDecimal(preCast);
             }
+            // not supported by decimal, return as-is
+            return (Float) preCast;
         } else if (preCast instanceof Double) {
-            if (((Double) preCast).isInfinite()) {
-                // not supported by decimal
-                return (Double) preCast;
+            double d = (Double) preCast;
+            if (!Double.isInfinite(d)) {
+                return Casting.toDecimal(preCast);
             }
-        } else {
+            // not supported by decimal, return as-is
+            return (Double) preCast;
         }
-        return Casting.toDecimal(preCast); // this makes it e.g. possible to report that 1e20 is too big for an integer.
+
+        // Default fallback for other Number types
+        return Casting.toDecimal(preCast);
     }
 
 
