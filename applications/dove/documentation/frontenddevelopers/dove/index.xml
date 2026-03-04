@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-"http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd">
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "https://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" []>
 <article class="specification">
   <articleinfo>
     <title>Dove 1.1 XML API</title>
@@ -805,7 +804,7 @@
 
 </response>
 ]]></programlisting>
-    </example>      
+    </example>
   </section>
   <section id="put">
     <title>put</title>
