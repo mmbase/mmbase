@@ -42,7 +42,7 @@ See http://www.MMBase.org/license
     -->
 
 
-    <log4j.version>1.2.14</log4j.version>
+    <log4j.version>1.2.17</log4j.version>
 
     <compile.flags>-Xlint:unchecked,deprecation,fallthrough,finally</compile.flags>
 
@@ -229,19 +229,6 @@ See http://www.MMBase.org/license
               </goals>
             </execution>
           </executions>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-release-plugin</artifactId>
-          <configuration>
-            <tagBase>https://scm.mmbase.org/mmbase/tags</tagBase>
-            <useReleaseProfile>false</useReleaseProfile>
-            <preparationGoals>clean install</preparationGoals>
-            <goals>deploy</goals>
-            <arguments>-Prelease,deploy</arguments>
-            <autoVersionSubmodules>true</autoVersionSubmodules>
-          </configuration>
         </plugin>
 
         <plugin>
