@@ -11,19 +11,20 @@ package org.mmbase.framework;
 
 
 import java.io.*;
-import java.net.*;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URLConnection;
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.regex.*;
-
-import javax.servlet.http.HttpServletRequest;
-
-
-import org.mmbase.util.functions.*;
-import org.mmbase.util.*;
+import java.util.regex.Pattern;
 import org.mmbase.module.core.MMBase;
 import org.mmbase.module.core.MMBaseContext;
-
+import org.mmbase.util.Casting;
+import org.mmbase.util.ChainedWriter;
+import org.mmbase.util.DateFormats;
+import org.mmbase.util.ThreadPools;
+import org.mmbase.util.functions.Parameters;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 
@@ -205,7 +206,7 @@ public class CachedRenderer extends WrappedRenderer {
         }
     }
 
-    private static final Map<File, Future<Exception>> rendering = new ConcurrentHashMap<File, Future<Exception>>();
+    private static final Map<File, Future<Throwable>> rendering = new ConcurrentHashMap<>();
 
     /**
      * Renders the wrapped renderer, and writes the result to both a file, and to the writer.
@@ -213,49 +214,49 @@ public class CachedRenderer extends WrappedRenderer {
     protected void renderWrappedAndFile(final File f, final Parameters blockParameters, final Writer w, final RenderHints hints, final Runnable ready) throws FrameworkException, IOException  {
         writeRenderTime(new Date(), w);
 
-        Future<Exception> future = rendering.get(f);
+        Future<Throwable> future = rendering.get(f);
         if (future == null)  {
             final Parameters myBlockParameters = Utils.fixateParameters(blockParameters);
-            future = ThreadPools.jobsExecutor.submit(new Callable<Exception>() {
-                    public Exception call() {
-                        try {
-                            long startTime = System.currentTimeMillis();
-                            File tempFile = new File(f + ".busy");
-                            Writer fw = new OutputStreamWriter(new FileOutputStream(tempFile), "UTF-8");
-                            Writer writer;
-                            if (wait == Integer.MAX_VALUE) {
-                                writer = new ChainedWriter(w, fw);
-                            } else {
-                                writer = fw;
-                            }
-                            getWraps().render(myBlockParameters, writer, hints);
-                            writer.flush();
-                            fw.close();
-                            tempFile.renameTo(f);
-                            if (ready != null) {
-                                ready.run();
-                            }
-                            if ((System.currentTimeMillis() - startTime) > (wait / 2)) {
-                                log.service("Created " + f);
-                            } else {
-                                log.debug("Created " + f);
-                            }
-                            return null;
-                        } catch (Exception e) {
-                            log.error(e.getMessage());
-                            return e;
-                        }
+            future = ThreadPools.jobsExecutor.submit(() -> {
+                try {
+                    long startTime = System.currentTimeMillis();
+                    File tempFile = new File(f + ".busy");
+                    Writer fw = new OutputStreamWriter(new FileOutputStream(tempFile), "UTF-8");
+                    Writer writer;
+                    if (wait == Integer.MAX_VALUE) {
+                        writer = new ChainedWriter(w, fw);
+                    } else {
+                        writer = fw;
                     }
-                });
+                    getWraps().render(myBlockParameters, writer, hints);
+                    writer.flush();
+                    fw.close();
+                    tempFile.renameTo(f);
+                    if (ready != null) {
+                        ready.run();
+                    }
+                    if ((System.currentTimeMillis() - startTime) > (wait / 2)) {
+                        log.service("Created " + f);
+                    } else {
+                        log.debug("Created " + f);
+                    }
+                    return null;
+                } catch (Throwable e) {
+                    log.error(e.getMessage());
+                    return e;
+                }
+            });
             ThreadPools.identify(future, "Rendering " + f);
             rendering.put(f, future);
             if (log.isDebugEnabled()) {
                 log.debug("Now rendering " + rendering);
             }
         } else {
-            log.debug("Joined " + f + "" + future);
+            if (log.isDebugEnabled()) {
+                log.debug("Joined " + f + future);
+            }
         }
-        Exception e;
+        Throwable e;
         try {
             e = future.get(wait, TimeUnit.MILLISECONDS);
             if (e == null) {
@@ -284,10 +285,8 @@ public class CachedRenderer extends WrappedRenderer {
             }
             w.write("</div>");
             e = null;
-        } catch (InterruptedException ioe) {
+        } catch (InterruptedException | ExecutionException ioe) {
             throw new FrameworkException(ioe);
-        } catch (ExecutionException ee) {
-            throw new FrameworkException(ee);
         }
 
         if (e != null) {
@@ -322,6 +321,13 @@ public class CachedRenderer extends WrappedRenderer {
                     throw new FrameworkException("" + getWraps() + " did not return an URI, and cannot be cached using getLastModified");
                 }
                 URLConnection connection =  uri.toURL().openConnection();
+                if (connection instanceof HttpURLConnection) {
+                    HttpURLConnection httpConnection = (HttpURLConnection) connection;
+                    int statusCode = httpConnection.getResponseCode();
+                    if (statusCode != HttpURLConnection.HTTP_OK) {
+                        throw new FrameworkException("The response for " + uri + " returned status code " + statusCode + " (" + httpConnection.getResponseMessage() + ")");
+                    }
+                }
                 connection.setConnectTimeout(timeout);
                 String cacheControlHeader = connection.getHeaderField("Cache-Control");
                 if (cacheControlHeader == null) {
@@ -333,27 +339,27 @@ public class CachedRenderer extends WrappedRenderer {
                     getWraps().render(blockParameters, w, hints);
                     return;
                 }
-                if (cacheControl.contains("must-revalidate")) {
-                    if (cacheFile.exists()) {
-                        log.debug("Server indicated that the cache must be revalidated");
-                        cacheFile.delete();
+                    if (cacheControl.contains("must-revalidate")) {
+                        if (cacheFile.exists()) {
+                            log.debug("Server indicated that the cache must be revalidated");
+                            cacheFile.delete();
+                        }
                     }
-                }
                 final String etag = connection.getHeaderField("ETag");
                 final long expiration = connection.getExpiration();
                 if (etag != null) {
                     log.debug("Found an etag header on " + uri + " " + etag);
                     final File etagFile = getETagFile(cacheFile);
-                    if ( ! cacheFile.exists() || ! etagFile.exists() || ! etag.equals(readETag(etagFile))) {
+                    if (!cacheFile.exists() || !etagFile.exists() || !etag.equals(readETag(etagFile))) {
                         renderWrappedAndFile(cacheFile, blockParameters, w, hints, new Runnable() {
-                                public void run()  {
-                                    try {
-                                        writeETag(etagFile, etag);
-                                    } catch (IOException ioe) {
-                                        throw new RuntimeException(ioe);
-                                    }
+                            public void run() {
+                                try {
+                                    writeETag(etagFile, etag);
+                                } catch (IOException ioe) {
+                                    throw new RuntimeException(ioe);
                                 }
-                            });
+                            }
+                        });
 
                     } else {
                         log.debug("" + cacheFile + " up to date");
@@ -362,17 +368,17 @@ public class CachedRenderer extends WrappedRenderer {
                 } else if (expiration > 0) {
                     log.debug("Found an expires header on " + uri + " " + etag);
                     final File expiresFile = getExpiresFile(cacheFile);
-                    if (! cacheFile.exists() || ! expiresFile.exists() || System.currentTimeMillis() > readExpires(expiresFile)) {
+                    if (!cacheFile.exists() || !expiresFile.exists() || System.currentTimeMillis() > readExpires(expiresFile)) {
                         log.service("Rendering " + uri + " because " + cacheFile + " not existing expired");
                         renderWrappedAndFile(cacheFile, blockParameters, w, hints, new Runnable() {
-                                public void run()  {
-                                    try {
-                                        writeExpires(expiresFile, expiration);
-                                    } catch (IOException ioe) {
-                                        throw new RuntimeException(ioe);
-                                    }
+                            public void run() {
+                                try {
+                                    writeExpires(expiresFile, expiration);
+                                } catch (IOException ioe) {
+                                    throw new RuntimeException(ioe);
                                 }
-                            });
+                            }
+                        });
                     } else {
                         log.debug("Serving cached file because not yet expired (it's before " + new Date(expiration) + ")");
                         renderFile(cacheFile, w);
@@ -380,17 +386,17 @@ public class CachedRenderer extends WrappedRenderer {
                 } else {
 
                     long modified = connection.getLastModified();
-                    if (modified  == 0) {
+                    if (modified == 0) {
                         log.warn("No last-modified or expiration returned by " + uri + " taking it 5 minutes after last rendering. Consider using 'expires'. Cache control " + cacheControl);
                         if (cacheFile.exists()) {
                             modified = cacheFile.lastModified();
-                            long delay =  5 * 60 * 1000;
+                            long delay = 5 * 60 * 1000;
                             if (modified + delay < System.currentTimeMillis()) {
                                 modified += delay;
                             }
                         }
                     }
-                    if (! cacheFile.exists() || (cacheFile.lastModified() < modified)) {
+                    if (!cacheFile.exists() || (cacheFile.lastModified() < modified)) {
                         log.service("Rendering " + uri + " because " + cacheFile + " older (" + new Date(cacheFile.lastModified()) + ") than " + new Date(modified));
                         renderWrappedAndFile(cacheFile, blockParameters, w, hints, null);
                     } else {
@@ -402,8 +408,6 @@ public class CachedRenderer extends WrappedRenderer {
                 }
             }
 
-        } catch (MalformedURLException mfe) {
-            throw new FrameworkException(mfe);
         } catch (IOException mfe) {
             throw new FrameworkException(mfe);
         }
