@@ -8,12 +8,11 @@ See http://www.MMBase.org/license
 Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.mmbase</groupId>
   <artifactId>mmbase</artifactId>
-
   <version>2.0-SNAPSHOT</version>
   <name>MMBase2</name>
 
@@ -21,17 +20,17 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
 
   <properties>
     <compiler.fork>false</compiler.fork>
-    <mmbase.version>2.0-SNAPSHOT</mmbase.version>
+    <mmbase.version.number>2.0</mmbase.version.number>
+    <mmbase.version.postfix>-SNAPSHOT</mmbase.version.postfix>
+    <mmbase.version>${mmbase.version.number}${mmbase.version.postfix}</mmbase.version>
+    <!-- Cannot be project.version, because then an extension of this cannot have it's own version any more -->
 
-    <mmbase.repos>scp://mmbase.org/home/tomcat/downloads/</mmbase.repos>
     <surefire.fork.mode>once</surefire.fork.mode>
     <surefire.format>brief</surefire.format>
     <surefire.usefile>false</surefire.usefile>
     <surefire.fork.vmargs>-ea</surefire.fork.vmargs>
 
     <project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
-
-    <javadoc.plugin.version>2.7</javadoc.plugin.version>
   </properties>
 
   <description>
@@ -41,62 +40,53 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
     Source Software (MPL) and all standards used are as 'open' as possible. The system can be used
     with all major operating systems, webservers and databases.
   </description>
-  <url>http://www.mmbase.org/</url>
+  <url>https://www.mmbase.org/</url>
   <inceptionYear>2000</inceptionYear>
 
   <organization>
     <name>MMBase.org</name>
-    <url>http://www.mmbase.org</url>
+    <url>https://www.mmbase.org</url>
   </organization>
 
   <licenses>
     <license>
       <name>Mozilla Public License 1.0 (MPL)</name>
-      <url>http://www.mmbase.org/license</url>
+      <url>https://www.mmbase.org/license</url>
     </license>
   </licenses>
 
   <scm>
-    <url>https://scm.mmbase.org/mmbase/trunk</url>
-    <connection>scm:svn:${project.scm.url}</connection>
+    <url>https://github.com/mmbase/mmbase.git</url>
+    <connection>scm:git:${project.scm.url}</connection>
     <developerConnection>${project.scm.connection}</developerConnection>
-
   </scm>
 
-
   <issueManagement>
-    <system>JIRA</system>
-    <url>http://www.mmbase.org/jira/</url>
+    <system>github</system>
+    <url>https://github.com/mmbase/mmbase/issues</url>
   </issueManagement>
 
   <ciManagement>
-    <system>hudson</system>
-    <url>http://www.mmbase.org/hudson/</url>
     <notifiers>
       <notifier>
         <configuration>
-          <address>mmbase-repos@googlegroups.com</address>
+          <address>developers@mmbase.org</address>
         </configuration>
       </notifier>
     </notifiers>
   </ciManagement>
 
-  <prerequisites>
-    <maven>2.2.1</maven>
-  </prerequisites>
-
-
   <mailingLists>
     <mailingList>
       <name>MMBase discussion group</name>
-      <subscribe>http://groups.google.com/group/mmbase-discuss/subscribe</subscribe>
-      <unsubscribe>http://groups.google.com/group/mmbase-discuss/subscribe</unsubscribe>
+      <subscribe>https://groups.google.com/group/mmbase-discuss/subscribe</subscribe>
+      <unsubscribe>https://groups.google.com/group/mmbase-discuss/subscribe</unsubscribe>
       <archive>https://groups.google.com/group/mmbase-discuss/topics</archive>
     </mailingList>
     <mailingList>
       <name>MMBase SCM changes List</name>
-      <subscribe>http://groups.google.com/group/mmbase-repos/subscribe</subscribe>
-      <unsubscribe>http://groups.google.com/group/mmbase-repos/subscribe</unsubscribe>
+      <subscribe>https://groups.google.com/group/mmbase-repos/subscribe</subscribe>
+      <unsubscribe>https://groups.google.com/group/mmbase-repos/subscribe</unsubscribe>
       <archive>https://groups.google.com/group/mmbase-repos/topics</archive>
     </mailingList>
   </mailingLists>
@@ -173,13 +163,12 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
     <developer>
       <id>michiel</id>
       <name>Michiel Meeuwissen</name>
-      <email>Michiel.Meeuwissen@dynasol.nl</email>
-      <url>http://www.dynasol.nl</url>
-      <organization>Dynasol</organization>
+      <email>michiel.meeuwissen@gmail.com</email>
+      <url>https://meeuw.org/</url>
       <roles>
         <role>Release Manager</role>
       </roles>
-      <timezone>1</timezone>
+      <timezone>Europe/Amsterdam</timezone>
     </developer>
     <developer>
       <id>nklasens</id>
@@ -233,7 +222,6 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
     <developer>
       <name>Sander de Boer</name>
       <id>sdboer</id>
-      <email></email>
       <organization>EO</organization>
       <timezone>1</timezone>
     </developer>
@@ -252,132 +240,152 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
 
   <build>
     <defaultGoal>install</defaultGoal>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.5</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>${javadoc.plugin.version}</version>
-          <configuration>
-            <maxmemory>1024</maxmemory>
-            <source>1.6</source>
-            <stylesheetfile>${basedir}/src/main/javadoc-style/stylesheet.css</stylesheetfile>
-            <doctitle>${project.name} ${project.version}</doctitle>
-            <windowtitle>${project.name} ${project.version} - API</windowtitle>
-            <bottom>${project.name} ${project.version} - ${javadoctimestamp}</bottom>
-            <show>package</show>
-            <links>
-              <link>http://www.mmbase.org/api/trunk/mmbase-utils/</link>
-              <link>http://www.mmbase.org/api/trunk/mmbase-bridge/</link>
-              <link>http://www.mmbase.org/api/trunk/mmbase-core/</link>
-              <link>http://docs.oracle.com/javase/7/docs/api/</link>
-              <link>http://docs.oracle.com/javaee/5/api/</link>
-              <link>http://docs.oracle.com/cd/E17802_01/products/products/jsp/jstl/1.1/docs/api/</link>
-              <link>http://logging.apache.org/log4j/1.2/apidocs/</link>
-              <link>http://commons.apache.org/fileupload/apidocs/</link>
-              <link>http://lucene.apache.org/java/3_4_0/api/all/</link>
-              <link>http://www.mozilla.org/rhino/apidocs/</link>
-            </links>
-
-            <tags>
-              <tag>
-                <head>To Do:</head>
-                <name>todo</name>
-                <placement>a</placement>
-              </tag>
-              <tag>
-                <head>Classifies the class as an APPLICATION class, belonging to the application with name application-name</head>
-                <name>application</name>
-              </tag>
-              <tag>
-                <head>Section contains hard-coded values, which should be made configurable.</head>
-                <name>bad-constant</name>
-              </tag>
-              <tag>
-                <head>Section contains literals (numeric or string constants), where constants (public final static identifiers) should be used.</head>
-                <name>bad-literal</name>
-              </tag>
-              <tag>
-                <head>The class needs to be adapted to the MMBase Coding Standards.</head>
-                <name>code-conventions</name>
-              </tag>
-              <tag>
-                <head>Classifies the class as a CORE class</head>
-                <name>core</name>
-              </tag>
-              <tag>
-                <head>Section is deprecated and will be removed from the code. If this is a Class, the entire Class will be removed.</head>
-                <name>deprecated-now</name>
-              </tag>
-              <tag>
-                <head>Section uses deprecated (java) code, which will be fixed</head>
-                <name>deprecation-used</name>
-              </tag>
-              <tag>
-                <head>Section contains code which is depedent on a class, where it is undesirable. The code will be adapated to be more generic or moved to a more appropriate class.</head>
-                <name>dependency</name>
-              </tag>
-              <tag>
-                <head>Section contains code which will be moved to an higher (possibly abstract) class, identified with &lt;classname></head>
-                <name>duplicate</name>
-              </tag>
-              <tag>
-                <head>Section needs Javadoc..</head>
-                <name>javadoc</name>
-              </tag>
-              <tag>
-                <head>Section needs to be altered to use internationalization, using english ('en') as a default.</head>
-                <name>language</name>
-              </tag>
-              <tag>
-                <head>The code for this class falls under a different (and conflicting) license, such as GPL. The code needs to be replaced or moved out of the core.</head>
-                <name>license</name>
-              </tag>
-              <tag>
-                <head>Class will be moved to package &lt;packagename&amp;lg;</head>
-                <name>move</name>
-              </tag>
-              <tag>
-                <head>Section need be improved for performance reasons.</head>
-                <name>performance</name>
-              </tag>
-              <tag>
-                <head>Class wil be renamed to &lt;classname></head>
-                <name>rename</name>
-              </tag>
-              <tag>
-                <head>This Class needs the indicated version of the MMBase core.</head>
-                <name>requires</name>
-              </tag>
-              <!--
-                  These seems to conflict with something and fails to complete mvn javadoc:jar  build
-              -->
-              <tag>
-                <head>Section scope will be narrowed to &lt;scope> (i.e. private, package, protected)</head>
-                <name>scope</name>
-              </tag>
-              <tag>
-                <name>sql</name>
-                <head>Section uses (direct) SQL queries, which will be removed or fixed</head>
-              </tag>
-              <tag>
-                <name>vpro</name>
-                <head>Section contains VPRO-specific code, which will be removed or fixed</head>
-              </tag>
-            </tags>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.3.1</version>
+        <configuration>
+
+          <maxmemory>1024</maxmemory>
+          <!--
+              Very nice, but mvn site fails on it.
+              The maven site does not work anyway.
+          -->
+          <stylesheetfile>file:///${maven.multiModuleProjectDirectory}/documentation/javadoc.css</stylesheetfile>
+
+          <doctitle>MMBase ${project.version}</doctitle>
+          <windowtitle>MMBase ${project.version} - API</windowtitle>
+          <bottom>${project.name} ${project.version} - ${javadoctimestamp}</bottom>
+          <show>package</show>
+          <javaApiLinks>
+            <property>
+              <name>api_1.7</name>
+              <value>https://download.oracle.com/javase/7/docs/api</value>
+            </property>
+          </javaApiLinks>
+          <detectLinks/>
+          <links>
+            <link>https://docs.oracle.com/cd/E17802_01/products/products/jsp/jstl/1.1/docs/api/</link>
+            <link>https://logging.apache.org/log4j/1.2/apidocs/</link>
+            <link>https://commons.apache.org/proper/commons-fileupload/apidocs/</link>
+          </links>
+          <groups>
+            <group>
+              <title>Bridge Packages and associated packages</title>
+              <packages>org.mmbase.bridge:org.mmbase.bridge.util:org.mmbase.security:org.mmbase.storage.search:org.mmbase.datatypes*:org.mmbase.util.functions:org.mmbase.cache:org.mmbase.framework:org.mmbase.servlet:org.mmbase.bridge.mock</packages>
+            </group>
+            <group>
+              <title>Utility Packages</title>
+              <packages>org.mmbase.util*:org.mmbase.bridge.util*</packages>
+            </group>
+            <group>
+              <title>Core Packages (should only be of interest if you're changing MMBase itself)</title>
+              <packages>org.mmbase.core*:org.mmbase.module:org.mmbase.module.core*:org.mmbase.module.builders*:org.mmbase.module.database*</packages>
+            </group>
+            <group>
+              <title>MMBase Taglib</title>
+              <packages>org.mmbase.bridge.jsp.taglib*</packages>
+            </group>
+            <group>
+              <title>Mojo</title>
+              <packages>org.mmbase.mojo*</packages>
+            </group>
+          </groups>
+          <tags>
+            <tag>
+              <head>To Do:</head>
+              <name>todo</name>
+              <placement>a</placement>
+            </tag>
+            <tag>
+              <head>Classifies the class as an APPLICATION class, belonging to the application with name application-name</head>
+              <name>application</name>
+            </tag>
+            <tag>
+              <head>Section contains hard-coded values, which should be made configurable.</head>
+              <name>bad-constant</name>
+            </tag>
+            <tag>
+              <head>Section contains literals (numeric or string constants), where constants (public final static identifiers) should be used.</head>
+              <name>bad-literal</name>
+            </tag>
+            <tag>
+              <head>The class needs to be adapted to the MMBase Coding Standards.</head>
+              <name>code-conventions</name>
+            </tag>
+            <tag>
+              <head>Classifies the class as a CORE class</head>
+              <name>core</name>
+            </tag>
+            <tag>
+              <head>Section is deprecated and will be removed from the code. If this is a Class, the entire Class will be removed.</head>
+              <name>deprecated-now</name>
+            </tag>
+            <tag>
+              <head>Section uses deprecated (java) code, which will be fixed</head>
+              <name>deprecation-used</name>
+            </tag>
+            <tag>
+              <head>Section contains code which is depedent on a class, where it is undesirable. The code will be adapated to be more generic or moved to a more appropriate class.</head>
+              <name>dependency</name>
+            </tag>
+            <tag>
+              <head>Section contains code which will be moved to an higher (possibly abstract) class, identified with &lt;classname></head>
+              <name>duplicate</name>
+            </tag>
+            <tag>
+              <head>Section needs Javadoc..</head>
+              <name>javadoc</name>
+            </tag>
+            <tag>
+              <head>Section needs to be altered to use internationalization, using english ('en') as a default.</head>
+              <name>language</name>
+            </tag>
+            <tag>
+              <head>The code for this class falls under a different (and conflicting) license, such as GPL. The code needs to be replaced or moved out of the core.</head>
+              <name>license</name>
+            </tag>
+            <tag>
+              <head>Class will be moved to package &lt;packagename&amp;lg;</head>
+              <name>move</name>
+            </tag>
+            <tag>
+              <head>Section need be improved for performance reasons.</head>
+              <name>performance</name>
+            </tag>
+            <tag>
+              <head>Class wil be renamed to &lt;classname></head>
+              <name>rename</name>
+            </tag>
+            <tag>
+              <head>This Class needs the indicated version of the MMBase core.</head>
+              <name>requires</name>
+            </tag>
+            <!--
+                These seems to conflict with something and fails to complete mvn javadoc:jar  build
+            -->
+            <tag>
+              <head>Section scope will be narrowed to &lt;scope> (i.e. private, package, protected)</head>
+              <name>scope</name>
+            </tag>
+            <tag>
+              <name>sql</name>
+              <head>Section uses (direct) SQL queries, which will be removed or fixed</head>
+            </tag>
+            <tag>
+              <name>vpro</name>
+              <head>Section contains VPRO-specific code, which will be removed or fixed</head>
+            </tag>
+
+          </tags>
+          <doclint>none</doclint>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.5</version>
         <configuration>
           <includes>
             <include>**/*Test.java</include>
@@ -393,23 +401,40 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
           <forkMode>${surefire.fork.mode}</forkMode>
           <childDelegation>false</childDelegation>
           <argLine>${surefire.fork.vmargs}</argLine>
-          <systemPropertiesVariables>
-            <java.awt.headless>${java.awt.headless}</java.awt.headless>
-            <mmbase.defaultcloudcontext>mock:local</mmbase.defaultcloudcontext>
+          <systemPropertyVariables>
+            <property>
+              <name>java.awt.headless</name>
+              <value>true</value>
+            </property>
+            <property>
+              <name>mmbase.defaultcloudcontext</name>
+              <value>mock:local</value>
+            </property>
+
             <!-- TODO should not depend on system  default locale -->
-            <user.language>en</user.language>
-            <java.util.logging.config.file>${basedir}/target/test-classes/logging.properties</java.util.logging.config.file>
-            <surefire.fork.vmargs>${surefire.fork.vmargs}</surefire.fork.vmargs>
-          </systemPropertiesVariables>
-          <check>
-            <branchRate>80</branchRate>
-            <lineRate>80</lineRate>
-            <haltOnFailure>true</haltOnFailure>
-            <totalBranchRate>80</totalBranchRate>
-            <totalLineRate>80</totalLineRate>
-            <packageLineRate>80</packageLineRate>
-            <packageBranchRate>80</packageBranchRate>
-          </check>
+            <property>
+              <name>user.language</name>
+              <value>en</value>
+            </property>
+            <property>
+              <name>java.util.logging.config.file</name>
+              <value>${basedir}/target/test-classes/logging.properties</value>
+            </property>
+            <property>
+              <name>surefire.fork.vmargs</name>
+              <value>${surefire.fork.vmargs}</value>
+            </property>
+          </systemPropertyVariables>
+          <!--
+                    <check>
+                      <branchRate>80</branchRate>
+                      <lineRate>80</lineRate>
+                      <haltOnFailure>true</haltOnFailure>
+                      <totalBranchRate>80</totalBranchRate>
+                      <totalLineRate>80</totalLineRate>
+                      <packageLineRate>80</packageLineRate>
+                      <packageBranchRate>80</packageBranchRate>
+                    </check>-->
         </configuration>
       </plugin>
       <plugin>
@@ -430,29 +455,29 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.9.0</version>
+        <extensions>true</extensions>
         <configuration>
-          <source>8</source>
-          <target>8</target>
-          <showDeprecation>true</showDeprecation>
+          <publishingServerId>central</publishingServerId>
+          <autoPublish>true</autoPublish>
+          <waitUntil>published</waitUntil>
         </configuration>
       </plugin>
     </plugins>
-
-    <extensions>
-      <extension>
-        <groupId>org.apache.maven.wagon</groupId>
-        <artifactId>wagon-ssh</artifactId>
-      </extension>
-    </extensions>
   </build>
+
   <reporting>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.3.1</version>
+        <configuration>
+          <maxmemory>1024</maxmemory>
+          <doclint>none</doclint>
+        </configuration>
         <reportSets>
           <reportSet>
             <id>aggregate</id>
@@ -474,54 +499,48 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
            org.mmbase.bridge.Node retval = (org.mmbase.bridge.Node)ObjectWrapper.rmiObjectToRemoteProxy(getWrappedObject().getSource());
            WTF, what can I say.
 
-<plugin>
-<groupId>org.codehaus.mojo</groupId>
-<artifactId>cobertura-maven-plugin</artifactId>
-<version>2.2</version>
-</plugin>
+           <plugin>
+           <groupId>org.codehaus.mojo</groupId>
+           <artifactId>cobertura-maven-plugin</artifactId>
+           <version>2.2</version>
+           </plugin>
       -->
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.5</version>
       </plugin>
       <plugin>
-        <artifactId>maven-site-plugin</artifactId>
-        <version>2.1</version> <!-- http://jira.codehaus.org/browse/MPIR-195 -->
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>taglist-maven-plugin</artifactId>
       </plugin>
-      <!--
-          <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>taglist-maven-plugin</artifactId>
-          </plugin>
-          <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>findbugs-maven-plugin</artifactId>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>javancss-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>project-team</report>
+              <report>mailing-list</report>
+              <report>cim</report>
+              <report>issue-tracking</report>
+              <report>license</report>
+              <report>scm</report>
+              <report>index</report>
+              <report>aggregate</report>
+              <report>javadoc</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
 
-</plugin>
-<plugin>
-<groupId>org.codehaus.mojo</groupId>
-<artifactId>javancss-maven-plugin</artifactId>
-</plugin>
-<plugin>
-<groupId>org.apache.maven.plugins</groupId>
-<artifactId>maven-project-info-reports-plugin</artifactId>
-<reportSets>
-<reportSet>
-<reports>
-<report>project-team</report>
-<report>mailing-list</report>
-<report>cim</report>
-<report>issue-tracking</report>
-<report>license</report>
-<report>scm</report>
-<report>index</report>
-<report>aggregate</report>
-<report>javadoc</report>
-</reports>
-</reportSet>
-</reportSets>
-</plugin>
-      -->
       <!--
           <plugin>
           <artifactId>maven-checkstyle-plugin</artifactId>
@@ -543,51 +562,37 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
 
   </reporting>
 
-  <distributionManagement>
-    <repository>
-      <id>mmbase</id>
-      <name>MMBase maven 2 repository</name>
-      <url>${mmbase.repos}maven2</url>
-    </repository>
-    <snapshotRepository>
-      <id>mmbase-snapshots</id>
-      <name>MMBase Maven2 Snapshot Repository</name>
-      <url>${mmbase.repos}snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
 
   <repositories>
     <repository>
+      <!-- jai-* is not in central, jms (which is dependeny of oscache) isn't either -->
       <id>jboss</id>
-      <name>Maven JBoss Nexus</name>
-      <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+      <name>JBoss maven 2 repository</name>
+      <url>https://repository.jboss.org/maven2</url>
+    </repository>
+    <repository>
+      <name>Central Portal Snapshots</name>
+      <id>central-portal-snapshots</id>
+      <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
       <snapshots>
-	<enabled>false</enabled>
+        <enabled>true</enabled>
       </snapshots>
     </repository>
-    <repository>
-      <id>mmbase</id>
-      <name>MMBase Maven2 repository</name>
-      <url>http://www.mmbase.org/maven2</url>
-    </repository>
-    <repository>
-      <id>mmbase-snapshots</id>
-      <name>MMBase Maven2 snapshots repository</name>
-      <url>http://www.mmbase.org/snapshots</url>
-    </repository>
   </repositories>
+
   <pluginRepositories>
     <pluginRepository>
-      <id>mmbase</id>
-      <name>MMBase Maven2 repository</name>
-      <url>http://www.mmbase.org/maven2</url>
-    </pluginRepository>
-    <pluginRepository>
-      <id>mmbase-snapshots</id>
-      <name>MMBase Maven2 snapshots repository</name>
-      <url>http://www.mmbase.org/snapshots</url>
+      <name>Central Portal Snapshots</name>
+      <id>central-portal-snapshots</id>
+      <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
       <snapshots>
-        <updatePolicy>daily</updatePolicy>
+        <enabled>true</enabled>
       </snapshots>
     </pluginRepository>
   </pluginRepositories>
@@ -607,7 +612,6 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
         <module>contributions</module>
         <module>base-webapp</module>
         <module>example-webapp</module>
-        <module>documentation</module>
       </modules>
     </profile>
     <profile>
@@ -631,20 +635,25 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
       -->
       <activation>
         <property>
-          <name>my.repository.id</name>
+          <name>my.version</name>
         </property>
       </activation>
 
+      <properties>
+        <mmbase.version.postfix>-${my.version}</mmbase.version.postfix>
+      </properties>
       <distributionManagement>
         <repository>
           <id>${my.repository.id}</id>
           <name>Corporate repository</name>
           <url>${my.repository.url}</url>
+          <uniqueVersion>false</uniqueVersion> <!-- hmm? -->
         </repository>
         <snapshotRepository>
           <id>${my.repository.id}</id>
           <name>Corporate snapshot repository</name>
           <url>${my.repository.url}</url>
+          <uniqueVersion>false</uniqueVersion>
         </snapshotRepository>
       </distributionManagement>
     </profile>
@@ -658,8 +667,10 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.3.1</version>
             <configuration>
               <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+              <doclint>none</doclint>
               <docletArtifact>
                 <groupId>org.umlgraph</groupId>
                 <artifactId>doclet</artifactId>
@@ -677,9 +688,28 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
           <version>${umlgraph.version}</version>
         </dependency>
       </dependencies>
+
     </profile>
-
-
+    <profile>
+      <id>deploy</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.2.8</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 
 </project>
