@@ -9,22 +9,28 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.util.xml;
 
-import javax.xml.transform.*;
-import javax.xml.transform.stream.*;
 import java.io.*;
-import java.net.*;
-import java.util.*;
-
-import org.mmbase.util.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.transform.Source;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.stream.StreamSource;
+import org.mmbase.util.IOUtil;
+import org.mmbase.util.ResourceLoader;
+import org.mmbase.util.SizeMeasurable;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
+import org.mmbase.util.xml.resolvers.Resolvers;
+import org.xmlresolver.XMLResolver;
 
 /**
  * This URIResolver can be used to resolve URI's, also in TransformerFactory's.
- *
+ * <p>
  * It has knowledge of a kind of path (as used by shells). Every entry
  * of this path is labeled with a 'prefix'.
- *
+ * <p>
  * This path always has at least (and on default) two entries:
 
  <ol>
@@ -32,8 +38,8 @@ import org.mmbase.util.logging.Logging;
    <li> MMBase configuration directory (prefix: 'mm:') </li>
  </ol>
 
- * Optionially you can add other dirs  between these two.
- *
+ * Optionally you can add other dirs  between these two.
+ * <p>
  * When you start searching in the current working dir, and the URI
  * does not point to an existing file, it starts searching downwards in
  * this list, until it finds a file that does exist.
@@ -50,7 +56,9 @@ public class URIResolver implements javax.xml.transform.URIResolver, SizeMeasura
     private static final Logger log = Logging.getLoggerInstance(URIResolver.class);
 
     private EntryList     dirs;  // prefix -> URL pairs
-    private int           hashCode;
+    private final int           hashCode;
+
+    private final XMLResolver xmlResolver = Resolvers.getResolver();
 
 
     /**
@@ -293,10 +301,17 @@ public class URIResolver implements javax.xml.transform.URIResolver, SizeMeasura
      * @see javax.xml.transform.URIResolver
      **/
 
-    public Source resolve(String href,  String base) throws TransformerException {
+    @Override
+    public Source resolve(String href, String base) throws TransformerException {
+
         try {
             URL u = resolveToURL(href, base);
             if (u == null) {
+                Source s = xmlResolver.getURIResolver().resolve(href, base);
+                if (s != null) {
+                    log.debug("Resolved " + href + " to " + s.getSystemId() + " using XMLResolver");
+                    return s;
+                }
                 log.debug("Didn't resolve " + href);
                 return null;
             }

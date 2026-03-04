@@ -137,6 +137,11 @@ See http://www.MMBase.org/license
     </dependency>
     -->
 
+    <dependency>
+      <groupId>org.mmbase</groupId>
+      <artifactId>mmbase-xmlresolver</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
 
     <dependency>
       <groupId>log4j</groupId>

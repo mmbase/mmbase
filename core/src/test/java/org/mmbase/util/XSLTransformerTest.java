@@ -2,6 +2,7 @@ package org.mmbase.util;
 
 import java.io.StringReader;
 import java.io.StringWriter;
+import static java.util.Objects.requireNonNull;
 import javax.xml.transform.Result;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamResult;
@@ -27,5 +28,54 @@ public class XSLTransformerTest extends TestCase {
             null
         );
         Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root>text\uD83D\uDC4D</root>\n", sw.toString());
+    }
+
+    /**
+     * Not actually dependent on uri resolve and stuff. Just chekcing whether it will decently transform the docbook to html, and not throw an exception.
+     */
+    public void testDocbookBasic() {
+        StringWriter sw = new StringWriter();
+        Result result = new StreamResult(sw);
+        try {
+            XSLTransformer.transform(
+                new StreamSource(requireNonNull(XSLTransformerTest.class.getResourceAsStream("/documentation.xml"))),
+                new StreamSource(requireNonNull(XSLTransformerTest.class.getResourceAsStream("/org/mmbase/config/xslt/docbook2block.xslt"))),
+                result,
+                null
+            );
+            assertEquals("<div xmlns=\"http://www.w3.org/1999/xhtml\" class=\"mm_docbook\"><h1>MMBase Documentation Overview</h1><div id=\"introduction\">\n" +
+                "    <h2>Introduction</h2>\n" +
+                "    <p>foo</p>\n" +
+                "    <p>bar</p>\n" +
+                "\n" +
+                "  </div></div>", sw.toString());
+        } catch (TransformerException e) {
+            Assert.fail("Should not throw exception, but got " + e.getMessage());
+        }
+    }
+
+
+    /**
+     * Not actually dependent on uri resolve and stuff. Just checking whether it will decently transform the docbook to html, and not throw an exception.
+     */
+    public void testDocbookUriResolver() {
+        StringWriter sw = new StringWriter();
+        Result result = new StreamResult(sw);
+        try {
+            XSLTransformer.transform(
+                new StreamSource(requireNonNull(XSLTransformerTest.class.getResourceAsStream("/documentation.xml"))),
+                new StreamSource(requireNonNull(XSLTransformerTest.class.getResourceAsStream("/org/mmbase/config/xslt/docbook2block.xslt"))),
+                result,
+                null
+            );
+            assertEquals("<div xmlns=\"http://www.w3.org/1999/xhtml\" class=\"mm_docbook\"><h1>MMBase Documentation Overview</h1><div id=\"introduction\">\n" +
+                "    <h2>Introduction</h2>\n" +
+                "    <p>foo</p>\n" +
+                "    <p>bar</p>\n" +
+                "\n" +
+                "  </div></div>", sw.toString());
+        } catch (TransformerException e) {
+            Assert.fail("Should not throw exception, but got " + e.getMessage());
+        }
     }
 }

@@ -10,24 +10,28 @@ See http://www.MMBase.org/license
 package org.mmbase.util;
 
 import java.io.*;
-import java.util.*;
 import java.net.URL;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.*;
-import javax.xml.parsers.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.transform.dom.DOMSource;
-
 import org.mmbase.bridge.*;
 import org.mmbase.bridge.util.xml.Generator;
-
-
-
-import org.mmbase.cache.xslt.*;
-
+import org.mmbase.cache.xslt.FactoryCache;
+import org.mmbase.cache.xslt.TemplateCache;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
 
 
 /**
@@ -139,49 +143,52 @@ public class XSLTransformer {
         } catch (Exception e) {
         }
 
-        URIResolver uri;
+        URIResolver uriResolver;
         if (considerDir) {
             try {
-                uri = new org.mmbase.util.xml.URIResolver(new URL(xslFile, "."));
+                uriResolver = new org.mmbase.util.xml.URIResolver(new URL(xslFile, "."));
             } catch (java.net.MalformedURLException mfe) {
                 // oddd..
                 throw new TransformerException(mfe.getMessage(), mfe);
             }
         } else {
-            uri = new org.mmbase.util.xml.URIResolver();
+            uriResolver = new org.mmbase.util.xml.URIResolver();
         }
-        transform(xml, xsl, uri, result, params);
+        transform(xml, xsl, uriResolver, result, params);
     }
 
     /**
      * @since MMBase-1.9.7
      */
     public static void transform(Source xml, Source xsl, Result result, Map<String, Object> params) throws TransformerException {
-        transform( xml, xsl, new org.mmbase.util.xml.URIResolver(), result, params );
+        transform(xml, xsl, new org.mmbase.util.xml.URIResolver(), result, params );
     }
 
     /**
      * @since MMBase-1.9.7
      */
-    protected static void transform(Source xml, Source xsl, URIResolver uri, Result result, Map<String, Object> params) throws TransformerException {
+    protected static void transform(Source xml, Source xsl, URIResolver uriResolver, Result result, Map<String, Object> params) throws TransformerException {
         TemplateCache cache = TemplateCache.getCache();
 
-        Templates cachedXslt = cache.getTemplates(xsl, uri);
+        Templates cachedXslt = cache.getTemplates(xsl, uriResolver);
         if (log.isDebugEnabled()) {
             // log.debug("Size of cached XSLT " + SizeOf.getByteSize(cachedXslt) + " bytes");
-            log.debug("Size of URIResolver " + SizeOf.getByteSize(uri) + " bytes");
+            log.debug("Size of URIResolver " + SizeOf.getByteSize(uriResolver) + " bytes");
             log.debug("template cache sze " + cache.size() + " entries");
         }
         if (cachedXslt == null) {
-            TransformerFactory tf = FactoryCache.getCache().getFactory(uri);
+            TransformerFactory tf = FactoryCache.getCache().getFactory(uriResolver);
+            tf.setURIResolver(uriResolver);
             cachedXslt = tf.newTemplates(xsl);
-            tf.setURIResolver(uri);
-            cache.put(xsl, cachedXslt, uri);
+            if (cachedXslt == null) {
+                log.warn("Could not create template for " + uriResolver + ": " + xsl.getSystemId());
+            }
+            cache.put(xsl, cachedXslt, uriResolver);
         } else {
             if (log.isDebugEnabled()) log.debug("Used xslt from cache with " + xsl.getSystemId());
         }
         Transformer transformer = cachedXslt.newTransformer();
-        transformer.setURIResolver(uri);
+        transformer.setURIResolver(uriResolver);
 
         //Transformer transformer = TransformerFactory.newInstance().newTransformer();
         if (log.isDebugEnabled()) {
@@ -193,7 +200,34 @@ public class XSLTransformer {
                 transformer.setParameter(entry.getKey(), entry.getValue());
             }
         }
-        transformer.transform(xml, result);
+
+        // Register EntityResolver with the XML source
+        Source xmlSource = xml;
+        if (!(xml instanceof DOMSource)) {
+            // For StreamSource and other source types, wrap in SAXSource with EntityResolver
+            try {
+                SAXParserFactory spf = SAXParserFactory.newInstance();
+                spf.setNamespaceAware(true);
+                XMLReader xmlReader = spf.newSAXParser().getXMLReader();
+                xmlReader.setEntityResolver(new org.mmbase.util.xml.EntityResolver(true));
+                InputSource inputSource = new InputSource(xml.getSystemId());
+                if (xml instanceof StreamSource) {
+                    StreamSource ss = (StreamSource) xml;
+                    if (ss.getInputStream() != null) {
+                        inputSource.setByteStream(ss.getInputStream());
+                    } else if (ss.getReader() != null) {
+                        inputSource.setCharacterStream(ss.getReader());
+                    }
+                }
+                xmlSource = new SAXSource(xmlReader, inputSource);
+            } catch (Exception e) {
+                log.warn("Could not set up EntityResolver for XML source: " + e.getMessage());
+                // Fall back to original source
+                xmlSource = xml;
+            }
+        }
+
+        transformer.transform(xmlSource, result);
     }
 
     /**

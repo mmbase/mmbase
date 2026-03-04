@@ -9,6 +9,7 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.util.xml;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ByteArrayInputStream;
@@ -23,7 +24,10 @@ import org.mmbase.util.Casting;
 import org.mmbase.util.ResourceLoader;
 import org.mmbase.util.logging.*;
 
+import org.mmbase.util.xml.resolvers.Resolvers;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xmlresolver.XMLResolver;
 
 /**
  * Take the systemId and converts it into a local file, using the MMBase config path
@@ -76,6 +80,8 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
      */
     private static final Map<String, Resource> systemIDtoResource = new ConcurrentHashMap<String, Resource>();
 
+    private static final XMLResolver xmlResolver = Resolvers.getResolver();
+
 
     /**
      * Container for dtd resources information
@@ -88,7 +94,7 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
         }
     }
     static class StringResource extends Resource {
-        private String string;
+        private final String string;
         StringResource(String s) {
             string = s;
         }
@@ -99,6 +105,15 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
                 log.error(uee); // WTF
                 return new ByteArrayInputStream(string.getBytes());
             }
+        }
+    }
+    static class ClassPathResource extends Resource {
+        private final String resource;
+        ClassPathResource(String r) {
+            resource = r;
+        }
+        InputStream getStream() {
+            return EntityResolver.class.getResourceAsStream(resource);
         }
     }
     static class FileResource extends Resource {
@@ -158,8 +173,10 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
         registerSystemID("http://www.w3.org/2001/03/datatypes.dtd", "datatypes.dtd", null);
         registerSystemID("https://www.w3.org/2001/03/datatypes.dtd", "datatypes.dtd", null);
 
-        //registerSystemID("https://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd", "docbookx.dtd", null);
-        //registerSystemID("https://www.oasis-open.org/docbook/xml/4.1.2/dbnotnx.mod", "dbnotnx.mod", null);
+        registerSystemID("http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd",  new ClassPathResource("/entities/oasis/4.1.2/docbookx.dtd"));
+        registerSystemID("http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd",  new ClassPathResource("/entities/oasis/4.0/docbookx.dtd"));
+        registerSystemID("http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd", "docbookx.dtd", null);
+        registerSystemID("https://www.oasis-open.org/docbook/xml/4.1.2/dbnotnx.mod", "dbnotnx.mod", null);
     }
 
 
@@ -181,13 +198,20 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
      * @todo EXPERIMENTAL
      * @since MMBase-1.8
      */
-    public static void registerSystemID(String systemID, String xsd, Class<?> c) {
-        systemIDtoResource.put(systemID, new FileResource(c, xsd));
+    public static void registerSystemID(String systemID, String resource, Class<?> c) {
+        systemIDtoResource.put(systemID, new FileResource(c, resource));
         if (systemID.startsWith("http://www.mmbase.org/")) {
-            systemIDtoResource.put("https://www.mmbase.org/" + systemID.substring("http://www.mmbase.org/".length()), new FileResource(c, xsd));
+            systemIDtoResource.put("https://www.mmbase.org/" + systemID.substring("http://www.mmbase.org/".length()), new FileResource(c, resource));
         }
-        if (log.isDebugEnabled()) log.debug("systemIDtoResource: " + systemID + " " + xsd + c.getName() + " " + systemIDtoResource.get(systemID));
+        if (log.isDebugEnabled()) log.debug("systemIDtoResource: " + systemID + " " + resource + c.getName() + " " + systemIDtoResource.get(systemID));
     }
+
+    static void registerSystemID(String systemID, Resource resource) {
+        systemIDtoResource.put(systemID,  resource);
+        if (systemID.startsWith("https:")) {
+            systemIDtoResource.put("http:" + systemID.substring("https:".length()), resource);
+        }
+     }
 
     private final String definitionPath;
 
@@ -343,15 +367,26 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
     /**
      * Takes the systemId and returns the local location of the dtd/xsd
      */
+    @Override
     public InputSource resolveEntity(final String publicId, final String systemId) {
         if (log.isDebugEnabled()) {
             log.debug("resolving PUBLIC " + publicId + " SYSTEM " + systemId);
         }
 
+        try {
+            InputSource s = xmlResolver.getEntityResolver().resolveEntity(publicId, systemId);
+            if (s != null) {
+                log.debug("Resolved by xmlresolver: " + s.getSystemId());
+                return s;
+            }
+        } catch (IOException | SAXException e) {
+            log.warn(e.getMessage(), e);
+        }
         InputStream definitionStream = null;
         String encoding = "UTF-8";
 
-        if ("http://www.mmbase.org/mmentities.ent".equals(systemId)) {
+        if ("http://www.mmbase.org/mmentities.ent".equals(systemId) ||
+            "https://www.mmbase.org/mmentities.ent".equals(systemId)) {
             log.debug("Reding mmbase entities for " + systemId + " " + publicId);
             //StringBuilder sb = new StringBuilder();
             //Class c = org.mmbase.framework.Framework.class;
