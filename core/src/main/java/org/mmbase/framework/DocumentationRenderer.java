@@ -82,7 +82,7 @@ public class DocumentationRenderer extends CachedRenderer {
                                 //https://raw.githubusercontent.com/mmbase/mmdocs/src/docbook/refs/head/main/index.xml
                                 URI url = new URL(repository + "/" + project + "/" + branch + "/" + module + "/" + db).toURI();
 
-                                log.info("Resolved " + url);
+                                log.debug("Resolved " + url);
                                 return url;
                             } catch (MalformedURLException mfe) {
                                 throw new RuntimeException(mfe.getMessage(), mfe);
