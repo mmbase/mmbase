@@ -486,6 +486,7 @@
       <class name="org.mmbase.framework.DocumentationRenderer">
         <param name="docbook">backenddevelopers/components/index.xml</param>
         <param name="includeRenderTime">xml-comments</param>
+        <param name="timeout">10000</param>
       </class>
     </body>
   </block>
