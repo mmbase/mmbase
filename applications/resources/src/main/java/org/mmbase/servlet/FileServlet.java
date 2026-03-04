@@ -549,7 +549,7 @@ public class FileServlet extends BridgeServlet {
      * @todo Generalize this stuff  with Ranges to HandleServlet, so that it also could work for images and attachments.
      */
     protected static void stream(ChainedRange range, InputStream in, OutputStream out) throws IOException {
-        byte[] buf = new byte[1024];
+        byte[] buf = new byte[8192];
         if (range != null) {
 
             long pos = 0;
@@ -559,7 +559,7 @@ public class FileServlet extends BridgeServlet {
                     log.trace("streaming " + available);
                 }
                 while(available > 0L) {
-                    int b = in.read(buf, 0, (int) Math.min(available, 1024L));
+                    int b = in.read(buf, 0, (int) Math.min(available, 8192L));
                     out.write(buf, 0, b);
                     pos += b;
                     available -= b;
