@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "https://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<article>
+  <articleinfo>
+    <title>MMBase Documentation Overview</title>
+
+    <date>2009-05</date>
+    <edition>$Id$</edition>
+
+    <abstract>
+      <para>This is the main page of the MMBase documentation. All
+        documentation should be listed here. It has several sections targeted at
+        different groups of users and developers. More about the documentation
+        structure can be read in the document <ulink
+          url="documentation.html">About MMBase Documentation</ulink>.</para>
+    </abstract>
+  </articleinfo>
+
+  <section id="introduction">
+    <title>Introduction</title>
+    <para>foo</para>
+    <para>bar</para>
+
+  </section>
+</article>
