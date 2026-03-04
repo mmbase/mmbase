@@ -172,11 +172,6 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
         registerSystemID("https://www.w3.org/2001/03/XMLSchema.dtd", "XMLSchema.dtd", null);
         registerSystemID("http://www.w3.org/2001/03/datatypes.dtd", "datatypes.dtd", null);
         registerSystemID("https://www.w3.org/2001/03/datatypes.dtd", "datatypes.dtd", null);
-
-        registerSystemID("http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd",  new ClassPathResource("/entities/oasis/4.1.2/docbookx.dtd"));
-        registerSystemID("http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd",  new ClassPathResource("/entities/oasis/4.0/docbookx.dtd"));
-        registerSystemID("http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd", "docbookx.dtd", null);
-        registerSystemID("https://www.oasis-open.org/docbook/xml/4.1.2/dbnotnx.mod", "dbnotnx.mod", null);
     }
 
 
@@ -368,20 +363,12 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
      * Takes the systemId and returns the local location of the dtd/xsd
      */
     @Override
-    public InputSource resolveEntity(final String publicId, final String systemId) {
+    public InputSource resolveEntity(final String publicId, final String systemId) throws IOException, SAXException {
         if (log.isDebugEnabled()) {
             log.debug("resolving PUBLIC " + publicId + " SYSTEM " + systemId);
         }
 
-        try {
-            InputSource s = xmlResolver.getEntityResolver().resolveEntity(publicId, systemId);
-            if (s != null) {
-                log.debug("Resolved by xmlresolver: " + s.getSystemId());
-                return s;
-            }
-        } catch (IOException | SAXException e) {
-            log.warn(e.getMessage(), e);
-        }
+
         InputStream definitionStream = null;
         String encoding = "UTF-8";
 
@@ -427,14 +414,14 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
                 if (validate) {
                     log.debug("Cannot resolve " + systemId + ", but needed for validation leaving to parser.");
                     log.debug("Find culpit: ", new Exception());
-                    return null;
+                    return xmlResolver.getEntityResolver().resolveEntity(publicId, systemId);
                 } else if (systemId != null && systemId.endsWith(".dtd")) {
                     // perhaps this should not be done if it is about resolving _entities_ rather then dtd.
                     log.debug("Not validating, no need to resolve DTD (?), returning empty resource for " + systemId);
                     return new InputSource(new ByteArrayInputStream(new byte[0]));
                 } else {
                     log.debug("Cannot resolve " + systemId + ", leaving to parser.");
-                    return null;
+                    return xmlResolver.getEntityResolver().resolveEntity(publicId, systemId);
                 }
             } else {
                 final String mmResource = asMMResource(systemId);
@@ -476,10 +463,11 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
                     } else {
                         log.service("Could not find MMBase entity '" + publicId + " " +  systemId + "' (did you make a typo?), returning null, system id will be used (needing a connection, or put in config dir)");
                     }
-                    // not sure, probably should return 'null' after all, then it will be resolved with internet.
-                    // but this can not happen, in fact...
-                    //return new InputSource(new StringReader(""));
-                    // FAILED
+                    InputSource s = xmlResolver.getEntityResolver().resolveEntity(publicId, systemId);
+                    if (s != null) {
+                        log.debug("Resolved by xmlresolver: " + s.getSystemId());
+                        return s;
+                    }
                     return null;
                 }
             }
