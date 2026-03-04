@@ -227,7 +227,7 @@
     <dependency>
       <groupId>org.mmbase</groupId>
       <artifactId>mmbase-statistics</artifactId>
-      <version>0.4</version>
+      <version>0.5-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
