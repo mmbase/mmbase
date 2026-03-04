@@ -23,7 +23,7 @@
   </block>
 
   <block name="edit">
-    <xi:include href="http://www.mmbase.org/components/validation.head.xml" />
+    <xi:include href="https://www.mmbase.org/components/validation.head.xml" />
     <body jsp="/mmbase/components/richtext/wiki/edit.jspx">
       <param name="n"    />
     </body>

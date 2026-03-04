@@ -32,6 +32,7 @@
         <param name="docbook">index.xml</param>
         <param name="module">applications/searchrelate/documentation</param>
         <param name="includeRenderTime">xml-comments</param>
+        <param name="project">mmbase</param>
       </class>
     </body>
   </block>
