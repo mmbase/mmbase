@@ -44,9 +44,6 @@ abstract public class AbstractRenderer implements Renderer {
         return parent;
     }
 
-    public java.net.URI getUri() {
-        return null;
-    }
     public java.net.URI getUri(Parameters blockParameters, RenderHints hints) {
         return getUri();
     }

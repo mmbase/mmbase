@@ -103,7 +103,9 @@ public interface Renderer {
     /**
      * An URI which may identify the implementation of this Renderer.
      */
-    URI getUri();
+    default URI getUri() {
+        return getUri(Parameters.VOID, null);
+    }
 
     /**
      * Ann URL which may identify a specific rendition

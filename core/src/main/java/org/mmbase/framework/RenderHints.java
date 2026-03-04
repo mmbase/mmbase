@@ -8,9 +8,6 @@ See http://www.MMBase.org/license
 
 */
 package org.mmbase.framework;
-import java.io.*;
-import java.net.URI;
-import org.mmbase.util.functions.*;
 
 /**
  * A Renderer is used by {@link Renderer#render}, with a RenderHints object, which gives to Renderer
