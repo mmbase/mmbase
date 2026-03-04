@@ -119,7 +119,7 @@ public class JspRenderer extends AbstractRenderer {
     }
 
     @Override
-public java.net.URI getUri() {
+    public java.net.URI getUri(Parameters blockParameters, RenderHints hints) {
         try {
             return org.mmbase.util.ResourceLoader.getWebRoot().getResource(getPath()).toURI();
         } catch (Exception e) {

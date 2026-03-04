@@ -9,6 +9,7 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.framework;
 
+import java.net.URI;
 import java.util.*;
 import java.io.*;
 import org.mmbase.util.functions.*;
@@ -58,9 +59,9 @@ public class ChainedRenderer extends AbstractRenderer {
     }
 
     @Override
-    public java.net.URI getUri() {
-        if (chain.size() > 0) {
-            return chain.get(0).getUri();
+    public URI getUri(Parameters blockParameters, RenderHints hints) {
+        if (!chain.isEmpty()) {
+            return chain.get(0).getUri(blockParameters, hints);
         } else {
             return null;
         }

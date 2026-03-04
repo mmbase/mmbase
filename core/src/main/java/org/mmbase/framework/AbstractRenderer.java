@@ -9,11 +9,11 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.framework;
 
-import java.io.Writer;
 import java.io.IOException;
-
-import org.mmbase.util.functions.Parameters;
+import java.io.Writer;
+import java.net.URI;
 import org.mmbase.util.functions.Parameter;
+import org.mmbase.util.functions.Parameters;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 
@@ -44,9 +44,12 @@ abstract public class AbstractRenderer implements Renderer {
         return parent;
     }
 
-    public java.net.URI getUri(Parameters blockParameters, RenderHints hints) {
-        return getUri();
+    @Override
+    public URI getUri(Parameters blockParameters, RenderHints hints) {
+        return null;
     }
+
+
 
     /**
      * This utility method, which of course must be used in conjuction with {@link #decorateOutro}

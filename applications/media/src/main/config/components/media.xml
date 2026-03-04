@@ -20,7 +20,7 @@
     <xi:include href="https://www.mmbase.org/components/docbook.head.xml" />
     <body>
       <class name="org.mmbase.framework.DocumentationRenderer">
-        <param name="docbook">index.xml</param>
+        <param name="docbook">applications/media/index.xml</param>
         <param name="module">applications/media/documentation</param>
         <param name="includeRenderTime">xml-comments</param>
         <param name="project">mmbase</param>

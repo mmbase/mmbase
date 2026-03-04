@@ -112,4 +112,5 @@ public interface Renderer {
      * @since MMBase-1.9.1
      */
     URI getUri(Parameters blockParameters, RenderHints hints);
+
 }

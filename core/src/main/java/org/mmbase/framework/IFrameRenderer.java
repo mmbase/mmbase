@@ -9,6 +9,7 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.framework;
 
+import java.net.URI;
 import java.util.*;
 import javax.servlet.http.*;
 import java.io.*;
@@ -76,6 +77,7 @@ public class IFrameRenderer extends AbstractRenderer {
             throw new FrameworkException(eio.getMessage(), eio);
         }
     }
+
 
 
 }

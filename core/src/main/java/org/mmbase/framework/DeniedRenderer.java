@@ -9,6 +9,7 @@
 */
 package org.mmbase.framework;
 
+import java.net.URI;
 import java.util.*;
 
 import javax.servlet.http.*;
@@ -72,6 +73,12 @@ public class DeniedRenderer extends AbstractRenderer {
         default:
         }
     }
+
+    @Override
+    public URI getUri(Parameters blockParameters, RenderHints hints) {
+        return null;
+    }
+
     public String toString() {
         return "DENIED";
     }
