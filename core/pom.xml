@@ -140,7 +140,7 @@ See http://www.MMBase.org/license
     <dependency>
       <groupId>org.mmbase</groupId>
       <artifactId>mmbase-xmlresolver</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.0</version>
     </dependency>
 
     <dependency>
