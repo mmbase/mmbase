@@ -131,7 +131,12 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
     }
     public Templates getTemplates(Source src, URIResolver uri) {
         Key key = new Key(src, uri);
-        if (log.isDebugEnabled()) log.debug("Getting from cache " + key);
+        if (key.uri == null) {
+
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("Getting from cache " + key);
+        }
         return get(key);
     }
 
@@ -179,20 +184,25 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
             return null;
         }
         Key key = new Key(src, uri);
-        Templates res = super.put(key, value);
-        log.debug("Put xslt in cache with key " + key);
-        if (key.getURL() != null) {
-            if (!templateWatcher.getResources().contains(key.getURL())) {
-                templateWatcher.add(key.getURL());
+        if (key.isCacheable()) {
+            final Templates res = super.put(key, value);
+            log.debug("Put xslt in cache with key " + key);
+            if (key.getURL() != null) {
+                if (!templateWatcher.getResources().contains(key.getURL())) {
+                    templateWatcher.add(key.getURL());
+                }
+            } else {
+                log.debug("Cannot watch null");
             }
+            if (log.isDebugEnabled()) {
+                log.debug("have set watch on  " + key.getURL());
+                log.trace("currently watching: " + templateWatcher);
+            }
+            return res;
         } else {
-            log.debug("Cannot watch null");
+            log.warn("Cannot cache template with key " + key + " because it is not cacheable (no systemid)");
+            return null;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("have set watch on  " + key.getURL());
-            log.trace("currently watching: " + templateWatcher);
-        }
-        return res;
     }
 
 
@@ -262,7 +272,11 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
         }
         @Override
         public String toString() {
-            return "" + src + "/" + uri;
+            return src + "/" + uri;
+        }
+
+        boolean isCacheable() {
+            return src != null;
         }
 
     }

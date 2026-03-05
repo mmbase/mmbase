@@ -18,10 +18,8 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import org.mmbase.bridge.*;
@@ -30,8 +28,6 @@ import org.mmbase.cache.xslt.FactoryCache;
 import org.mmbase.cache.xslt.TemplateCache;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
 
 
 /**
@@ -201,7 +197,7 @@ public class XSLTransformer {
             }
         }
 
-        // Register EntityResolver with the XML source
+  /*      // Register EntityResolver with the XML source
         Source xmlSource = xml;
         if (!(xml instanceof DOMSource)) {
             // For StreamSource and other source types, wrap in SAXSource with EntityResolver
@@ -225,9 +221,9 @@ public class XSLTransformer {
                 // Fall back to original source
                 xmlSource = xml;
             }
-        }
+        }*/
 
-        transformer.transform(xmlSource, result);
+        transformer.transform(xml, result);
     }
 
     /**
@@ -265,8 +261,8 @@ public class XSLTransformer {
 
     /**
      * Can be used to transform a directory of XML-files. Of course the result must be written to files too.
-     *
-     * The transformations will be called with a paramter "root" which
+     * <p>
+     * The transformations will be called with a parameter "root" which
      * points back to the root directory relatively. You need this
      * when all your transformations results (probably html's) need to
      * refer to the same file which is relative to the root of the transformation.
@@ -284,7 +280,7 @@ public class XSLTransformer {
         if (! resultDir.isDirectory()) {
             throw  new TransformerException("" + resultDir + " is not a directory");
         }
-        if (params == null) params = new HashMap<String,Object>();
+        if (params == null) params = new HashMap<>();
 
         List<String> exclude = (List<String>) params.get("exclude");
 
@@ -297,9 +293,9 @@ public class XSLTransformer {
                 File resultSubDir = new File(resultDir, element.getName());
                 Map<String,Object> myParams;
                 if (params == null) {
-                    myParams = new HashMap<String,Object>();
+                    myParams = new HashMap<>();
                 } else {
-                    myParams = new HashMap<String,Object>(params);
+                    myParams = new HashMap<>(params);
                 }
 
                 if (myParams.get("root") == null) {
@@ -373,7 +369,7 @@ public class XSLTransformer {
 
         } else {
             boolean namespaceaware = true;
-            Map<String, Object> params = new HashMap<String, Object>();
+            Map<String, Object> params = new HashMap<>();
             if (argv.length > 3) {
                 for (int i = 3; i<argv.length; i++) {
                     String key = argv[i];
