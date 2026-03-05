@@ -1,4 +1,4 @@
-<mm:content 
+<mm:content
     unacceptable="Please use a better browser"
     type="application/xhtml+xml" language="client" expires="0" postprocessor="none" jspvar="locale"
     xmlns:c="http://java.sun.com/jsp/jstl/core"
@@ -8,10 +8,10 @@
               doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
               doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"/>
   <jsp:directive.page session="true" buffer="200kb" />
-  
+
   <html lang="${locale}" xmlns="http://www.w3.org/1999/xhtml">
 
-    <!-- 
+    <!--
          Offers a form for one new MMBase node.
          Also handles the form, and then redirects to change.jspx, because the node is existng then.
          $Id$
@@ -20,7 +20,7 @@
     <body>
       <mm:import id="referids">nodemanager,only?</mm:import>
       <mm:cloud rank="basic user">
-        <mm:import externid="nodemanager" required="true" />        
+        <mm:import externid="nodemanager" required="true" />
 
         <mm:import externid="submitted">new</mm:import>
 
@@ -29,7 +29,7 @@
             <a href="${_}" class="back"><span class="navigate">back</span></a>
           </mm:link>
             <a href="javascript:document.getElementById('createform').submit();" class="ok"><span class="navigate">ok</span></a>
-          <jsp:text>New <mm:nodeinfo nodetype="$nodemanager" type="guitype" /></jsp:text>
+          <jsp:text>New </jsp:text><mm:nodeinfo nodetype="$nodemanager" type="guitype" />
 
         </h1>
         <mm:form id="createform">
