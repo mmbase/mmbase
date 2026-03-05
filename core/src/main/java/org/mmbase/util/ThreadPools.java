@@ -23,12 +23,12 @@ import org.mmbase.util.xml.Instantiator;
  * @version $Id$
  */
 public abstract class ThreadPools {
-    private static Logger log = Logging.getLoggerInstance(ThreadPools.class);
+    private static final Logger log = Logging.getLoggerInstance(ThreadPools.class);
 
     public static final ThreadGroup threadGroup =  new ThreadGroup("MMBase Thread Pool");
 
-    private static Map<Future, String> identifiers =
-        Collections.synchronizedMap(new WeakHashMap<Future, String>());
+    private static final Map<Future<?>, String> identifiers =
+        Collections.synchronizedMap(new WeakHashMap<>());
 
     /**
      * There is no way to identify the FutureTask objects returned in
@@ -36,7 +36,7 @@ public abstract class ThreadPools {
      * Used by admin pages.
      * @since MMBase-1.9
      */
-    public static String identify(Future r, String s) {
+    public static String identify(Future<?> r, String s) {
         return identifiers.put(r, s);
     }
 
@@ -45,7 +45,7 @@ public abstract class ThreadPools {
      * @deprecated Used ThreadPools.scheduler#scheduleAtFixedRate  This method is only provided to
      * use this in both 1.8 (concurrecy backport) and 1.9 (java 1.5).
      */
-    public static ScheduledFuture scheduleAtFixedRate(Runnable pub, int time1, int time2) {
+    public static ScheduledFuture<?> scheduleAtFixedRate(Runnable pub, int time1, int time2) {
         return scheduler.scheduleAtFixedRate(pub,
                                              time1,
                                              time2, TimeUnit.SECONDS);
@@ -54,7 +54,7 @@ public abstract class ThreadPools {
      * returns a identifier string for the given task.
      * @since MMBase-1.9
      */
-    public static String getString(Future r) {
+    public static String getString(Future<?> r) {
         String s = identifiers.get(r);
         if (s == null) return "" + r;
         return s;
@@ -65,13 +65,13 @@ public abstract class ThreadPools {
      * are short living tasks. This is mainly used by {@link
      * org.mmbase.util.transformers.ChainedCharTransformer} (and only
      * when transforming a Reader).
-     *
+     * <p>
      * Code performing a similar task could also use this thread pool.
      */
     public static final ExecutorService filterExecutor = Executors.newCachedThreadPool();
 
 
-    private static List<WeakReference<Thread>> nameLess = new CopyOnWriteArrayList<WeakReference<Thread>>();
+    private static final List<WeakReference<Thread>> nameLess = new CopyOnWriteArrayList<>();
 
 
     public static Thread newThread(final Runnable r, final String id) {
@@ -95,7 +95,7 @@ public abstract class ThreadPools {
             };
         t.setDaemon(true);
         if (mn == null) {
-            nameLess.add(new WeakReference<Thread>(t));
+            nameLess.add(new WeakReference<>(t));
         }
         return t;
     }
@@ -108,8 +108,9 @@ public abstract class ThreadPools {
      * job of this type.
      *
      */
-    public static final ThreadPoolExecutor jobsExecutor = new ThreadPoolExecutor(2, 2000, 1 * 60 , TimeUnit.SECONDS, new SynchronousQueue<Runnable>(), new ThreadFactory() {
+    public static final ThreadPoolExecutor jobsExecutor = new ThreadPoolExecutor(2, 2000, 60 , TimeUnit.SECONDS, new SynchronousQueue<>(), new ThreadFactory() {
 
+            @Override
             public Thread newThread(Runnable r) {
                 return ThreadPools.newThread(r, "JobsThread-" + (jobsSeq++));
             }
@@ -155,6 +156,7 @@ public abstract class ThreadPools {
      * @since MMBase-1.9
      */
     public static final ScheduledThreadPoolExecutor scheduler = new ScheduledThreadPoolExecutor(2, new ThreadFactory() {
+            @Override
             public Thread newThread(Runnable r) {
                 return ThreadPools.newThread(r, "SchedulerThread-" + (schedSeq++));
             }
@@ -167,6 +169,7 @@ public abstract class ThreadPools {
         // a bit silly, but otherwise I in some cases encountered an exception ('cannot be started
         // by this class').
         scheduler.schedule(new Runnable() {
+                @Override
                 public void run() {
                     String machineName = getMachineName();
                     for (WeakReference<Thread> tr : nameLess) {
@@ -182,7 +185,7 @@ public abstract class ThreadPools {
             }, 60, TimeUnit.SECONDS);
     }
 
-    private static final Map<String, ExecutorService> threadPools = new ConcurrentHashMap<String, ExecutorService>();
+    private static final Map<String, ExecutorService> threadPools = new ConcurrentHashMap<>();
     static {
         threadPools.put("jobs", jobsExecutor);
         threadPools.put("filters", filterExecutor);
@@ -196,6 +199,7 @@ public abstract class ThreadPools {
 
 
     static final UtilReader properties = new UtilReader("threadpools.xml", new Runnable() {
+            @Override
             public void run() {
                 configure();
             }
@@ -254,21 +258,21 @@ public abstract class ThreadPools {
     public static void shutdown() {
         {
             List<Runnable> run = scheduler.shutdownNow();
-            if (run.size() > 0) {
+            if (!run.isEmpty()) {
                 log.info("Interrupted " + run);
             }
         }
         {
 
             List<Runnable> run = filterExecutor.shutdownNow();
-            if (run.size() > 0) {
+            if (!run.isEmpty()) {
                 log.info("Interrupted " + run);
             }
 
         }
         {
             List<Runnable> run = jobsExecutor.shutdownNow();
-            if (run.size() > 0) {
+            if (!run.isEmpty()) {
                 log.info("Interrupted " + run);
             }
         }

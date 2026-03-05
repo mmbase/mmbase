@@ -75,8 +75,8 @@ public class FactoryCache extends Cache<URIResolver, TransformerFactory> {
     /**
      * Make a factory for a certain URIResolver.
      */
-    public TransformerFactory getFactory(URIResolver uri) {
-        TransformerFactory tf =  get(uri);
+    public TransformerFactory getFactory(URIResolver uriResolver) {
+        TransformerFactory tf =  get(uriResolver);
         if (tf == null) {
             tf = TransformerFactory.newInstance();
             try {
@@ -90,9 +90,9 @@ public class FactoryCache extends Cache<URIResolver, TransformerFactory> {
                     log.debug(tf + ": " + iae.getMessage() + ".");
                 }
             }
-            tf.setURIResolver(uri);
-            // you must set the URIResolver in the tfactory, because it will not be called everytime, when you use Templates-caching.
-            put(uri, tf);
+            tf.setURIResolver(uriResolver);
+            // you must set the URIResolver in the factory, because it will not be called everytime, when you use Templates-caching.
+            put(uriResolver, tf);
         }
         if (! loggedImplementation) {
             log.info("XSLT TransformerFactory implementation " + tf.getClass().getName());

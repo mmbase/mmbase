@@ -47,9 +47,9 @@ import org.xml.sax.InputSource;
 public class ContextAuthorization extends Authorization {
     private static final Logger   log = Logging.getLoggerInstance(ContextAuthorization.class);
     private Document 	    document;
-    private ContextCache    cache = new ContextCache();
+    private final ContextCache    cache = new ContextCache();
 
-    protected  Cache<String, AllowingContexts> allowingContextsCache
+    private final Cache<String, AllowingContexts> allowingContextsCache
         = new Cache<String, AllowingContexts>(200) { // 200 users.
             public String getName()        { return "CS:AllowingContextsCache"; }
             public String getDescription() { return "Links user id to a set of contexts"; }
@@ -58,9 +58,9 @@ public class ContextAuthorization extends Authorization {
     private int            maxContextsInQuery = 50; // must be configurable
 
     /** contains elements of type = Operation */
-    private Set<Operation>            globalAllowedOperations = new HashSet<Operation>();
-    private Map<String, String>       replaceNotFound         = new HashMap<String, String>();
-    private Map<UserContext, String>  userDefaultContexts     = new HashMap<UserContext, String>();
+    private final Set<Operation>            globalAllowedOperations = new HashSet<>();
+    private final Map<String, String>       replaceNotFound         = new HashMap<>();
+    private final Map<UserContext, String>  userDefaultContexts     = new HashMap<>();
     private SortedSet<String>         allContexts;
 
     protected void load() {
@@ -169,7 +169,7 @@ public class ContextAuthorization extends Authorization {
     }
 
     private void setAllContexts() throws SecurityException {
-        allContexts = new TreeSet<String>();
+        allContexts = new TreeSet<>();
         String xpath = "/contextconfig/contexts/context";
         log.trace("going to execute the query:" + xpath );
         NodeList found;
@@ -211,7 +211,7 @@ public class ContextAuthorization extends Authorization {
                 log.debug("cache hit");
                 return list;
             }
-            list = new HashSet<String>();
+            list = new HashSet<>();
         }
 
         // possible contextes are dependeding of the context they're in...
@@ -337,7 +337,7 @@ public class ContextAuthorization extends Authorization {
                 log.debug("Found " + grants.getLength() + " grants on " + operation + " for context " + context) ;
             }
 
-            Set<String> allowedGroups = new HashSet<String>();
+            Set<String> allowedGroups = new HashSet<>();
             for(int currentNode = 0; currentNode < grants.getLength(); currentNode++) {
                 Node contains = grants.item(currentNode);
                 NamedNodeMap nnm = contains.getAttributes();
@@ -351,7 +351,7 @@ public class ContextAuthorization extends Authorization {
                 }
             }
 
-            boolean allowed = userInGroups(user.getIdentifier(), allowedGroups, new HashSet<String>());
+            boolean allowed = userInGroups(user.getIdentifier(), allowedGroups, new HashSet<>());
             if (log.isDebugEnabled()) {
                 if (allowed) {
                     log.debug("operation " + operation + " was permitted for user with id " + user);
@@ -391,7 +391,7 @@ public class ContextAuthorization extends Authorization {
             }
         }
 
-        Set<String> fetchedGroups = new HashSet<String>();
+        Set<String> fetchedGroups = new HashSet<>();
         for (String groupname : groups) {
             // get the group we are researching....
             // well, since we are already exploring ourselve, no need to do it again....
@@ -537,7 +537,7 @@ public class ContextAuthorization extends Authorization {
 
     protected SortedSet<String> getDisallowingContexts(UserContext user, Operation operation) {
         if (operation != Operation.READ) throw new UnsupportedOperationException("Currently only implemented for READ");
-        SortedSet<String> set = new TreeSet<String>();
+        SortedSet<String> set = new TreeSet<>();
         for (String context : getAllContexts()) {
             if (! check(user, context, operation)) {
                 set.add(context);
@@ -568,7 +568,7 @@ public class ContextAuthorization extends Authorization {
                         contexts = disallowing;
                         inverse = true;
                     } else {
-                        contexts  = new TreeSet<String>(getAllContexts());
+                        contexts  = new TreeSet<>(getAllContexts());
                         contexts.removeAll(disallowing);
                         inverse = false;
                     }
