@@ -99,7 +99,7 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
     /**
      * Remove all entries associated wit a certain url (used by FileWatcher).
      *
-     * @param  The file under concern
+     * @param  file The file under concern
      * @return The number of cache entries removed
      */
 
@@ -131,9 +131,6 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
     }
     public Templates getTemplates(Source src, URIResolver uri) {
         Key key = new Key(src, uri);
-        if (key.uri == null) {
-
-        }
         if (log.isDebugEnabled()) {
             log.debug("Getting from cache " + key);
         }
@@ -200,7 +197,7 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
             }
             return res;
         } else {
-            log.warn("Cannot cache template with key " + key + " because it is not cacheable (no systemid)");
+            log.warn("Cannot cache template with key " + key + " because it is not cacheable (no systemid)", new Exception());
             return null;
         }
     }

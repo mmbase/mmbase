@@ -112,6 +112,8 @@ public class XsltTag extends ContextReferrerTag  {
                 formatter.setOutputProperties(props);
             }
             StreamSource src = new StreamSource(new java.io.StringReader(totalString));
+
+            // generate a systemId for the xslt, so that it can be cached. We use the hashcode of the xslt string, and the url of the request, to make sure it is unique enough.
             String systemId = ((HttpServletRequest)pageContext.getRequest()).getRequestURL().append('/').append(((long) xsltString.hashCode() & 0xffff)).toString();
             src.setSystemId(systemId);
             if (log.isDebugEnabled()) log.debug("Found xslt " + systemId + ": " + totalString);

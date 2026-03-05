@@ -18,8 +18,10 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import org.mmbase.bridge.*;
@@ -28,6 +30,8 @@ import org.mmbase.cache.xslt.FactoryCache;
 import org.mmbase.cache.xslt.TemplateCache;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
 
 
 /**
@@ -196,8 +200,7 @@ public class XSLTransformer {
                 transformer.setParameter(entry.getKey(), entry.getValue());
             }
         }
-
-  /*      // Register EntityResolver with the XML source
+        // Register EntityResolver with the XML source
         Source xmlSource = xml;
         if (!(xml instanceof DOMSource)) {
             // For StreamSource and other source types, wrap in SAXSource with EntityResolver
@@ -221,9 +224,9 @@ public class XSLTransformer {
                 // Fall back to original source
                 xmlSource = xml;
             }
-        }*/
+        }
 
-        transformer.transform(xml, result);
+        transformer.transform(xmlSource, result);
     }
 
     /**

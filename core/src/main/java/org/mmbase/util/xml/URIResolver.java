@@ -318,7 +318,7 @@ public class URIResolver implements javax.xml.transform.URIResolver, SizeMeasura
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             IOUtil.copy(u.openStream(), bytes);
             Source source = new StreamSource(new ByteArrayInputStream(bytes.toByteArray()));
-            //source.setSystemId(u.toString());
+            source.setSystemId(u.toString());
             return source;
         } catch (Exception e) {
             throw new TransformerException(e);

@@ -168,10 +168,9 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
      * @since MMBase-1.8
      */
     protected boolean checkCachePolicy(Object key) {
-        CachePolicy policy = null;
         if (active) {
             if (key instanceof Cacheable) {
-                policy = ((Cacheable)key).getCachePolicy();
+                CachePolicy policy = ((Cacheable)key).getCachePolicy();
                 if (policy != null) {
                     return policy.checkPolicy(key);
                 }

@@ -468,6 +468,8 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
                         log.debug("Resolved by xmlresolver: " + s.getSystemId());
                         return s;
                     }
+                    log.info("Not resolving PUBLIC " + publicId + " SYSTEM " + systemId);
+
                     return null;
                 }
             }
