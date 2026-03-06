@@ -20,8 +20,8 @@
     <property name="wiki_inlinecreate">false</property>
   </properties>
 
-  <xi:include href="http://www.mmbase.org/builders/richtext/content.fields.xml" />
-  <xi:include href="http://www.mmbase.org/builders/versioning/object.fields.xml" />
+  <xi:include href="https://www.mmbase.org/builders/richtext_content/content.fields.xml" />
+  <xi:include href="https://www.mmbase.org/builders/versioning/object.fields.xml" />
 
   <functionlist>
     <function name="url" key="{REQUEST.getContextPath}/mmbase/examples/wiki/page?{NODE.number}">

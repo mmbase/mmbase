@@ -27,10 +27,9 @@
   -->
 
   <!-- What you can do is, make both the builder itself and the version builder include the same list of fields -->
-  <xi:include href="http://www.mmbase.org/builders/richtext/content.fields.xml" />
-
-  <xi:include href="http://www.mmbase.org/builders/versioning/versioning.fields.xml" />
-  <xi:include href="http://www.mmbase.org/builders/versioning/versioning.indexes.xml" />
+  <xi:include href="https://www.mmbase.org/builders/richtext_content/content.fields.xml" />
+  <xi:include href="https://www.mmbase.org/builders/versioning/versioning.fields.xml" />
+  <xi:include href="https://www.mmbase.org/builders/versioning/versioning.indexes.xml" />
 
 
 </builder>
