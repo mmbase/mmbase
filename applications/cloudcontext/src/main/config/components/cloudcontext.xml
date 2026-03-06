@@ -30,7 +30,7 @@
     <title xml:lang="nl">Gebruikers</title>
     <title xml:lang="en">Users</title>
     <description xml:lang="en">Generic security editor</description>
-    <xi:include href="http://www.mmbase.org/components/cloudcontext_style.head.xml" />
+    <xi:include href="https://www.mmbase.org/components/cloudcontext_style.head.xml" />
     <body jsp="users.jspx">
       <param name="offset" type="java.lang.Integer" />
       <param name="orderby" type="java.lang.String" />
