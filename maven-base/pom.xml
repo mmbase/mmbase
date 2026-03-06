@@ -28,8 +28,9 @@ See http://www.MMBase.org/license
     <servlet.version>2.4</servlet.version>
     <jsp.version>2.0</jsp.version>
     <jsp.groupId>javax.servlet</jsp.groupId>
-    <jstl.version>1.1.2</jstl.version>
+    <jstl.version>1.2</jstl.version>
     <taglib-standard.version>1.1.2</taglib-standard.version>
+
 
 
     <!-- MMBase 2.0?
@@ -449,7 +450,7 @@ See http://www.MMBase.org/license
       <dependency>
         <groupId>commons-lang</groupId>
         <artifactId>commons-lang</artifactId>
-        <version>2.4</version>
+        <version>2.6</version>
       </dependency>
       <dependency>
         <groupId>commons-fileupload</groupId>
@@ -459,7 +460,7 @@ See http://www.MMBase.org/license
       <dependency>
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
-        <version>2.14.0</version>
+        <version>2.21.0</version>
       </dependency>
 
       <dependency>
