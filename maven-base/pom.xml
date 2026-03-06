@@ -29,7 +29,7 @@ See http://www.MMBase.org/license
     <jsp.version>2.0</jsp.version>
     <jsp.groupId>javax.servlet</jsp.groupId>
     <jstl.version>1.2</jstl.version>
-    <taglib-standard.version>1.1.2</taglib-standard.version>
+    <taglib-standard.version>1.2.5</taglib-standard.version>
 
 
 
@@ -402,8 +402,8 @@ See http://www.MMBase.org/license
         <version>${jstl.version}</version>
       </dependency>
       <dependency>
-        <groupId>taglibs</groupId>
-        <artifactId>standard</artifactId>
+        <groupId>org.apache.taglibs</groupId>
+        <artifactId>taglibs-standard-impl</artifactId>
         <version>${taglib-standard.version}</version>
       </dependency>
 

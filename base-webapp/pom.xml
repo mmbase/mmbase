@@ -64,16 +64,15 @@
       <type>war</type>
     </dependency>-->
 
-    <dependency>
+<!--    <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
-    </dependency>
+    </dependency>-->
     <dependency>
-      <groupId>taglibs</groupId>
-      <artifactId>standard</artifactId>
+      <groupId>org.apache.taglibs</groupId>
+      <artifactId>taglibs-standard-impl</artifactId>
       <scope>${standard.scope}</scope>
     </dependency>
-
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>

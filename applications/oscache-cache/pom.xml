@@ -29,8 +29,12 @@
       <version>2.4.1</version>
       <exclusions>
         <exclusion>
-          <groupId>javax.jmx</groupId>
+          <groupId>javax.jms</groupId>
           <artifactId>jms</artifactId>
+        </exclusion>
+        <exclusion><!-- provided -->
+          <groupId>javax.servlet</groupId>
+          <artifactId>servlet-api</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
