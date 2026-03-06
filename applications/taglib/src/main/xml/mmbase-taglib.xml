@@ -50,7 +50,7 @@ version: $Id$
   <info>
     <p>
       This is the MMBase taglib reference documentation. There is also a
-      <a href="http://www.mmbase.org/docs/applications/taglib/frontenddevelopers/taglib/taglib-tutorial.html">taglib tutorial.</a>
+      <a href="https://www.mmbase.org/docs/applications/taglib/frontenddevelopers/taglib/taglib-tutorial.html">taglib tutorial.</a>
     </p>
     <p>
       In this reference documentation mmbase tags are divided intro groups. Every tag can be a
@@ -181,7 +181,7 @@ version: $Id$
     </description>
     <name>managerProperty</name>
     <function-class>org.mmbase.bridge.jsp.taglib.functions.Functions</function-class>
-    <function-signature>java.lang.Object managerProperty(java.lang.String, java.lang.String)</function-signature>
+    <function-signature>java.lang.String managerProperty(java.lang.String, java.lang.String)</function-signature>
     <since>MMBase-1.8.6</since>
     <see tag="property" />
   </function>
@@ -191,7 +191,7 @@ version: $Id$
     </description>
     <name>moduleProperty</name>
     <function-class>org.mmbase.bridge.jsp.taglib.functions.Functions</function-class>
-    <function-signature>java.lang.Object moduleProperty(java.lang.String, java.lang.String)</function-signature>
+    <function-signature>java.lang.String moduleProperty(java.lang.String, java.lang.String)</function-signature>
     <since>MMBase-1.8.6</since>
     <see tag="property" />
   </function>

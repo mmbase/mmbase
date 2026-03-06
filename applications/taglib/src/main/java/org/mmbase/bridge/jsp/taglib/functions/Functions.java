@@ -144,7 +144,7 @@ public class Functions {
     /**
      * @since MMBase-1.8.6
      */
-    public static Object managerProperty(String nodeManager, String name) {
+    public static String managerProperty(String nodeManager, String name) {
         Cloud cloud = (Cloud) ContextReferrerTag.getThreadPageContext().getAttribute(CloudTag.KEY, CloudTag.SCOPE);
         return cloud.getNodeManager(nodeManager).getProperty(name);
     }
@@ -152,7 +152,7 @@ public class Functions {
     /**
      * @since MMBase-1.8.6
      */
-    public static Object moduleProperty(String module, String name) {
+    public static String moduleProperty(String module, String name) {
         Cloud cloud = (Cloud) ContextReferrerTag.getThreadPageContext().getAttribute(CloudTag.KEY, CloudTag.SCOPE);
         return cloud.getCloudContext().getModule(module).getProperty(name);
     }
