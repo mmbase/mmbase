@@ -33,7 +33,7 @@
           <a href="${_}" class="back"><span class="navigate">back</span></a>
         </mm:link>
         <a href="javascript:document.getElementById('createform').submit();" class="ok"><span class="navigate">ok</span></a>
-        <jsp:text>New <mm:nodeinfo nodetype="$nodemanager" type="guitype" /></jsp:text>
+        <jsp:text>New </jsp:text><mm:nodeinfo nodetype="$nodemanager" type="guitype" />
       </h1>
       <mm:form id="createform">
         <input type="hidden" name="nodemanager" value="${nodemanager}" />
