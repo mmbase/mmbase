@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          extends="calendar_items" maintainer="mmbase.org"
          name="special_days" version="0"
-         xsi:schemaLocation="http://www.mmbase.org/xmlns/builder http://www.mmbase.org/xmlns/builder.xsd">
+         xsi:schemaLocation="http://www.mmbase.org/xmlns/builder https://www.mmbase.org/xmlns/builder.xsd">
   <names>
     <singular xml:lang="en">Special day</singular>
     <singular xml:lang="nl">Bijzondere dag</singular>

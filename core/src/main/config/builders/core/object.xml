@@ -2,7 +2,7 @@
 <builder
     xmlns="http://www.mmbase.org/xmlns/builder"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.mmbase.org/xmlns/builder http://www.mmbase.org/xmlns/builder.xsd"
+    xsi:schemaLocation="http://www.mmbase.org/xmlns/builder https://www.mmbase.org/xmlns/builder.xsd"
     name="object" maintainer="mmbase.org" version="0">
   <class>org.mmbase.module.core.MMObjectBuilder</class>
   <searchage>1000</searchage>
