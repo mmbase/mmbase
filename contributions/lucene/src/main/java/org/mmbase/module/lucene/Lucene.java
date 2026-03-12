@@ -951,7 +951,7 @@ public class Lucene extends ReloadableModule implements NodeEventListener, Relat
                 MMBase mmb = MMBase.getMMBase();
                 // register. Unfortunately this can currently only be done through the core
                 //for (Step step : queryDefinition.query.getSteps() ) {
-                for (Iterator i = queryDefinition.query.getSteps().iterator(); i.hasNext();) {
+                for (Iterator i = queryDefinition.query.getSteps().iterator(); i.hasNext(); ) {
                     Step step = (Step) i.next();
                     MMObjectBuilder builder = mmb.getBuilder(step.getTableName());
                     if (log.isDebugEnabled()) {
@@ -960,7 +960,6 @@ public class Lucene extends ReloadableModule implements NodeEventListener, Relat
                     builder.addEventListener(this);
                 }
             }
-
 
 
             String elementName = queryDefinition.elementManager.getName();
@@ -976,14 +975,17 @@ public class Lucene extends ReloadableModule implements NodeEventListener, Relat
             }
 
             if (log.isDebugEnabled()) {
-                 log.debug("Configured builder " + elementName + " with query:" + queryDefinition.query);
+                log.debug("Configured builder " + elementName + " with query:" + queryDefinition.query);
             }
             return queryDefinition;
+        } catch (org.mmbase.bridge.NotFoundException notFoundException) {
+            configErrors.add(notFoundException.getMessage());
+            log.info("NotFoundException in " + queryElement.getOwnerDocument().getDocumentURI() + " for index " + XMLWriter.write(queryElement, true, true) + " " + notFoundException.getMessage());
         } catch (Exception e) {
             configErrors.add(e.getMessage());
             log.warn("Invalid query in " + queryElement.getOwnerDocument().getDocumentURI() + " for index " + XMLWriter.write(queryElement, true, true), e);
-            return null;
         }
+        return null;
     }
 
     protected final IdEventListener idListener = new IdEventListener() {
