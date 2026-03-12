@@ -28,10 +28,10 @@
           <td />
           <td colspan="4">
             <mm:function set="streams" name="getJob" referids="_node@node">
-              JOB: ${_.class}<br />  
+              JOB: ${_.getClass().name}<br />
             </mm:function>
             <mm:function set="streams" name="runningJobs">
-              JOB: ${_.class} 
+              JOB: ${_.getClass().name}
             </mm:function>
           </td>
           <td>
@@ -73,11 +73,11 @@
       <c:if test="${!_.main}">
         <tr class="odd">
           <td> ${_.source.number} </td>
-          <td> 
+          <td>
             <strong><a href="${mm:escape('text/xml', _.URL)}"><mm:escape>${_.URL}</mm:escape></a></strong>
           </td>
           <td> ${_.mimeType} </td>
-          <td> 
+          <td>
             ${_.dimension}
             <mm:node number="${_.source.number}" notfound="skip">
               <mm:hasfield name="label">
@@ -85,11 +85,11 @@
               </mm:hasfield>
             </mm:node>
           </td>
-          <td> 
+          <td>
             <mm:node number="${_.source.number}" notfound="skip">
               <mm:hasfield name="id"><mm:field name="id" />, </mm:hasfield>
             </mm:node>
-            ${_.source.builder.tableName}  
+            ${_.source.builder.tableName}
           </td>
           <td>${_.state}</td>
         </tr><tr>
@@ -132,12 +132,12 @@
         </tr>
       </c:if>
     </mm:listfunction>
-  
+
     <tr class="odd">
       <td colspan="9"><jsp:text> </jsp:text></td>
     </tr>
   </mm:listnodes>
-  
+
   <tfoot>
     <tr cols="100">
       <th colspan="9">
