@@ -232,16 +232,18 @@
       <version>${mmbase.version}</version>
       <type>war</type>
     </dependency>
-
-    <!-- for some reaseon doesn't work in jetty?
     <dependency>
+      <groupId>org.mmbase</groupId>
+      <artifactId>mmbase-cloudcontext</artifactId>
+      <version>${mmbase.version}</version>
+      <type>war</type>
+    </dependency>
+   <!-- <dependency>
       <groupId>org.mmbase</groupId>
       <artifactId>mmbase-calendar</artifactId>
       <version>${mmbase.version}</version>
       <type>war</type>
-    </dependency>
-
--->
+    </dependency>-->
     <dependency>
       <groupId>org.mmbase</groupId>
       <artifactId>mmbase-statistics</artifactId>
