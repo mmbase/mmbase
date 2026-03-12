@@ -2,8 +2,8 @@
 <!DOCTYPE application PUBLIC "-//MMBase//DTD application config 1.1//EN" "https://www.mmbase.org/dtd/application_1_1.dtd">
 <application name="ExampleData" maintainer="mmbase.org" version="1" auto-deploy="false">
   <requirements>
-    <requires name="Resources" maintainer="mmbase.org" version="1" />
-    <requires name="RichText" maintainer="mmbase.org" version="1" />
+    <requires name="Resources" maintainer="mmbase.org"  />
+    <requires name="RichText" maintainer="mmbase.org"  />
   </requirements>
 
   <neededbuilderlist>

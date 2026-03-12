@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE application PUBLIC "-//MMBase//DTD application config 1.1//EN" "https://www.mmbase.org/dtd/application_1_1.dtd">
+<application name="ExampleApp" maintainer="mmbase.org" version="1" auto-deploy="true">
+  <requirements>
+    <requires name="ExampleData" maintainer="mmbase.org" />
+  </requirements>
+
+  <neededbuilderlist>
+
+  </neededbuilderlist>
+
+  <neededreldeflist>
+
+  </neededreldeflist>
+
+  <allowedrelationlist>
+
+  </allowedrelationlist>
+
+  <datasourcelist>
+  </datasourcelist>
+
+  <relationsourcelist>
+  </relationsourcelist>
+
+  <contextsourcelist>
+  </contextsourcelist>
+
+
+</application>
