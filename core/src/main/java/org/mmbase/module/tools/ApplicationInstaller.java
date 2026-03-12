@@ -175,7 +175,7 @@ class ApplicationInstaller {
                         ver.updateInstalledVersion(name, "application", maintainer, version);
                     }
 
-                    log.info("Application '" + name + "' deployed succesfully.");
+                    log.info("Application '" + name + "' deployed successfully.");
                     result.success("Application loaded oke\n\n"
                                    + "The application has the following install notice for you : \n\n"
                                    + reader.getInstallNotice());
