@@ -5,10 +5,10 @@
 %><%@attribute name="requestignore" type="java.lang.String"
 %><%@attribute name="sessionignore" type="java.lang.String"
 %><%
-Exception exception = (Exception) jspContext.getAttribute("exception");
+Throwable exception = (Throwable) jspContext.getAttribute("exception");
 int errorCode = exception instanceof org.mmbase.bridge.NotFoundException ? 404 : 500;
 response.setStatus(errorCode);
-ErrorRenderer.Error error = new ErrorRenderer.Error(errorCode ,(Exception) jspContext.getAttribute("exception"));
+ErrorRenderer.Error error = new ErrorRenderer.Error(errorCode , exception);
 error.setShowVersion((Boolean) jspContext.getAttribute("showversion"));
 error.setShowSession((Boolean) jspContext.getAttribute("showsession"));
 error.setRequestIgnore((String) jspContext.getAttribute("requestignore"));
