@@ -236,7 +236,7 @@
 
     <specialization id="eline">
       <description xml:lang="en">
-        A String that may not contain newlines (this is enforced). Practicly this will result in 'input type="text"' form entries.
+        A String that may not contain newlines (this is enforced). Practically this will result in 'input type="text"' form entries.
       </description>
       <!-- enforced line -->
       <pattern value="\A[^\n\r]*\z" />
