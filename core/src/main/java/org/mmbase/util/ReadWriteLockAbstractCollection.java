@@ -24,7 +24,7 @@ public class ReadWriteLockAbstractCollection<E> extends AbstractCollection<E> {
 
     @Override
     public Iterator<E> iterator() {
-        // Delegate to entrySet iterator for proper remove support
+        // Iterate over a snapshot for stability, but apply removals to the backing collection
         final Iterator<E> entryIt;
         rwLock.readLock().lock();
         try {
@@ -33,6 +33,9 @@ public class ReadWriteLockAbstractCollection<E> extends AbstractCollection<E> {
             rwLock.readLock().unlock();
         }
         return new Iterator<E>() {
+            private E lastReturned = null;
+            private boolean canRemove = false;
+
             @Override
             public boolean hasNext() {
                 return entryIt.hasNext();
@@ -40,12 +43,24 @@ public class ReadWriteLockAbstractCollection<E> extends AbstractCollection<E> {
 
             @Override
             public E next() {
-                return entryIt.next();
+                E e = entryIt.next();
+                lastReturned = e;
+                canRemove = true;
+                return e;
             }
 
             @Override
             public void remove() {
-                entryIt.remove();
+                if (!canRemove) {
+                    throw new IllegalStateException("next() has not been called, or remove() already called after the last next()");
+                }
+                rwLock.writeLock().lock();
+                try {
+                    backing.remove(lastReturned);
+                } finally {
+                    rwLock.writeLock().unlock();
+                }
+                canRemove = false;
             }
         };
     }
