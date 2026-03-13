@@ -1,8 +1,14 @@
 package org.mmbase.cache.implementation;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Random;
-import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.mmbase.cache.Cache;
 import org.mmbase.cache.CacheImplementationInterface;
+import org.mmbase.util.LRUHashtable;
 
 
 /**
@@ -32,11 +38,38 @@ import org.mmbase.cache.CacheImplementationInterface;
  * @author  Rico Jansen (in org.mmbase.util.LRUHashtable)
  * @author  Michiel Meeuwissen
  * @version $Id$
- * @see    org.mmbase.cache.Cache
+ * @see    Cache
  * @since MMBase-1.9
  */
-public class Test extends TestCase {
+@RunWith(Parameterized.class)
+public class PerformanceTest {
 
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+            {1025, 1000000, 2, LRUCache.class},
+            {1025, 1000000, 2, LRUHashtable.class},
+            {1025, 1000000, 2, NonBlockingLRUCache.class}
+        });
+    }
+
+    int treesiz;
+    int opers;
+    int thrds;
+    Class<?> impl;
+
+    public PerformanceTest(int treesiz, int opers, int thrds, Class impl) {
+        this.treesiz =treesiz;
+        this.opers = opers;
+        this.thrds = thrds;
+        this.impl = impl;
+    }
+
+
+    @Test
+    public void test() throws Exception {
+        main(new String[] {"" + treesiz, "" + opers, "" + thrds, impl.getName()});
+    }
 
     public static void main(String argv[]) throws Exception {
         Class<?> impl = LRUCache.class;
@@ -66,6 +99,7 @@ public class Test extends TestCase {
 
         final CacheImplementationInterface<String, String> treap = (CacheImplementationInterface<String, String>) impl.newInstance();
         treap.setMaxSize(treesiz / 2);
+        System.out.println("Created " + treap.getClass() + " " + treap + " with treesiz " + treesiz);
         long ll1 = System.currentTimeMillis();
 
         // fill the map
