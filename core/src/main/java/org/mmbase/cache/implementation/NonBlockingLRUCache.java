@@ -13,6 +13,8 @@ import java.util.*;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.mmbase.cache.CacheImplementationInterface;
+import org.mmbase.util.ReadWriteLockAbstractCollection;
+import org.mmbase.util.ReadWriteLockAbstractSet;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 
@@ -124,8 +126,8 @@ public class NonBlockingLRUCache<K, V> implements CacheImplementationInterface<K
     }
 
     @Override
-    public Object getLock() {
-        return rwLock;
+    public Optional<ReadWriteLock> getLock() {
+        return Optional.of(rwLock);
     }
 
     // wrapping for thread-safety with read/write locks
@@ -223,32 +225,17 @@ public class NonBlockingLRUCache<K, V> implements CacheImplementationInterface<K
 
     @Override
     public Set<K> keySet() {
-        rwLock.readLock().lock();
-        try {
-            return new LinkedHashSet<>(backing.keySet());
-        } finally {
-            rwLock.readLock().unlock();
-        }
+        return new ReadWriteLockAbstractSet<>(rwLock, backing.keySet());
     }
 
     @Override
-    public Set<Entry<K,V>> entrySet() {
-        rwLock.readLock().lock();
-        try {
-            return new LinkedHashSet<>(backing.entrySet());
-        } finally {
-            rwLock.readLock().unlock();
-        }
+    public Set<Entry<K, V>> entrySet() {
+        return new ReadWriteLockAbstractSet<>(rwLock, backing.entrySet());
     }
 
     @Override
     public Collection<V> values() {
-        rwLock.readLock().lock();
-        try {
-            return new ArrayList<>(backing.values());
-        } finally {
-            rwLock.readLock().unlock();
-        }
+        return new ReadWriteLockAbstractCollection<>(rwLock, backing.values());
     }
 
 

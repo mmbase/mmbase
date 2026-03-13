@@ -7,18 +7,15 @@
 package org.mmbase.cache;
 
 import java.util.*;
-
-import org.mmbase.core.event.Event;
-import org.mmbase.core.event.NodeEvent;
-import org.mmbase.core.event.NodeEventListener;
-import org.mmbase.core.event.RelationEvent;
-import org.mmbase.core.event.RelationEventListener;
-import org.mmbase.module.core.*;
-import org.mmbase.util.logging.*;
-
-import org.mmbase.storage.search.*;
-
-import org.mmbase.bridge.implementation.BasicQuery;
+import org.mmbase.core.event.*;
+import org.mmbase.module.core.MMBase;
+import org.mmbase.module.core.MMObjectBuilder;
+import org.mmbase.module.core.MMObjectNode;
+import org.mmbase.storage.search.SearchQuery;
+import org.mmbase.storage.search.SearchQueryWrapper;
+import org.mmbase.storage.search.Step;
+import org.mmbase.util.logging.Logger;
+import org.mmbase.util.logging.Logging;
 
 /**
  * This cache provides a base implementation to cache the result of
@@ -112,9 +109,12 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
         if (!checkCachePolicy(query)) {
             return null;
         }
-        synchronized(lock) {
+        writeLock();
+        try {
             increaseCounters(query, typeCounters);
             return super.put(query, queryResult);
+        } finally {
+            writeUnlock();
         }
     }
 
@@ -129,12 +129,16 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
         while (key instanceof SearchQueryWrapper) {
             key = ((SearchQueryWrapper) key).unwrap();
         }
-        synchronized(lock) {
+
+        writeLock();
+        try {
             List<MMObjectNode> result = super.remove(key);
             if (result != null) {
                 decreaseCounters((SearchQuery) key, typeCounters);
             }
             return result;
+        } finally {
+            writeUnlock();
         }
     }
 
@@ -167,12 +171,15 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
      *
      */
     public double getAvarageValueLength() {
-        synchronized(lock) {
+        readLock();
+        try {
             double total = 0;
             for (List<MMObjectNode> result : values()) {
                 total += result.size();
             }
             return total / size();
+        } finally {
+            readUnlock();
         }
     }
 
@@ -192,42 +199,40 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
 
     /**
      *
-     * @todo Is the lock necessary?
      */
     private boolean containsType(RelationEvent event) {
-        synchronized(lock) {
-            if (typeCounters.containsKey("object")) {
-                return true;
-            }
-            if (typeCounters.containsKey(event.getRelationSourceType())
-                || typeCounters.containsKey(event.getRelationDestinationType())) {
-                return true;
-            }
-            MMBase mmb = MMBase.getMMBase();
-            String roleName = mmb.getRelDef().getBuilderName(Integer.valueOf(event.getRole()));
-            if (typeCounters.containsKey(roleName)) {
-                return true;
-            }
-            MMObjectBuilder srcbuilder = mmb.getBuilder(event.getRelationSourceType());
-            if (srcbuilder == null) {
-                return false;
-            }
-            for (MMObjectBuilder parent : srcbuilder.getAncestors()) {
-                if (typeCounters.containsKey(parent.getTableName())) {
-                    return true;
-                }
-            }
-            MMObjectBuilder destbuilder = mmb.getBuilder(event.getRelationDestinationType());
-            if (destbuilder == null) {
-                return false;
-            }
-            for (MMObjectBuilder parent : destbuilder.getAncestors()) {
-                if (typeCounters.containsKey(parent.getTableName())) {
-                    return true;
-                }
-            }
+        if (typeCounters.containsKey("object")) {
+            return true;
+        }
+        if (typeCounters.containsKey(event.getRelationSourceType())
+            || typeCounters.containsKey(event.getRelationDestinationType())) {
+            return true;
+        }
+        MMBase mmb = MMBase.getMMBase();
+        String roleName = mmb.getRelDef().getBuilderName(Integer.valueOf(event.getRole()));
+        if (typeCounters.containsKey(roleName)) {
+            return true;
+        }
+        MMObjectBuilder srcbuilder = mmb.getBuilder(event.getRelationSourceType());
+        if (srcbuilder == null) {
             return false;
         }
+        for (MMObjectBuilder parent : srcbuilder.getAncestors()) {
+            if (typeCounters.containsKey(parent.getTableName())) {
+                return true;
+            }
+        }
+        MMObjectBuilder destbuilder = mmb.getBuilder(event.getRelationDestinationType());
+        if (destbuilder == null) {
+            return false;
+        }
+        for (MMObjectBuilder parent : destbuilder.getAncestors()) {
+            if (typeCounters.containsKey(parent.getTableName())) {
+                return true;
+            }
+        }
+        return false;
+
     }
 
 
@@ -241,7 +246,8 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
     }
 
     private boolean containsType(NodeEvent event) {
-        synchronized(lock) {
+        readLock();
+        try {
             if (typeCounters.containsKey("object")) {
                 return true;
             }
@@ -259,6 +265,8 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
                 }
             }
             return false;
+        } finally {
+            readLock();
         }
     }
 
@@ -268,9 +276,12 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
         }
         Set<SearchQuery> cacheKeys;
         Map<String, Integer> oldTypeCounters;
-        synchronized(lock) {
+        readLock();
+        try {
             cacheKeys = new HashSet<SearchQuery>(keySet());
             oldTypeCounters = new HashMap<String, Integer>(typeCounters);
+        } finally {
+            readUnlock();
         }
 
         Set<SearchQuery>     removeKeys        = new HashSet<SearchQuery>();
@@ -278,7 +289,8 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
 
         evaluate(event, cacheKeys, removeKeys, foundTypeCounters);
 
-        synchronized(lock) {
+        writeLock();
+        try {
             for (SearchQuery q : removeKeys) {
                 remove(q);
             }
@@ -306,6 +318,8 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
                 }
             }
             typeCounters = foundTypeCounters;
+        } finally {
+            writeUnlock();
         }
         return removeKeys.size();
     }
@@ -349,9 +363,12 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
 
     @Override
     public void clear(){
-        synchronized(lock) {
+        writeLock();
+        try {
             super.clear();
             releaseStrategy.clear();
+        } finally {
+            writeUnlock();
         }
     }
 }

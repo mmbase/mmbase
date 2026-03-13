@@ -9,9 +9,10 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.util;
 
-import org.mmbase.cache.CacheImplementationInterface;
 import java.util.*;
-import org.mmbase.util.logging.*;
+import org.mmbase.cache.CacheImplementationInterface;
+import org.mmbase.util.logging.Logger;
+import org.mmbase.util.logging.Logging;
 
 /**
  * A hashtable which has a maximum of entries.  Old entries are
@@ -30,7 +31,6 @@ public class LRUHashtable<K, V> implements Cloneable, CacheImplementationInterfa
     private static final Logger log = Logging.getLoggerInstance(LRUHashtable.class);
 
     private final Hashtable<K, LRUEntry> backing;
-
     /**
      * First (virtual) element of the table.
      * The element that follows root is the oldest element in the table
@@ -87,9 +87,6 @@ public class LRUHashtable<K, V> implements Cloneable, CacheImplementationInterfa
         this(100, 101, 0.75f);
     }
 
-    public Object getLock() {
-        return backing;
-    }
 
     /**
      * Store an element in the table.

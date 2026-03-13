@@ -11,11 +11,10 @@ package org.mmbase.security.implementation.cloudcontext;
 
 import java.util.*;
 import org.mmbase.cache.Cache;
-import org.mmbase.cache.QueryResultCache;
 import org.mmbase.core.event.*;
-import org.mmbase.security.Rank;
-import org.mmbase.security.Operation;
 import org.mmbase.module.core.MMObjectNode;
+import org.mmbase.security.Operation;
+import org.mmbase.security.Rank;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 
@@ -94,7 +93,7 @@ public abstract class Caches {
             return "group + group/user --> boolean";
         }
     };
-    
+
     protected static final class OperationsCache extends Cache<String, Set<MMObjectNode>> {
         OperationsCache() {
             super(100);
@@ -247,17 +246,15 @@ public abstract class Caches {
 
     protected static void invalidateCaches(int nodeNumber) {
         rankCache.remove(Integer.valueOf(nodeNumber));
-        synchronized(userCache.getLock()) {
-            Iterator<Map.Entry<String, MMObjectNode>> i =  userCache.entrySet().iterator();
-            while (i.hasNext()) {
-                Map.Entry<String, MMObjectNode> entry = i.next();
-                MMObjectNode node = entry.getValue();
-                if (node == null) {
+        Iterator<Map.Entry<String, MMObjectNode>> i =  userCache.entrySet().iterator();
+        while (i.hasNext()) {
+            Map.Entry<String, MMObjectNode> entry = i.next();
+            MMObjectNode node = entry.getValue();
+            if (node == null) {
+                i.remove();
+            } else {
+                if (node.getNumber() == nodeNumber) {
                     i.remove();
-                } else {
-                    if (node.getNumber() == nodeNumber) {
-                        i.remove();
-                    }
                 }
             }
         }

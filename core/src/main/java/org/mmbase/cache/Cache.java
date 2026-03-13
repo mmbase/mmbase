@@ -9,10 +9,13 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.cache;
 
-import java.util.*;
-
-import org.mmbase.util.*;
-import org.mmbase.cache.implementation.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import org.mmbase.util.HashCodeUtil;
+import org.mmbase.util.SizeMeasurable;
+import org.mmbase.util.SizeOf;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 
@@ -32,9 +35,8 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     /**
      * @since MMBase-1.8
      */
-    private CacheImplementationInterface<K, V> implementation;
+    protected CacheImplementationInterface<K, V> implementation;
 
-    protected volatile Object lock;
 
     /**
      * The number of times an element was succesfully retrieved from this cache.
@@ -54,34 +56,19 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     public Cache(int size) {
         // See: http://www.mmbase.org/jira/browse/MMB-1486
         implementation = CacheManager.getInstance().createDefaultImplementation(size);
-        lock           = implementation.getLock();
-        //implementation = new LRUHashtable<K, V>(size);
-
         log.service("Creating cache " + getName() + ": " + getDescription());
     }
 
     void setImplementation(int size, String clazz, Map<String,String> configValues) {
-        synchronized(lock) {
-            clear();
-            try {
-                if (implementation == null || (! clazz.equals(implementation.getClass().getName()))) {
-                    log.info("Setting implementation of " + this + " to " + clazz);
-                    implementation = CacheManager.getInstance().createImplementation(size, clazz, configValues);
-                    lock = implementation.getLock();
-                }
-            } catch (RuntimeException iae) {
-                log.error("For cache " + this + " " + iae.getClass().getName() + ": " + iae.getMessage());
+        clear();
+        try {
+            if (implementation == null || (! clazz.equals(implementation.getClass().getName()))) {
+                log.info("Setting implementation of " + this + " to " + clazz);
+                implementation = CacheManager.getInstance().createImplementation(size, clazz, configValues);
             }
+        } catch (RuntimeException iae) {
+            log.error("For cache " + this + " " + iae.getClass().getName() + ": " + iae.getMessage());
         }
-    }
-
-    /**
-     * If you want to structurally modify this cache, synchronize on this object.
-     *
-     * @since MMBase-1.8.6
-     */
-    public final Object getLock() {
-        return lock;
     }
 
     /**
@@ -324,37 +311,43 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
 
     public int getByteSize(SizeOf sizeof) {
         int size = 26;
-        if (implementation instanceof SizeMeasurable) {
-            size += ((SizeMeasurable) implementation).getByteSize(sizeof);
-        } else {
-            // sizeof.sizeof(implementation) does not work because this.equals(implementation)
-            synchronized(lock) {
+        readLock();
+        try {
+            if (implementation instanceof SizeMeasurable) {
+                size += ((SizeMeasurable) implementation).getByteSize(sizeof);
+            } else {
+                // sizeof.sizeof(implementation) does not work because this.equals(implementation)
                 for (Map.Entry<K, V> entry : implementation.entrySet()) {
                     size += sizeof.sizeof(entry.getKey());
                     size += sizeof.sizeof(entry.getValue());
                 }
             }
+        } finally {
+            readUnlock();
         }
         return size;
     }
 
     /**
      * Returns the sum of bytesizes of every key and value. This may count too much, because objects
-     * (like Nodes) may occur in more then one value, but this is considerably cheaper then {@link
+     * (like Nodes) may occur in more than one value, but this is considerably cheaper then {@link
      * #getByteSize()}, which has to keep a Collection of every counted object.
      * @since MMBase-1.8
      */
     public int getCheapByteSize() {
         int size = 0;
-        SizeOf sizeof = new SizeOf();
-        synchronized(lock) {
+        readLock();
+        try {
+            SizeOf sizeof = new SizeOf();
             for (Map.Entry<K, V> entry : implementation.entrySet()) {
                 size += sizeof.sizeof(entry.getKey());
                 size += sizeof.sizeof(entry.getValue());
                 sizeof.clear();
             }
+            return size;
+        } finally {
+            readUnlock();
         }
-        return size;
     }
 
 
@@ -459,6 +452,19 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
 
     public Cache<K,V> putCache() {
         return CacheManager.putCache(this);
+    }
+
+    protected void writeLock() {
+        implementation.getLock().ifPresent(lock -> lock.writeLock().lock());
+    }
+    protected void writeUnlock() {
+        implementation.getLock().ifPresent(lock -> lock.writeLock().unlock());
+    }
+    protected void readLock() {
+        implementation.getLock().ifPresent(lock -> lock.readLock().lock());
+    }
+    protected void readUnlock() {
+        implementation.getLock().ifPresent(lock -> lock.readLock().unlock());
     }
 
 }

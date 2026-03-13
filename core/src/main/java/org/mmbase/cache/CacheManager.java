@@ -554,8 +554,7 @@ public class CacheManager implements CacheManagerMBean {
 
 
     public static class Bean<K, V> implements Comparable<Bean<?, ?>> {
-        /* private final Cache<K, V> cache; // this line prevents building in Java 1.5.0_07 probably because of http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4916620 */
-        private final Cache cache;
+        private final Cache<K, V> cache;
         public Bean(Cache<K, V> c) {
             cache = c;
         }
@@ -563,15 +562,9 @@ public class CacheManager implements CacheManagerMBean {
         public String getDescription() { return cache.getDescription(); }
         public int getMaxEntrySize() { return cache.getMaxEntrySize(); }
         public Set<Map.Entry<K, V>> getEntrySet() {
-            synchronized (cache.getLock()) {
-                return new HashSet<Map.Entry<K, V>>(cache.entrySet());
-            }
+            return cache.entrySet();
         }
-        public Set<K> getKeySet() {
-            synchronized (cache.getLock()) {
-                return new HashSet<K>(cache.keySet());
-            }
-        }
+        public Set<K> getKeySet() {return cache.keySet(); }
         public long getHits() { return cache.getHits(); }
         public long  getMisses() { return cache.getMisses(); }
         public long getPuts() { return cache.getPuts(); }
