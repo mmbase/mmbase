@@ -54,6 +54,22 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
      */
     private long puts = 0;
 
+    /**
+     * Thread-local storage of the lock used for the last write lock acquisition
+     * in this thread. This ensures that writeUnlock() always unlocks the same
+     * lock instance that was locked by writeLock(), even if the implementation
+     * is changed in between.
+     */
+    private final ThreadLocal<ReadWriteLock> writeThreadLocalLock = new ThreadLocal<ReadWriteLock>();
+
+    /**
+     * Thread-local storage of the lock used for the last read lock acquisition
+     * in this thread. This ensures that readUnlock() always unlocks the same
+     * lock instance that was locked by readLock(), even if the implementation
+     * is changed in between.
+     */
+    private final ThreadLocal<ReadWriteLock> readThreadLocalLock = new ThreadLocal<ReadWriteLock>();
+
     public Cache(int size) {
         // See: http://www.mmbase.org/jira/browse/MMB-1486
         implementation = CacheManager.getInstance().createDefaultImplementation(size);
@@ -61,14 +77,8 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     }
 
     void setImplementation(int size, String clazz, Map<String,String> configValues) {
+        writeLock();
         CacheImplementationInterface<K, V> oldImpl = implementation;
-        java.util.concurrent.locks.Lock writeLock = null;
-        if (oldImpl != null) {
-            writeLock = oldImpl.writeLock();
-            if (writeLock != null) {
-                writeLock.lock();
-            }
-        }
         try {
             clear();
             try {
@@ -80,9 +90,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
                 log.error("For cache " + this + " " + iae.getClass().getName() + ": " + iae.getMessage());
             }
         } finally {
-            if (writeLock != null) {
-                writeLock.unlock();
-            }
+            writeUnlock();
         }
     }
 
@@ -469,21 +477,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
         return CacheManager.putCache(this);
     }
 
-    /**
-     * Thread-local storage of the lock used for the last write lock acquisition
-     * in this thread. This ensures that writeUnlock() always unlocks the same
-     * lock instance that was locked by writeLock(), even if the implementation
-     * is changed in between.
-     */
-    private final ThreadLocal<ReadWriteLock> writeThreadLocalLock = new ThreadLocal<ReadWriteLock>();
 
-    /**
-     * Thread-local storage of the lock used for the last read lock acquisition
-     * in this thread. This ensures that readUnlock() always unlocks the same
-     * lock instance that was locked by readLock(), even if the implementation
-     * is changed in between.
-     */
-    private final ThreadLocal<ReadWriteLock> readThreadLocalLock = new ThreadLocal<ReadWriteLock>();
 
     protected void writeLock() {
         implementation.getLock().ifPresent(lock -> {
