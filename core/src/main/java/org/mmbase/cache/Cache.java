@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.locks.ReadWriteLock;
 import org.mmbase.util.HashCodeUtil;
 import org.mmbase.util.SizeMeasurable;
 import org.mmbase.util.SizeOf;
@@ -468,17 +469,56 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
         return CacheManager.putCache(this);
     }
 
+    /**
+     * Thread-local storage of the lock used for the last write lock acquisition
+     * in this thread. This ensures that writeUnlock() always unlocks the same
+     * lock instance that was locked by writeLock(), even if the implementation
+     * is changed in between.
+     */
+    private final ThreadLocal<ReadWriteLock> writeThreadLocalLock = new ThreadLocal<ReadWriteLock>();
+
+    /**
+     * Thread-local storage of the lock used for the last read lock acquisition
+     * in this thread. This ensures that readUnlock() always unlocks the same
+     * lock instance that was locked by readLock(), even if the implementation
+     * is changed in between.
+     */
+    private final ThreadLocal<ReadWriteLock> readThreadLocalLock = new ThreadLocal<ReadWriteLock>();
+
     protected void writeLock() {
-        implementation.getLock().ifPresent(lock -> lock.writeLock().lock());
+        implementation.getLock().ifPresent(lock -> {
+            writeThreadLocalLock.set(lock);
+            lock.writeLock().lock();
+        });
     }
+
     protected void writeUnlock() {
-        implementation.getLock().ifPresent(lock -> lock.writeLock().unlock());
+        ReadWriteLock lock = writeThreadLocalLock.get();
+        if (lock != null) {
+            try {
+                lock.writeLock().unlock();
+            } finally {
+                writeThreadLocalLock.remove();
+            }
+        }
     }
+
     protected void readLock() {
-        implementation.getLock().ifPresent(lock -> lock.readLock().lock());
+        implementation.getLock().ifPresent(lock -> {
+            readThreadLocalLock.set(lock);
+            lock.readLock().lock();
+        });
     }
+
     protected void readUnlock() {
-        implementation.getLock().ifPresent(lock -> lock.readLock().unlock());
+        ReadWriteLock lock = readThreadLocalLock.get();
+        if (lock != null) {
+            try {
+                lock.readLock().unlock();
+            } finally {
+                readThreadLocalLock.remove();
+            }
+        }
     }
 
 }
