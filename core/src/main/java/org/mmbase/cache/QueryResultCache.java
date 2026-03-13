@@ -266,7 +266,7 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
             }
             return false;
         } finally {
-            readLock();
+            readUnlock();
         }
     }
 
