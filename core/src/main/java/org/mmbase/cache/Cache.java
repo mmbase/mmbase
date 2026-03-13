@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.mmbase.util.HashCodeUtil;
 import org.mmbase.util.SizeMeasurable;
 import org.mmbase.util.SizeOf;
@@ -29,6 +30,13 @@ import org.mmbase.util.logging.Logging;
 abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBean {
 
     private static final Logger log = Logging.getLoggerInstance(Cache.class);
+
+    /**
+     * Internal lock that always exists, used to protect changes to the
+     * {@link #implementation} reference itself. This avoids relying on an
+     * optional implementation-provided lock when swapping implementations.
+     */
+    private final ReadWriteLock implementationLock = new ReentrantReadWriteLock();
 
     private boolean active = true;
     protected int maxEntrySize = -1; // no maximum/ implementation does not support;
@@ -77,7 +85,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     }
 
     void setImplementation(int size, String clazz, Map<String,String> configValues) {
-        writeLock();
+        implementationLock.writeLock().lock();
         CacheImplementationInterface<K, V> oldImpl = implementation;
         try {
             clear();
@@ -90,7 +98,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
                 log.error("For cache " + this + " " + iae.getClass().getName() + ": " + iae.getMessage());
             }
         } finally {
-            writeUnlock();
+            implementationLock.writeLock().unlock();
         }
     }
 
