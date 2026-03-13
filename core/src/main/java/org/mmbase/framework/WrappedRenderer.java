@@ -16,7 +16,7 @@ import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 
 /**
- * A generic implementation of a Renderer that wraps another Renderer. It defines and implments the
+ * A generic implementation of a Renderer that wraps another Renderer. It defines and implements the
  * parameter 'wraps' which you can point to another block.
  *
  * @author Michiel Meeuwissen
