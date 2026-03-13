@@ -31,6 +31,7 @@ public class ReadWriteLockAbstractSet<E> extends AbstractSet<E> {
         return new Iterator<E>() {
             private final Iterator<E> it = keys.iterator();
             private E current;
+            private boolean canRemove = false;
 
             @Override
             public boolean hasNext() {
@@ -40,12 +41,13 @@ public class ReadWriteLockAbstractSet<E> extends AbstractSet<E> {
             @Override
             public E next() {
                 current = it.next();
+                canRemove = true;
                 return current;
             }
 
             @Override
             public void remove() {
-                if (current == null) {
+                if (!canRemove) {
                     throw new IllegalStateException("next() has not been called, or element already removed");
                 }
                 rwLock.writeLock().lock();
@@ -54,7 +56,7 @@ public class ReadWriteLockAbstractSet<E> extends AbstractSet<E> {
                 } finally {
                     rwLock.writeLock().unlock();
                 }
-                current = null;
+                canRemove = false;
             }
         };
     }
