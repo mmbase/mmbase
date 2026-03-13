@@ -36,7 +36,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     /**
      * @since MMBase-1.8
      */
-    protected CacheImplementationInterface<K, V> implementation;
+    protected volatile CacheImplementationInterface<K, V> implementation;
 
 
     /**
