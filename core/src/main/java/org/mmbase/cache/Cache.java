@@ -60,14 +60,28 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     }
 
     void setImplementation(int size, String clazz, Map<String,String> configValues) {
-        clear();
-        try {
-            if (implementation == null || (! clazz.equals(implementation.getClass().getName()))) {
-                log.info("Setting implementation of " + this + " to " + clazz);
-                implementation = CacheManager.getInstance().createImplementation(size, clazz, configValues);
+        CacheImplementationInterface<K, V> oldImpl = implementation;
+        java.util.concurrent.locks.Lock writeLock = null;
+        if (oldImpl != null) {
+            writeLock = oldImpl.writeLock();
+            if (writeLock != null) {
+                writeLock.lock();
             }
-        } catch (RuntimeException iae) {
-            log.error("For cache " + this + " " + iae.getClass().getName() + ": " + iae.getMessage());
+        }
+        try {
+            clear();
+            try {
+                if (oldImpl == null || (! clazz.equals(oldImpl.getClass().getName()))) {
+                    log.info("Setting implementation of " + this + " to " + clazz);
+                    implementation = CacheManager.getInstance().createImplementation(size, clazz, configValues);
+                }
+            } catch (RuntimeException iae) {
+                log.error("For cache " + this + " " + iae.getClass().getName() + ": " + iae.getMessage());
+            }
+        } finally {
+            if (writeLock != null) {
+                writeLock.unlock();
+            }
         }
     }
 
