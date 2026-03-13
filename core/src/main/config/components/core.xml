@@ -622,8 +622,8 @@
          mimetype="text/html">
     <title xml:lang="nl">Documentatie</title>
     <title xml:lang="en">Documentation</title>
-    <description xml:lang="en">Renderering of our docbook documentation (expiremental)</description>
-    <xi:include href="http://www.mmbase.org/components/docbook.head.xml" />
+    <description xml:lang="en">Rendering of our docbook documentation (experimental)</description>
+    <xi:include href="https://www.mmbase.org/components/docbook.head.xml" />
     <body>
       <class name="org.mmbase.framework.DocumentationRenderer">
         <param name="docbook">index.xml</param>
