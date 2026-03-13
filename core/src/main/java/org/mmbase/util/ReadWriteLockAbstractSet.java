@@ -45,14 +45,16 @@ public class ReadWriteLockAbstractSet<E> extends AbstractSet<E> {
 
             @Override
             public void remove() {
-                it.remove();
-
+                if (current == null) {
+                    throw new IllegalStateException("next() has not been called, or element already removed");
+                }
                 rwLock.writeLock().lock();
                 try {
                     backing.remove(current);
                 } finally {
                     rwLock.writeLock().unlock();
                 }
+                current = null;
             }
         };
     }
