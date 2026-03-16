@@ -9,10 +9,10 @@
 -->
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee https://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
   <description>
-    MMBase is an open-source content managment system. See http://www.mmbase.org/
+    MMBase is an open-source content management system. See https://www.mmbase.org/
   </description>
 
   <display-name>MMBase distro</display-name>
@@ -346,7 +346,7 @@
   <resource-ref>
     <description>
       Mail resource for MMBase.
-      Don't forget the configure it with your app-server.
+      Don't forget to configure it with your app-server.
     </description>
     <res-ref-name>mail/Session</res-ref-name>
     <res-type>javax.mail.Session</res-type>

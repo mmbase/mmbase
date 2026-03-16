@@ -1,14 +1,15 @@
 package org.mmbase.cache.oscache;
+
+import com.opensymphony.oscache.base.Config;
+import com.opensymphony.oscache.base.algorithm.AbstractConcurrentReadCache;
+import com.opensymphony.oscache.base.persistence.PersistenceListener;
+import java.util.*;
+import java.util.concurrent.locks.ReadWriteLock;
 import org.mmbase.cache.CacheImplementationInterface;
+import org.mmbase.util.SizeMeasurable;
 import org.mmbase.util.SizeOf;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
-import com.opensymphony.oscache.base.algorithm.AbstractConcurrentReadCache;
-import com.opensymphony.oscache.base.persistence.PersistenceListener;
-import com.opensymphony.oscache.base.Config;
-import java.util.Map;
-import java.util.Set;
-import java.util.Collection;
 
 /**
  * Implementation of the MMBase 'CacheImplementationInterface' interface, which
@@ -31,10 +32,10 @@ import java.util.Collection;
  * </pre>
  * @author Johannes Verelst &lt;johannes.verelst@eo.nl&gt;
  */
-public class OSCacheImplementation<K, V> implements CacheImplementationInterface<K, V>  {
+public class OSCacheImplementation<K, V> implements CacheImplementationInterface<K, V>, SizeMeasurable {
     private AbstractConcurrentReadCache cacheImpl;
-    private static final String classname = com.opensymphony.oscache.base.algorithm.LRUCache.class.getName();
-    private static final String persistanceclass = com.opensymphony.oscache.plugins.diskpersistence.DiskPersistenceListener.class.getName();
+    private static final String defaultClassName = com.opensymphony.oscache.base.algorithm.LRUCache.class.getName();
+    private static final String defaultPersistenceClass = com.opensymphony.oscache.plugins.diskpersistence.DiskPersistenceListener.class.getName();
     private static final Logger log = Logging.getLoggerInstance(OSCacheImplementation.class);
 
     public OSCacheImplementation() {
@@ -46,22 +47,30 @@ public class OSCacheImplementation<K, V> implements CacheImplementationInterface
      */
     public void config(Map<String, String> config) {
        try {
-           Class c = Class.forName(classname);
-           if (c != null) {
-               cacheImpl = (AbstractConcurrentReadCache)c.newInstance();
+           String className = config.remove("class");
+           if (className == null) {
+               className = defaultClassName;
            }
+           Map<String, String> copy = new HashMap<>(config);
 
-           c = Class.forName(persistanceclass);
-           if (c != null) {
-               PersistenceListener pl = (PersistenceListener)c.newInstance();
+           cacheImpl = (AbstractConcurrentReadCache) Class.forName(className).newInstance();
+           String persistanceclass = copy.remove("persistence");
+           if (persistanceclass == null) {
+               persistanceclass = defaultPersistenceClass;
+           }
+           if (! persistanceclass.isEmpty()) {
+               PersistenceListener pl = (PersistenceListener) Class.forName(persistanceclass).newInstance();
                Config osconfig = new Config();
-               osconfig.set("cache.path", config.get("path"));
+               osconfig.set("cache.path", config.remove("path"));
                pl.configure(osconfig);
                cacheImpl.setPersistenceListener(pl);
                cacheImpl.setMemoryCaching(true);
                cacheImpl.setUnlimitedDiskCache(true);
                cacheImpl.setOverflowPersistence(true);
-            }
+           }
+           if (! copy.isEmpty()) {
+               log.warn("Unknown configuration parameters: " + copy);
+           }
         } catch (Exception e) {
             log.error("Exception while initializing cache: " + e);
         }
@@ -238,7 +247,7 @@ public class OSCacheImplementation<K, V> implements CacheImplementationInterface
      * @todo This will also be used to lock 'get' iteration operations in QueryResultCache, but that
      * is not actually needed for this implementation. You cannot synchronize on null though, in java.
      */
-    public Object getLock() {
-        return cacheImpl;
+    public Optional<ReadWriteLock> getLock() {
+        return Optional.empty();
     }
 }

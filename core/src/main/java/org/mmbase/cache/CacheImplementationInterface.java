@@ -9,7 +9,9 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.cache;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.locks.ReadWriteLock;
 
 
 /**
@@ -47,5 +49,5 @@ public interface CacheImplementationInterface<K, V> extends Map<K, V> {
      * return the object on which to synchronize, e.g. when looping over entrySet.
      * @since MMBase-1.8.6
      */
-    Object getLock();
+    Optional<ReadWriteLock> getLock();
 }

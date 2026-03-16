@@ -9,6 +9,7 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.cache.implementation;
 
+import java.util.concurrent.locks.ReadWriteLock;
 import org.mmbase.cache.CacheImplementationInterface;
 import java.util.*;
 import org.mmbase.util.logging.*;
@@ -119,10 +120,13 @@ public class LRUCache<K, V> implements CacheImplementationInterface<K, V> {
 
     public void config(Map<String, String> map) {
         // needs no configuration.
+        if (! map.isEmpty()) {
+            log.warn("Unknown configuration parameters: " + map);
+        }
     }
 
-    public Object getLock() {
-        return backing;
+    public Optional<ReadWriteLock> getLock() {
+        return Optional.empty();
     }
 
     // wrapping for synchronization

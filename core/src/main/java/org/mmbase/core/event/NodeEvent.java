@@ -38,7 +38,7 @@ public class NodeEvent extends Event {
      */
     public static final int TYPE_RELATION_CHANGE = 3;
 
-    private static final Map<String, Object> EMPTY = Collections.unmodifiableMap(new HashMap<String, Object>());
+    private static final Map<String, Object> EMPTY = Collections.unmodifiableMap(new HashMap<>());
     private static final Object EMPTIED = null;
 
     /**
@@ -51,8 +51,8 @@ public class NodeEvent extends Event {
         if (values.size() == 0) {
             return Collections.unmodifiableMap(values);
         }
-        Set<String> toremove = new HashSet<String>();
-        Map<String, Object> newMap = new HashMap<String, Object>();
+        Set<String> toremove = new HashSet<>();
+        Map<String, Object> newMap = new HashMap<>();
         synchronized(values) {
             ENTRIES:
             for (Map.Entry<String, Object> entry : values.entrySet()) {
@@ -136,7 +136,7 @@ public class NodeEvent extends Event {
         log.info("Reading " + properties);
         {
             String[] unacceptable = properties.getProperties().get("unacceptable").split(",");
-            List<Class> classes = new ArrayList<Class>();
+            List<Class> classes = new ArrayList<>();
             for (String clazz : unacceptable) {
                 try {
                     classes.add(Class.forName(clazz));
@@ -149,7 +149,7 @@ public class NodeEvent extends Event {
         }
         {
             String[] required = properties.getProperties().get("required").split(",");
-            List<Class> classes = new ArrayList<Class>();
+            List<Class> classes = new ArrayList<>();
             for (String clazz : required) {
                 try {
                     classes.add(Class.forName(clazz));
@@ -248,7 +248,7 @@ public class NodeEvent extends Event {
         return nodeNumber;
     }
 
-    private static final Set<String> relationBuilders = new HashSet<String>();
+    private static final Set<String> relationBuilders = new HashSet<>();
 
     /**
      * Especially events of the type NEW can also be about relations. You may want to know this. This determines it efficiently without actually
@@ -428,7 +428,7 @@ public class NodeEvent extends Event {
 
     public static void main(String[] args) {
         //test serializable
-        Map<String,Object>  oldv = new HashMap<String,Object>(), newv = new HashMap<String,Object>();
+        Map<String,Object>  oldv = new HashMap<>(), newv = new HashMap<>();
         oldv.put("een","veen");
         oldv.put("twee","vtwee");
         newv.putAll(oldv);

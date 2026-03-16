@@ -9,10 +9,16 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.cache;
 
-import java.util.*;
-
-import org.mmbase.util.*;
-import org.mmbase.cache.implementation.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import org.mmbase.util.HashCodeUtil;
+import org.mmbase.util.SizeMeasurable;
+import org.mmbase.util.SizeOf;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 
@@ -26,15 +32,21 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
 
     private static final Logger log = Logging.getLoggerInstance(Cache.class);
 
+    /**
+     * Internal lock that always exists, used to protect changes to the
+     * {@link #implementation} reference itself. This avoids relying on an
+     * optional implementation-provided lock when swapping implementations.
+     */
+    private final ReadWriteLock implementationLock = new ReentrantReadWriteLock();
+
     private boolean active = true;
     protected int maxEntrySize = -1; // no maximum/ implementation does not support;
 
     /**
      * @since MMBase-1.8
      */
-    private CacheImplementationInterface<K, V> implementation;
+    protected volatile CacheImplementationInterface<K, V> implementation;
 
-    protected volatile Object lock;
 
     /**
      * The number of times an element was succesfully retrieved from this cache.
@@ -51,37 +63,60 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
      */
     private long puts = 0;
 
+    /**
+     * Thread-local storage of the lock used for the last write lock acquisition
+     * in this thread. This ensures that writeUnlock() always unlocks the same
+     * lock instance that was locked by writeLock(), even if the implementation
+     * is changed in between.
+     */
+    private final ThreadLocal<Lock> writeThreadLocalLock = new ThreadLocal<Lock>();
+
+    /**
+     * Thread-local storage of the lock used for the last read lock acquisition
+     * in this thread. This ensures that readUnlock() always unlocks the same
+     * lock instance that was locked by readLock(), even if the implementation
+     * is changed in between.
+     */
+    private final ThreadLocal<Lock> readThreadLocalLock = new ThreadLocal<Lock>();
+
     public Cache(int size) {
         // See: http://www.mmbase.org/jira/browse/MMB-1486
         implementation = CacheManager.getInstance().createDefaultImplementation(size);
-        lock           = implementation.getLock();
-        //implementation = new LRUHashtable<K, V>(size);
-
         log.service("Creating cache " + getName() + ": " + getDescription());
     }
 
+    void setDefaultImplementation(int size) {
+        implementationLock.writeLock().lock();
+        try {
+            CacheImplementationInterface<K, V> oldImpl = implementation;
+            CacheImplementationInterface<K, V> newImpl = CacheManager.getInstance().createDefaultImplementation(size);
+            if (!newImpl.getClass().equals(oldImpl.getClass())) {
+                clear();
+                log.info("Setting default implementation of " + this + " to " + newImpl);
+                implementation = newImpl;
+            }
+        } finally {
+            implementationLock.writeLock().unlock();
+        }
+
+    }
+
     void setImplementation(int size, String clazz, Map<String,String> configValues) {
-        synchronized(lock) {
-            clear();
+        implementationLock.writeLock().lock();
+        try {
+            CacheImplementationInterface<K, V> oldImpl = implementation;
             try {
-                if (implementation == null || (! clazz.equals(implementation.getClass().getName()))) {
+                if (oldImpl == null || (!clazz.equals(oldImpl.getClass().getName()))) {
+                    clear();
                     log.info("Setting implementation of " + this + " to " + clazz);
                     implementation = CacheManager.getInstance().createImplementation(size, clazz, configValues);
-                    lock = implementation.getLock();
                 }
             } catch (RuntimeException iae) {
                 log.error("For cache " + this + " " + iae.getClass().getName() + ": " + iae.getMessage());
             }
+        } finally {
+            implementationLock.writeLock().unlock();
         }
-    }
-
-    /**
-     * If you want to structurally modify this cache, synchronize on this object.
-     *
-     * @since MMBase-1.8.6
-     */
-    public final Object getLock() {
-        return lock;
     }
 
     /**
@@ -157,6 +192,23 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
      */
     public Class<?> getImplementation() {
         return implementation.getClass();
+    }
+
+
+    /**
+     * @since MMBase-1.9.7
+     */
+    @Override
+    public String getImplementationClassName() {
+        return implementation.getClass().getName();
+    }
+
+    /**
+     * @since MMBase-1.9.7
+     */
+    @Override
+    public void setImplementationClassName(String className) {
+        setImplementation(getMaxSize(), className, null);
     }
 
     /**
@@ -324,37 +376,43 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
 
     public int getByteSize(SizeOf sizeof) {
         int size = 26;
-        if (implementation instanceof SizeMeasurable) {
-            size += ((SizeMeasurable) implementation).getByteSize(sizeof);
-        } else {
-            // sizeof.sizeof(implementation) does not work because this.equals(implementation)
-            synchronized(lock) {
+        readLock();
+        try {
+            if (implementation instanceof SizeMeasurable) {
+                size += ((SizeMeasurable) implementation).getByteSize(sizeof);
+            } else {
+                // sizeof.sizeof(implementation) does not work because this.equals(implementation)
                 for (Map.Entry<K, V> entry : implementation.entrySet()) {
                     size += sizeof.sizeof(entry.getKey());
                     size += sizeof.sizeof(entry.getValue());
                 }
             }
+        } finally {
+            readUnlock();
         }
         return size;
     }
 
     /**
      * Returns the sum of bytesizes of every key and value. This may count too much, because objects
-     * (like Nodes) may occur in more then one value, but this is considerably cheaper then {@link
+     * (like Nodes) may occur in more than one value, but this is considerably cheaper then {@link
      * #getByteSize()}, which has to keep a Collection of every counted object.
      * @since MMBase-1.8
      */
     public int getCheapByteSize() {
         int size = 0;
-        SizeOf sizeof = new SizeOf();
-        synchronized(lock) {
+        readLock();
+        try {
+            SizeOf sizeof = new SizeOf();
             for (Map.Entry<K, V> entry : implementation.entrySet()) {
                 size += sizeof.sizeof(entry.getKey());
                 size += sizeof.sizeof(entry.getValue());
                 sizeof.clear();
             }
+            return size;
+        } finally {
+            readUnlock();
         }
-        return size;
     }
 
 
@@ -459,6 +517,51 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
 
     public Cache<K,V> putCache() {
         return CacheManager.putCache(this);
+    }
+
+
+
+    protected void writeLock() {
+        implementation.getLock().ifPresent(lock -> {
+            Lock wl =  lock.writeLock();
+            writeThreadLocalLock.set(wl);
+            wl.lock();
+        });
+    }
+
+    protected void writeUnlock() {
+        Lock lock = writeThreadLocalLock.get();
+        if (lock != null) {
+            try {
+                lock.unlock();
+            } finally {
+                writeThreadLocalLock.remove();
+            }
+        }
+    }
+
+    protected void readLock() {
+        // Using write lock rather than read lock because the cache implementation
+        // (e.g., access-order LinkedHashMap in LRUCache) requires write locks even for
+        // read operations like get(). Using a read lock here would risk deadlock if
+        // the caller then calls get() (read-to-write upgrade is not supported by
+        // ReentrantReadWriteLock).
+        implementation.getLock().ifPresent(lock -> {
+            Lock rl = lock.writeLock();
+            readThreadLocalLock.set(rl);
+            rl.lock();
+        });
+    }
+
+    protected void readUnlock() {
+        Lock lock = readThreadLocalLock.get();
+        if (lock != null) {
+            try {
+                lock.unlock();
+            } finally {
+                readThreadLocalLock.remove();
+            }
+        }
     }
 
 }

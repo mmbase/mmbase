@@ -52,12 +52,19 @@ public class DocumentationRenderer extends CachedRenderer {
     }
     @Override
     public Parameter<?>[] getParameters() {
-        return new Parameter<?>[] {
+        String baseUrl = null;
+        try {
+            baseUrl = getBaseUrl().toString();
+        } catch (MalformedURLException e) {
+            log.error(e.getMessage(), e);
+        }
+        return new Parameter<?>[]{
             new Parameter<String>("docbook", String.class, docbook),
             new Parameter<String>("module", String.class, module),
             new Parameter<String>("project", String.class, project),
             new Parameter<String>("repository", String.class, repository),
-            new Parameter<String>("branch", String.class, branch)
+            new Parameter<String>("branch", String.class, branch),
+            new Parameter<String>("baseurl", String.class, baseUrl)
         };
     }
 
@@ -80,8 +87,8 @@ public class DocumentationRenderer extends CachedRenderer {
                                 //https://raw.githubusercontent.com/mmbase/mmdocs/refs/heads/main/src/docbook/index.xml
                                 //https://raw.githubusercontent.com/mmbase/mmdocs/refs/head/main/src/docbook/index.xml
                                 //https://raw.githubusercontent.com/mmbase/mmdocs/src/docbook/refs/head/main/index.xml
-                                URI url = new URL(repository + "/" + project + "/" + branch + "/" + module + "/" + db).toURI();
-
+                                URL baseUrl = getBaseUrl();
+                                URI url = baseUrl.toURI().resolve(db);
                                 log.debug("Resolved " + url);
                                 return url;
                             } catch (MalformedURLException mfe) {
@@ -101,5 +108,12 @@ public class DocumentationRenderer extends CachedRenderer {
         return wrapped;
     }
 
+    URL getBaseUrl() throws MalformedURLException {
+        //https://raw.githubusercontent.com/mmbase/mmdocs/refs/heads/main/src/docbook/index.xml
+        //https://raw.githubusercontent.com/mmbase/mmdocs/refs/head/main/src/docbook/index.xml
+        //https://raw.githubusercontent.com/mmbase/mmdocs/src/docbook/refs/head/main/index.xml
+        return new URL(repository + "/" + project + "/" + branch + "/" + module + "/");
+
+    }
 
 }

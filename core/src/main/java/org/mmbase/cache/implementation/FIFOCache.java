@@ -13,6 +13,8 @@ import java.util.*;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.mmbase.cache.CacheImplementationInterface;
+import org.mmbase.util.ReadWriteLockAbstractCollection;
+import org.mmbase.util.ReadWriteLockAbstractSet;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 
@@ -30,21 +32,21 @@ import org.mmbase.util.logging.Logging;
  *
  * @author  Michiel Meeuwissen
  * @see    org.mmbase.cache.Cache
- * @since MMBase-1.9.2
+ * @since MMBase-1.9.7
  */
-public class NonBlockingLRUCache<K, V> implements CacheImplementationInterface<K, V> {
+public class FIFOCache<K, V> implements CacheImplementationInterface<K, V> {
 
-    private static final Logger log = Logging.getLoggerInstance(NonBlockingLRUCache.class);
+    private static final Logger log = Logging.getLoggerInstance(FIFOCache.class);
 
     public int maxSize = 100;
     private final LinkedHashMap<K, V> backing;
     private final ReadWriteLock rwLock = new ReentrantReadWriteLock();
 
-    public NonBlockingLRUCache() {
+    public FIFOCache() {
         this(100);
     }
 
-    public NonBlockingLRUCache(int size) {
+    public FIFOCache(int size) {
         maxSize = size;
         // Use LinkedHashMap in insertion-order mode (not access-order) for LRU behavior
         // Access-order would require write locks on get(), preventing non-blocking reads
@@ -53,7 +55,7 @@ public class NonBlockingLRUCache<K, V> implements CacheImplementationInterface<K
             private static final long serialVersionUID = 0L;
             @Override
             protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
-                return size() > NonBlockingLRUCache.this.maxSize;
+                return this.size() > FIFOCache.this.maxSize;
             }
         };
     }
@@ -121,11 +123,15 @@ public class NonBlockingLRUCache<K, V> implements CacheImplementationInterface<K
     @Override
     public void config(Map<String, String> map) {
         // needs no configuration.
+        if (! map.isEmpty()) {
+            log.warn("Unknown configuration parameters: " + map);
+        }
+
     }
 
     @Override
-    public Object getLock() {
-        return rwLock;
+    public Optional<ReadWriteLock> getLock() {
+        return Optional.of(rwLock);
     }
 
     // wrapping for thread-safety with read/write locks
@@ -223,32 +229,17 @@ public class NonBlockingLRUCache<K, V> implements CacheImplementationInterface<K
 
     @Override
     public Set<K> keySet() {
-        rwLock.readLock().lock();
-        try {
-            return new LinkedHashSet<>(backing.keySet());
-        } finally {
-            rwLock.readLock().unlock();
-        }
+        return new ReadWriteLockAbstractSet<>(rwLock, backing.keySet());
     }
 
     @Override
-    public Set<Entry<K,V>> entrySet() {
-        rwLock.readLock().lock();
-        try {
-            return new LinkedHashSet<>(backing.entrySet());
-        } finally {
-            rwLock.readLock().unlock();
-        }
+    public Set<Entry<K, V>> entrySet() {
+        return new ReadWriteLockAbstractSet<>(rwLock, backing.entrySet());
     }
 
     @Override
     public Collection<V> values() {
-        rwLock.readLock().lock();
-        try {
-            return new ArrayList<>(backing.values());
-        } finally {
-            rwLock.readLock().unlock();
-        }
+        return new ReadWriteLockAbstractCollection<>(rwLock, backing.values());
     }
 
 
