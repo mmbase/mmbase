@@ -8,7 +8,7 @@
 
   <display-name>MMBase distro</display-name>
   <description>
-    MMBase is an open-source content managment system. See http://www.mmbase.org/
+    MMBase is an open-source content management system. See https://www.mmbase.org/
   </description>
 
   <!-- uncomment this and fill in the right value, if your app-server
