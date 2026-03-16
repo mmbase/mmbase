@@ -3,6 +3,8 @@ package org.mmbase.cache.implementation;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Random;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -47,9 +49,12 @@ public class PerformanceTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-            {1025, 1000000, 2, LRUCache.class},
-            {1025, 1000000, 2, LRUHashtable.class},
-            {1025, 1000000, 2, NonBlockingLRUCache.class}
+            {1025, 1000000, 4, LRUCache.class},
+            {1025, 1000000, 4, LRUHashtable.class},
+
+            {1025, 1000000, 4, FIFOCache.class},
+            {1025, 1000000, 4, CacheImplementationInterface.class},
+
         });
     }
 
@@ -71,7 +76,7 @@ public class PerformanceTest {
         main(new String[] {"" + treesiz, "" + opers, "" + thrds, impl.getName()});
     }
 
-    public static void main(String argv[]) throws Exception {
+    public static void main(String[] argv) throws Exception {
         Class<?> impl = LRUCache.class;
         int treesiz = 1024;
         int opers = 1000000;
@@ -185,6 +190,27 @@ public class PerformanceTest {
         long timePerKop = (ll5 - ll3) * 1000 / (opers);
         System.out.println("Run      " + (ll5-ll3) / 1000000+ " ms (" + timePerKop / 1000 + " us/koperation,  " + (timePerKop / thrds) / 1000 + " us/koperation total from " + thrds + " threads)");
         System.out.println("Used implementation: " + impl);
+    }
+
+    ReadWriteLock lock = new ReentrantReadWriteLock();
+
+
+    @Test
+    public void testLock() {
+        lock.writeLock().lock();
+        lock.readLock().lock();
+        lock.readLock().lock();
+
+        lock.writeLock().lock();
+        try {
+
+        } finally {
+            lock.writeLock().lock();
+            lock.readLock().unlock();
+            lock.readLock().unlock();
+            lock.writeLock().unlock();
+
+        }
     }
 
 
