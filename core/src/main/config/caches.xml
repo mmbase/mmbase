@@ -27,16 +27,25 @@
 
     <strategy>org.mmbase.cache.ConstraintsMatchingStrategy</strategy>
     -->
+
+
   </releaseStrategies>
 
   <!-- since 1.9.7 you can also specify the default implementation for all caches here. -->
   <defaultImplementation>
     <!-- this is the original implementation -->
+
     <class>org.mmbase.cache.implementation.LRUCache</class>
     <!-- this one will be non-blocking on gets, but it is not fully LRU, and probably also less tested -->
     <!--
-     <class>org.mmbase.cache.implementation.NonBlockingLRUCache</class>
+    <class>oorg.mmbase.cache.implementation.FIFOCache</class>
     -->
+    <!-- This one would need the mmbase-oscache module
+    <class>org.mmbase.cache.oscache.OSCacheImplementation</class>
+    <param name="class">com.opensymphony.oscache.base.algorithm.LRUCache</param>
+    <param name="persistence"></param>
+    -->
+
   </defaultImplementation>
 
   <!-- ================================================================================
