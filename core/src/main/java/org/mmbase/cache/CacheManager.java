@@ -129,8 +129,9 @@ public class CacheManager implements CacheManagerMBean {
      *
      * @see #getCaches
      */
-    public static Cache getCache(String name) {
-        return getInstance().caches.get(name);
+    @SuppressWarnings("unchecked")
+    public static <K, V> Cache<K, V> getCache(String name) {
+        return (Cache<K, V>) getInstance().caches.get(name);
     }
 
     /**
@@ -138,15 +139,15 @@ public class CacheManager implements CacheManagerMBean {
      * accesible by tools which want that (like EL).
      * @since MMBase-1.9
      */
-    public static Bean getBean(String name) {
-        return new Bean(getCache(name));
+    public static Bean<?, ?> getBean(String name) {
+        return new Bean<>(getCache(name));
     }
-    public static Set<Bean> getCaches(String className) {
-        SortedSet<Bean> result = new TreeSet<Bean>();
-        for (Cache c : getInstance().caches.values()) {
+    public static Set<Bean<?, ?>> getCaches(String className) {
+        SortedSet<Bean<?, ?>> result = new TreeSet<>();
+        for (Cache<?, ?> c : getInstance().caches.values()) {
             try {
-                if (className == null || "".equals(className) || Class.forName(className).isInstance(c)) {
-                    result.add(new Bean(c));
+                if (className == null || className.isEmpty() || Class.forName(className).isInstance(c)) {
+                    result.add(new Bean<>(c));
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -172,7 +173,8 @@ public class CacheManager implements CacheManagerMBean {
     }
 
 
-    private static ThreadPoolExecutor cachePutter = new ThreadPoolExecutor(0, 1, 2 , TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(), new ThreadFactory() {
+    private static final ThreadPoolExecutor cachePutter = new ThreadPoolExecutor(0, 1, 2 , TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(), new ThreadFactory() {
+            @Override
             public Thread newThread(Runnable r) {
                 return ThreadPools.newThread(r, "CachePutter");
             }
@@ -291,9 +293,7 @@ public class CacheManager implements CacheManagerMBean {
             if (only != null && ! only.equals(cacheName)) {
                 continue;
             }
-            // TODO: fix again when everybody runs 1.5.0_08, because of
-            // generics bug http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4916620
-            Cache cache = getCache(cacheName);
+            Cache<?, ?> cache = getCache(cacheName);
             if (cache == null) {
                 log.service("No cache " + cacheName + " is present (perhaps not used yet?)");
             } else {
@@ -307,12 +307,14 @@ public class CacheManager implements CacheManagerMBean {
                         configValues.put(paramName, paramValue);
                     }
                     cache.setImplementation(cache.getMaxSize(), clazz, configValues);
+                } else {
+                    cache.setDefaultImplementation(cache.getMaxSize());
                 }
                 String status = DocumentReader.getElementValue(DocumentReader.getElementByPath(cacheElement, "cache.status"));
                 cache.setActive(status.equalsIgnoreCase("active"));
                 try {
-                    Integer size = Integer.valueOf(DocumentReader.getElementValue(DocumentReader.getElementByPath(cacheElement, "cache.size")));
-                    cache.setMaxSize(size.intValue());
+                    int size = Integer.valueOf(DocumentReader.getElementValue(DocumentReader.getElementByPath(cacheElement, "cache.size")));
+                    cache.setMaxSize(size);
                     log.service("Setting " + cacheName + " " + status + " with size " + size);
                 } catch (NumberFormatException nfe) {
                     log.error("Could not configure cache " + cacheName + " because the size was wrong: " + nfe.toString());
