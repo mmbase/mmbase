@@ -198,8 +198,10 @@ public class URIResolver implements javax.xml.transform.URIResolver, SizeMeasura
      */
     public List<String> getPrefixPath() {
         List<String> result = new ArrayList<String>();
-        for (Entry entry : dirs) {
-            result.add(entry.getPrefix() + entry.getDir().toString());
+        if (dirs != null) {
+            for (Entry entry : dirs) {
+                result.add(entry.getPrefix() + entry.getDir().toString());
+            }
         }
         return result;
     }
