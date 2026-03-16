@@ -37,8 +37,8 @@ import org.mmbase.util.logging.Logging;
  */
 public class OSCacheImplementation<K, V> implements CacheImplementationInterface<K, V>, SizeMeasurable {
     private AbstractConcurrentReadCache cacheImpl;
-    private static final String classname = com.opensymphony.oscache.base.algorithm.LRUCache.class.getName();
-    private static final String persistanceclass = com.opensymphony.oscache.plugins.diskpersistence.DiskPersistenceListener.class.getName();
+    private static final String defaultClassName = com.opensymphony.oscache.base.algorithm.LRUCache.class.getName();
+    private static final String defaultPersistenceClass = com.opensymphony.oscache.plugins.diskpersistence.DiskPersistenceListener.class.getName();
     private static final Logger log = Logging.getLoggerInstance(OSCacheImplementation.class);
 
     public OSCacheImplementation() {
@@ -50,14 +50,18 @@ public class OSCacheImplementation<K, V> implements CacheImplementationInterface
      */
     public void config(Map<String, String> config) {
        try {
-           Class c = Class.forName(classname);
-           if (c != null) {
-               cacheImpl = (AbstractConcurrentReadCache)c.newInstance();
+           String className = config.get("class");
+           if (className == null) {
+               className = defaultClassName;
            }
 
-           c = Class.forName(persistanceclass);
-           if (c != null) {
-               PersistenceListener pl = (PersistenceListener)c.newInstance();
+           cacheImpl = (AbstractConcurrentReadCache) Class.forName(className).newInstance();
+           String persistanceclass = config.get("persistence");
+           if (persistanceclass == null) {
+               persistanceclass = defaultPersistenceClass;
+           }
+           if (! persistanceclass.isEmpty()) {
+               PersistenceListener pl = (PersistenceListener) Class.forName(persistanceclass).newInstance();
                Config osconfig = new Config();
                osconfig.set("cache.path", config.get("path"));
                pl.configure(osconfig);
@@ -65,7 +69,7 @@ public class OSCacheImplementation<K, V> implements CacheImplementationInterface
                cacheImpl.setMemoryCaching(true);
                cacheImpl.setUnlimitedDiskCache(true);
                cacheImpl.setOverflowPersistence(true);
-            }
+           }
         } catch (Exception e) {
             log.error("Exception while initializing cache: " + e);
         }
