@@ -4,6 +4,7 @@ import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 
 
@@ -14,11 +15,16 @@ import java.util.concurrent.locks.ReadWriteLock;
  */
 public class ReadWriteLockAbstractCollection<E> extends AbstractCollection<E> {
 
-    private final ReadWriteLock rwLock;
+    private final Lock readLock;
+    private final Lock writeLock;
     private final Collection<E> backing;
 
     public ReadWriteLockAbstractCollection(ReadWriteLock rwLock, Collection<E> backing) {
-        this.rwLock = rwLock;
+        this(rwLock.readLock(), rwLock.writeLock(), backing);
+    }
+    public ReadWriteLockAbstractCollection(Lock readLock, Lock writeLock, Collection<E> backing) {
+        this.readLock = readLock;
+        this.writeLock = writeLock;;
         this.backing = backing;
     }
 
@@ -26,11 +32,11 @@ public class ReadWriteLockAbstractCollection<E> extends AbstractCollection<E> {
     public Iterator<E> iterator() {
         // Iterate over a snapshot for stability, but apply removals to the backing collection
         final Iterator<E> entryIt;
-        rwLock.readLock().lock();
+        readLock.lock();
         try {
             entryIt = new ArrayList<E>(backing).iterator();
         } finally {
-            rwLock.readLock().unlock();
+            readLock.unlock();
         }
         return new Iterator<E>() {
             private E lastReturned = null;
@@ -54,11 +60,11 @@ public class ReadWriteLockAbstractCollection<E> extends AbstractCollection<E> {
                 if (!canRemove) {
                     throw new IllegalStateException("next() has not been called, or remove() already called after the last next()");
                 }
-                rwLock.writeLock().lock();
+                writeLock.lock();
                 try {
                     backing.remove(lastReturned);
                 } finally {
-                    rwLock.writeLock().unlock();
+                    writeLock.unlock();
                 }
                 canRemove = false;
             }
@@ -67,31 +73,31 @@ public class ReadWriteLockAbstractCollection<E> extends AbstractCollection<E> {
 
     @Override
     public int size() {
-        rwLock.readLock().lock();
+        readLock.lock();
         try {
             return backing.size();
         } finally {
-            rwLock.readLock().unlock();
+            readLock.unlock();
         }
     }
 
     @Override
     public boolean contains(Object o) {
-        rwLock.readLock().lock();
+        readLock.lock();
         try {
             return backing.contains(o);
         } finally {
-            rwLock.readLock().unlock();
+            readLock.unlock();
         }
     }
 
     @Override
     public void clear() {
-        rwLock.writeLock().lock();
+        writeLock.lock();
         try {
             backing.clear();
         } finally {
-            rwLock.writeLock().unlock();
+            writeLock.unlock();
         }
     }
 

@@ -1,6 +1,7 @@
 package org.mmbase.util;
 
 import java.util.*;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 
 /**
@@ -10,23 +11,30 @@ import java.util.concurrent.locks.ReadWriteLock;
  */
 public class ReadWriteLockAbstractSet<E> extends AbstractSet<E> {
 
-    private final ReadWriteLock rwLock;
+    private final Lock readLock;
+    private final Lock writeLock;
     private final Set<E> backing;
 
     public ReadWriteLockAbstractSet(ReadWriteLock rwLock, Set<E> backing) {
-        this.rwLock = rwLock;
+        this(rwLock.readLock(), rwLock.writeLock(), backing);
+    }
+
+    public ReadWriteLockAbstractSet(Lock readLock, Lock writeLock, Set<E> backing) {
+        this.readLock = readLock;
+        this.writeLock = writeLock;
         this.backing = backing;
     }
+
 
     @Override
     public Iterator<E> iterator() {
         // Snapshot the keys under read lock, return an iterator that supports remove via the outer map
-        rwLock.readLock().lock();
+        readLock.lock();
         final List<E> keys;
         try {
             keys = new ArrayList<>(backing);
         } finally {
-            rwLock.readLock().unlock();
+            readLock.unlock();
         }
         return new Iterator<E>() {
             private final Iterator<E> it = keys.iterator();
@@ -50,11 +58,11 @@ public class ReadWriteLockAbstractSet<E> extends AbstractSet<E> {
                 if (!canRemove) {
                     throw new IllegalStateException("next() has not been called, or element already removed");
                 }
-                rwLock.writeLock().lock();
+                writeLock.lock();
                 try {
                     backing.remove(current);
                 } finally {
-                    rwLock.writeLock().unlock();
+                    writeLock.unlock();
                 }
                 canRemove = false;
             }
@@ -63,43 +71,43 @@ public class ReadWriteLockAbstractSet<E> extends AbstractSet<E> {
 
     @Override
     public int size() {
-        rwLock.readLock().lock();
+        readLock.lock();
         try {
             return backing.size();
         } finally {
-            rwLock.readLock().unlock();
+            readLock.unlock();
         }
 
     }
 
     @Override
     public boolean contains(Object o) {
-        rwLock.readLock().lock();
+        readLock.lock();
         try {
             return backing.contains(o);
         } finally {
-            rwLock.readLock().unlock();
+            readLock.unlock();
         }
     }
 
     @Override
     public boolean remove(Object o) {
-        rwLock.writeLock().lock();
+        writeLock.lock();
         try {
             return backing.remove(o);
         } finally {
-            rwLock.writeLock().unlock();
+            writeLock.unlock();
         }
 
     }
 
     @Override
     public void clear() {
-        rwLock.writeLock().lock();
+        writeLock.lock();
         try {
             backing.clear();
         } finally {
-            rwLock.writeLock().unlock();
+            writeLock.unlock();
         }
     }
 
