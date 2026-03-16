@@ -9,12 +9,9 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.cache.implementation;
 
+import java.util.concurrent.locks.ReadWriteLock;
 import org.mmbase.cache.CacheImplementationInterface;
 import java.util.*;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-import org.mmbase.util.ReadWriteLockAbstractCollection;
-import org.mmbase.util.ReadWriteLockAbstractSet;
 import org.mmbase.util.logging.*;
 
 /**
@@ -32,7 +29,6 @@ public class LRUCache<K, V> implements CacheImplementationInterface<K, V> {
 
     public int maxSize = 100;
     private final Map<K, V> backing;
-    private final ReadWriteLock rwLock = new ReentrantReadWriteLock();
 
     public LRUCache() {
         this(100);
@@ -40,9 +36,8 @@ public class LRUCache<K, V> implements CacheImplementationInterface<K, V> {
 
     public LRUCache(int size) {
         maxSize = size;
-        // Access-order LinkedHashMap: get() is a structural modification
-        // All access must be protected by the ReadWriteLock
-        backing = new LinkedHashMap<K, V>(size, 0.75f, true) {
+        // caches can typically be accessed/modified by multipible thread, so we need to synchronize
+        backing = Collections.synchronizedMap(new LinkedHashMap<K, V>(size, 0.75f, true) {
             private static final long serialVersionUID = 0L;
             @Override
             protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
@@ -78,7 +73,7 @@ public class LRUCache<K, V> implements CacheImplementationInterface<K, V> {
                     return false;
                 }
             }
-        };
+        });
     }
 
     public int getCount(K key) {
@@ -94,12 +89,11 @@ public class LRUCache<K, V> implements CacheImplementationInterface<K, V> {
         if (size < 0 ) {
             throw new IllegalArgumentException("Cannot set size to negative value " + size);
         }
-        rwLock.writeLock().lock();
-        try {
-            maxSize = size;
-            while (backing.size() > maxSize) {
+        maxSize = size;
+        synchronized(backing) {
+            while (size() > maxSize) {
                 try {
-                    Iterator<K> i = backing.keySet().iterator();
+                    Iterator<K> i = keySet().iterator();
                     i.next();
                     i.remove();
                 } catch (Exception e) {
@@ -107,8 +101,6 @@ public class LRUCache<K, V> implements CacheImplementationInterface<K, V> {
                     // ConcurentModification?
                 }
             }
-        } finally {
-            rwLock.writeLock().unlock();
         }
     }
 
@@ -131,94 +123,22 @@ public class LRUCache<K, V> implements CacheImplementationInterface<K, V> {
     }
 
     public Optional<ReadWriteLock> getLock() {
-        return Optional.of(rwLock);
+        return Optional.empty();
     }
 
-    // All methods need synchronization via ReadWriteLock.
-    // Because the backing LinkedHashMap uses access-order mode,
-    // even get() is a structural modification and requires a write lock.
-    public int size() {
-        rwLock.readLock().lock();
-        try {
-            return backing.size();
-        } finally {
-            rwLock.readLock().unlock();
-        }
-    }
-    public boolean isEmpty() {
-        rwLock.readLock().lock();
-        try {
-            return backing.isEmpty();
-        } finally {
-            rwLock.readLock().unlock();
-        }
-    }
-    public boolean containsKey(Object key) {
-        rwLock.readLock().lock();
-        try {
-            return backing.containsKey(key);
-        } finally {
-            rwLock.readLock().unlock();
-        }
-    }
-    public boolean containsValue(Object value) {
-        rwLock.readLock().lock();
-        try {
-            return backing.containsValue(value);
-        } finally {
-            rwLock.readLock().unlock();
-        }
-    }
-    // get() modifies access order in this LinkedHashMap, so it needs a write lock
-    public V get(Object key) {
-        rwLock.writeLock().lock();
-        try {
-            return backing.get(key);
-        } finally {
-            rwLock.writeLock().unlock();
-        }
-    }
-    public V put(K key, V value) {
-        rwLock.writeLock().lock();
-        try {
-            return backing.put(key, value);
-        } finally {
-            rwLock.writeLock().unlock();
-        }
-    }
-    public V remove(Object key) {
-        rwLock.writeLock().lock();
-        try {
-            return backing.remove(key);
-        } finally {
-            rwLock.writeLock().unlock();
-        }
-    }
-    public void putAll(Map<? extends K, ? extends V> map) {
-        rwLock.writeLock().lock();
-        try {
-            backing.putAll(map);
-        } finally {
-            rwLock.writeLock().unlock();
-        }
-    }
-    public void clear() {
-        rwLock.writeLock().lock();
-        try {
-            backing.clear();
-        } finally {
-            rwLock.writeLock().unlock();
-        }
-    }
-    public Set<K> keySet() {
-        return new ReadWriteLockAbstractSet<>(rwLock.writeLock(), rwLock.writeLock(), backing.keySet());
-    }
-    public Set<Map.Entry<K,V>> entrySet() {
-        return new ReadWriteLockAbstractSet<>(rwLock.writeLock(), rwLock.writeLock(),  backing.entrySet());
-    }
-    public Collection<V> values() {
-        return new ReadWriteLockAbstractCollection<>(rwLock.writeLock(), rwLock.writeLock(), backing.values());
-    }
+    // wrapping for synchronization
+    public int size() { return backing.size(); }
+    public boolean isEmpty() { return backing.isEmpty();}
+    public boolean containsKey(Object key) { return backing.containsKey(key);}
+    public boolean containsValue(Object value){ return backing.containsValue(value);}
+    public V get(Object key) { return backing.get(key);}
+    public V put(K key, V value) { return backing.put(key, value);}
+    public V remove(Object key) { return backing.remove(key);}
+    public void putAll(Map<? extends K, ? extends V> map) { backing.putAll(map); }
+    public void clear() { backing.clear(); }
+    public Set<K> keySet() { return backing.keySet(); }
+    public Set<Map.Entry<K,V>> entrySet() { return backing.entrySet(); }
+    public Collection<V> values() { return backing.values();}
 
 
 }
