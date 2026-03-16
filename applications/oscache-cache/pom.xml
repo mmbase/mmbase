@@ -14,8 +14,8 @@
   <packaging>jar</packaging>
 
   <description>
-    MMBase contains a pluggable architecture for it's caches, where you can write your own cache
-    implementation to store MMBase objects in memory. This implementation uses the popular 'oscache'
+    MMBase contains a pluggable architecture for its caches, where you can write your own cache
+    implementation to store MMBase objects in memory. This implementation uses the (once) popular 'oscache'
     library, that can fall back to disk storage when needed. This allows you to cache a lot more
     inside MMBase without filling the internal memory. Note that you must only do this for objects
     which are more expensive to retrieve from Database than from disk (for instance difficult
