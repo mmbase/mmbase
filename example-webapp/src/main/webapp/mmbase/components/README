@@ -1,6 +1,6 @@
 This directory is the default location for component blocks implemented as JSP.
 
-This directory contains subdirectories wich correspond to the names of MMBase components.  All Jsps
+This directory contains subdirectories which correspond to the names of MMBase components.  All Jsps
 in a certain subdirectory <component name> (and subdirectories) should produce precisely one
 component block 'div', and be referred to in a component XML (in <config dir>/components/<component
 name>.xml).
