@@ -120,6 +120,9 @@ public class LRUCache<K, V> implements CacheImplementationInterface<K, V> {
 
     public void config(Map<String, String> map) {
         // needs no configuration.
+        if (! map.isEmpty()) {
+            log.warn("Unknown configuration parameters: " + map);
+        }
     }
 
     public Optional<ReadWriteLock> getLock() {

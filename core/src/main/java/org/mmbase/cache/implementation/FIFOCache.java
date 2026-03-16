@@ -55,7 +55,7 @@ public class FIFOCache<K, V> implements CacheImplementationInterface<K, V> {
             private static final long serialVersionUID = 0L;
             @Override
             protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
-                return size() > FIFOCache.this.maxSize;
+                return this.size() > FIFOCache.this.maxSize;
             }
         };
     }
@@ -89,9 +89,9 @@ public class FIFOCache<K, V> implements CacheImplementationInterface<K, V> {
      * Must be called with write lock held.
      */
     private void evictExcessEntries() {
-        while (size() > maxSize) {
+        while (backing.size() > maxSize) {
             try {
-                Iterator<K> i = keySet().iterator();
+                Iterator<K> i = backing.keySet().iterator();
                 if (i.hasNext()) {
                     i.next();
                     i.remove();
@@ -123,6 +123,10 @@ public class FIFOCache<K, V> implements CacheImplementationInterface<K, V> {
     @Override
     public void config(Map<String, String> map) {
         // needs no configuration.
+        if (! map.isEmpty()) {
+            log.warn("Unknown configuration parameters: " + map);
+        }
+
     }
 
     @Override
