@@ -21,9 +21,14 @@
     <class>org.mmbase.cache.implementation.LRUCache</class>
 
 
-    <!-- this one will be non-blocking on gets, but it is not ready LRU, and probably also less tested -->
+    <!-- this one will be non-blocking on gets, but it is not realy LRU, and probably also less tested -->
     <!--
-     <class>org.mmbase.cache.implementation.FIFOCache</class>
+    <class>org.mmbase.cache.implementation.FIFOCache</class>
+    -->
+    <!-- This is the one that would need the mmbase-oscache module
+    <class>org.mmbase.cache.oscache.OSCacheImplementation</class>
+    <param name="class">com.opensymphony.oscache.base.algorithm.LRUCache</param>
+    <param name="persistence"></param>
     -->
   </defaultImplementation>
 
