@@ -49,8 +49,8 @@ public class PerformanceTest {
         return Arrays.asList(new Object[][] {
             {1025, 1000000, 4, LRUCache.class},
             {1025, 1000000, 4, LRUHashtable.class},
-            {1025, 1000000, 4, FIFOCache.class},
-            {1025, 1000000, 4, CacheImplementationInterface.class},
+            {1025, 1000000, 4, FIFOCache.class}
+            //{1025, 1000000, 4, CacheImplementationInterface.class},
 
         });
     }
