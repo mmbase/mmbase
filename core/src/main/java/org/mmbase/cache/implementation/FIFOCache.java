@@ -32,21 +32,21 @@ import org.mmbase.util.logging.Logging;
  *
  * @author  Michiel Meeuwissen
  * @see    org.mmbase.cache.Cache
- * @since MMBase-1.9.2
+ * @since MMBase-1.9.7
  */
-public class NonBlockingLRUCache<K, V> implements CacheImplementationInterface<K, V> {
+public class FIFOCache<K, V> implements CacheImplementationInterface<K, V> {
 
-    private static final Logger log = Logging.getLoggerInstance(NonBlockingLRUCache.class);
+    private static final Logger log = Logging.getLoggerInstance(FIFOCache.class);
 
     public int maxSize = 100;
     private final LinkedHashMap<K, V> backing;
     private final ReadWriteLock rwLock = new ReentrantReadWriteLock();
 
-    public NonBlockingLRUCache() {
+    public FIFOCache() {
         this(100);
     }
 
-    public NonBlockingLRUCache(int size) {
+    public FIFOCache(int size) {
         maxSize = size;
         // Use LinkedHashMap in insertion-order mode (not access-order) for LRU behavior
         // Access-order would require write locks on get(), preventing non-blocking reads
@@ -55,7 +55,7 @@ public class NonBlockingLRUCache<K, V> implements CacheImplementationInterface<K
             private static final long serialVersionUID = 0L;
             @Override
             protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
-                return size() > NonBlockingLRUCache.this.maxSize;
+                return size() > FIFOCache.this.maxSize;
             }
         };
     }
@@ -89,9 +89,9 @@ public class NonBlockingLRUCache<K, V> implements CacheImplementationInterface<K
      * Must be called with write lock held.
      */
     private void evictExcessEntries() {
-        while (backing.size() > maxSize) {
+        while (size() > maxSize) {
             try {
-                Iterator<K> i = backing.keySet().iterator();
+                Iterator<K> i = keySet().iterator();
                 if (i.hasNext()) {
                     i.next();
                     i.remove();
