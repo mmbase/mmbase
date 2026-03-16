@@ -78,6 +78,10 @@ public interface CacheMBean {
 
     double getAvarageValueLength();
 
+    String getImplementationClassName();
+
+    void setImplementationClassName(String className);
+
 
 
 
