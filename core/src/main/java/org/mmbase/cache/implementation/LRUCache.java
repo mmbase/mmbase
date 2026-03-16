@@ -211,13 +211,13 @@ public class LRUCache<K, V> implements CacheImplementationInterface<K, V> {
         }
     }
     public Set<K> keySet() {
-        return new ReadWriteLockAbstractSet<>(rwLock, backing.keySet());
+        return new ReadWriteLockAbstractSet<>(rwLock.writeLock(), rwLock.writeLock(), backing.keySet());
     }
     public Set<Map.Entry<K,V>> entrySet() {
-        return new ReadWriteLockAbstractSet<>(rwLock, backing.entrySet());
+        return new ReadWriteLockAbstractSet<>(rwLock.writeLock(), rwLock.writeLock(),  backing.entrySet());
     }
     public Collection<V> values() {
-        return new ReadWriteLockAbstractCollection<>(rwLock, backing.values());
+        return new ReadWriteLockAbstractCollection<>(rwLock.writeLock(), rwLock.writeLock(), backing.values());
     }
 
 
