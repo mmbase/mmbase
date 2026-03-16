@@ -3,10 +3,7 @@ package org.mmbase.cache.oscache;
 import com.opensymphony.oscache.base.Config;
 import com.opensymphony.oscache.base.algorithm.AbstractConcurrentReadCache;
 import com.opensymphony.oscache.base.persistence.PersistenceListener;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.locks.ReadWriteLock;
 import org.mmbase.cache.CacheImplementationInterface;
 import org.mmbase.util.SizeMeasurable;
@@ -50,25 +47,29 @@ public class OSCacheImplementation<K, V> implements CacheImplementationInterface
      */
     public void config(Map<String, String> config) {
        try {
-           String className = config.get("class");
+           String className = config.remove("class");
            if (className == null) {
                className = defaultClassName;
            }
+           Map<String, String> copy = new HashMap<>(config);
 
            cacheImpl = (AbstractConcurrentReadCache) Class.forName(className).newInstance();
-           String persistanceclass = config.get("persistence");
+           String persistanceclass = copy.remove("persistence");
            if (persistanceclass == null) {
                persistanceclass = defaultPersistenceClass;
            }
            if (! persistanceclass.isEmpty()) {
                PersistenceListener pl = (PersistenceListener) Class.forName(persistanceclass).newInstance();
                Config osconfig = new Config();
-               osconfig.set("cache.path", config.get("path"));
+               osconfig.set("cache.path", config.remove("path"));
                pl.configure(osconfig);
                cacheImpl.setPersistenceListener(pl);
                cacheImpl.setMemoryCaching(true);
                cacheImpl.setUnlimitedDiskCache(true);
                cacheImpl.setOverflowPersistence(true);
+           }
+           if (! copy.isEmpty()) {
+               log.warn("Unknown configuration parameters: " + copy);
            }
         } catch (Exception e) {
             log.error("Exception while initializing cache: " + e);
