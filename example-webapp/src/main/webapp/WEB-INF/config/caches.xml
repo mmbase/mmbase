@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE caches PUBLIC "-//MMBase//DTD cache config 1.0//EN" "https://www.mmbase.org/dtd/caches_1_0.dtd">
+<!--
+
+-->
+<caches>
+
+
+  <releaseStrategies>
+    <strategy>org.mmbase.cache.BetterStrategy</strategy>
+    <!--
+
+    <strategy>org.mmbase.cache.ConstraintsMatchingStrategy</strategy>
+    -->
+  </releaseStrategies>
+
+  <!-- since 1.9.7 you can also specify the default implementation for all caches here. -->
+  <defaultImplementation>
+
+    <!-- this is the original implementation -->
+    <class>org.mmbase.cache.implementation.LRUCache</class>
+
+
+    <!-- this one will be non-blocking on gets, but it is not ready LRU, and probably also less tested -->
+    <!--
+     <class>org.mmbase.cache.implementation.FIFOCache</class>
+    -->
+  </defaultImplementation>
+
+  <!-- ================================================================================
+  Node caches
+  ================================================================================  -->
+
+  <!-- simple nodes -->
+  <cache name="Nodes">
+    <status>active</status>
+    <size>4096</size>
+  </cache>
+
+  <!-- simple node lists -->
+  <cache name="NodeListCache">
+    <status>active</status>
+    <size>300</size>
+    <!--
+      If you want to use the OSCache implementation to overflow on disk, you can uncomment
+      this code
+    <implementation>
+      <class>org.mmbase.cache.oscache.OSCacheImplementation</class>
+      <param name="usememory">true</param>
+      <param name="path">/tmp</param>
+      <param name="overflowdisk">true</param>
+    </implementation>
+    -->
+  </cache>
+
+  <!-- cluster nodes -->
+  <cache name="MultilevelCache">
+    <status>active</status>
+    <size>300</size>
+  </cache>
+
+  <!-- used for queries like select max(votes) and select count(title) -->
+  <cache name="AggregatedResultCache">
+    <status>active</status>
+    <size>300</size>
+  </cache>
+
+  <!-- related nodes -->
+  <cache name="RelatedNodesCache">
+    <status>active</status>
+    <size>300</size>
+  </cache>
+
+  <!-- relation nodes -->
+  <cache name="RelationsCache">
+    <status>active</status>
+    <size>300</size>
+  </cache>
+
+  <!-- related nodes, (not?) used in InsRel -->
+  <cache name="RelatedCache">
+    <status>active</status>
+    <size>25</size>
+  </cache>
+
+  <!-- Alias to number cache, used in OALias -->
+  <cache name="AliasCache">
+    <status>active</status>
+    <size>128</size>
+  </cache>
+
+  <!-- Object type cache in MMObjectBuilder.
+       Used by MMBase to perform
+       object number to object type lookup
+  -->
+  <cache name="TypeCache">
+    <status>active</status>
+    <size>20000</size>
+  </cache>
+
+  <!-- ================================================================================
+  Caches for XSL Transformations
+  ================================================================================  -->
+
+  <!-- Compiled templates -->
+  <cache name="XSLTemplates">
+    <status>active</status>
+    <size>50</size>
+  </cache>
+
+  <!-- A factory for every URIResolver -->
+  <cache name="XSLFactories">
+    <status>active</status>
+    <size>50</size>
+  </cache>
+
+  <!-- If it makes sense (e.g. not in Editwizard) also the results of
+  XSL transformations can be cached. Because it is a little difficult
+  to invalidate cache entries, this cache is now inactive on default.
+  -->
+  <cache name="XSLTResults">
+    <status>inactive</status>
+    <size>50</size>
+    <maxEntrySize>5000</maxEntrySize>
+  </cache>
+
+  <!-- ================================================================================
+  Caches related to images/icaches/attachments
+  ================================================================================  -->
+
+  <!-- Quick search of the icache node number (by template/ckey) -->
+  <cache name="CkeyNumberCache">
+    <status>active</status>
+    <size>500</size>
+  </cache>
+
+  <!-- The 'handle' field of small images (and icaches) objects are cached in a dedicated cache -->
+  <cache name="ImageHandles">
+    <status>active</status>
+    <size>200</size>
+    <maxEntrySize>100000</maxEntrySize>
+  </cache>
+
+
+  <!-- All other blobs -->
+  <cache name="GenericBlobCache">
+    <status>active</status>
+    <size>200</size>
+    <maxEntrySize>100000</maxEntrySize>
+  </cache>
+
+
+  <!-- ================================================================================
+  Jumpers cache
+  ================================================================================  -->
+  <cache name="JumpersCache">
+    <status>active</status>
+    <size>1000</size>
+  </cache>
+</caches>
