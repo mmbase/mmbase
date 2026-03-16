@@ -201,37 +201,42 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
      *
      */
     private boolean containsType(RelationEvent event) {
-        if (typeCounters.containsKey("object")) {
-            return true;
-        }
-        if (typeCounters.containsKey(event.getRelationSourceType())
-            || typeCounters.containsKey(event.getRelationDestinationType())) {
-            return true;
-        }
-        MMBase mmb = MMBase.getMMBase();
-        String roleName = mmb.getRelDef().getBuilderName(Integer.valueOf(event.getRole()));
-        if (typeCounters.containsKey(roleName)) {
-            return true;
-        }
-        MMObjectBuilder srcbuilder = mmb.getBuilder(event.getRelationSourceType());
-        if (srcbuilder == null) {
-            return false;
-        }
-        for (MMObjectBuilder parent : srcbuilder.getAncestors()) {
-            if (typeCounters.containsKey(parent.getTableName())) {
+        readLock();
+        try {
+            if (typeCounters.containsKey("object")) {
                 return true;
             }
-        }
-        MMObjectBuilder destbuilder = mmb.getBuilder(event.getRelationDestinationType());
-        if (destbuilder == null) {
-            return false;
-        }
-        for (MMObjectBuilder parent : destbuilder.getAncestors()) {
-            if (typeCounters.containsKey(parent.getTableName())) {
+            if (typeCounters.containsKey(event.getRelationSourceType())
+                || typeCounters.containsKey(event.getRelationDestinationType())) {
                 return true;
             }
+            MMBase mmb = MMBase.getMMBase();
+            String roleName = mmb.getRelDef().getBuilderName(Integer.valueOf(event.getRole()));
+            if (typeCounters.containsKey(roleName)) {
+                return true;
+            }
+            MMObjectBuilder srcbuilder = mmb.getBuilder(event.getRelationSourceType());
+            if (srcbuilder == null) {
+                return false;
+            }
+            for (MMObjectBuilder parent : srcbuilder.getAncestors()) {
+                if (typeCounters.containsKey(parent.getTableName())) {
+                    return true;
+                }
+            }
+            MMObjectBuilder destbuilder = mmb.getBuilder(event.getRelationDestinationType());
+            if (destbuilder == null) {
+                return false;
+            }
+            for (MMObjectBuilder parent : destbuilder.getAncestors()) {
+                if (typeCounters.containsKey(parent.getTableName())) {
+                    return true;
+                }
+            }
+            return false;
+        } finally {
+            readUnlock();
         }
-        return false;
 
     }
 
