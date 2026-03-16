@@ -3,8 +3,6 @@ package org.mmbase.cache.implementation;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Random;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -51,7 +49,6 @@ public class PerformanceTest {
         return Arrays.asList(new Object[][] {
             {1025, 1000000, 4, LRUCache.class},
             {1025, 1000000, 4, LRUHashtable.class},
-
             {1025, 1000000, 4, FIFOCache.class},
             {1025, 1000000, 4, CacheImplementationInterface.class},
 
@@ -192,7 +189,7 @@ public class PerformanceTest {
         System.out.println("Used implementation: " + impl);
     }
 
-    ReadWriteLock lock = new ReentrantReadWriteLock();
+  /*  ReadWriteLock lock = new ReentrantReadWriteLock();
 
 
     @Test
@@ -212,7 +209,7 @@ public class PerformanceTest {
 
         }
     }
-
+*/
 
 
 }
