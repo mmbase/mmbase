@@ -41,7 +41,25 @@
     </xsd:complexType>
   </xsd:element>
   <xsd:element name="status" />
-  <xsd:element name="class" />
+  <xsd:element name="class">
+    <xsd:complexType mixed="true">
+      <xsd:sequence>
+        <xsd:element ref="param" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+      <xsd:attribute name="name" type="xsd:string" />
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="param">
+    <xsd:complexType>
+      <xsd:simpleContent>
+        <xsd:extension base="xsd:string">
+          <xsd:attribute name="name" type="xsd:string" use="required" />
+        </xsd:extension>
+      </xsd:simpleContent>
+    </xsd:complexType>
+  </xsd:element>
+
   <xsd:element name="searchage" />
 
   <xsd:element name="names">
@@ -334,7 +352,6 @@
       </xsd:attribute>
     </xsd:complexType>
   </xsd:element>
-
 </xsd:schema>
 
 
