@@ -244,6 +244,11 @@ See http://www.MMBase.org/license
       <artifactId>xercesImpl</artifactId>
       <version>2.12.2</version>
     </dependency>
+    <dependency>
+      <groupId>com.github.ben-manes.caffeine</groupId>
+      <artifactId>caffeine</artifactId>
+      <version>2.9.3</version>
+    </dependency>
 
     <!-- Saxon Home Editon doesn't support extension function as xalan does
     It does not have the bug with unicode in 'microblog', but will break the editwizards.

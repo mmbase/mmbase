@@ -376,7 +376,6 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
 
     public int getByteSize(SizeOf sizeof) {
         int size = 26;
-        readLock();
         try {
             if (implementation instanceof SizeMeasurable) {
                 size += ((SizeMeasurable) implementation).getByteSize(sizeof);
@@ -388,7 +387,6 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
                 }
             }
         } finally {
-            readUnlock();
         }
         return size;
     }
@@ -401,7 +399,6 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
      */
     public int getCheapByteSize() {
         int size = 0;
-        readLock();
         try {
             SizeOf sizeof = new SizeOf();
             for (Map.Entry<K, V> entry : implementation.entrySet()) {
@@ -411,7 +408,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
             }
             return size;
         } finally {
-            readUnlock();
+
         }
     }
 
@@ -520,48 +517,5 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     }
 
 
-
-    protected void writeLock() {
-        implementation.getLock().ifPresent(lock -> {
-            Lock wl =  lock.writeLock();
-            writeThreadLocalLock.set(wl);
-            wl.lock();
-        });
-    }
-
-    protected void writeUnlock() {
-        Lock lock = writeThreadLocalLock.get();
-        if (lock != null) {
-            try {
-                lock.unlock();
-            } finally {
-                writeThreadLocalLock.remove();
-            }
-        }
-    }
-
-    protected void readLock() {
-        // Using write lock rather than read lock because the cache implementation
-        // (e.g., access-order LinkedHashMap in LRUCache) requires write locks even for
-        // read operations like get(). Using a read lock here would risk deadlock if
-        // the caller then calls get() (read-to-write upgrade is not supported by
-        // ReentrantReadWriteLock).
-        implementation.getLock().ifPresent(lock -> {
-            Lock rl = lock.writeLock();
-            readThreadLocalLock.set(rl);
-            rl.lock();
-        });
-    }
-
-    protected void readUnlock() {
-        Lock lock = readThreadLocalLock.get();
-        if (lock != null) {
-            try {
-                lock.unlock();
-            } finally {
-                readThreadLocalLock.remove();
-            }
-        }
-    }
 
 }

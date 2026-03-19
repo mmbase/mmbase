@@ -7,6 +7,7 @@
 package org.mmbase.cache;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import org.mmbase.core.event.*;
 import org.mmbase.module.core.MMBase;
 import org.mmbase.module.core.MMObjectBuilder;
@@ -48,7 +49,7 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
      * @todo I think that nearly all query result caches contain queries with quite generic or
      * oftenly changed types. I doubt that the gain is worth the hassle.
      */
-    private Map<String, Integer> typeCounters = new HashMap<String, Integer>();
+    private Map<String, Integer> typeCounters = new ConcurrentHashMap<>();
 
 
     /**
@@ -109,13 +110,9 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
         if (!checkCachePolicy(query)) {
             return null;
         }
-        writeLock();
-        try {
-            increaseCounters(query, typeCounters);
-            return super.put(query, queryResult);
-        } finally {
-            writeUnlock();
-        }
+        increaseCounters(query, typeCounters);
+        return super.put(query, queryResult);
+
     }
 
     /**
@@ -130,16 +127,11 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
             key = ((SearchQueryWrapper) key).unwrap();
         }
 
-        writeLock();
-        try {
-            List<MMObjectNode> result = super.remove(key);
-            if (result != null) {
-                decreaseCounters((SearchQuery) key, typeCounters);
-            }
-            return result;
-        } finally {
-            writeUnlock();
+        List<MMObjectNode> result = super.remove(key);
+        if (result != null) {
+            decreaseCounters((SearchQuery) key, typeCounters);
         }
+        return result;
     }
 
     private void increaseCounters(SearchQuery query, Map<String, Integer> counters) {
@@ -171,16 +163,11 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
      *
      */
     public double getAvarageValueLength() {
-        readLock();
-        try {
-            double total = 0;
-            for (List<MMObjectNode> result : values()) {
-                total += result.size();
-            }
-            return total / size();
-        } finally {
-            readUnlock();
+        double total = 0;
+        for (List<MMObjectNode> result : values()) {
+            total += result.size();
         }
+        return total / size();
     }
 
     @Override
@@ -201,7 +188,6 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
      *
      */
     private boolean containsType(RelationEvent event) {
-        readLock();
         try {
             if (typeCounters.containsKey("object")) {
                 return true;
@@ -235,7 +221,6 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
             }
             return false;
         } finally {
-            readUnlock();
         }
 
     }
@@ -251,7 +236,6 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
     }
 
     private boolean containsType(NodeEvent event) {
-        readLock();
         try {
             if (typeCounters.containsKey("object")) {
                 return true;
@@ -271,7 +255,6 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
             }
             return false;
         } finally {
-            readUnlock();
         }
     }
 
@@ -281,12 +264,11 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
         }
         Set<SearchQuery> cacheKeys;
         Map<String, Integer> oldTypeCounters;
-        readLock();
         try {
             cacheKeys = new HashSet<SearchQuery>(keySet());
             oldTypeCounters = new HashMap<String, Integer>(typeCounters);
         } finally {
-            readUnlock();
+
         }
 
         Set<SearchQuery>     removeKeys        = new HashSet<SearchQuery>();
@@ -294,7 +276,6 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
 
         evaluate(event, cacheKeys, removeKeys, foundTypeCounters);
 
-        writeLock();
         try {
             for (SearchQuery q : removeKeys) {
                 remove(q);
@@ -324,7 +305,7 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
             }
             typeCounters = foundTypeCounters;
         } finally {
-            writeUnlock();
+
         }
         return removeKeys.size();
     }
@@ -368,12 +349,10 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
 
     @Override
     public void clear(){
-        writeLock();
         try {
             super.clear();
             releaseStrategy.clear();
         } finally {
-            writeUnlock();
         }
     }
 }

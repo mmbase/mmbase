@@ -10,7 +10,6 @@ See http://www.MMBase.org/license
 package org.mmbase.util;
 
 import java.util.*;
-import java.util.concurrent.locks.ReadWriteLock;
 import org.mmbase.cache.CacheImplementationInterface;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
@@ -383,10 +382,7 @@ public class LRUHashtable<K, V> implements Cloneable, CacheImplementationInterfa
         // lru needs no configuration.
     }
 
-    @Override
-    public Optional<ReadWriteLock> getLock() {
-        return Optional.empty();
-    }
+
 
     public int getByteSize() {
         return getByteSize(new SizeOf());
