@@ -41,10 +41,9 @@ public class CaffeineCache<K, V> implements CacheImplementationInterface<K, V> {
             @Override
             public Set<Entry<K, V>> entrySet() {
                 return new AbstractSet<Entry<K, V>>() {
-
                     @Override
                     public Iterator<Entry<K, V>> iterator() {
-                        Iterator<Entry<K, Value<V>>> i = wrapped.entrySet().iterator();
+                        final Iterator<Entry<K, Value<V>>> i = wrapped.entrySet().iterator();
                         return new Iterator<Entry<K, V>>() {
                             @Override
                             public boolean hasNext() {
@@ -53,7 +52,8 @@ public class CaffeineCache<K, V> implements CacheImplementationInterface<K, V> {
 
                             @Override
                             public Entry<K, V> next() {
-                                return new SimpleEntry<>(i.next().getKey(), i.next().getValue().value);
+                                Map.Entry<K, Value<V>> e = i.next();
+                                return new SimpleEntry<>(e.getKey(), e.getValue().value);
                             }
                         };
                     }

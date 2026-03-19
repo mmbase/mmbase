@@ -265,7 +265,7 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
         Set<SearchQuery> cacheKeys;
         Map<String, Integer> oldTypeCounters;
         try {
-            cacheKeys = new HashSet<SearchQuery>(keySet());
+            cacheKeys = new HashSet<>(keySet());
             oldTypeCounters = new HashMap<String, Integer>(typeCounters);
         } finally {
 
