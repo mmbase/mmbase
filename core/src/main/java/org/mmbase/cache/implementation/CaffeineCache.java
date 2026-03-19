@@ -4,9 +4,14 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import java.util.*;
 import org.mmbase.cache.CacheImplementationInterface;
 
+/**
+ * Cache backed by <a href="https://github.com/ben-manes/caffeine/wiki/Eviction#size-based">Caffeine</a> cache.
+ * This is very well optimized.
+ * @since MMBase-1.9.7
+ */
 public class CaffeineCache<K, V> implements CacheImplementationInterface<K, V> {
 
-    com.github.benmanes.caffeine.cache.Cache<K, V> backing ;
+    com.github.benmanes.caffeine.cache.Cache<K, Value<V>> backing ;
     Map<K, V> backingAsMap ;
 
 
@@ -31,7 +36,35 @@ public class CaffeineCache<K, V> implements CacheImplementationInterface<K, V> {
         this.backing = Caffeine.newBuilder()
             .maximumSize(maxSize)
             .build();
-        this.backingAsMap = backing.asMap();
+        this.backingAsMap = new AbstractMap<K, V>() {
+            private final Map<K, Value<V>> wrapped = backing.asMap();
+            @Override
+            public Set<Entry<K, V>> entrySet() {
+                return new AbstractSet<Entry<K, V>>() {
+
+                    @Override
+                    public Iterator<Entry<K, V>> iterator() {
+                        Iterator<Entry<K, Value<V>>> i = wrapped.entrySet().iterator();
+                        return new Iterator<Entry<K, V>>() {
+                            @Override
+                            public boolean hasNext() {
+                                return i.hasNext();
+                            }
+
+                            @Override
+                            public Entry<K, V> next() {
+                                return new SimpleEntry<>(i.next().getKey(), i.next().getValue().value);
+                            }
+                        };
+                    }
+
+                    @Override
+                    public int size() {
+                        return wrapped.size();
+                    }
+                };
+            }
+        };
     }
 
     @Override
@@ -71,22 +104,32 @@ public class CaffeineCache<K, V> implements CacheImplementationInterface<K, V> {
 
     @Override
     public V get(Object key) {
-        return backing.getIfPresent((K) key);
+        Value<V> v = backing.getIfPresent((K) key);
+        if (v == null) {
+            return null;
+        }
+        return v.value;
     }
 
     @Override
     public V put(K key, V value) {
-        return backingAsMap.put(key, value);
+        V containingValue = get(key);
+        backing.put(key, new Value<>(value));
+        return containingValue;
     }
 
     @Override
     public V remove(Object key) {
-        return backingAsMap.remove(key);
+        V containingValue = get(key);
+        backing.invalidate((K)key);
+        return  containingValue;
     }
 
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {
-        backing.putAll(m);
+        for (Map.Entry<? extends K, ? extends V> entry : m.entrySet()) {
+            put(entry.getKey(), entry.getValue());
+        }
     }
 
     @Override
@@ -107,5 +150,13 @@ public class CaffeineCache<K, V> implements CacheImplementationInterface<K, V> {
     @Override
     public Set<Entry<K, V>> entrySet() {
         return backingAsMap.entrySet();
+    }
+
+    public static class Value<V> {
+        private final V value;
+
+        public Value(V value) {
+            this.value = value;
+        }
     }
 }

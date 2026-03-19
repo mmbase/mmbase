@@ -108,6 +108,7 @@ public class PerformanceTest {
         for (int i = 0; i < treesiz; i++) {
             treap.put(""+i,""+i);
         }
+        treap.put("x", null);
         long ll2=System.currentTimeMillis();
         System.out.println("Size "+treap.size());
 

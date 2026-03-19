@@ -111,7 +111,7 @@ public class LRUHashtable<K, V> implements Cloneable, CacheImplementationInterfa
                 if (backing.size() > maxSize) {
                     K remove = root.next.key;
                     Object was =  remove(remove);
-                    assert was != null;
+                    //assert was != null;
                     if (was == null) {
                         log.warn("Nothing was removed, while that was expected " + remove + " should have been removed");
                     }
