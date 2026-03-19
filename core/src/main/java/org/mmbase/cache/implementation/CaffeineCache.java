@@ -38,6 +38,15 @@ public class CaffeineCache<K, V> implements CacheImplementationInterface<K, V> {
             .build();
         this.backingAsMap = new AbstractMap<K, V>() {
             private final Map<K, Value<V>> wrapped = backing.asMap();
+
+            @Override
+            public boolean containsKey(Object key) {
+                return wrapped.containsKey(key);
+            }
+            @Override
+            public Set<K> keySet() {
+                return wrapped.keySet();
+            }
             @Override
             public Set<Entry<K, V>> entrySet() {
                 return new AbstractSet<Entry<K, V>>() {

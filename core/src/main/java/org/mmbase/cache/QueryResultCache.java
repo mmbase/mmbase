@@ -262,14 +262,8 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
         if (log.isDebugEnabled()) {
             log.debug("Considering " + event);
         }
-        Set<SearchQuery> cacheKeys;
-        Map<String, Integer> oldTypeCounters;
-        try {
-            cacheKeys = new HashSet<>(keySet());
-            oldTypeCounters = new HashMap<String, Integer>(typeCounters);
-        } finally {
-
-        }
+        Set<SearchQuery> cacheKeys = new HashSet<>(keySet());
+        Map<String, Integer> oldTypeCounters =  new HashMap<String, Integer>(typeCounters);
 
         Set<SearchQuery>     removeKeys        = new HashSet<SearchQuery>();
         Map<String, Integer> foundTypeCounters = new HashMap<String, Integer>();
