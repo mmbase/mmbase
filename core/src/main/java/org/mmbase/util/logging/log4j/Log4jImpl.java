@@ -141,7 +141,7 @@ public final class Log4jImpl extends org.apache.log4j.Logger  implements Logger 
 
         doConfigure(rl.getResourceAsStream(s));
 
-        configWatcher.setDelay(10 * 1000); // check every 10 secs if config changed
+        configWatcher.setDelay(ResourceWatcher.getDefaultResourceWatcherDelay()); // check every period if config changed
         configWatcher.start();
         log = getLoggerInstance(Log4jImpl.class.getName());
 

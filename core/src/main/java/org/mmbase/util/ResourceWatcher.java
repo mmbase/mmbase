@@ -11,14 +11,17 @@ See http://www.MMBase.org/license
 package org.mmbase.util;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.*;
-import java.lang.ref.*;
-
-
-import org.mmbase.core.event.*;
-import org.mmbase.util.logging.*;
-import org.mmbase.bridge.*;
+import org.mmbase.bridge.Node;
+import org.mmbase.core.event.EventManager;
+import org.mmbase.core.event.NodeEvent;
+import org.mmbase.core.event.NodeEventListener;
+import org.mmbase.module.Module;
+import org.mmbase.util.logging.Logger;
+import org.mmbase.util.logging.Logging;
 
 /**
  *  Like {@link org.mmbase.util.FileWatcher} but for Resources. If (one of the) file(s) to which the resource resolves
@@ -38,6 +41,25 @@ public abstract class ResourceWatcher implements NodeEventListener  {
      * All instantiated ResourceWatchers.
      */
     static final Map<ResourceWatcher, Object> resourceWatchers = Collections.synchronizedMap(new WeakHashMap<ResourceWatcher, Object>());
+
+    /**
+     * @since 1.9.7
+     * @return
+     */
+    public static Duration getDefaultResourceWatcherDelay()  {
+        String initParameter = null;
+        try {
+            initParameter = Module.getInitParameter("mmbaseroot", "resourcewatcher.delay");
+        } catch (IOException e) {
+            log.warn(e.getMessage(), e);
+        }
+        if (initParameter == null || !initParameter.isEmpty()) {
+
+            initParameter = "PT10s";
+        }
+        return Duration.parse(initParameter);
+
+    }
 
     /**
      * Considers all resource-watchers. Perhaps onChange must be called, because there is a node for this resource available now.
@@ -253,16 +275,20 @@ public abstract class ResourceWatcher implements NodeEventListener  {
 
     public synchronized void start() {
         if (! running) {
-            // create and start all filewatchers.
-            for (String resource : getResources()) {
-                //resourceLoader.checkShadowedNewerResources(resource);
-                mapNodeNumber(resource);
-                createFileWatcher(resource);
+            if (delay > 0) {
+                // create and start all filewatchers.
+                for (String resource : getResources()) {
+                    //resourceLoader.checkShadowedNewerResources(resource);
+                    mapNodeNumber(resource);
+                    createFileWatcher(resource);
+                }
+                if (EventManager.getInstance() != null) {
+                    EventManager.getInstance().addEventListener(this);
+                }
+                running = true;
+            } else {
+              log.info("No starting since delay < 0");
             }
-            if (EventManager.getInstance() != null) {
-                EventManager.getInstance().addEventListener(this);
-            }
-            running = true;
         } else {
             log.warn("Already running.", new Exception());
         }
@@ -292,6 +318,10 @@ public abstract class ResourceWatcher implements NodeEventListener  {
         for (FileWatcher fw : fileWatchers.values()) {
             fw.setDelay(delay);
         }
+    }
+
+    public synchronized void setDelay(Duration delay) {
+        setDelay(delay.toMillis());
     }
 
     /**

@@ -149,7 +149,7 @@ public class Logging {
         ///System.out.println("(If logging does not start then dtd validation might be a problem on your server)");
 
         configWatcher.add(configFile);
-        configWatcher.setDelay(10 * 1000); // check every 10 secs if config changed
+        configWatcher.setDelay(ResourceWatcher.getDefaultResourceWatcherDelay()); // check every now and then if config changed
         configWatcher.start();
 
         DocumentReader reader;

@@ -50,12 +50,12 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
             public  void onChange(String file) {
                 // invalidate cache.
                 if (log.isDebugEnabled()) {
-                    log.debug("Removing " + file.toString() + " from cache");
+                    log.debug("Removing " + file + " from cache");
                 }
                 synchronized(cache) {
                     int removed = cache.remove(file);
                     if (removed == 0) {
-                        log.error("Could not remove " + file.toString() + " Template(s) from cache!");
+                        log.error("Could not remove " + file + " Template(s) from cache!");
                     } else {
                         if (log.isDebugEnabled()) {
                             log.debug("Removed " + removed + " entries from cache");
@@ -75,7 +75,7 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
 
     static {
         cache.putCache();
-        templateWatcher.setDelay(100 * 1000); // check every 100 secs if one of the stream source templates was change
+        templateWatcher.setDelay(ResourceWatcher.getDefaultResourceWatcherDelay());
         templateWatcher.start();
 
     }

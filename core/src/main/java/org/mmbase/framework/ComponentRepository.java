@@ -86,7 +86,7 @@ public class ComponentRepository {
                 };
             rw.add("components");
             rw.onChange();
-            rw.setDelay(2 * 1000); // 2 s
+            rw.setDelay(ResourceWatcher.getDefaultResourceWatcherDelay());
             rw.start();
         }
     }

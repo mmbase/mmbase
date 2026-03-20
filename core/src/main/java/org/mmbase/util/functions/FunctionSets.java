@@ -97,7 +97,7 @@ public class FunctionSets {
                     }
                 };
             readSets(watcher);
-            watcher.setDelay(10000);
+            watcher.setDelay(ResourceWatcher.getDefaultResourceWatcherDelay());
             watcher.start();
         } catch (Throwable t) {
             log.error(t.getClass().getName(), t);

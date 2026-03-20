@@ -233,7 +233,14 @@
   -->
   <property name="runStartupChecks">true</property>
 
-
+    <!--
+    Default delay between resource watcher checks
+    -->
+    <property name="resourcewatcher.delay">PT10s</property>
+    <!-- resource watching can be effectively disable by setting this to a negavtive value, e.g. PT-10s, -->
+    <!--
+    <property name="resourcewatcher.delay">PT-10s</property>
+    -->
 
   </properties>
 </module>

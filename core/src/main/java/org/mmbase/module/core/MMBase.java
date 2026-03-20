@@ -516,6 +516,7 @@ public class MMBase extends ProcessorModule {
         mmbaseroot = null;
     }
 
+
     /**
      * @since MMBase-1.7
      */

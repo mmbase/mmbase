@@ -66,7 +66,7 @@ import java.util.concurrent.*;
  * @version $Id$
  */
 public abstract class FileWatcher {
-    private static Logger log = Logging.getLoggerInstance(FileWatcher.class);
+    private static final Logger log = Logging.getLoggerInstance(FileWatcher.class);
 
 
     /**

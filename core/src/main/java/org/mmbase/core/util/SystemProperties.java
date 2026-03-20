@@ -26,7 +26,7 @@ public class SystemProperties {
 
     private final static String PROPERTY_BUILDER = "systemproperties";
 
-    private final static String DEVEVELOPMENT    = "development";
+    private final static String DEVELOPMENT      = "development";
     private final static String TEST             = "test";
     private final static String ACCEPTANCE       = "acceptance";
     private final static String PRODUCTION       = "production";
@@ -133,8 +133,8 @@ public class SystemProperties {
                 environment = TEST;
                 return;
             }
-            if (isServerInEnv(machineName, mmservers.getStringValue(DEVEVELOPMENT))) {
-                environment = DEVEVELOPMENT;
+            if (isServerInEnv(machineName, mmservers.getStringValue(DEVELOPMENT))) {
+                environment = DEVELOPMENT;
                 return;
             }
             if (warnOnce) {

@@ -41,7 +41,7 @@ public abstract class WatchedReloadableModule extends ReloadableModule {
      * super.onload if you need to override this.
      */
     public void onload() {
-        configWatcher.setDelay(10 * 1000);
+        configWatcher.setDelay(ResourceWatcher.getDefaultResourceWatcherDelay());
         configWatcher.start();
         configWatcher.add("modules/" +  configurationPath + ".xml");
     }

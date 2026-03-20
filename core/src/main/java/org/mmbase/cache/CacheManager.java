@@ -366,7 +366,7 @@ public class CacheManager implements CacheManagerMBean {
      * The caches can be configured with an XML file, this file can
      * be changed which causes the caches to be reconfigured automaticly.
      */
-    private static ResourceWatcher configWatcher = new ResourceWatcher () {
+    private static final ResourceWatcher configWatcher = new ResourceWatcher () {
             public void onChange(String resource) {
                 try {
                     org.xml.sax.InputSource is =  ResourceLoader.getConfigurationRoot().getInputSource(resource);
@@ -385,7 +385,7 @@ public class CacheManager implements CacheManagerMBean {
             log.debug("Static init of Caches");
             configWatcher.add("caches.xml");
             configWatcher.onChange("caches.xml");
-            configWatcher.setDelay(10 * 1000); // check every 10 secs if config changed
+            configWatcher.setDelay(ResourceWatcher.getDefaultResourceWatcherDelay());
             configWatcher.start();
         } catch (Throwable t) {
             log.error(t);

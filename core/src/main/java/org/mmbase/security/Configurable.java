@@ -62,7 +62,7 @@ public abstract class Configurable {
         this.manager = manager;
         this.configWatcher = configWatcher;
 
-        configWatcher.setDelay(10 * 1000);
+        configWatcher.setDelay(ResourceWatcher.getDefaultResourceWatcherDelay());
 
         if (configPath != null && !configPath.equals("")) {
             if (configPath.startsWith("/")) {
