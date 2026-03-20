@@ -183,9 +183,11 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
         Key key = new Key(src, uri);
         if (key.isCacheable()) {
             final Templates res = super.put(key, value);
-            log.debug("Put xslt in cache with key " + key);
             if (key.watcheable()) {
                 if (!templateWatcher.getResources().contains(key.getURL())) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("Put xslt in cache with key " + key);
+                    }
                     templateWatcher.add(key.getURL());
                 }
             } else {
