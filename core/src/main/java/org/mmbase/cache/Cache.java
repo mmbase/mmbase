@@ -123,6 +123,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
      * Returns a name for this cache type. Default it is the class
      * name, but this normally will be overriden.
      */
+    @Override
     public String getName() {
         return getClass().getName();
     }
@@ -131,6 +132,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
      * Gives a description for this cache type. This can be used in
      * cache overviews.
      */
+    @Override
     public String getDescription() {
         return "An all purpose Cache";
     }
@@ -142,6 +144,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
      * cache-type supports it (default no), then no values bigger then
      * this will be stored in the cache.
      */
+    @Override
     public int getMaxEntrySize() {
         if (getDefaultMaxEntrySize() > 0) {
             return maxEntrySize;
@@ -153,6 +156,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     /**
      * @since MMBase-1.9.2
      */
+    @Override
     public void setMaxEntrySize(int i) {
         if (getDefaultMaxEntrySize() > 0) {
             maxEntrySize = i;
@@ -164,10 +168,11 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     /**
      * Returns the average 'length' of the values in the cache. Whatever that may mean. For a {@link
      * QueryResultCache} the length obviously is the length of the cached lists.
-     *
+     * <p>
      * May return <code>NaN</code> if unknown or undetermined.
      * @since MMBase-1.9.2
      */
+    @Override
     public double getAvarageValueLength() {
         return Double.NaN;
     }
@@ -180,6 +185,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
         return -1;
     }
 
+    @Override
     public Set<Map.Entry<K,V>> entrySet() {
         if (! active) {
             return new HashSet<Map.Entry<K,V>>();
@@ -235,6 +241,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     /**
      * Like 'get' of Maps but considers if the cache is active or not,  and the cache policy of the key.
      */
+    @Override
     public  V get(Object key) {
         if (!checkCachePolicy(key)) {
             return null;
@@ -252,6 +259,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
      * Like 'put' of LRUHashtable but considers if the cache is active or not.
      *
      */
+    @Override
     public V put(K key, V value) {
         if (!checkCachePolicy(key)) {
             return null;
@@ -264,6 +272,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
      * Returns the number of times an element was succesfully retrieved
      * from the table.
      */
+    @Override
     public long getHits() {
         return hits;
     }
@@ -272,6 +281,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
      * Returns the number of times an element cpould not be retrieved
      * from the table.
      */
+    @Override
     public long getMisses() {
         return misses;
     }
@@ -279,6 +289,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     /**
      * Returns the number of times an element was committed to the table.
      */
+    @Override
     public long getPuts() {
         return puts;
     }
@@ -287,16 +298,19 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
      * Reset 'puts', 'misses' and 'puts' to 0.
      * @since MMBase-1.9.2
      */
+    @Override
     public void reset() {
         hits = 0; misses = 0; puts = 0;
     }
 
+    @Override
     public  void setMaxSize(int size) {
         implementation.setMaxSize(size);
     }
     public  int maxSize() {
         return implementation.maxSize();
     }
+    @Override
     public int getMaxSize() {
         return maxSize();
     }
@@ -304,14 +318,16 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     /**
      * @see java.util.Map#size()
      */
+    @Override
     public  int size() {
         return implementation.size();
     }
 
+    @Override
     public int getSize() {
         return size();
     }
-    public  boolean contains(Object key) {
+    public  boolean contains(K key) {
         return implementation.containsKey(key);
     }
 
@@ -330,6 +346,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
      *
      * @return A double between 0 and 1 or NaN.
      */
+    @Override
     public double getRatio() {
         return ((double) hits) / (  hits + misses );
     }
@@ -349,6 +366,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
      * Sets this cache to active or passive.
      * TODO: Writing back to caches.xml if necessary (if this call was nog caused by change of caches.xml itself)
      */
+    @Override
     public void setActive(boolean a) {
         active = a;
         if (! active) {
@@ -366,14 +384,17 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     /**
      * Wether this cache is active or not.
      */
+    @Override
     public final boolean isActive() {
         return active;
     }
 
+    @Override
     public int getByteSize() {
         return getByteSize(new SizeOf());
     }
 
+    @Override
     public int getByteSize(SizeOf sizeof) {
         int size = 26;
         try {
@@ -416,6 +437,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     /**
      * @see java.util.Map#clear()
      */
+    @Override
     public void clear() {
         implementation.clear();
     }
@@ -424,6 +446,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     /**
      * @see java.util.Map#containsKey(java.lang.Object)
      */
+    @Override
     public boolean containsKey(Object key) {
         return implementation.containsKey(key);
     }
@@ -432,6 +455,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     /**
      * @see java.util.Map#containsValue(java.lang.Object)
      */
+    @Override
     public boolean containsValue(Object value) {
         return implementation.containsValue(value);
     }
@@ -470,6 +494,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     /**
      * @see java.util.Map#isEmpty()
      */
+    @Override
     public boolean isEmpty() {
         return implementation.isEmpty();
     }
@@ -478,6 +503,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     /**
      * @see java.util.Map#keySet()
      */
+    @Override
     public Set<K> keySet() {
         return implementation.keySet();
     }
@@ -486,6 +512,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     /**
      * @see java.util.Map#putAll(java.util.Map)
      */
+    @Override
     public void putAll(Map<? extends K,? extends V> t) {
         implementation.putAll(t);
     }
@@ -494,6 +521,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     /**
      * @see java.util.Map#remove(java.lang.Object)
      */
+    @Override
     public V remove(Object key) {
         return implementation.remove(key);
     }
@@ -502,6 +530,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
     /**
      * @see java.util.Map#values()
      */
+    @Override
     public Collection<V> values() {
         return implementation.values();
     }

@@ -10,6 +10,7 @@ See http://www.MMBase.org/license
 
 package org.mmbase.bridge.implementation;
 
+import java.io.Serializable;
 import java.util.*;
 import org.mmbase.bridge.util.Queries;
 import org.mmbase.cache.CachePolicy;
@@ -32,7 +33,7 @@ import org.mmbase.security.Authorization;
  * @since MMBase-1.7
  * @see org.mmbase.storage.search.implementation.BasicSearchQuery
  */
-public class BasicQuery implements Query  {
+public class BasicQuery implements Query, Serializable {
 
     private static final Logger log = Logging.getLoggerInstance(BasicQuery.class);
 

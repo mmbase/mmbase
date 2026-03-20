@@ -9,6 +9,7 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.storage.search;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.mmbase.cache.Cacheable;
@@ -21,7 +22,7 @@ import org.mmbase.cache.Cacheable;
  * @version $Id$
  * @since MMBase-1.7
  */
-public interface SearchQuery extends Cacheable {
+public interface SearchQuery extends Cacheable, Serializable {
     /**
      * Default maxNumber value, corresponds to no maximum.
      * @see SearchQuery#getMaxNumber

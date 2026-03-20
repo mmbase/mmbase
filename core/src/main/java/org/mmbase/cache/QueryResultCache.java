@@ -162,6 +162,7 @@ abstract public class QueryResultCache extends Cache<SearchQuery, List<MMObjectN
     /**
      *
      */
+    @Override
     public double getAvarageValueLength() {
         double total = 0;
         for (List<MMObjectNode> result : values()) {

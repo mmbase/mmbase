@@ -38,7 +38,7 @@ public class SerializableInputStream  extends InputStream implements Serializabl
     public static byte[] toByteArray(InputStream stream) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
-            byte[] buf = new byte[1024];
+            byte[] buf = new byte[8192];
             int n;
             while ((n = stream.read(buf)) > -1) {
                 bos.write(buf, 0, n);

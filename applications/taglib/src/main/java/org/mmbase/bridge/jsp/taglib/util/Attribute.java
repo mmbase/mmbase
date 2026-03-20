@@ -9,14 +9,18 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.bridge.jsp.taglib.util;
 
-import java.util.*;
-
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import javax.servlet.jsp.JspTagException;
-
 import org.mmbase.bridge.jsp.taglib.ContextReferrerTag;
 import org.mmbase.cache.Cache;
-import org.mmbase.util.*;
-import org.mmbase.util.logging.*;
+import org.mmbase.util.Casting;
+import org.mmbase.util.ExprCalc;
+import org.mmbase.util.logging.Logger;
+import org.mmbase.util.logging.Logging;
 
 /**
  * MMBase Taglib attributes can contain $-variables. Parsing of these $-variables is
@@ -28,7 +32,7 @@ import org.mmbase.util.logging.*;
  * @since   MMBase-1.7
  */
 
-public class Attribute {
+public class Attribute implements Serializable {
     private static final Logger log = Logging.getLoggerInstance(Attribute.class);
 
     private final static AttributeCache cache = new AttributeCache();

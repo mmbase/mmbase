@@ -1,6 +1,7 @@
 package org.mmbase.cache.implementation;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
+import java.io.Serializable;
 import java.util.*;
 import org.mmbase.cache.CacheImplementationInterface;
 
@@ -9,6 +10,7 @@ import org.mmbase.cache.CacheImplementationInterface;
  * This is very well optimized.
  * @since MMBase-1.9.7
  */
+@SuppressWarnings("unchecked")
 public class CaffeineCache<K, V> implements CacheImplementationInterface<K, V> {
 
     com.github.benmanes.caffeine.cache.Cache<K, Value<V>> backing ;
@@ -48,6 +50,11 @@ public class CaffeineCache<K, V> implements CacheImplementationInterface<K, V> {
                 return wrapped.keySet();
             }
             @Override
+            public V put(K key, V value) {
+                Value<V> v = wrapped.put(key, new Value<>(value));
+                return v == null ? null : v.value;
+            }
+            @Override
             public Set<Entry<K, V>> entrySet() {
                 return new AbstractSet<Entry<K, V>>() {
                     @Override
@@ -63,6 +70,10 @@ public class CaffeineCache<K, V> implements CacheImplementationInterface<K, V> {
                             public Entry<K, V> next() {
                                 Map.Entry<K, Value<V>> e = i.next();
                                 return new SimpleEntry<>(e.getKey(), e.getValue().value);
+                            }
+                            @Override
+                            public void remove() {
+                                i.remove();
                             }
                         };
                     }
@@ -161,11 +172,27 @@ public class CaffeineCache<K, V> implements CacheImplementationInterface<K, V> {
         return backingAsMap.entrySet();
     }
 
-    public static class Value<V> {
+    public static class Value<V> implements Serializable {
+
+        private static final long serialVersionUID = 1L;
+
         private final V value;
 
         public Value(V value) {
             this.value = value;
+        }
+
+        @Override
+        public final boolean equals(Object o) {
+            if (!(o instanceof Value)) return false;
+
+            Value<?> value1 = (Value<?>) o;
+            return Objects.equals(value, value1.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(value);
         }
     }
 }

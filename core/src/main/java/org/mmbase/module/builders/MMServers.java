@@ -42,7 +42,7 @@ public class MMServers extends MMObjectBuilder implements MMBaseObserver, org.mm
 
     private boolean checkedSystem = false;
     private final List<String> possibleServices = new CopyOnWriteArrayList<String>();
-    private ScheduledFuture future;
+    private ScheduledFuture<?> future;
 
     /**
      * Function uptime
@@ -54,7 +54,7 @@ public class MMServers extends MMObjectBuilder implements MMBaseObserver, org.mm
             }
             public Long getFunctionValue(Parameters parameters) {
                 int now = (int) (System.currentTimeMillis() / 1000);
-                return Long.valueOf(now - MMBase.startTime);
+                return (long) (now - MMBase.startTime);
             }
         };
     {
@@ -80,7 +80,7 @@ public class MMServers extends MMObjectBuilder implements MMBaseObserver, org.mm
         }
         String tmp = getInitParameter("ProbeInterval");
         if (tmp != null) {
-            intervalTime = (long)Integer.parseInt(tmp);
+            intervalTime = Integer.parseInt(tmp);
             log.service("ProbeInterval was configured to be " + intervalTime + " seconds");
         } else {
             log.service("ProbeInterval defaults to " + intervalTime + " seconds");
