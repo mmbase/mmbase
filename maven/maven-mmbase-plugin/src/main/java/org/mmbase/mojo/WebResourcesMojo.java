@@ -30,7 +30,7 @@ import java.util.List;
  * @goal install-resources
  * @requiresProject
  * @author Michiel Meeuwissen
- * @deprecated Simply move the jsp to the correct location in src/main/webapp. That's easy with svn.
+ * @deprecated Simply move the jsp to the correct location in src/main/webapp.
  */
 
 public class WebResourcesMojo extends AbstractMojo {
