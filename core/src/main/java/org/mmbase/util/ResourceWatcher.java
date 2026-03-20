@@ -53,7 +53,7 @@ public abstract class ResourceWatcher implements NodeEventListener  {
         } catch (IOException e) {
             log.warn(e.getMessage(), e);
         }
-        if (initParameter == null || !initParameter.isEmpty()) {
+        if (initParameter == null || initParameter.isEmpty()) {
 
             initParameter = "PT10s";
         }
