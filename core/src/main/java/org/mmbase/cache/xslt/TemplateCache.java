@@ -46,7 +46,7 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
      * The Source-s which are based on a file, are added to this FileWatcher, which wil invalidate
      * the corresponding cache entry when the file changes.
      */
-    private static ResourceWatcher templateWatcher = new ResourceWatcher(ResourceLoader.getWebRoot()) {
+    private static final ResourceWatcher templateWatcher = new ResourceWatcher(ResourceLoader.getWebRoot()) {
             public  void onChange(String file) {
                 // invalidate cache.
                 if (log.isDebugEnabled()) {
@@ -75,7 +75,7 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
 
     static {
         cache.putCache();
-        templateWatcher.setDelay(10 * 1000); // check every 10 secs if one of the stream source templates was change
+        templateWatcher.setDelay(100 * 1000); // check every 100 secs if one of the stream source templates was change
         templateWatcher.start();
 
     }
@@ -184,12 +184,14 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
         if (key.isCacheable()) {
             final Templates res = super.put(key, value);
             log.debug("Put xslt in cache with key " + key);
-            if (key.getURL() != null) {
+            if (key.watcheable()) {
                 if (!templateWatcher.getResources().contains(key.getURL())) {
                     templateWatcher.add(key.getURL());
                 }
             } else {
-                log.debug("Cannot watch null");
+                if (log.isDebugEnabled()) {
+                    log.debug("Cannot watch " + key);
+                }
             }
             if (log.isDebugEnabled()) {
                 log.debug("have set watch on  " + key.getURL());
@@ -201,6 +203,8 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
             return null;
         }
     }
+
+
 
 
     /**
@@ -249,7 +253,7 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
             this.uri = uri;
         }
         @Override
-            public boolean equals(Object o) {
+        public boolean equals(Object o) {
             if (o instanceof Key) {
                 Key k = (Key) o;
                 return  (src == null ? k.src == null : src.equals(k.src)) &&
@@ -267,6 +271,10 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
         String getURL() {
             return src;
         }
+        public boolean watcheable() {
+            return src !=  null && src.startsWith("file:");
+        }
+
         @Override
         public String toString() {
             return src + "/" + uri;

@@ -8,17 +8,15 @@ See http://www.MMBase.org/license
 
 */
 package org.mmbase.bridge.jsp.taglib;
-import  org.mmbase.bridge.jsp.taglib.util.Attribute;
-import  org.mmbase.bridge.jsp.taglib.functions.Functions;
-import javax.servlet.jsp.JspTagException;
-import javax.servlet.http.HttpServletRequest;
 
+import java.util.Properties;
+import javax.servlet.jsp.JspTagException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.stream.StreamSource;
+import  org.mmbase.bridge.jsp.taglib.functions.Functions;
+import  org.mmbase.bridge.jsp.taglib.util.Attribute;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
-
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.transform.OutputKeys;
-import java.util.Properties;
 
 /**
  * Has to live in a formatter tag ({@link FormatterTag}, and can provide inline XSLT to it.
@@ -114,7 +112,7 @@ public class XsltTag extends ContextReferrerTag  {
             StreamSource src = new StreamSource(new java.io.StringReader(totalString));
 
             // generate a systemId for the xslt, so that it can be cached. We use the hashcode of the xslt string, and the url of the request, to make sure it is unique enough.
-            String systemId = ((HttpServletRequest)pageContext.getRequest()).getRequestURL().append('/').append(((long) xsltString.hashCode() & 0xffff)).toString();
+            String systemId = "mm:xslt://" + pageContext.getPage().getClass().getName() + "/" + ((long) xsltString.hashCode() & 0xffff);
             src.setSystemId(systemId);
             if (log.isDebugEnabled()) log.debug("Found xslt " + systemId + ": " + totalString);
             formatter.setXsltSource(src);
