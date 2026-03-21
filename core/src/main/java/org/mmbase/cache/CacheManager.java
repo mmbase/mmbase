@@ -21,10 +21,7 @@ import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import org.mmbase.cache.implementation.LRUCache;
-import org.mmbase.util.ResourceLoader;
-import org.mmbase.util.ResourceWatcher;
-import org.mmbase.util.SizeOf;
-import org.mmbase.util.ThreadPools;
+import org.mmbase.util.*;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 import org.mmbase.util.xml.DocumentReader;
@@ -385,7 +382,6 @@ public class CacheManager implements CacheManagerMBean {
             log.debug("Static init of Caches");
             configWatcher.add("caches.xml");
             configWatcher.onChange("caches.xml");
-            configWatcher.setDelay(ResourceWatcher.getDefaultResourceWatcherDelay());
             configWatcher.start();
         } catch (Throwable t) {
             log.error(t);

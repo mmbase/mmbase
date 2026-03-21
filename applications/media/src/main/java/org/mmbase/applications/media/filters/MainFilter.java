@@ -10,22 +10,22 @@ See http://www.MMBase.org/license
 
 package org.mmbase.applications.media.filters;
 
+import java.util.*;
+
 import org.mmbase.applications.media.urlcomposers.URLComposer;
+import org.mmbase.util.ResourceLoader;
+import org.mmbase.util.ResourceWatcher;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 import org.mmbase.util.xml.DocumentReader;
-import org.mmbase.util.*;
-
 import org.w3c.dom.Element;
-
-import java.util.*;
 
 /**
  * This is the main class for the filter process. It maintains list of
- * Filters (which can be configured in the 'filters.xml' configuration file). 
- * It does not do any filtering itself, it is only to access to the actual 
+ * Filters (which can be configured in the 'filters.xml' configuration file).
+ * It does not do any filtering itself, it is only to access to the actual
  * filters, so filtering is completely configurable.
- *
+ * <p>
  * Since there can be only one 'main' filter this class is a
  * Singleton, and its one instance can be gotten by the #getInstance()
  * function (and this is done by Media builders when they need url
@@ -60,7 +60,6 @@ public class MainFilter {
     private MainFilter() {
         String configFile = CONFIG_FILE;
         configWatcher.add(configFile);
-        configWatcher.setDelay(10 * 1000); // check every 10 secs if config changed
         configWatcher.start();
         configWatcher.onChange();
     }

@@ -21,7 +21,7 @@ import org.mmbase.util.ResourceWatcher;
  */
 public abstract class WatchedReloadableModule extends ReloadableModule {
 
-    private ResourceWatcher configWatcher = new ResourceWatcher() {
+    private final ResourceWatcher configWatcher = new ResourceWatcher() {
             public void onChange(String resource) {
                 // resource parameter can be ignored, because it inconveniently contains ".xml".
                 if (reloadConfiguration()) {
@@ -41,7 +41,6 @@ public abstract class WatchedReloadableModule extends ReloadableModule {
      * super.onload if you need to override this.
      */
     public void onload() {
-        configWatcher.setDelay(ResourceWatcher.getDefaultResourceWatcherDelay());
         configWatcher.start();
         configWatcher.add("modules/" +  configurationPath + ".xml");
     }

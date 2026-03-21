@@ -11,11 +11,12 @@ package org.mmbase.util.logging;
 
 import java.lang.reflect.Method;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.mmbase.util.ApplicationContextReader;
-import org.mmbase.util.ResourceWatcher;
 import org.mmbase.util.ResourceLoader;
+import org.mmbase.util.ResourceWatcher;
 import org.mmbase.util.xml.DocumentReader;
 
 /**
@@ -149,7 +150,6 @@ public class Logging {
         ///System.out.println("(If logging does not start then dtd validation might be a problem on your server)");
 
         configWatcher.add(configFile);
-        configWatcher.setDelay(ResourceWatcher.getDefaultResourceWatcherDelay()); // check every now and then if config changed
         configWatcher.start();
 
         DocumentReader reader;

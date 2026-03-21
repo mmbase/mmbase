@@ -9,16 +9,14 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.cache.xslt;
 
-import org.mmbase.cache.Cache;
-import javax.xml.transform.Templates;
-import javax.xml.transform.Source;
+import java.util.*;
+
+import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamSource;
+
+import org.mmbase.cache.Cache;
 import org.mmbase.util.ResourceLoader;
 import org.mmbase.util.ResourceWatcher;
-
-import java.util.*;
-import javax.xml.transform.URIResolver;
-
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 
@@ -75,7 +73,6 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
 
     static {
         cache.putCache();
-        templateWatcher.setDelay(ResourceWatcher.getDefaultResourceWatcherDelay());
         templateWatcher.start();
 
     }

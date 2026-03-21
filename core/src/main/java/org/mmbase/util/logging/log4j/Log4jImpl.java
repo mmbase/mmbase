@@ -9,21 +9,13 @@ See http://www.MMBase.org/license
 
 package org.mmbase.util.logging.log4j;
 
-import org.mmbase.util.logging.Logger;
-import org.mmbase.util.logging.Level;
-import org.mmbase.util.logging.Logging;
-import org.mmbase.util.logging.MDC;
-
-import org.mmbase.util.ResourceWatcher;
-import org.mmbase.util.ResourceLoader;
-import org.mmbase.core.event.*;
-
-import org.apache.log4j.xml.DOMConfigurator;
-
 import java.io.*;
 
-import java.io.PrintStream;
-import java.io.File;
+import org.apache.log4j.xml.DOMConfigurator;
+import org.mmbase.core.event.*;
+import org.mmbase.util.ResourceLoader;
+import org.mmbase.util.ResourceWatcher;
+import org.mmbase.util.logging.*;
 
 /**
  * This Logger implementation extends the Logger class from the log4j
@@ -141,7 +133,6 @@ public final class Log4jImpl extends org.apache.log4j.Logger  implements Logger 
 
         doConfigure(rl.getResourceAsStream(s));
 
-        configWatcher.setDelay(ResourceWatcher.getDefaultResourceWatcherDelay()); // check every period if config changed
         configWatcher.start();
         log = getLoggerInstance(Log4jImpl.class.getName());
 

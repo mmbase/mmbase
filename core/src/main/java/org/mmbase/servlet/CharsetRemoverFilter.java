@@ -36,7 +36,7 @@ public class CharsetRemoverFilter implements Filter {
     private static final Logger log = Logging.getLoggerInstance(CharsetRemoverFilter.class);
 
 
-    Properties contentTypes = new Properties();    
+    Properties contentTypes = new Properties();
     FileWatcher watcher = new FileWatcher(true) {
             public void onChange(File file) {
                 load(file);
@@ -50,7 +50,6 @@ public class CharsetRemoverFilter implements Filter {
         log.info("Init of CharsetRemover Filter, using " + file);
         load(file);
         watcher.add(file);
-        watcher.setDelay(10 * 1000); // check every 10 secs if config changed
         watcher.start();
 
     }
@@ -76,7 +75,7 @@ public class CharsetRemoverFilter implements Filter {
     }
 
 
-    public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, FilterChain filterChain) 
+    public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, FilterChain filterChain)
         throws java.io.IOException, ServletException {
 
         HttpServletResponseWrapper wrapper = new HttpServletResponseWrapper((HttpServletResponse) servletResponse) {
@@ -89,7 +88,7 @@ public class CharsetRemoverFilter implements Filter {
                     if (log.isDebugEnabled()) {
                         log.trace("Setting contentType to " + ct + " " + Logging.stackTrace(new Exception()));
                     }
-                    getResponse().setContentType(ct);                    
+                    getResponse().setContentType(ct);
                 }
             @Override
                 public String getContentType() {
@@ -101,14 +100,14 @@ public class CharsetRemoverFilter implements Filter {
                  * are in byte-writing mode.  and charset's become
                  * irrelevant,and tomcat will not add one any more.
                  */
-                
+
             @Override
                 public PrintWriter getWriter() throws IOException {
-                    if (writer == null) {                        
+                    if (writer == null) {
                         String charSet = contentType == null ? null : (String) contentTypes.get(contentType);
                         if (charSet != null) {
-                            if (contentType != null) {                                
-                                super.setContentType(contentType);                            
+                            if (contentType != null) {
+                                super.setContentType(contentType);
                             }
                             if (log.isDebugEnabled()) {
                                 log.debug("Wrapping outputstream to avoid charset " + charSet);
@@ -140,11 +139,11 @@ public class CharsetRemoverFilter implements Filter {
                     if (log.isDebugEnabled()) {
                         log.debug("Returning " + writer.getClass());
                     }
-                    return writer;                        
+                    return writer;
                 }
         };
         filterChain.doFilter(servletRequest, wrapper);
-        
+
     }
     /**
      * destroys the filter

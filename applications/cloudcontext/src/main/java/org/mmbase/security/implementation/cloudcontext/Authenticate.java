@@ -9,16 +9,20 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.security.implementation.cloudcontext;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import java.util.*;
-import java.io.*;
+
+import org.mmbase.module.core.MMObjectNode;
+import org.mmbase.module.core.VirtualNode;
 import org.mmbase.security.*;
-import org.mmbase.module.core.*;
 import org.mmbase.security.SecurityException;
 import org.mmbase.security.classsecurity.ClassAuthentication;
+import org.mmbase.util.ResourceWatcher;
+import org.mmbase.util.functions.*;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
-import org.mmbase.util.functions.*;
-import org.mmbase.util.ResourceWatcher;
 
 /**
  * Cloud-based Authentication. Deploy the application to explore the object-model on which this is based.
@@ -80,7 +84,6 @@ public class Authenticate extends CloudContextAuthentication {
             };
         adminsWatcher.add(ADMINS_PROPS);
         adminsWatcher.onChange(ADMINS_PROPS);
-        adminsWatcher.setDelay(10*1000);
         adminsWatcher.start();
 
     }

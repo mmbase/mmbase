@@ -9,16 +9,16 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.framework;
 
-import java.util.*;
 import java.net.URL;
-import org.w3c.dom.*;
-import org.mmbase.util.*;
-import org.mmbase.util.xml.Instantiator;
 
+import java.util.*;
 
-
+import org.mmbase.util.ResourceLoader;
+import org.mmbase.util.ResourceWatcher;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
+import org.mmbase.util.xml.Instantiator;
+import org.w3c.dom.*;
 
 /**
  * This (singleton) class maintains all {@link Component}s which are registered in the current MMBase.
@@ -86,7 +86,6 @@ public class ComponentRepository {
                 };
             rw.add("components");
             rw.onChange();
-            rw.setDelay(ResourceWatcher.getDefaultResourceWatcherDelay());
             rw.start();
         }
     }

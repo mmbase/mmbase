@@ -9,18 +9,19 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.util.functions;
 
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
+
+import java.util.*;
+
+import org.mmbase.util.*;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 import org.mmbase.util.xml.DocumentReader;
-import org.mmbase.util.*;
 import org.mmbase.util.xml.XMLWriter;
-
-import java.io.*;
-import java.util.*;
+import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
-import org.w3c.dom.*;
-import java.net.*;
-
 
 
 /**
@@ -97,7 +98,6 @@ public class FunctionSets {
                     }
                 };
             readSets(watcher);
-            watcher.setDelay(ResourceWatcher.getDefaultResourceWatcherDelay());
             watcher.start();
         } catch (Throwable t) {
             log.error(t.getClass().getName(), t);

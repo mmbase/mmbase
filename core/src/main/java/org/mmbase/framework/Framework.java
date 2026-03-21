@@ -9,14 +9,15 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.framework;
 
-import java.io.*;
-import java.util.*;
+import java.io.Writer;
+import java.util.Map;
 import org.mmbase.bridge.Node;
 import org.mmbase.util.ResourceWatcher;
-import org.mmbase.util.xml.Instantiator;
-import org.mmbase.util.functions.*;
+import org.mmbase.util.functions.Parameter;
+import org.mmbase.util.functions.Parameters;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
+import org.mmbase.util.xml.Instantiator;
 
 /**
  * The MMBase Framework displays and processes components.
@@ -94,7 +95,6 @@ public abstract class Framework {
                         }
                     };
                 frameworkWatcher.add("framework.xml");
-                frameworkWatcher.setDelay(10 * 1000); // check every 10 secs if config changed
                 frameworkWatcher.start();
             }
             frameworkWatcher.onChange();

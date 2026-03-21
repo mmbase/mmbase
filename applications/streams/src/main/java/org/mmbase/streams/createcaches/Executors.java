@@ -149,7 +149,6 @@ public class Executors {
     protected static void readConfiguration() {
         watcher.exit();
         watcher.add("streams/createcaches.xml");
-        watcher.setDelay(10000);
         watcher.onChange();
         watcher.start();
     }

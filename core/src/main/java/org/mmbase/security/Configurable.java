@@ -10,7 +10,6 @@ See http://www.MMBase.org/license
 package org.mmbase.security;
 
 import org.mmbase.util.ResourceWatcher;
-
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 
@@ -61,8 +60,6 @@ public abstract class Configurable {
         }
         this.manager = manager;
         this.configWatcher = configWatcher;
-
-        configWatcher.setDelay(ResourceWatcher.getDefaultResourceWatcherDelay());
 
         if (configPath != null && !configPath.equals("")) {
             if (configPath.startsWith("/")) {

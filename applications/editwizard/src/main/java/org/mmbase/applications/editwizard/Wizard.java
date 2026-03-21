@@ -9,33 +9,30 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.applications.editwizard;
 
-import org.mmbase.bridge.Cloud;
-import org.mmbase.bridge.util.Queries;
-import org.mmbase.storage.search.RelationStep; // just for the search-constants.
-
-import org.mmbase.cache.Cache;
-
-import org.mmbase.applications.dove.*;
-
-import org.mmbase.util.*;
-import org.mmbase.framework.*;
-import org.mmbase.util.logging.*;
-import org.mmbase.util.xml.*;
-import org.mmbase.util.functions.*;
-
-import java.util.regex.*;
-
-import org.w3c.dom.*;
-
-import java.net.URL;
 import java.io.*;
+import java.net.URL;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import javax.xml.transform.TransformerException;
+
+import org.mmbase.applications.dove.Dove;
+import org.mmbase.bridge.Cloud;
+import org.mmbase.bridge.util.Queries;
+import org.mmbase.cache.Cache;
+import org.mmbase.framework.*;
+import org.mmbase.storage.search.RelationStep; // just for the search-constants.
+import org.mmbase.util.ResourceLoader;
+import org.mmbase.util.ResourceWatcher;
+import org.mmbase.util.functions.Parameter;
+import org.mmbase.util.functions.Parameters;
+import org.mmbase.util.logging.Logger;
+import org.mmbase.util.logging.Logging;
+import org.mmbase.util.xml.*;
+import org.w3c.dom.*;
 
 
 /**
@@ -3073,8 +3070,6 @@ public class Wizard implements org.mmbase.util.SizeMeasurable, java.io.Serializa
                 for (URL ff : dependencies) {
                     fileWatcher.add(ff);
                 }
-
-                fileWatcher.setDelay(10 * 1000); // check every 10 secs
                 fileWatcher.start();
             }
         }
