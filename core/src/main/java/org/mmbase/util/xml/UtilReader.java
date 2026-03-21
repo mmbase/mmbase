@@ -9,12 +9,16 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.util.xml;
 
-import java.util.*;
-import java.net.URL;
 import java.io.IOException;
+import java.net.URL;
+
+import java.util.*;
+
 import org.mmbase.util.*;
-import org.mmbase.util.logging.*;
+import org.mmbase.util.logging.Logger;
+import org.mmbase.util.logging.Logging;
 import org.w3c.dom.Element;
+
 /**
  * This class reads configuration files for utilities, that are
  * placed in /config/utils/.
@@ -86,7 +90,7 @@ public class UtilReader {
     }
 
     private class UtilFileWatcher extends ResourceWatcher {
-        private ResourceWatcher wrappedWatcher;
+        private final ResourceWatcher wrappedWatcher;
         public UtilFileWatcher(ResourceWatcher f) {
             super(); // true: keep reading.
             wrappedWatcher = f;
@@ -273,7 +277,7 @@ public class UtilReader {
     }
 
     /**
-     * A unmodifiable Map, with extra 'Properties'-like methods. The entries of this Map are
+     * An unmodifiable Map, with extra 'Properties'-like methods. The entries of this Map are
      * typically backed by the resources of an UtilReader (and the Map dynamically changes if the
      * resources change).
      * @since MMBase-1.8
