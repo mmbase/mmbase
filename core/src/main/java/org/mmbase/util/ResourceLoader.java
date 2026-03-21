@@ -255,16 +255,18 @@ public class ResourceLoader extends ClassLoader {
      * @param sc The ServletContext used for determining the mmbase configuration directory. Or <code>null</code>.
      */
     public static  synchronized void init(ServletContext sc) {
-        if (servletContext != null) {
+        if (servletContext != null && servletContext != sc) {
             throw new IllegalArgumentException("ResourceLoader is already initialized with a servlet context, cannot be reinitialized with another one");
         }
-        servletContext = sc;
-        // reset both roots, they will be redetermined using servletContext.
-        configRootNeedsInit = true;
-        webRootNeedsInit    = true;
-        ResourceWatcher.reinitWatchers();
-        if (sc != null) {
-            EventManager.getInstance().propagateEvent(new SystemEvent.ResourceLoaderChange());
+        if (servletContext != sc) {
+            servletContext = sc;
+            // reset both roots, they will be redetermined using servletContext.
+            configRootNeedsInit = true;
+            webRootNeedsInit = true;
+            ResourceWatcher.reinitWatchers();
+            if (sc != null) {
+                EventManager.getInstance().propagateEvent(new SystemEvent.ResourceLoaderChange());
+            }
         }
     }
 

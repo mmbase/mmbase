@@ -115,8 +115,12 @@ public abstract class FileWatcher {
         if (future != null) {
             future.cancel(true);
         }
-        future = org.mmbase.util.ThreadPools.scheduler.scheduleAtFixedRate(fileWatchers, THREAD_DELAY, THREAD_DELAY, TimeUnit.MILLISECONDS);
-        org.mmbase.util.ThreadPools.identify(future, "File Watcher");
+        if (THREAD_DELAY > 0) {
+            future = org.mmbase.util.ThreadPools.scheduler.scheduleAtFixedRate(fileWatchers, THREAD_DELAY, THREAD_DELAY, TimeUnit.MILLISECONDS);
+            org.mmbase.util.ThreadPools.identify(future, "File Watcher");
+        } else {
+            future = null;
+        }
     }
 
     static {
