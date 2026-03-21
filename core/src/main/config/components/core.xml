@@ -486,7 +486,7 @@
       <class name="org.mmbase.framework.DocumentationRenderer">
         <param name="docbook">backenddevelopers/components/index.xml</param>
         <param name="includeRenderTime">xml-comments</param>
-        <param name="timeout">10000</param>
+        <param name="timeout">10s</param>
       </class>
     </body>
   </block>
@@ -555,7 +555,7 @@
       <class name="org.mmbase.framework.ConnectionRenderer">
         <param name="url">https://github.com/mmbase/mmbase/releases.atom</param>
         <param name="xslt">xslt/rss.xslt</param>
-        <param name="timeout">50000</param>
+        <param name="timeout">10s</param>
       </class>
     </body>
   </block>

@@ -9,12 +9,15 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.module.core;
 
-import java.util.*;
 import java.io.*;
-import javax.servlet.*;
 import java.text.DateFormat;
+import java.util.*;
 
-import org.mmbase.core.event.*;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+
+import org.mmbase.core.event.EventManager;
+import org.mmbase.core.event.SystemEvent;
 import org.mmbase.core.util.DaemonTask;
 import org.mmbase.core.util.DaemonThread;
 import org.mmbase.util.ResourceLoader;
@@ -65,7 +68,7 @@ public class MMBaseContext {
      */
     public synchronized static void init(ServletContext servletContext) {
         if (!initialized ||
-            (initialized && sx == null)) { // initialized, but with init(configPath)
+            sx == null) { // initialized, but with init(configPath)
 
             if (servletContext == null) {
                 throw new IllegalArgumentException();

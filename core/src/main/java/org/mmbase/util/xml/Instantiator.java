@@ -9,13 +9,15 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.util.xml;
 
-import org.mmbase.util.Casting;
-
-import java.util.*;
 import java.lang.reflect.*;
-import org.w3c.dom.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.mmbase.util.logging.*;
+import org.mmbase.util.Casting;
+import org.mmbase.util.logging.Logger;
+import org.mmbase.util.logging.Logging;
+
+import org.w3c.dom.*;
 
 /**
  * Utilities to use an XML to instantiate Java objects, using
@@ -170,7 +172,7 @@ public abstract class Instantiator {
             }
         }
         if (! invoked) {
-            log.warn("Could not set property '" + name + "' on " + o);
+            log.warn("Could not set property '" + name + "' on " + o.getClass().getName() + " " + o);
         }
     }
 

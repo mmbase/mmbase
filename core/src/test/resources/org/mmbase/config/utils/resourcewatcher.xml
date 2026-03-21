@@ -8,6 +8,12 @@
          The one thread which is doing all the checking, does sleep between checks too.
          It's sleep time can be configured here. During development you want it to be low, in production high to avoid the overhead.
     -->
-    <property name="delay">1000</property> <!--Time in millis between checks -->
+    <property name="delay">PT10S</property> <!--Time in  between checks -->
+
+    <!-- resource watching can be effectively disabled by setting this to a negavtive value, e.g. PT-10s, -->
+    <!--
+    <property name="resourcewatcher.delay">PT-10s</property>
+    -->
+    <property name="defaultdelay">PT10S</property>
   </properties>
 </util>

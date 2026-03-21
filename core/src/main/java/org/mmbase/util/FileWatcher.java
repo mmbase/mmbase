@@ -11,10 +11,16 @@ See http://www.MMBase.org/license
 package org.mmbase.util;
 
 import java.io.File;
+import java.time.Duration;
 import java.util.*;
-import org.mmbase.util.logging.*;
+import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.function.LongSupplier;
+import java.util.function.Supplier;
+import org.mmbase.util.logging.Logger;
+import org.mmbase.util.logging.Logging;
 import org.mmbase.util.xml.UtilReader;
-import java.util.concurrent.*;
 
 /**
  * Original javadoc.
@@ -73,16 +79,33 @@ public abstract class FileWatcher {
      *	The default delay between every file modification check, set to 60
      *  seconds.
      */
-    static final public long DEFAULT_DELAY = 60000;
+    static  public long DEFAULT_DELAY = 60000;
 
     /**
      * The one thread doing al the work also needs a delay.
      */
-    static public long THREAD_DELAY = 10000;
+    static public long THREAD_DELAY =  10000;
 
 
     static ScheduledFuture<?> future;
     static FileWatcherRunner fileWatchers = new FileWatcherRunner();
+
+    /**
+     * @since 1.9.7
+     * @return
+     */
+    public static Supplier<Duration> getDefaultDelay()  {
+        return () -> Duration.ofMillis(DEFAULT_DELAY);
+
+    }
+
+    /**
+     * @since 1.9.7
+     * @return
+     */
+    public static Duration getThreadDelay()  {
+        return Duration.ofMillis(THREAD_DELAY);
+    }
 
 
     /**
@@ -105,24 +128,33 @@ public abstract class FileWatcher {
     }
 
 
-    private static Map<String, String> props;
-
+    private static final UtilReader.PropertiesMap<String> props;
 
     /**
      * @since MMBase-1.8
      */
-    static private Runnable watcher = new Runnable() {
+    static  final Runnable watcher = new Runnable() {
             public void run() {
+
                 try {
                     String delay = props.get("delay");
                     if (delay != null) {
-                        THREAD_DELAY = Integer.parseInt(delay);
-                        scheduleFileWatcherRunner();
+                        THREAD_DELAY = Casting.toDuration(delay, () -> Duration.ofSeconds(10)).toMillis();
                         log.service("Set thread delay time to " + THREAD_DELAY);
                     }
                 } catch (Exception e) {
                     log.error(e);
                 }
+                try {
+                    String delay = props.get("defaultdelay");
+                    if (delay != null) {
+                        DEFAULT_DELAY = Casting.toDuration(delay, () -> Duration.ofSeconds(10)).toMillis();
+                        log.service("Set thread delay time to " + DEFAULT_DELAY);
+                    }
+                } catch (Exception e) {
+                    log.error(e);
+                }
+                scheduleFileWatcherRunner();
             }
         };
 
@@ -146,11 +178,11 @@ public abstract class FileWatcher {
      * The delay to observe between every check. By default set {@link
      * #DEFAULT_DELAY}.
      */
-    private long delay = DEFAULT_DELAY;
+    private LongSupplier delay = () -> DEFAULT_DELAY;
 
-    private Set<FileEntry> files = new LinkedHashSet<FileEntry>();
-    private Set<File> fileSet = new FileSet(); // (automaticly) wraps 'files'.
-    private Set<File> removeFiles = new HashSet<File>();
+    private final Set<FileEntry> files = new LinkedHashSet<FileEntry>();
+    private final Set<File> fileSet = new FileSet(); // (automaticly) wraps 'files'.
+    private final Set<File> removeFiles = new HashSet<File>();
     private boolean stop = false;
     private boolean running = false;
     private boolean continueAfterChange = false;
@@ -182,19 +214,34 @@ public abstract class FileWatcher {
      * Set the delay to observe between each check of the file changes.
      * @param delay The delay in milliseconds
      */
+
     public void setDelay(long delay) {
-        this.delay = delay;
+        this.delay = () -> delay;
         if (delay < THREAD_DELAY) {
             log.info("Delay of " + this + "  (" + delay + " ms) is smaller than the delay of the watching thread. Will not watch more often then once per " + THREAD_DELAY + " ms. Set to " + THREAD_DELAY);
-            this.delay = THREAD_DELAY;
+            this.delay = () -> THREAD_DELAY;
         }
     }
+    /**
+     * @since MMBase-1.9.7
+     */
+    public void setDelay(LongSupplier delay) {
+        this.delay = delay;
+    }
+    /**
+     * @since MMBase-1.9.7
+     */
+    public void setDelay(Supplier<Duration> delay) {
+        this.delay = () -> delay.get().toMillis();
+    }
+
+
 
     /**
      * @since MMBase-1.9.2
      */
     public long getDelay() {
-        return delay;
+        return delay.getAsLong();
     }
 
     /**
@@ -234,7 +281,7 @@ public abstract class FileWatcher {
     }
 
     /**
-     * Wether the file is being watched or not.
+     * Whether the file is being watched or not.
      * @param file the file to be checked.
      * @since MMBase-1.6
      */
@@ -377,7 +424,7 @@ public abstract class FileWatcher {
                 }
             }
             //set a delay and start it.
-            w.setDelay(1 * 1000); // 1 s
+            w.setDelay(() -> 1 * 1000); // 1 s
             w.start();
             //this.wait(123); // make all watchers out sync
         }
@@ -401,7 +448,7 @@ public abstract class FileWatcher {
         /*
          * Set of file-watchers, which are currently active.
          */
-        private Set<FileWatcher> watchers = new CopyOnWriteArraySet<FileWatcher>();
+        private final Set<FileWatcher> watchers = new CopyOnWriteArraySet<FileWatcher>();
 
 
         void add(FileWatcher f) {
@@ -425,9 +472,9 @@ public abstract class FileWatcher {
                 List<FileWatcher> removed = new ArrayList<FileWatcher>(); // copyonwritearraylist's iterator  does not support remove
                 for (FileWatcher f : watchers) {
                     long staleness = (now - f.lastCheck);
-                    if (staleness >= f.delay) {
+                    if (staleness >= f.delay.getAsLong()) {
                         if (log.isTraceEnabled()) {
-                            log.trace("Filewatcher " + f + " with " + f.delay  + " ms <= " + staleness  + " ms is expired. Currently it's watching: " + f.getClass().getName() + " " + f.toString());
+                            log.trace("Filewatcher " + f + " with " + f.delay.getAsLong()  + " ms <= " + staleness  + " ms is expired. Currently it's watching: " + f.getClass().getName() + " " + f.toString());
                         }
                         // System.out.print(".");
                         //changed returns true if we can stop watching
@@ -471,17 +518,14 @@ public abstract class FileWatcher {
             // do something..
             i++;
         }
-        @Override
-        protected void finalize() {
-            System.out.println(this.toString() + ":" + i);
-        }
+
     }
 
     /**
      * Object used in file-lists of the FileWatcher. It wraps a File object, but adminstrates
      * lastmodified an existence seperately (to compare with the actual values of the File).
      */
-    private class FileEntry {
+    private static class FileEntry {
         // static final Logger log = Logging.getLoggerInstance(FileWatcher.class.getName());
         private long lastModified = -1;
         private boolean exists = false;

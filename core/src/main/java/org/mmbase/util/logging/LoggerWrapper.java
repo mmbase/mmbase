@@ -12,7 +12,7 @@ import java.util.*;
 
 /**
  * Wraps a logger instance. This can be used for static logger instances which might be instatatied
- * before logging itself is configured. After configurating logging, all static 'wrappers' can then
+ * before logging itself is configured. After configuring logging, all static 'wrappers' can then
  * be called to wrap another logger instance.
  *
  * @author Michiel Meeuwissen

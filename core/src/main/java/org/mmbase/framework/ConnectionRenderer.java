@@ -9,15 +9,18 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.framework;
 
-import java.net.*;
 import java.io.*;
+import java.net.*;
+import java.time.Duration;
 
-import org.apache.commons.io.IOUtils;
-import org.mmbase.util.functions.*;
-import org.mmbase.util.*;
-
+import org.mmbase.util.GenericResponseWrapper;
+import org.mmbase.util.ResourceLoader;
+import org.mmbase.util.functions.Parameter;
+import org.mmbase.util.functions.Parameters;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
+
+import org.apache.commons.io.IOUtils;
 
 /**
  * A {@link Renderer} implementation based on an external connection. It also supports
@@ -51,7 +54,7 @@ public class ConnectionRenderer extends AbstractRenderer {
 
 
     protected URL url;
-    protected int timeOut = 2000;
+    protected int  timeout = 2000;
     protected String xsl = null;
     protected boolean decorate = true;
 
@@ -66,9 +69,10 @@ public class ConnectionRenderer extends AbstractRenderer {
     public void setXslt(String x) throws MalformedURLException {
         xsl = x;
     }
-    public void setTimeOut(int t) {
-        timeOut = t;
+    public void setTimeout(Duration t) {
+        timeout = (int) t.toMillis();
     }
+
     public void setDecorate(boolean d) {
         decorate = d;
     }
@@ -94,8 +98,8 @@ public class ConnectionRenderer extends AbstractRenderer {
             }
             URL u = getUri(blockParameters, hints).toURL();
             HttpURLConnection connection = (HttpURLConnection) u.openConnection();
-            connection.setConnectTimeout(timeOut);
-            connection.setReadTimeout(timeOut);
+            connection.setConnectTimeout(timeout);
+            connection.setReadTimeout(timeout);
             int responseCode = connection.getResponseCode();
             String contentType = connection.getContentType();
             inputStream = connection.getInputStream();

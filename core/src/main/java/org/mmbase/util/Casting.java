@@ -14,15 +14,12 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.text.*;
 import java.time.Duration;
-
 import java.time.format.DateTimeParseException;
-
 import java.util.*;
 import java.util.function.Supplier;
 
 import javax.xml.parsers.*;
 
-import org.apache.commons.fileupload.FileItem;
 import org.mmbase.bridge.*;
 import org.mmbase.bridge.util.*;
 import org.mmbase.datatypes.DataType;
@@ -31,6 +28,8 @@ import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 import org.mmbase.util.transformers.CharTransformer;
 import org.mmbase.util.xml.XMLWriter;
+
+import org.apache.commons.fileupload.FileItem;
 import org.w3c.dom.Document;
 
 
@@ -269,6 +268,12 @@ public class Casting {
                     return (C) value;
                 } else {
                     return (C) LocaleCollator.getInstance(toString(value));
+                }
+            } else if (type.equals(Duration.class)) {
+                if (value instanceof Duration) {
+                    return (C) value;
+                } else {
+                    return (C) toDuration(value);
                 }
             } else {
                 log.error("Don't know how to convert to " + type, new Exception());
@@ -1152,13 +1157,20 @@ public class Casting {
             return Duration.ofMillis((long) (((Number) i).doubleValue() * 1000L));
         } else if (i instanceof CharSequence) {
             String s = i.toString();
-            if (s.startsWith("T")) {
-                s = "P" + s;
-            }
             try {
-                return Duration.parse(s);
-            } catch (DateTimeParseException e) {
                 return Duration.ofMillis((long) (Double.parseDouble(s) * 1000L));
+            } catch (NumberFormatException nfe) {
+                if (s.startsWith("T")) {
+                    s = "P" + s;
+                }
+                if (! s.startsWith("PT")) {
+                    s = "PT" + s;
+                }
+                try {
+                    return Duration.parse(s);
+                } catch (DateTimeParseException e) {
+                    return def.get();
+                }
             }
         }
         return def.get();

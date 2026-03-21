@@ -11,21 +11,20 @@ See http://www.MMBase.org/license
 package org.mmbase.util;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
 import java.util.*;
+import java.util.function.LongSupplier;
+import java.util.function.Supplier;
+
 import org.mmbase.bridge.Node;
-import org.mmbase.core.event.EventManager;
-import org.mmbase.core.event.NodeEvent;
-import org.mmbase.core.event.NodeEventListener;
-import org.mmbase.module.Module;
+import org.mmbase.core.event.*;
 import org.mmbase.util.logging.Logger;
 import org.mmbase.util.logging.Logging;
 
 /**
  *  Like {@link org.mmbase.util.FileWatcher} but for Resources. If (one of the) file(s) to which the resource resolves
- *  to is added or changed, it's onChange will be triggered, if not a 'more important' one was
+ *  to is added or changed, its onChange will be triggered, if not a 'more important' one was
  *  existing already. If a file is removed, and was the most important one, it will be removed from the filewatcher.
  *
  * @author Michiel Meeuwissen
@@ -41,25 +40,6 @@ public abstract class ResourceWatcher implements NodeEventListener  {
      * All instantiated ResourceWatchers.
      */
     static final Map<ResourceWatcher, Object> resourceWatchers = Collections.synchronizedMap(new WeakHashMap<ResourceWatcher, Object>());
-
-    /**
-     * @since 1.9.7
-     * @return
-     */
-    public static Duration getDefaultResourceWatcherDelay()  {
-        String initParameter = null;
-        try {
-            initParameter = Module.getInitParameter("mmbaseroot", "resourcewatcher.delay");
-        } catch (IOException e) {
-            log.warn(e.getMessage(), e);
-        }
-        if (initParameter == null || initParameter.isEmpty()) {
-
-            initParameter = "PT10s";
-        }
-        return Duration.parse(initParameter);
-
-    }
 
     /**
      * Considers all resource-watchers. Perhaps onChange must be called, because there is a node for this resource available now.
@@ -81,8 +61,6 @@ public abstract class ResourceWatcher implements NodeEventListener  {
                     }
                 }
             }
-            reinitWatchers();
-
         }
     }
 
@@ -91,8 +69,8 @@ public abstract class ResourceWatcher implements NodeEventListener  {
      */
     static void reinitWatchers() {
         synchronized(resourceWatchers) {
-            for (ResourceWatcher rw : resourceWatchers.keySet()) {
-                log.debug("Reinitting watcher " + rw);
+            for (ResourceWatcher rw : new ArrayList<>(resourceWatchers.keySet())) {
+                log.debug("Reiniting watcher " + rw);
                 rw.readdResources();
             }
         }
@@ -101,7 +79,7 @@ public abstract class ResourceWatcher implements NodeEventListener  {
     /**
      * Delay setting used for the filewatchers.
      */
-   private long delay = FileWatcher.DEFAULT_DELAY;
+   private LongSupplier delay = () -> FileWatcher.getDefaultDelay().get().toMillis();
 
     /**
      * All resources watched by this ResourceWatcher. A Set of Strings. Often, a ResourceWatcher would watch only one resource.
@@ -111,7 +89,7 @@ public abstract class ResourceWatcher implements NodeEventListener  {
     /**
      * When a resource is loaded from a Node, we must know which Nodes correspond to which
      * resource. You could ask the node itself, but if the node happens to be deleted, then you
-     * can't know that any more. Used in {@link #notify(NodeEvent)}
+     * can't know that anymore. Used in {@link #notify(NodeEvent)}
      */
     protected final Map<Integer, String> nodeNumberToResourceName = new HashMap<Integer, String>();
 
@@ -189,7 +167,7 @@ public abstract class ResourceWatcher implements NodeEventListener  {
             createFileWatcher(resourceName);
             mapNodeNumber(resourceName);
         } else {
-            log.debug("Not createing file and and node watchers because not running");
+            log.debug("Not creating file and and node watchers because not running");
         }
     }
 
@@ -275,7 +253,7 @@ public abstract class ResourceWatcher implements NodeEventListener  {
 
     public synchronized void start() {
         if (! running) {
-            if (delay > 0) {
+            if (delay.getAsLong() > 0) {
                 // create and start all filewatchers.
                 for (String resource : getResources()) {
                     //resourceLoader.checkShadowedNewerResources(resource);
@@ -313,15 +291,15 @@ public abstract class ResourceWatcher implements NodeEventListener  {
      * Set the delay to observe between each check of the file changes.
      * @param delay The delay in milliseconds
      */
-    public synchronized void setDelay(long delay) {
+    public synchronized void setDelay(LongSupplier delay) {
         this.delay = delay;
         for (FileWatcher fw : fileWatchers.values()) {
             fw.setDelay(delay);
         }
     }
 
-    public synchronized void setDelay(Duration delay) {
-        setDelay(delay.toMillis());
+    public synchronized void setDelay(Supplier<Duration> delay) {
+        setDelay(() -> delay.get().toMillis());
     }
 
     /**
@@ -361,7 +339,7 @@ public abstract class ResourceWatcher implements NodeEventListener  {
             add(resource);
         }
         log.debug("Readded resources, now " + resources);
-
+        onChange();
     }
 
     /**
@@ -401,7 +379,7 @@ public abstract class ResourceWatcher implements NodeEventListener  {
      * @since MMBase-1.9.2
      */
     public long getDelay() {
-        return delay;
+        return delay.getAsLong();
     }
 
     /**

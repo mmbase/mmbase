@@ -10,13 +10,8 @@ See http://www.MMBase.org/license
 package org.mmbase.util;
 
 import java.time.Duration;
-
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.mmbase.bridge.Cloud;
 import org.mmbase.bridge.Node;
 import org.mmbase.bridge.mock.MockBuilderReader;
@@ -24,6 +19,11 @@ import org.mmbase.bridge.mock.MockCloudContext;
 import org.mmbase.bridge.util.CloudThreadLocal;
 import org.mmbase.util.transformers.CopyCharTransformer;
 import org.mmbase.util.transformers.Xml;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  *
@@ -187,6 +187,8 @@ public class CastingTest  {
         assertEquals(Duration.ofSeconds(1), Casting.toDuration("PT1S"));
         assertEquals(Duration.ofMinutes(3), Casting.toDuration("T3M"));
         assertEquals(Duration.ofSeconds(1), Casting.toDuration("1"));
+        assertEquals(Duration.ofMinutes(1), Casting.toDuration("1M"));
+
         assertEquals(Duration.ofSeconds(1), Casting.toDuration(1));
         assertEquals(Duration.ofSeconds(-10), Casting.toDuration("PT-10s"));
         assertEquals(Duration.ofSeconds(1), Casting.toDuration("1"));

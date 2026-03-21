@@ -3,7 +3,7 @@
 <util>
   <properties>
     <!--
-        This file contains patterns -> weight, which is used by the Classloader parth of ResourceLoaders
+        This file contains patterns -> weight, which is used by the Classloader part of ResourceLoaders
     -->
 
 
