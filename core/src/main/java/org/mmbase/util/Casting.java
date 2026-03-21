@@ -10,26 +10,28 @@ See http://www.MMBase.org/license
 
 package org.mmbase.util;
 
-import java.util.*;
-import java.text.*;
 import java.io.*;
-import javax.xml.parsers.*;
 import java.math.BigDecimal;
-import org.mmbase.bridge.*;
-import org.mmbase.bridge.Node;
-import org.mmbase.bridge.util.CloudThreadLocal;
-import org.mmbase.bridge.util.NodeWrapper;
-import org.mmbase.bridge.util.NodeMap;
-import org.mmbase.bridge.util.MapNode;
-import org.mmbase.datatypes.DataType;
-import org.mmbase.datatypes.DataTypes;
-import org.mmbase.util.transformers.CharTransformer;
-import org.mmbase.util.logging.*;
-import org.mmbase.util.xml.XMLWriter;
+import java.text.*;
+import java.time.Duration;
 
-import org.w3c.dom.*;
+import java.time.format.DateTimeParseException;
+
+import java.util.*;
+import java.util.function.Supplier;
+
+import javax.xml.parsers.*;
 
 import org.apache.commons.fileupload.FileItem;
+import org.mmbase.bridge.*;
+import org.mmbase.bridge.util.*;
+import org.mmbase.datatypes.DataType;
+import org.mmbase.datatypes.DataTypes;
+import org.mmbase.util.logging.Logger;
+import org.mmbase.util.logging.Logging;
+import org.mmbase.util.transformers.CharTransformer;
+import org.mmbase.util.xml.XMLWriter;
+import org.w3c.dom.Document;
 
 
 /**
@@ -308,7 +310,8 @@ public class Casting {
             Document.class.isAssignableFrom(type) ||
             Collection.class.isAssignableFrom(type) ||
             Date.class.isAssignableFrom(type) ||
-            Map.class.isAssignableFrom(type);
+            Map.class.isAssignableFrom(type) ||
+                Duration.class.isAssignableFrom(type);
     }
 
 
@@ -465,11 +468,11 @@ public class Casting {
         } else if (o instanceof CharSequence) {
             return new StringWrapper((CharSequence) o, escaper);
         } else if (o instanceof InputStream) {
-	    try {
-		return new StringSerializableInputStream(toSerializableInputStream(o), escaper);
-	    } catch (IOException ioe) {
-		return ioe.getMessage();
-	    }
+            try {
+                return new StringSerializableInputStream(toSerializableInputStream(o), escaper);
+            } catch (IOException ioe) {
+                return ioe.getMessage();
+            }
         } else {
             return o;
         }
@@ -1142,8 +1145,32 @@ public class Casting {
         }
         return date;
     }
+    static public Duration toDuration(Object i, Supplier<Duration> def) {
+        if (i instanceof Duration) {
+            return (Duration) i;
+        } else if (i instanceof Number) {
+            return Duration.ofMillis((long) (((Number) i).doubleValue() * 1000L));
+        } else if (i instanceof CharSequence) {
+            String s = i.toString();
+            if (s.startsWith("T")) {
+                s = "P" + s;
+            }
+            try {
+                return Duration.parse(s);
+            } catch (DateTimeParseException e) {
+                return Duration.ofMillis((long) (Double.parseDouble(s) * 1000L));
+            }
+        }
+        return def.get();
+    }
+    static public Duration toDuration(Object i) {
+        return toDuration(i, () -> {
+            throw new IllegalArgumentException();
+        });
+    }
 
-    static DocumentBuilder DOCUMENTBUILDER;
+
+        static DocumentBuilder DOCUMENTBUILDER;
     static {
         try {
             DocumentBuilderFactory dfactory = DocumentBuilderFactory.newInstance();
