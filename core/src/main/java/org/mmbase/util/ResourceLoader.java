@@ -10,39 +10,40 @@ See http://www.MMBase.org/license
 package org.mmbase.util;
 
 // general
+
 import java.io.*;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.regex.Pattern;
 import java.net.*;
 
-// used for resolving in servlet-environment
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Pattern;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.transform.*;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
-
-// used for resolving in MMBase database
 import org.mmbase.bridge.*;
 import org.mmbase.bridge.util.Queries;
-import org.mmbase.storage.search.implementation.*;
-import org.mmbase.storage.search.*;
-import org.mmbase.core.event.*;
-
-// XML stuff
+import org.mmbase.core.event.EventManager;
+import org.mmbase.core.event.SystemEvent;
+import org.mmbase.storage.search.CompositeConstraint;
+import org.mmbase.storage.search.Constraint;
+import org.mmbase.storage.search.implementation.BasicCompositeConstraint;
+import org.mmbase.util.logging.Logger;
+import org.mmbase.util.logging.Logging;
+import org.mmbase.util.transformers.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.xml.sax.InputSource;
-import javax.xml.transform.*;
-import javax.xml.transform.Transformer;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.dom.DOMSource;
 
+// used for resolving in servlet-environment
+// used for resolving in MMBase database
+// XML stuff
 // used for Unicode Escaping when editing property files
-import org.mmbase.util.transformers.*;
-
-import org.mmbase.util.logging.Logger;
-import org.mmbase.util.logging.Logging;
 
 
 /**
@@ -655,9 +656,9 @@ public class ResourceLoader extends ClassLoader {
     }
 
     /**
-     * Returns a List, containing all URL's which may represent the
-     * given resource. This can be used to show what resource whould be loaded and what resource
-     * whould be masked, or one can also simply somehow 'merge' all these resources.
+     * Returns a List, containing all URLs which may represent the
+     * given resource. This can be used to show what resource would be loaded and what resource
+     * would be masked, or one can also simply somehow 'merge' all these resources.
      * The List is ordered, the URL's appearing earlier in the list should be considered 'more
      * important' or 'heavier'. See {@link #getWeight}.
      */

@@ -170,7 +170,6 @@ public class Processor implements CommitProcessor, java.io.Externalizable {
         LOG.service("Adding for " + this + " " + configFile);
         watcher.exit();
         watcher.add(configFile);
-        watcher.setDelay(10000);
         watcher.onChange();
         watcher.start();
     }
