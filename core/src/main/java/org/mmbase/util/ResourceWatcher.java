@@ -265,7 +265,7 @@ public abstract class ResourceWatcher implements NodeEventListener  {
                 }
                 running = true;
             } else {
-              log.info("No starting since delay < 0");
+                log.service("Not started watching for  " + resources + " since delay < 0");
             }
         } else {
             log.warn("Already running.", new Exception());
@@ -366,7 +366,7 @@ public abstract class ResourceWatcher implements NodeEventListener  {
      * Shows the 'contents' of the filewatcher. It shows a list of files/last modified timestamps.
      */
     public String toString() {
-        return "" + resources + " " + fileWatchers;
+        return resources + " " + fileWatchers;
     }
 
     /**
