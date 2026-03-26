@@ -23,7 +23,7 @@ NOTE: It's a bit odd to make a branch and not a tag, but the following will do s
 
 [source,sh,subs="attributes"]
 ----
-  git co {target-version}
+  git checkout {target-version}
 ----
 
 And edit:
