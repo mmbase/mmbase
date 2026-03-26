@@ -1,6 +1,6 @@
 = How to make a release
 
-:target-version: MMBase-1_9_7_rc2
+:target-version: MMBase-1_9_7_rc3
 
 
 - Make sure all automated test-cases succeed. Check the nightly build, or run 'make all' in tests.
@@ -37,7 +37,7 @@ And edit:
   - Fix the other poms:
 [source,sh,subs="attributes"]
 ----
-   for i in `find . -name pom.xml` ; do cat $i | sed s/1.9-SNAPSHOT/1.9.1/g > $i.new ; mv $i.new $i   ; done
+   for i in `find . -name pom.xml` ; do cat $i | sed s/1.9-SNAPSHOT/1.9.1/g > $i.new ; mv -f $i.new $i   ; done
 ----
   - Check this in
 
