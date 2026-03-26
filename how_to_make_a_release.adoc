@@ -37,7 +37,7 @@ And edit:
   - Fix the other poms:
 [source,sh,subs="attributes"]
 ----
-   for i in `find . -name pom.xml` ; do cat $i | sed s/1.9-SNAPSHOT/1.9.1/g > $i.new ; mv -f $i.new $i   ; done
+   for i in `find . -name pom.xml` ; do cat $i | sed s/1.9-SNAPSHOT/{target-version}/g > $i.new ; mv -f $i.new $i   ; done
 ----
   - Check this in
 
@@ -45,9 +45,9 @@ And edit:
 
 
  - Then:
-[source, bash]
+[source, bash, sub="attributes"]
 ----
-michiel@mitulo:(MMBase-1_9_7_rc2,12)~/github/mmbase/mmbase$ PROFILES=deploy ./build-all.sh deploy
+michiel@mitulo:({target-version},12)~/github/mmbase/mmbase$ PROFILES=deploy ./build-all.sh deploy
 ----
 
 Now also create tag, and let's delete the branch, so avoid more edits.
