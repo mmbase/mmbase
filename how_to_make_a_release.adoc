@@ -45,7 +45,7 @@ And edit:
 
 
  - Then:
-[source, bash, sub="attributes"]
+[source,bash,subs="attributes"]
 ----
 michiel@mitulo:({target-version},12)~/github/mmbase/mmbase$ PROFILES=deploy ./build-all.sh deploy
 ----
