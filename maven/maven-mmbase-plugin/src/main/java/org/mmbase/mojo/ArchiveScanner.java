@@ -57,14 +57,21 @@ public class ArchiveScanner extends DirectoryScanner {
           excludes = new String[0];
       }
 
-      filesIncluded = new ArrayList<>();
-      filesNotIncluded = new ArrayList<String>();
-      filesExcluded = new ArrayList<String>();
-      dirsIncluded = new ArrayList<String>();
-      dirsNotIncluded = new ArrayList<String>();
-      dirsExcluded = new ArrayList<String>();
+       setupDefaultFilters();
+       setupMatchPatterns();
 
-      List<String> jarEntries = new ArrayList<String>();
+       filesIncluded = new ArrayList<String>();
+       filesNotIncluded = new ArrayList<String>();
+       filesExcluded = new ArrayList<String>();
+       filesDeselected = new ArrayList<String>();
+       dirsIncluded = new ArrayList<String>();
+       dirsNotIncluded = new ArrayList<String>();
+       dirsExcluded = new ArrayList<String>();
+       dirsDeselected = new ArrayList<String>();
+
+
+
+       List<String> jarEntries = new ArrayList<String>();
       Enumeration<JarEntry> en = jarfile.entries();
       while (en.hasMoreElements()) {
          JarEntry entry = en.nextElement();
@@ -108,6 +115,7 @@ public class ArchiveScanner extends DirectoryScanner {
             }
          }
       }
+
    }
 
    protected void slowScan() {
