@@ -9,10 +9,11 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.cache.implementation;
 
-import java.util.concurrent.locks.ReadWriteLock;
-import org.mmbase.cache.CacheImplementationInterface;
 import java.util.*;
-import org.mmbase.util.logging.*;
+
+import org.mmbase.cache.CacheImplementationInterface;
+import org.mmbase.util.logging.Logger;
+import org.mmbase.util.logging.Logging;
 
 /**
  * A cache implementation backed by a {@link java.util.LinkedHashMap}, in access-order mode, and
@@ -124,11 +125,6 @@ public class LRUCache<K, V> implements CacheImplementationInterface<K, V> {
             log.warn("Unknown configuration parameters: " + map);
         }
     }
-
-    public Optional<ReadWriteLock> getLock() {
-        return Optional.empty();
-    }
-
     // wrapping for synchronization
     public int size() { return backing.size(); }
     public boolean isEmpty() { return backing.isEmpty();}
