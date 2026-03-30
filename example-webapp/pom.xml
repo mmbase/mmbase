@@ -150,11 +150,7 @@
       <type>war</type>
     </dependency>
     -->
-    <dependency>
-      <groupId>org.mmbase</groupId>
-      <artifactId>mmbase-oscache-cache</artifactId>
-      <version>${mmbase.version}</version>
-    </dependency>
+
     <dependency>
       <groupId>org.mmbase</groupId>
       <artifactId>mmbase-largeobjects</artifactId>
@@ -248,6 +244,11 @@
     <dependency>
       <groupId>org.mmbase</groupId>
       <artifactId>mmbase-oscache-cache</artifactId>
+      <version>${mmbase.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mmbase</groupId>
+      <artifactId>mmbase-ehcache-cache</artifactId>
       <version>${mmbase.version}</version>
     </dependency>
    <!-- <dependency>
