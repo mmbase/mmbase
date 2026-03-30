@@ -1,9 +1,11 @@
 package org.mmbase.cache.implementation;
 
-import com.github.benmanes.caffeine.cache.Caffeine;
 import java.io.Serializable;
 import java.util.*;
+
 import org.mmbase.cache.CacheImplementationInterface;
+
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 /**
  * Cache backed by <a href="https://github.com/ben-manes/caffeine/wiki/Eviction#size-based">Caffeine</a> cache.
@@ -15,8 +17,6 @@ public class CaffeineCache<K, V> implements CacheImplementationInterface<K, V> {
 
     com.github.benmanes.caffeine.cache.Cache<K, Value<V>> backing ;
     Map<K, V> backingAsMap ;
-
-
     private int maxSize;
 
     public CaffeineCache() {
@@ -170,6 +170,10 @@ public class CaffeineCache<K, V> implements CacheImplementationInterface<K, V> {
     @Override
     public Set<Entry<K, V>> entrySet() {
         return backingAsMap.entrySet();
+    }
+
+    public String toString() {
+        return "CaffeineCache " + maxSize + " ";
     }
 
     public static class Value<V> implements Serializable {
