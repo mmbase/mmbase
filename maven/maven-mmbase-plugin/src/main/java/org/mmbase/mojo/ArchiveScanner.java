@@ -57,12 +57,12 @@ public class ArchiveScanner extends DirectoryScanner {
           excludes = new String[0];
       }
 
-      filesIncluded = new Vector<String>();
-      filesNotIncluded = new Vector<String>();
-      filesExcluded = new Vector<String>();
-      dirsIncluded = new Vector<String>();
-      dirsNotIncluded = new Vector<String>();
-      dirsExcluded = new Vector<String>();
+      filesIncluded = new ArrayList<>();
+      filesNotIncluded = new ArrayList<String>();
+      filesExcluded = new ArrayList<String>();
+      dirsIncluded = new ArrayList<String>();
+      dirsNotIncluded = new ArrayList<String>();
+      dirsExcluded = new ArrayList<String>();
 
       List<String> jarEntries = new ArrayList<String>();
       Enumeration<JarEntry> en = jarfile.entries();
@@ -81,30 +81,30 @@ public class ArchiveScanner extends DirectoryScanner {
          if (name.endsWith(fileSeparator)) {
             if (isIncluded(name)) {
                if (!isExcluded(name)) {
-                  dirsIncluded.addElement(name);
+                  dirsIncluded.add(name);
                }
                else {
                   everythingIncluded = false;
-                  dirsExcluded.addElement(name);
+                  dirsExcluded.add(name);
                }
             }
             else {
                everythingIncluded = false;
-               dirsNotIncluded.addElement(name);
+               dirsNotIncluded.add(name);
             }
          } else {
             if (isIncluded(name)) {
                if (!isExcluded(name)) {
-                  filesIncluded.addElement(name);
+                  filesIncluded.add(name);
                }
                else {
                   everythingIncluded = false;
-                  filesExcluded.addElement(name);
+                  filesExcluded.add(name);
                }
             }
             else {
                everythingIncluded = false;
-               filesNotIncluded.addElement(name);
+               filesNotIncluded.add(name);
             }
          }
       }
