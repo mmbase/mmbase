@@ -9,13 +9,15 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.util.logging.commons.impl;
 
-import org.apache.commons.logging.Log;
+import org.mmbase.util.logging.Level;
 import org.mmbase.util.logging.Logger;
+
+import org.apache.commons.logging.Log;
 
 /**
  * Adaptor class to convert jakarta-commons Log calls to MMBase Logger calls.<br/>
- * <br/> 
- * 
+ * <br/>
+ *
  * @author Kees Jongenburger
  */
 public class MMBaseLogger implements Log {
@@ -23,7 +25,7 @@ public class MMBaseLogger implements Log {
     protected Logger logger;
 
     /**
-     * creates a new adaptor 
+     * creates a new adaptor
      * @param logger the logger to use
      */
     MMBaseLogger(Logger logger) {
@@ -41,34 +43,34 @@ public class MMBaseLogger implements Log {
      * @return if service is enabled in the MMBaseLogger
      */
     public boolean isErrorEnabled() {
-        return logger.isServiceEnabled();
+        return logger.isEnabledFor(Level.ERROR);
     }
 
     /**
      * @return is service is enabled in the MMBase logger
      */
     public boolean isFatalEnabled() {
-        return logger.isServiceEnabled();
+        return logger.isEnabledFor(Level.FATAL);
     }
     /**
      * @return is service is enabled in the MMBase logger
      */
     public boolean isInfoEnabled() {
-        return logger.isServiceEnabled();
+        return logger.isEnabledFor(Level.INFO);
     }
 
     /**
      * @return if debug is enabled in the MMBaseLogger
      */
     public boolean isTraceEnabled() {
-        return logger.isDebugEnabled();
+        return logger.isTraceEnabled();
     }
 
     /**
      * @return is service is enabled in the MMBaseLogger
      */
     public boolean isWarnEnabled() {
-        return logger.isServiceEnabled();
+        return logger.isEnabledFor(Level.WARN);
     }
 
     /**
@@ -100,14 +102,14 @@ public class MMBaseLogger implements Log {
     }
 
     /**
-     * calls {@link org.mmbase.util.logging.Logger#error(java.lang.Object)} 
+     * calls {@link org.mmbase.util.logging.Logger#error(java.lang.Object)}
      */
     public void error(Object object) {
         logger.error(object);
     }
-    
+
     /**
-     * calls {@link org.mmbase.util.logging.Logger#fatal(java.lang.Object)} 
+     * calls {@link org.mmbase.util.logging.Logger#fatal(java.lang.Object)}
      */
     public void fatal(Object object) {
         logger.fatal(object);
@@ -127,7 +129,7 @@ public class MMBaseLogger implements Log {
 	public void error(Object object, Throwable throwable) {
 		logger.error(object, throwable);
 	}
-	
+
 	/**
 	 * calls {@link org.mmbase.util.logging.Logger#fatal(java.lang.Object, java.lang.Throwable)}
 	 */
@@ -148,7 +150,7 @@ public class MMBaseLogger implements Log {
 	public void trace(Object object, Throwable throwable) {
 		logger.trace(object, throwable);
 	}
-	
+
 	/**
 	 * calls {@link org.mmbase.util.logging.Logger#warn(java.lang.Object, java.lang.Throwable)}
 	 */
