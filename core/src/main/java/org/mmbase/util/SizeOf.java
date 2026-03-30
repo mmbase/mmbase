@@ -153,16 +153,20 @@ public class SizeOf {
     }
 
     private int sizeof(Map<?,?> m) {
-        int len =
-            size_inst(m, m.getClass()) + 
-            m.size() * 30; // estimated overhead per entry. Is about correct for Hashtable and HashMap
-        Iterator<? extends Map.Entry<?,?>> i = m.entrySet().iterator();
-        while (i.hasNext()) {
-            Map.Entry<?,?> entry = i.next();
-            len += sizeof(entry.getKey());
-            len += sizeof(entry.getValue());
+        if (m != null) {
+            int len =
+                size_inst(m, m.getClass()) +
+                    m.size() * 30; // estimated overhead per entry. Is about correct for Hashtable and HashMap
+            Iterator<? extends Map.Entry<?, ?>> i = m.entrySet().iterator();
+            while (i.hasNext()) {
+                Map.Entry<?, ?> entry = i.next();
+                len += sizeof(entry.getKey());
+                len += sizeof(entry.getValue());
+            }
+            return len;
+        } else {
+            return 0;
         }
-        return len;
     }
 
     private int sizeof(Collection<?> m) {
@@ -270,7 +274,7 @@ public class SizeOf {
         long usedBefore = rt.totalMemory() - rt.freeMemory();
         // create one million objects
         for (int i = SIZE; i < 2 * SIZE; i++) {
-            //list[i - 1000000] = "a" + i + "b" + i; 
+            //list[i - 1000000] = "a" + i + "b" + i;
             //list.add("a" + i + "b" + i); // of 16 byte
             //list.add(new String( new byte[] {})); // of 0 byte
             //list.add(new String( new byte[] {}).intern());
