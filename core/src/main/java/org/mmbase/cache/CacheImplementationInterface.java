@@ -42,4 +42,11 @@ public interface CacheImplementationInterface<K, V> extends Map<K, V> {
      */
     void config(Map<String, String> configuration);
 
+    /**
+     * @since 1.9.7
+     */
+    default void shutdown() {
+
     }
+
+}

@@ -14,7 +14,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.function.IntFunction;
+import java.util.function.*;
 import java.util.regex.Pattern;
 import javax.management.JMException;
 import javax.management.MBeanServer;
@@ -42,6 +42,8 @@ public class CacheManager implements CacheManagerMBean {
 
     private static final Logger log = Logging.getLoggerInstance(CacheManager.class);
 
+    public static String CACHE_NAME = "cacheName";
+
     /**
      * All registered caches
      */
@@ -51,7 +53,7 @@ public class CacheManager implements CacheManagerMBean {
     private static CacheManager instance = null;
 
     @SuppressWarnings("rawtypes")
-    private static IntFunction<CacheImplementationInterface> createCache = LRUCache::new;
+    private static BiFunction<Integer, String, CacheImplementationInterface> createCache = (size, name) -> new LRUCache((size));
 
     private CacheManager() {
         // singleton
@@ -97,7 +99,7 @@ public class CacheManager implements CacheManagerMBean {
                             }
                             on = new ObjectName("org.mmbase", props);
                         } catch (MalformedObjectNameException mfone) {
-                            log.warn("" + props + " " + mfone);
+                            log.warn(props + " " + mfone);
                             return;
                         }
                         try {
@@ -105,9 +107,9 @@ public class CacheManager implements CacheManagerMBean {
                             mbs.registerMBean(instance, on);
                             log.service("Registered " + on);
                         } catch (JMException jmo) {
-                            log.warn("" + on + " " + jmo.getClass() + " " + jmo.getMessage());
+                            log.warn(on + " " + jmo.getClass() + " " + jmo.getMessage());
                         } catch (Throwable t) {
-                            log.error("" + on + " " + t.getClass() + " " + t.getMessage());
+                            log.error(on + " " + t.getClass() + " " + t.getMessage());
                         }
                     }
                 });
@@ -201,9 +203,9 @@ public class CacheManager implements CacheManagerMBean {
                         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
                         mbs.registerMBean(cache, name);
                     } catch (JMException jmo) {
-                        log.warn("" + name + " " + jmo.getClass() + " " + jmo.getMessage());
+                        log.warn(name + " " + jmo.getClass() + " " + jmo.getMessage());
                     } catch (Throwable t) {
-                        log.error("" + name + " " + t.getClass() + " " + t.getMessage());
+                        log.error(name + " " + t.getClass() + " " + t.getMessage());
                     }
                 }
             };
@@ -239,7 +241,7 @@ public class CacheManager implements CacheManagerMBean {
             }
             return new ObjectName(buf.toString());
         } catch (MalformedObjectNameException mfone) {
-            log.warn("" + buf + " " + mfone);
+            log.warn(buf + " " + mfone);
             return null;
         }
     }
@@ -278,7 +280,7 @@ public class CacheManager implements CacheManagerMBean {
                     configValues.put(paramName, paramValue);
                 }
                 log.info("Default cache implementation: " + clazz + " with config " + configValues);
-                createCache = size -> createImplementation(size, clazz, configValues);
+                createCache = (size, name) -> createImplementation(size, clazz, name,  configValues);
             }
         } else {
             if (log.isDebugEnabled()) log.debug("Configuring cache " + only + " with file " + xmlReader.getSystemId());
@@ -297,7 +299,8 @@ public class CacheManager implements CacheManagerMBean {
                 String clazz = DocumentReader.getElementValue(DocumentReader.getElementByPath(cacheElement, "cache.implementation.class"));
                 if(!"".equals(clazz)) {
                     Element cacheImpl = DocumentReader.getElementByPath(cacheElement, "cache.implementation");
-                    Map<String,String> configValues = new HashMap<String,String>();
+                    Map<String,String> configValues = new HashMap<>();
+                    configValues.put(CACHE_NAME, cacheName);;
                     for (Element attrNode: DocumentReader.getChildElements(cacheImpl, "param")) {
                         String paramName = xmlReader.getElementAttributeValue(attrNode, "name");
                         String paramValue = DocumentReader.getElementValue(attrNode);
@@ -310,7 +313,7 @@ public class CacheManager implements CacheManagerMBean {
                 String status = DocumentReader.getElementValue(DocumentReader.getElementByPath(cacheElement, "cache.status"));
                 cache.setActive(status.equalsIgnoreCase("active"));
                 try {
-                    int size = Integer.valueOf(DocumentReader.getElementValue(DocumentReader.getElementByPath(cacheElement, "cache.size")));
+                    int size = Integer.parseInt(DocumentReader.getElementValue(DocumentReader.getElementByPath(cacheElement, "cache.size")));
                     cache.setMaxSize(size);
                     log.service("Setting " + cacheName + " " + status + " with size " + size);
                 } catch (NumberFormatException nfe) {
@@ -401,7 +404,7 @@ public class CacheManager implements CacheManagerMBean {
     }
 
     /**
-     * Clears and dereferences all caches. To be used on shutdown of MMBase.
+     * Shutdown all caches. To be used on shutdown of MMBase.
      * @since MMBase-1.8.1
      */
     public static void shutdown() {
@@ -409,13 +412,13 @@ public class CacheManager implements CacheManagerMBean {
         log.info("Clearing and unregistering all caches");
         log.debug(mbs.queryNames(getObjectName(null, false), null));
         for(Cache<?,?> cache : getInstance().caches.values()) {
-            cache.clear();
+            cache.shutdown();
             ObjectName name = getObjectName(cache, false);
             if (mbs.isRegistered(name)) {
                 try {
                     mbs.unregisterMBean(name);
                 } catch (JMException jmo) {
-                    log.warn("" + name + " " + jmo.getClass() + " " + jmo.getMessage() + " " + mbs.queryNames(null, null));
+                    log.warn(name + " " + jmo.getClass() + " " + jmo.getMessage() + " " + mbs.queryNames(null, null));
                 }
             }
         }
@@ -524,13 +527,15 @@ public class CacheManager implements CacheManagerMBean {
     }
 
     @SuppressWarnings("unchecked")
-    public <K, V> CacheImplementationInterface<K, V> createDefaultImplementation(int size) {
-        return( CacheImplementationInterface<K, V>) createCache.apply(size);
+    protected <K, V> CacheImplementationInterface<K, V> createDefaultImplementation(String name, int size) {
+        return( CacheImplementationInterface<K, V>) createCache.apply(size, name);
     }
 
     @SuppressWarnings("unchecked")
-    public static <K, V> CacheImplementationInterface<K, V>  createImplementation(int size, String clazz, Map<String,String> configValues) {
+    public static <K, V> CacheImplementationInterface<K, V>  createImplementation(int size, String clazz, String name, Map<String,String> configValues) {
         try {
+            Map<String, String> copy = new HashMap<>(configValues);
+            copy.put(CACHE_NAME, name);
             Class<?> clas = Class.forName(clazz);
             CacheImplementationInterface<K, V> implementation;
             try {
@@ -540,7 +545,7 @@ public class CacheManager implements CacheManagerMBean {
                 log.debug("No constructor with int argument for " + clazz + ", trying default constructor");
                 implementation = (CacheImplementationInterface<K,V>) clas.newInstance();
             }
-            implementation.config(configValues);
+            implementation.config(copy);
             return implementation;
 
 

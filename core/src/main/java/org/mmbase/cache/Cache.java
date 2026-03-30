@@ -79,9 +79,10 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
      */
     private final ThreadLocal<Lock> readThreadLocalLock = new ThreadLocal<Lock>();
 
+
     public Cache(int size) {
         // See: http://www.mmbase.org/jira/browse/MMB-1486
-        implementation = CacheManager.getInstance().createDefaultImplementation(size);
+        implementation = CacheManager.getInstance().createDefaultImplementation(getName(), size);
         log.service("Creating cache " + getName() + ": " + getDescription());
     }
 
@@ -89,7 +90,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
         implementationLock.writeLock().lock();
         try {
             CacheImplementationInterface<K, V> oldImpl = implementation;
-            CacheImplementationInterface<K, V> newImpl = CacheManager.getInstance().createDefaultImplementation(size);
+            CacheImplementationInterface<K, V> newImpl = CacheManager.getInstance().createDefaultImplementation(getName(), size);
             if (!newImpl.getClass().equals(oldImpl.getClass())) {
                 clear();
                 log.info("Setting default implementation of " + this + " to " + newImpl);
@@ -109,7 +110,7 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
                 if (oldImpl == null || (!clazz.equals(oldImpl.getClass().getName()))) {
                     clear();
                     log.info("Setting implementation of " + this + " to " + clazz);
-                    implementation = CacheManager.getInstance().createImplementation(size, clazz, configValues);
+                    implementation = CacheManager.getInstance().createImplementation(size, clazz, getName(), configValues);
                 }
             } catch (RuntimeException iae) {
                 log.error("For cache " + this + " " + iae.getClass().getName() + ": " + iae.getMessage());
@@ -535,6 +536,13 @@ abstract public class Cache<K, V> implements SizeMeasurable, Map<K, V>, CacheMBe
         return implementation.values();
     }
 
+
+    /**
+     * @since 1.9.7
+     */
+    public void shutdown() {
+        implementation.shutdown();
+    }
 
     /**
      * Puts this cache in the caches repository.
