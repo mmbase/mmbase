@@ -35,6 +35,7 @@ And edit:
     Such as 1.9.2 and -20091104
 
   - Fix the other poms:
+
 [source,sh,subs="attributes"]
 ----
    for i in `find . -name pom.xml` ; do cat $i | sed s/1.9-SNAPSHOT/{target-version}/g > $i.new ; mv -f $i.new $i   ; done
