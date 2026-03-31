@@ -43,10 +43,14 @@ MVN="mvn"
 
 #cd $DIR/applications/streams && $MVN -P'deploy,!development' clean deploy
 #exit
+FAILED=""
 for d in  . maven-base maven maven/maven-mmbase-plugin core maven-base/applications applications   ; do
     echo "========== Running with -N clean $TARGET in $d"
-    (cd $DIR/$d &&  $MVN -N clean $TARGET)
+    (cd $DIR/$d &&  $MVN -N clean $TARGET) || FAILED="$FAILED $d"
 done
+if [ -n "$FAILED" ]; then
+    echo "WARNING: The following directories failed:$FAILED"
+fi
 
 echo "============= Now running the rest $(pwd) $DIR"
     (cd $DIR && $MVN -U -P"!development,default,${PROFILE_ARG}" clean $TARGET)

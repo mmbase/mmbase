@@ -45,12 +45,14 @@ And edit:
 
 
  - Then:
+
 [source,sh,subs="attributes"]
 ----
 michiel@mitulo:({target-version},12)~/github/mmbase/mmbase$ PROFILES=deploy ./build-all.sh deploy
 ----
 
 Now also create tag, and let's delete the branch, so avoid more edits.
+
 [source,sh,subs="attributes"]
 ----
 	git tag -a {target-version} -m "released"
