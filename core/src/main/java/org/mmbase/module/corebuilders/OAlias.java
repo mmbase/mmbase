@@ -37,7 +37,7 @@ public class OAlias extends MMObjectBuilder {
     private static final Logger log = Logging.getLoggerInstance(OAlias.class);
 
     // alias -> node-number (Integer)
-    private Cache<String,Integer> numberCache = new Cache<String,Integer>(128) {
+    private final Cache<String,Integer> numberCache = new Cache<String,Integer>(128) {
         public String getName()        { return "AliasCache"; }
         public String getDescription() { return "Cache for node aliases"; }
         };

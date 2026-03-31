@@ -9,6 +9,7 @@ See http://www.MMBase.org/license
 */
 package org.mmbase.cache.xslt;
 
+import java.io.Serializable;
 import java.util.*;
 
 import javax.xml.transform.*;
@@ -244,7 +245,7 @@ public class TemplateCache extends Cache<TemplateCache.Key, Templates> {
      * Contains the systemid of the XSLT object (if there is one)
      * and the URIResolver.
      */
-    public static class Key {
+    public static class Key implements Serializable {
         private final String  src;
         private final URIResolver uri;
         Key(Source src, URIResolver uri) {

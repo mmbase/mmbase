@@ -37,9 +37,12 @@
     <!--
     <class>org.mmbase.cache.implementation.LRUCache</class>
     -->
-    <!-- this one is based on the well known caffeine library and is expected to perform much better -->
-
+    <!--
+     this one is based on the well known caffeine library and is expected to perform much better
+     It is the default since 1.9.7, but you can switch back to the original one if you want to.
+     -->
     <class>org.mmbase.cache.implementation.CaffeineCache</class>
+
     <!-- This one would need the mmbase-oscache module
     <class>org.mmbase.cache.oscache.OSCacheImplementation</class>
     <param name="class">com.opensymphony.oscache.base.algorithm.LRUCache</param>
