@@ -63,7 +63,7 @@ Now also create tag, and let's delete the branch, so avoid more edits.
 	git push origin tag {branch-version}
 	git checkout MMBase-1_9
 	git branch -D {branch-version}
-	git push -d {branch-version}
+	git push origin {branch-version}
 
 ----
 
