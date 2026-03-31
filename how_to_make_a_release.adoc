@@ -1,6 +1,9 @@
 = How to make a release
 
-:target-version: MMBase-1_9_7_rc3
+:minor-version: 7
+:status-version: rc3
+:target-version: 1.9.{minor-version}-{status-version}
+:branch-version: MMBase-1_9_{minor-version}_{status-version}
 
 
 - Make sure all automated test-cases succeed. Check the nightly build, or run 'make all' in tests.
@@ -16,14 +19,14 @@ NOTE: It's a bit odd to make a branch and not a tag, but the following will do s
 
 [source,sh,subs="attributes"]
 ----
-   git branch {target-version}
+   git branch {branch-version}
 ----
 
 - Check it out
 
 [source,sh,subs="attributes"]
 ----
-  git checkout {target-version}
+  git checkout {branch-version}
 ----
 
 And edit:
@@ -49,18 +52,18 @@ And edit:
 
 [source,sh,subs="attributes"]
 ----
-michiel@mitulo:({target-version},12)~/github/mmbase/mmbase$ PROFILES=deploy ./build-all.sh deploy
+michiel@mitulo:({branch-version},12)~/github/mmbase/mmbase$ PROFILES=deploy ./build-all.sh deploy
 ----
 
 Now also create tag, and let's delete the branch, so avoid more edits.
 
 [source,sh,subs="attributes"]
 ----
-	git tag -a {target-version} -m "released"
-	git push origin tag {target-version}
+	git tag -a {branch-version} -m "released"
+	git push origin tag {branch-version}
 	git co MMBase-1_9
-	git branch -D {target-version}
-	git push -d {target-version}
+	git branch -D {branch-version}
+	git push -d {branch-version}
 
 ----
 
