@@ -246,11 +246,11 @@
       <artifactId>mmbase-oscache-cache</artifactId>
       <version>${mmbase.version}</version>
     </dependency>
-    <dependency>
+   <!-- <dependency>
       <groupId>org.mmbase</groupId>
       <artifactId>mmbase-ehcache-cache</artifactId>
       <version>${mmbase.version}</version>
-    </dependency>
+    </dependency>-->
    <!-- <dependency>
       <groupId>org.mmbase</groupId>
       <artifactId>mmbase-calendar</artifactId>
