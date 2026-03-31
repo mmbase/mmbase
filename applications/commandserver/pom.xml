@@ -6,11 +6,11 @@
   <parent>
     <groupId>org.mmbase</groupId>
     <artifactId>mmbase-cms</artifactId>
-    <version>MMBase-1_9_7_rc3</version>
+    <version>1.9.7-rc3</version>
   </parent>
 
   <artifactId>mmbase-commandserver</artifactId>
-  <version>MMBase-1_9_7_rc3</version>
+  <version>1.9.7-rc3</version>
 
   <name>MMBase Command Server</name>
   <packaging>jar</packaging>

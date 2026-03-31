@@ -20,8 +20,8 @@ See http://www.MMBase.org/license
   <name>MMBase Tests</name>
 
   <properties>
-    <mmbase.version.test>MMBase-1_9_7_rc3</mmbase.version.test>
-    <mmbase.version>MMBase-1_9_7_rc3</mmbase.version>
+    <mmbase.version.test>1.9.7-rc3</mmbase.version.test>
+    <mmbase.version>1.9.7-rc3</mmbase.version>
   </properties>
 
   <build>

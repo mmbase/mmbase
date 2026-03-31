@@ -12,7 +12,7 @@
   <name>MMBase Streams Example webapp</name>
 
   <properties>
-    <mmbase.version>MMBase-1_9_7_rc3</mmbase.version>
+    <mmbase.version>1.9.7-rc3</mmbase.version>
     <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
   </properties>
 
@@ -22,7 +22,7 @@
       <plugin>
         <groupId>org.mmbase.maven</groupId>
         <artifactId>maven-mmbase-plugin</artifactId>
-        <version>MMBase-1_9_7_rc3</version>
+        <version>1.9.7-rc3</version>
         <executions>
           <execution>
             <id>include-default-excludes</id>
