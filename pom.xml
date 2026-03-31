@@ -13,15 +13,15 @@ Version $Id: pom.xml,v 1.8 2009/02/20 15:21:28 michiel Exp $
 
   <groupId>org.mmbase</groupId>
   <artifactId>mmbase-cms</artifactId>
-  <version>1.9-SNAPSHOT</version>
+  <version>MMBase-1_9_7_rc3</version>
   <name>MMBase</name>
 
   <packaging>pom</packaging>
 
   <properties>
     <compiler.fork>false</compiler.fork>
-    <mmbase.version.number>1.9</mmbase.version.number>
-    <mmbase.version.postfix>-SNAPSHOT</mmbase.version.postfix>
+    <mmbase.version.number>1.9.7</mmbase.version.number>
+    <mmbase.version.postfix>-rc3</mmbase.version.postfix>
     <mmbase.version>${mmbase.version.number}${mmbase.version.postfix}</mmbase.version>
     <!-- Cannot be project.version, because then an extension of this cannot have it's own version any more -->
 

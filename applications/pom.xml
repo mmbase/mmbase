@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.mmbase</groupId>
     <artifactId>mmbase-parent</artifactId>
-    <version>1.9-SNAPSHOT</version>
+    <version>MMBase-1_9_7_rc3</version>
     <relativePath>../maven-base/pom.xml</relativePath>
  </parent>
 
