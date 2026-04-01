@@ -1,7 +1,7 @@
 = How to make a release
 
 :minor-version: 7
-:status-version: Final
+:status-version: rc3
 :target-version: 1.9.{minor-version}-{status-version}
 :branch-version: MMBase-1_9_{minor-version}_{status-version}
 
@@ -31,9 +31,11 @@ NOTE: It's a bit odd to make a branch and not a tag, but the following will do s
 
 And edit:
 
-  - `core/src/main/java/org/mmbase/Version.java`
-  - `core/src/main/config/components/core.xml` (make release notes point to right RSS)
-  - `pom.xml` Change `<mmbase.version.number>` and `<mmbase.version.postfix>` to the right numbers. Such as `1.9.7` and `-Final`
+  - core/src/main/java/org/mmbase/Version.java
+  - core/src/main/config/components/core.xml (make release notes point to right RSS)
+  - pom.xml
+    Change <mmbase.version.number> and <mmbase.version.postfix> to the right numbers.
+    Such as 1.9.2 and -20091104
 
   - Fix the other poms:
 
@@ -59,9 +61,9 @@ Now also create tag, and let's delete the branch, so avoid more edits.
 ----
 	git tag -a {branch-version} -m "released"
 	git push origin tag {branch-version}
-	git co MMBase-1_9
+	git checkout MMBase-1_9
 	git branch -D {branch-version}
-	git push --tags
+	git push origin {branch-version}
 
 ----
 
