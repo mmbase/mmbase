@@ -124,10 +124,13 @@ jobs:
         include:
          - directory: example-webapp
            name: example-webapp
+           description: MMBase example web application
          - directory: base-webapp
            name: base-webapp
+           description: MMBase base web application
          - directory: applications/commandserver
            name: commandserver
+           description: MMBase command server
     steps:
       - name: Download WAR artifact
         uses: actions/download-artifact@v8
@@ -165,6 +168,7 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
             type=raw,value=${{ steps.version.outputs.major }},enable=${{ startsWith(github.ref, 'refs/tags/') }}
           annotations: |
+            index:org.opencontainers.image.description=${{ matrix.description }}
             index:org.opencontainers.image.documentation=https://github.com/mmbase/mmbase/tree/MMBase-1_9/${{matrix.directory}}
       - name: Build and push Docker image
         id: build-and-push
