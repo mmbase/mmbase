@@ -85,7 +85,7 @@ jobs:
               applications/commandserver/target/*.jar
   integration-tests:
     env:
-      MAVEN_ARGS: '--no-transfer-progress'
+      MAVEN_ARGS: '--no-transfer-progress --color always'
     needs: maven
     runs-on: ubuntu-latest
     container:
@@ -142,6 +142,17 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Compute semantic version from tag
+        id: version
+        if: startsWith(github.ref, 'refs/tags/MMBase-')
+        run: |
+          TAG="${GITHUB_REF#refs/tags/MMBase-}"
+          # Convert MMBase tag format to semver: 1_9_7_rc1 -> 1.9.7-rc1, 1_9_7_Final -> 1.9.7
+          SEMVER=$(echo "$TAG" | sed -E 's/_/./g; s/\.Final$//; s/\.([a-zA-Z])/-\1/')
+          echo "semver=${SEMVER}" >> "$GITHUB_OUTPUT"
+          MAJOR=$(echo "$SEMVER" | cut -d. -f1)
+          echo "major=${MAJOR}" >> "$GITHUB_OUTPUT"
+        shell: bash
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v6
@@ -149,10 +160,10 @@ jobs:
           images: ghcr.io/mmbase/${{matrix.name}}
           tags: |
             type=ref,event=branch
-            type=ref,event=tag
+            type=raw,value=${{ steps.version.outputs.semver }},enable=${{ startsWith(github.ref, 'refs/tags/') }}
             type=ref,event=pr
             type=raw,value=latest,enable={{is_default_branch}}
-            type=pep440,pattern={{major}},event=tag
+            type=raw,value=${{ steps.version.outputs.major }},enable=${{ startsWith(github.ref, 'refs/tags/') }}
           annotations: |
             index:org.opencontainers.image.documentation=https://github.com/mmbase/mmbase/tree/MMBase-1_9/${{matrix.directory}}
       - name: Build and push Docker image
